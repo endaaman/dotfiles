@@ -1,7 +1,5 @@
 export VTE_CJK_WIDTH=1
 
-# direnv
-eval "$(direnv hook zsh)"
 export EDITOR=vim
 
 # for git

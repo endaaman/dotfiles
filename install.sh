@@ -5,22 +5,16 @@ NC='\033[0m'
 
 cd
 
-printf "${RED}link .editorconfig${NC}\n"
-ln -fs dotfiles/editorconfig ./.editorconfig
-printf "${RED}link .gitconfig${NC}\n"
-ln -fs dotfiles/gitconfig ./.gitconfig
-printf "${RED}link .gitignore_global${NC}\n"
-ln -fs dotfiles/gitignore_global ./.gitignore_global
+ln -fs "$HOME/dotfiles/editorconfig" "$HOME/.editorconfig"
+ln -fs "$HOME/dotfiles/gitconfig" "$HOME/.gitconfig"
+ln -fs "$HOME/dotfiles/gitignore_global" "$HOME/.gitignore_global"
 
-printf "${RED}link .pyenv${NC}\n"
-ln -fs dotfiles/pyenv ./.pyenv
-printf "${RED}link .rbenv${NC}\n"
-ln -fs dotfiles/rbenv ./.rbenv
-printf "${RED}link .git-prompt${NC}\n"
-ln -fs dotfiles/zsh-git-prompt ./.git-prompt
+ln -fs "$HOME/dotfiles/pyenv" "$HOME/.pyenv"
+ln -fs "$HOME/dotfiles/pyenv-virtualenv" "$HOME/.pyenv/plugins"
+ln -fs "$HOME/dotfiles/rbenv" "$HOME/.rbenv"
+ln -fs "$HOME/dotfiles/zsh-git-prompt" "$HOME/.git-prompt"
 
-printf "${RED}link .zshrc${NC}\n"
-ln -fs dotfiles/zshrc ./.zshrc
+ln -fs "dotfiles/zshrc" "$HOME/.zshrc"
 
 
 if [ ! -d '.nodebrew' ]; then
