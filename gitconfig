@@ -1,0 +1,6 @@
+[user]
+	name = endaaman
+	email = buhibuhidog@gmail.com
+[core]
+	excludesfile = /home/ken/.gitignore_global
+	editor = vim -c \"set fenc=utf-8\"

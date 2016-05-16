@@ -1,0 +1,9 @@
+[submodule "zsh-git-prompt"]
+	path = zsh-git-prompt
+	url = https://github.com/olivierverdier/zsh-git-prompt.git
+[submodule "pyenv"]
+	path = pyenv
+	url = https://github.com/yyuu/pyenv.git
+[submodule "rbenv"]
+	path = rbenv
+	url = https://github.com/rbenv/rbenv.git
