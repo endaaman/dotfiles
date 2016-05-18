@@ -31,6 +31,8 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
 
+export PATH="$HOME/bin:$PATH"
+
 # alias
 alias g="git"
 alias ll='ls -alF'
