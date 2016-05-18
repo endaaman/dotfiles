@@ -45,4 +45,4 @@ alias j2c="js2coffee"
 alias docker-clean="docker rm \`docker ps -qa\`"
 alias docker-cleani="docker rmi \`docker images --filter \"dangling=true\" -q\`"
 
-alias reload-dotfiles="~/dotfiles/install.sh && source .zshrc"
+alias reload-dotfiles="~/dotfiles/install.sh && source ~/.zshrc"
