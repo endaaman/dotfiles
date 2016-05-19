@@ -1,5 +1,10 @@
-export VTE_CJK_WIDTH=1
+# init completion
+autoload -U compinit
+compinit
+eval `dircolors -b`
+zstyle ':completion:*' list-colors $LS_COLORS
 
+export VTE_CJK_WIDTH=1
 export EDITOR=vim
 
 # for git
