@@ -10,7 +10,7 @@ syntax enable
 if &compatible
   set nocompatible
 endif
-set runtimepath^=~/.vim/dein
+set runtimepath^=~/.vim/dein.vim
 
 call dein#begin(expand('~/.cache/dein'))
 
