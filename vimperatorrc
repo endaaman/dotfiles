@@ -1,0 +1,7 @@
+map j 3<C-e>
+map k 3<C-y>
+
+map <A-Left> gt
+map <A-Right> gT
+
+echo .vimperatorrc sourced
