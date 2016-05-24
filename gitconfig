@@ -1,6 +1,11 @@
 [user]
-	name = endaaman
-	email = buhibuhidog@gmail.com
+  name = endaaman
+  email = buhibuhidog@gmail.com
 [core]
-	excludesfile = /home/ken/.gitignore_global
-	editor = vim -c \"set fenc=utf-8\"
+  excludesfile = /home/ken/.gitignore_global
+  editor = vim -c \"set fenc=utf-8\"
+
+[alias]
+  a = add
+  s = status
+  c = commit
