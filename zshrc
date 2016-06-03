@@ -40,7 +40,7 @@ export PATH="$HOME/bin:$PATH"
 
 # alias
 alias g="git"
-alias ll='ls -alF'
+alias ll='ls -ahlF'
 alias la='ls -A'
 alias l='ls -CF'
 
