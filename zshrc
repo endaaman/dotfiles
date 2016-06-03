@@ -52,4 +52,6 @@ alias j2c="js2coffee"
 alias docker-clean="docker rm \`docker ps -qa\`"
 alias docker-cleani="docker rmi \`docker images --filter \"dangling=true\" -q\`"
 
+alias tap_production="export NODE_ENV=production"
+
 alias reload-zshrc='exec zsh -l'
