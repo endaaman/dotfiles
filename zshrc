@@ -49,8 +49,8 @@ alias pm="python manage.py"
 alias be="bundle exec"
 alias j2c="js2coffee"
 
-alias docker-clean="docker rm \`docker ps -qa\`"
-alias docker-cleani="docker rmi \`docker images --filter \"dangling=true\" -q\`"
+alias docker-clean="docker ps -a -q -f \"status=exited\" | xargs --no-run-if-empty docker rm -v"
+alias docker-cleani="docker images -q -f \"dangling=true\" | xargs --no-run-if-empty docker rmi"
 
 alias tap_production="export NODE_ENV=production"
 
