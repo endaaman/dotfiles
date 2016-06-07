@@ -1,9 +1,3 @@
-# init completion
-autoload -U compinit
-compinit
-eval `dircolors -b`
-zstyle ':completion:*' list-colors $LS_COLORS
-
 export VTE_CJK_WIDTH=1
 export EDITOR=vim
 
@@ -35,8 +29,18 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-
 export PATH="$HOME/bin:$PATH"
+
+
+# completion
+autoload -Uz compinit
+compinit
+eval `dircolors -b`
+zstyle ':completion:*' list-colors $LS_COLORS
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' ignore-parents parent pwd ..
+zstyle ':completion:*:processes' command 'ps x -o pid,s,args'
+
 
 # alias
 alias g="git"
