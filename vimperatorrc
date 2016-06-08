@@ -4,4 +4,4 @@ map k 3<C-y>
 map <A-Left> gT
 map <A-Right> gt
 
-echo .vimperatorrc sourced
+echo '.vimperatorrc sourced'
