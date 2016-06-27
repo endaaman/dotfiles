@@ -1,7 +1,8 @@
-map j 3<C-e>
-map k 3<C-y>
+nnoremap j <Down>
+nnoremap k <Up>
 
-map <A-Left> gT
-map <A-Right> gt
+nnoremap <A-Left> gT
+nnoremap <A-Right> gt
 
-echo '.vimperatorrc sourced'
+nnoremap yt :js util.copyToClipboard(buffer.title)
+nnoremap ym :js util.copyToClipboard('[' + buffer.title + '](' + buffer.URL + ')')
