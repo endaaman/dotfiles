@@ -29,6 +29,9 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
+# PHP
+[[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc
+
 export PATH="$HOME/bin:$PATH"
 
 
