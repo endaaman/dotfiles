@@ -10,9 +10,8 @@ trim_trailing_whitespace = false
 [*.jade]
 trim_trailing_whitespace = true
 
-
-[*.coffee]
-indent_size = 4
-
 [Makefile]
+indent_style = tab
+
+[*.php]
 indent_style = tab

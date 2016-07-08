@@ -67,15 +67,5 @@ else
   printf "${CYAN}git-prompt is alreay installed${NC}\n"
 fi
 
-if [ ! -d '.vim/dein.vim' ]; then
-  printf "\n"
-  printf "${CYAN}dein is not installed.${NC}\n"
-  printf "${CYAN}Installing dein...${NC}\n"
-  git clone https://github.com/Shougo/dein.vim.git ~/.vim/dein.vim
-  printf "${CYAN}Done${NC}\n"
-else
-  printf "${CYAN}dein is alreay installed${NC}\n"
-fi
-
 
 printf "\n${CYAN}All has been done.${NC}\n"
