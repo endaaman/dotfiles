@@ -2,13 +2,12 @@ scriptencoding utf-8
 syntax on
 
 set encoding=utf-8
+set number
 set nowrap
-
 set hlsearch
 set ignorecase
 set smartcase
 set nocompatible
-
 set autoindent
 set ruler
 set list
@@ -31,28 +30,7 @@ set mouse=a
 
 nmap <silent> <Esc><Esc> :nohlsearch<CR>
 
-nnoremap <S-Up> v<Up>
-nnoremap <S-Down> v<Down>
-nnoremap <S-Left> v<Left>
-nnoremap <S-Right> v<Right>
 
-vnoremap <S-Up> k
-vnoremap <S-Down> j
-vnoremap <S-Left> h
-vnoremap <S-Right> l
-
-noremap! <C-Up> ddkkp
-noremap! <C-Down> ddjjp
-
-noremap <C-k> <Plug>(caw:i:toggle)
-nnoremap <C-d> <Nop>
-
-nnoremap <silent><C-e> :NERDTreeTabsToggle<CR>
-nnoremap <C-n> gt
-nnoremap <C-p> gT
-
-
-let g:multi_cursor_use_default_mapping=0
 let g:multi_cursor_next_key='<C-d>'
 let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
@@ -63,11 +41,32 @@ let g:multi_cursor_start_key='<C-d>'
 let g:airline_powerline_fonts = 1
 set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
 
+
+let g:unite_source_grep_command = 'ag'
+let g:unite_source_grep_default_opts = '--nocolor --nogroup'
+let g:unite_source_grep_max_candidates = 200
+let g:unite_source_grep_recursive_opt = ''
+" let g:unite_enable_start_insert=1
+let g:unite_source_history_yank_enable =1
+nmap <Space> [unite]
+vnoremap /g y:Unite grep::-iRn:<C-R>=escape(@", '\\.*$^[]')<CR><CR>
+
+nnoremap <silent> [unite]a :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nnoremap <silent> [unite]f :<C-u>Unite<Space>buffer file_mru<CR>
+nnoremap <silent> [unite]d :<C-u>Unite<Space>directory_mru<CR>
+nnoremap <silent> [unite]b :<C-u>Unite<Space>buffer<CR>
+nnoremap <silent> [unite]r :<C-u>Unite<Space>register<CR>
+nnoremap <silent> [unite]t :<C-u>Unite<Space>tab<CR>
+nnoremap <silent> [unite]h :<C-u>Unite<Space>history/yank<CR>
+nnoremap <silent> [unite]o :<C-u>Unite<Space>outline<CR>
+nnoremap <silent> [unite]<CR> :<C-u>Unite<Space>file_rec:!<CR>
+autocmd FileType unite call s:unite_my_settings()
+function! s:unite_my_settings()"{{{
+    nmap <buffer> <ESC> <Plug>(unite_exit)
+endfunction"}}}
+
+
 command Pbcopy0 :let @*=@0
-
-let NERDTreeShowHidden = 1
- 
-
 
 if 0 | endif
 
@@ -81,20 +80,19 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 
+NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/neocomplete.vim'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'Xuyuanp/nerdtree-git-plugin'
-NeoBundle 'jistr/vim-nerdtree-tabs'
 NeoBundle 'ConradIrwin/vim-bracketed-paste'
-NeoBundle 'fatih/vim-go'
-NeoBundle 'tyru/caw.vim.git'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'editorconfig/editorconfig-vim'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'mhartington/oceanic-next'
 NeoBundle 'ryanoasis/vim-devicons'
+NeoBundle 'tomtom/tcomment_vim'
+NeoBundle 'fatih/vim-go'
 
 call neobundle#end()
 
@@ -104,7 +102,6 @@ set t_Co=256
 autocmd ColorScheme * highlight Normal ctermbg=none
 autocmd ColorScheme * highlight LineNr ctermbg=none
 colorscheme OceanicNext
- set background=dark
+set background=dark
 
-" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 NeoBundleCheck
