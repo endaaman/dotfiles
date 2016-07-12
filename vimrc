@@ -1,3 +1,46 @@
+if 0 | endif
+
+if &compatible
+ set nocompatible
+endif
+
+set runtimepath^=~/.vim/bundle/neobundle.vim/
+
+call neobundle#begin(expand('~/.vim/bundle/'))
+
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+NeoBundle 'ConradIrwin/vim-bracketed-paste'
+NeoBundle 'Shougo/neocomplete.vim'
+NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets' 
+NeoBundle 'Shougo/unite-outline'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/vimproc' 
+NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'editorconfig/editorconfig-vim'
+NeoBundle 'fatih/vim-go'
+NeoBundle 'm2mdas/phpcomplete-extended'
+NeoBundle 'm2mdas/phpcomplete-extended-laravel'
+NeoBundle 'mhartington/oceanic-next'
+NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'ryanoasis/vim-devicons'
+NeoBundle 'terryma/vim-multiple-cursors'
+NeoBundle 'tomtom/tcomment_vim'
+
+call neobundle#end()
+
+filetype plugin indent on
+
+set t_Co=256
+autocmd ColorScheme * highlight Normal ctermbg=none
+autocmd ColorScheme * highlight LineNr ctermbg=none
+colorscheme OceanicNext
+set background=dark
+
+NeoBundleCheck
+
 scriptencoding utf-8
 syntax on
 
@@ -25,10 +68,8 @@ set nobackup
 set nocursorline
 autocmd InsertEnter,InsertLeave * set cursorline!
 
-set clipboard=unnamed,autoselect
+set clipboard=unnamedplus
 set mouse=a
-
-nmap <silent> <Esc><Esc> :nohlsearch<CR>
 
 
 let g:multi_cursor_next_key='<C-d>'
@@ -68,40 +109,3 @@ endfunction"}}}
 
 command Pbcopy0 :let @*=@0
 
-if 0 | endif
-
-if &compatible
- set nocompatible
-endif
-
-set runtimepath^=~/.vim/bundle/neobundle.vim/
-
-call neobundle#begin(expand('~/.vim/bundle/'))
-
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'Shougo/unite-outline'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimproc'
-NeoBundle 'Shougo/neocomplete.vim'
-NeoBundle 'ConradIrwin/vim-bracketed-paste'
-NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'editorconfig/editorconfig-vim'
-NeoBundle 'terryma/vim-multiple-cursors'
-NeoBundle 'mhartington/oceanic-next'
-NeoBundle 'ryanoasis/vim-devicons'
-NeoBundle 'tomtom/tcomment_vim'
-NeoBundle 'fatih/vim-go'
-
-call neobundle#end()
-
-filetype plugin indent on
-
-set t_Co=256
-autocmd ColorScheme * highlight Normal ctermbg=none
-autocmd ColorScheme * highlight LineNr ctermbg=none
-colorscheme OceanicNext
-set background=dark
-
-NeoBundleCheck
