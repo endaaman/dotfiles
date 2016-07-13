@@ -25,6 +25,7 @@ NeoBundle 'm2mdas/phpcomplete-extended'
 NeoBundle 'm2mdas/phpcomplete-extended-laravel'
 NeoBundle 'mhartington/oceanic-next'
 NeoBundle 'nathanaelkane/vim-indent-guides'
+" NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'ryanoasis/vim-devicons'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'tomtom/tcomment_vim'
@@ -44,33 +45,50 @@ NeoBundleCheck
 scriptencoding utf-8
 syntax on
 
+set autochdir
+set autoindent
 set encoding=utf-8
-set number
-set nowrap
+set expandtab
 set hlsearch
 set ignorecase
-set smartcase
-set nocompatible
-set autoindent
-set ruler
 set list
 set listchars=tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
-set wildmenu
-set showcmd
-set shiftwidth=2
-set softtabstop=2
-set expandtab
-set tabstop=2
-set smarttab
-set autochdir
+set modifiable
 set nobackup
-" set backupdir=~/.vim/backup
+set nocompatible
 set nocursorline
+set nowrap
+set number
+set ruler
+set shiftwidth=2
+set showcmd
+set smartcase
+set smarttab
+set softtabstop=2
+set tabstop=2
+set wildmenu
+set write
+" set ts=2
+" set sw=2
+" set tabstop=4
+" set shiftwidth=4
+set expandtab
+
+
 autocmd InsertEnter,InsertLeave * set cursorline!
+
 
 set clipboard=unnamedplus
 set mouse=a
 
+
+let g:indent_guides_enable_on_vim_startup=1
+let g:indent_guides_start_level= 1
+let g:indent_guides_guide_size = 1
+" let g:indent_guides_color_change_percent = 30
+let g:indent_guides_auto_colors=0
+hi IndentGuidesOdd ctermbg=23
+hi IndentGuidesEven ctermbg=30
 
 let g:multi_cursor_next_key='<C-d>'
 let g:multi_cursor_prev_key='<C-p>'
@@ -92,7 +110,7 @@ let g:unite_source_history_yank_enable =1
 nmap <Space> [unite]
 vnoremap /g y:Unite grep::-iRn:<C-R>=escape(@", '\\.*$^[]')<CR><CR>
 
-nnoremap <silent> [unite]a :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nnoremap <silent> [unite]a :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
 nnoremap <silent> [unite]f :<C-u>Unite<Space>buffer file_mru<CR>
 nnoremap <silent> [unite]d :<C-u>Unite<Space>directory_mru<CR>
 nnoremap <silent> [unite]b :<C-u>Unite<Space>buffer<CR>
@@ -103,7 +121,7 @@ nnoremap <silent> [unite]o :<C-u>Unite<Space>outline<CR>
 nnoremap <silent> [unite]<CR> :<C-u>Unite<Space>file_rec:!<CR>
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()"{{{
-    nmap <buffer> <ESC> <Plug>(unite_exit)
+  nmap <buffer> <ESC> <Plug>(unite_exit)
 endfunction"}}}
 
 
