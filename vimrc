@@ -1,7 +1,7 @@
 if 0 | endif
 
 if &compatible
- set nocompatible
+  set nocompatible
 endif
 
 set runtimepath^=~/.vim/bundle/neobundle.vim/
@@ -18,17 +18,21 @@ NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimproc' 
+NeoBundle 'Shougo/vimfiler' 
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'editorconfig/editorconfig-vim'
 NeoBundle 'fatih/vim-go'
-NeoBundle 'm2mdas/phpcomplete-extended'
-NeoBundle 'm2mdas/phpcomplete-extended-laravel'
+" NeoBundle 'm2mdas/phpcomplete-extended'
+" NeoBundle 'm2mdas/phpcomplete-extended-laravel'
 NeoBundle 'mhartington/oceanic-next'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 " NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'ryanoasis/vim-devicons'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'tomtom/tcomment_vim'
+NeoBundle 'simeji/winresizer'
+NeoBundle 'kchmck/vim-coffee-script'
+
 
 call neobundle#end()
 
@@ -45,7 +49,7 @@ NeoBundleCheck
 scriptencoding utf-8
 syntax on
 
-set autochdir
+" set autochdir
 set autoindent
 set encoding=utf-8
 set expandtab
@@ -73,10 +77,21 @@ set write
 " set tabstop=4
 " set shiftwidth=4
 set expandtab
+set timeout timeoutlen=1000 ttimeoutlen=50
+set directory=~/.vim/tmp
+set backupdir=~/.vim/tmp
+set undodir=~/.vim/tmp
+
+let mapleader = "\\"
 
 
+set cursorline
 autocmd InsertEnter,InsertLeave * set cursorline!
 
+imap ^[OA <Up>
+imap ^[OB <Down>
+imap ^[OC <Right>
+imap ^[OD <Left>
 
 set clipboard=unnamedplus
 set mouse=a
@@ -87,9 +102,9 @@ let g:indent_guides_start_level= 1
 let g:indent_guides_guide_size = 1
 " let g:indent_guides_color_change_percent = 30
 let g:indent_guides_auto_colors=0
-hi IndentGuidesOdd ctermbg=23
-hi IndentGuidesEven ctermbg=30
-
+hi IndentGuidesOdd ctermbg=24
+hi IndentGuidesEven ctermbg=23
+let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'vimfiler']
 let g:multi_cursor_next_key='<C-d>'
 let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
@@ -97,8 +112,27 @@ let g:multi_cursor_quit_key='<Esc>'
 let g:multi_cursor_start_key='<C-d>'
 
 
-let g:airline_powerline_fonts = 1
 set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
+
+let g:phpcomplete_index_composer_command= '/usr/local/bin/composer'
+
+autocmd  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
+
+
+" nnoremap <silent> <Leader>fe :<C-u>VimFilerBufferDir -quit<CR>
+
+" let g:vimfiler_as_default_explorer = 1
+let g:vimfiler_safe_mode_by_default = 0
+" let g:vimfiler_edit_action = 'tabopen'
+
+" nnoremap <silent> <Tab> :<C-u>VimFiler -split -simple -winwidth=40 -no-quit<CR>
+nnoremap <silent> <Tab> :<C-u>VimFiler -split -simple -no-quit<CR>
+
+autocmd FileType vimfiler nmap <buffer> <Enter>  <Plug>(vimfiler_expand_or_edit)
+autocmd FileType vimfiler nmap <buffer> o        <Plug>(vimfiler_cd_or_edit)
+autocmd FileType vimfiler nmap <buffer> H        <nop>
+autocmd FileType vimfiler nmap <buffer> h        <nop>
+autocmd FileType vimfiler nmap <buffer> l        <Plug>(vimfiler_expand_tree)
 
 
 let g:unite_source_grep_command = 'ag'
@@ -110,6 +144,9 @@ let g:unite_source_history_yank_enable =1
 nmap <Space> [unite]
 vnoremap /g y:Unite grep::-iRn:<C-R>=escape(@", '\\.*$^[]')<CR><CR>
 
+call unite#custom#source('buffer', 'converters', ['converter_smart_path'])
+
+
 nnoremap <silent> [unite]a :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
 nnoremap <silent> [unite]f :<C-u>Unite<Space>buffer file_mru<CR>
 nnoremap <silent> [unite]d :<C-u>Unite<Space>directory_mru<CR>
@@ -118,6 +155,7 @@ nnoremap <silent> [unite]r :<C-u>Unite<Space>register<CR>
 nnoremap <silent> [unite]t :<C-u>Unite<Space>tab<CR>
 nnoremap <silent> [unite]h :<C-u>Unite<Space>history/yank<CR>
 nnoremap <silent> [unite]o :<C-u>Unite<Space>outline<CR>
+nnoremap <silent> [unite]g :<C-u>Unite<Space>grep<CR>
 nnoremap <silent> [unite]<CR> :<C-u>Unite<Space>file_rec:!<CR>
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()"{{{
@@ -125,5 +163,4 @@ function! s:unite_my_settings()"{{{
 endfunction"}}}
 
 
-command Pbcopy0 :let @*=@0
 
