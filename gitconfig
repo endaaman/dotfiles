@@ -1,8 +1,7 @@
-[user]
-  name = endaaman
-  email = buhibuhidog@gmail.com
+[include]
+  path = ~/.gitconfig_local
 [core]
-  excludesfile = /home/ken/.gitignore_global
+  excludesfile = ~/.gitignore_global
   editor = vim -c \"set fenc=utf-8\"
 
 [alias]
@@ -10,3 +9,6 @@
   s = status
   c = commit
   co = checkout
+[color]
+  ui = true
+  diff = true
