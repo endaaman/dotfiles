@@ -9,4 +9,4 @@ nnoremap ym :js util.copyToClipboard('[' + buffer.title + '](' + buffer.URL + ')
 
 ignorekeys clear
 ignorekeys add mail\\.google\\.com
-ignorekeys add live\\.nicovideo\\.jp
+ignorekeys add live\\.nicovideo\\.jp/watch
