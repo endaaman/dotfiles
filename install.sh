@@ -12,69 +12,100 @@ ln -fs ~/dotfiles/zshrc ~/.zshrc
 ln -fs ~/dotfiles/vimrc ~/.vimrc
 ln -fs ~/dotfiles/vimperatorrc ~/.vimperatorrc
 
-touch ~/.gitconfig_local
 
 mkdir -p ~/.vim
+ln -sf ~/.vim ~/.config/nvim
+ln -sf ~/.vimrc ~/.config/nvim/init.vim
+
+touch ~/.gitconfig_local
+
+nodejs=false
+python=false
+ruby=false
+
+for i in "$@" ; do
+  case "$i" in
+    'nodejs' | 'node' ) nodejs=true ;;
+    'python' | 'py' ) python=true ;;
+    'ruby' | 'rb' ) ruby=true ;;
+  esac
+done
 
 
-if [ ! -d '.nodebrew' ]; then
-  printf "\n"
-  printf "${CYAN}nodebew is not installed.${NC}\n"
-  printf "${CYAN}Installing nodebrew...${NC}\n"
-  curl -L git.io/nodebrew | perl - setup
-  printf "${CYAN}Install node.js v4...${NC}\n"
-  ~/.nodebrew/nodebrew install-binary 4
-else
-  printf "${CYAN}nodebrew is alreay installed${NC}\n"
+if $nodejs; then
+  if [ ! -d '.nodebrew' ]; then
+    printf "\n"
+    printf "${CYAN}Installing nodebrew${NC}\n"
+    curl -L git.io/nodebrew | perl - setup
+    printf "${CYAN}Installing node.js v4${NC}\n"
+    ~/.nodebrew/nodebrew install-binary 4
+  else
+    printf "${CYAN}Updating nodebrew${NC}\n"
+    ~/.nodebrew/nodebrew selfupdate
+  fi
 fi
 
-if [ ! -d '.pyenv' ]; then
-  printf "\n"
-  printf "${CYAN}pyenv is not installed.${NC}\n"
-  printf "${CYAN}Installing pyenv...${NC}\n"
-  git clone https://github.com/yyuu/pyenv.git ~/.pyenv
-else
-  printf "${CYAN}pyenv is alreay installed${NC}\n"
+
+if $python; then
+  if [ ! -d '.pyenv' ]; then
+    printf "\n"
+    printf "${CYAN}Installing pyenv${NC}\n"
+    git clone https://github.com/yyuu/pyenv.git ~/.pyenv
+  else
+    printf "${CYAN}Updating pyenv${NC}\n"
+    cd ~/.pyenv
+    git pull
+    cd
+  fi
+
+  if [ ! -d '.pyenv/plugins/pyenv-virtualenv' ]; then
+    printf "\n"
+    printf "${CYAN}Installing pyenv-virtualenv${NC}\n"
+    git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+  else
+    printf "${CYAN}Updating pyenv-virtualenv${NC}\n"
+    cd ~/.pyenv/plugins/pyenv-virtualenv
+    git pull
+    cd
+  fi
 fi
 
-if [ ! -d '.pyenv/plugins/pyenv-virtualenv' ]; then
-  printf "\n"
-  printf "${CYAN}pyenv-virtualenv is not installed.${NC}\n"
-  printf "${CYAN}Installing pyenv-virtualenv...${NC}\n"
-  git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
-else
-  printf "${CYAN}pyenv-virtualenv is alreay installed${NC}\n"
+
+if $ruby; then
+  if [ ! -d '.rbenv' ]; then
+    printf "\n"
+    printf "${CYAN}Installing rbenv${NC}\n"
+    git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+  else
+    printf "${CYAN}Updating rbenv${NC}\n"
+    cd ~/.rbenv
+    git pull
+    cd
+  fi
+
+  if [ ! -d '.rbenv/plugins/ruby-build' ]; then
+    printf "\n"
+    printf "${CYAN}Installing ruby-build${NC}\n"
+    git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+  else
+    printf "${CYAN}Updating ruby-build${NC}\n"
+    cd ~/.rbenv/plugins/ruby-build
+    git pull
+    cd
+  fi
 fi
 
-
-if [ ! -d '.rbenv' ]; then
-  printf "\n"
-  printf "${CYAN}rbenv is not installed.${NC}\n"
-  printf "${CYAN}Installing rbenv...${NC}\n"
-  git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-  printf "${CYAN}Done${NC}\n\n"
-else
-  printf "${CYAN}rbenv is alreay installed${NC}\n"
-fi
-
-if [ ! -d '.rbenv/plugins/ruby-build' ]; then
-  printf "\n"
-  printf "${CYAN}ruby-build is not installed.${NC}\n"
-  printf "${CYAN}Installing ruby-build...${NC}\n"
-  git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-  printf "${CYAN}Done${NC}\n\n"
-else
-  printf "${CYAN}ruby-build is alreay installed${NC}\n"
-fi
 
 if [ ! -d '.git-prompt' ]; then
   printf "\n"
-  printf "${CYAN}zsh-git-prompt is not installed.${NC}\n"
-  printf "${CYAN}Installing zsh-git-prompt...${NC}\n"
+  printf "${CYAN}Installing zsh-git-prompt${NC}\n"
   git clone https://github.com/olivierverdier/zsh-git-prompt.git ~/.git-prompt
   printf "${CYAN}Done${NC}\n"
 else
-  printf "${CYAN}git-prompt is alreay installed${NC}\n"
+  cd ~/.git-prompt
+  git pull
+  cd
+  printf "${CYAN}Updating git-prompt${NC}\n"
 fi
 
 

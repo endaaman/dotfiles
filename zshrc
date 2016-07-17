@@ -33,6 +33,7 @@ eval "$(pyenv virtualenv-init -)"
 [[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc
 
 export PATH="$HOME/bin:$PATH"
+export XDG_CONFIG_HOME=$HOME/.config
 
 
 # completion

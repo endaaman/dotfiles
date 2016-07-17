@@ -51,7 +51,7 @@ syntax on
 
 set autoindent
 set backupdir=~/.vim/tmp
-set clipboard=unnamed,unnamedplus,autoselec
+set clipboard^=unnamedplus
 set cursorline
 set directory=~/.vim/tmp
 set encoding=utf-8
@@ -64,7 +64,6 @@ set listchars=tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
 set modifiable
 set nobackup
 set nocompatible
-set nocursorline
 set nowrap
 set number
 set ruler
