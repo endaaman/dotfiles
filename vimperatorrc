@@ -1,8 +1,13 @@
 nnoremap j <Down>
 nnoremap k <Up>
+nnoremap h <C-PageUp>
+nnoremap l <C-PageDown>
 
-nnoremap <A-Left> gT
-nnoremap <A-Right> gt
+nnoremap <C-h> <Left>
+nnoremap <C-l> <Right>
+
+nnoremap <A-Left> <C-PageUp>
+nnoremap <A-Right> <C-PageDown>
 
 nnoremap yt :js util.copyToClipboard(buffer.title)
 nnoremap ym :js util.copyToClipboard('[' + buffer.title + '](' + buffer.URL + ')')
@@ -10,3 +15,5 @@ nnoremap ym :js util.copyToClipboard('[' + buffer.title + '](' + buffer.URL + ')
 ignorekeys clear
 ignorekeys add mail\\.google\\.com
 ignorekeys add live\\.nicovideo\\.jp/watch
+
+echo "vimperatorrc has been sourced"

@@ -9,6 +9,9 @@
   s = status
   c = commit
   co = checkout
+  pl = pull
+  ps = push
+  cm = commit -m
 [color]
   ui = true
   diff = true

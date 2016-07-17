@@ -17,26 +17,27 @@ NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets' 
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimproc' 
 NeoBundle 'Shougo/vimfiler' 
+NeoBundle 'Shougo/vimproc' 
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'editorconfig/editorconfig-vim'
 NeoBundle 'fatih/vim-go'
-" NeoBundle 'm2mdas/phpcomplete-extended'
-" NeoBundle 'm2mdas/phpcomplete-extended-laravel'
+NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'mhartington/oceanic-next'
+NeoBundle 'mxw/vim-jsx'
 NeoBundle 'nathanaelkane/vim-indent-guides'
-" NeoBundle 'Yggdroot/indentLine'
+NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'ryanoasis/vim-devicons'
+NeoBundle 'simeji/winresizer'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'tomtom/tcomment_vim'
-NeoBundle 'simeji/winresizer'
-NeoBundle 'kchmck/vim-coffee-script'
-
 
 call neobundle#end()
 
 filetype plugin indent on
+
+NeoBundleCheck
+
 
 set t_Co=256
 autocmd ColorScheme * highlight Normal ctermbg=none
@@ -44,14 +45,17 @@ autocmd ColorScheme * highlight LineNr ctermbg=none
 colorscheme OceanicNext
 set background=dark
 
-NeoBundleCheck
 
 scriptencoding utf-8
 syntax on
 
-" set autochdir
 set autoindent
+set backupdir=~/.vim/tmp
+set clipboard=unnamed,unnamedplus,autoselec
+set cursorline
+set directory=~/.vim/tmp
 set encoding=utf-8
+set expandtab
 set expandtab
 set hlsearch
 set ignorecase
@@ -70,31 +74,13 @@ set smartcase
 set smarttab
 set softtabstop=2
 set tabstop=2
+set timeout timeoutlen=1000 ttimeoutlen=50
+set undodir=~/.vim/tmp
 set wildmenu
 set write
-" set ts=2
-" set sw=2
-" set tabstop=4
-" set shiftwidth=4
-set expandtab
-set timeout timeoutlen=1000 ttimeoutlen=50
-set directory=~/.vim/tmp
-set backupdir=~/.vim/tmp
-set undodir=~/.vim/tmp
-
-let mapleader = "\\"
-
-
-set cursorline
-autocmd InsertEnter,InsertLeave * set cursorline!
-
-imap ^[OA <Up>
-imap ^[OB <Down>
-imap ^[OC <Right>
-imap ^[OD <Left>
-
-set clipboard=unnamedplus
 set mouse=a
+
+autocmd InsertEnter,InsertLeave * set cursorline!
 
 
 let g:indent_guides_enable_on_vim_startup=1
