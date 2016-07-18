@@ -1,8 +1,20 @@
 export VTE_CJK_WIDTH=1
 export EDITOR=vim
 
-# for git
-source ~/.git-prompt/zshrc.sh
+
+# colors
+autoload -Uz colors
+colors
+eval `dircolors -b`
+
+# completion
+autoload -Uz compinit
+compinit
+zstyle ':completion:*' list-colors $LS_COLORS
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' ignore-parents parent pwd ..
+zstyle ':completion:*:processes' command 'ps x -o pid,s,args'
+
 
 # prompt
 PROMPT="%F{cyan}%~%f "
@@ -14,40 +26,52 @@ fi
 RPROMPT='$(git_super_status)'
 
 
+# for git
+if [ -d "$HOME/.git-prompt" ]; then
+  source ~/.git-prompt/zshrc.sh
+fi
+
+
 # node.js
-export PATH=$HOME/.nodebrew/current/bin:$PATH
-nodebrew use 4 > /dev/null
+if [ -d "$HOME/.nodebrew" ]; then
+  export PATH=$HOME/.nodebrew/current/bin:$PATH
+  nodebrew use 4 > /dev/null
+fi
+
 
 # ruby
-export PATH=$HOME/.rbenv/bin:$PATH
-eval "$(rbenv init -)"
+if [ -d "$HOME/.rbenv" ]; then
+  export PATH=$HOME/.rbenv/bin:$PATH
+  eval "$(rbenv init -)"
+fi
+
 
 # python
-export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+if [ -d "$HOME/.pyenv" ]; then
+  export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
+
 
 # PHP
-[[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc
+if [ -d "$HOME/.phpbrew" ]; then
+  source ~/.phpbrew/bashrc
+fi
+
 
 # GO
-export GOPATH=~/.go
+if [ -d "$HOME/.go" ]; then
+  export GOPATH=~/.go
+  export PATH=$PATH:$GOPATH/bin
+fi
 
 
+# user
 export PATH="$HOME/bin:$PATH"
 export XDG_CONFIG_HOME=$HOME/.config
-
-
-# completion
-autoload -Uz compinit
-compinit
-eval `dircolors -b`
-zstyle ':completion:*' list-colors $LS_COLORS
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-zstyle ':completion:*' ignore-parents parent pwd ..
-zstyle ':completion:*:processes' command 'ps x -o pid,s,args'
 
 
 # alias
