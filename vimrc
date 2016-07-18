@@ -43,6 +43,7 @@ filetype plugin indent on
 
 NeoBundleCheck
 
+syntax on
 
 set t_Co=256
 autocmd ColorScheme * highlight Normal ctermbg=none
@@ -51,11 +52,10 @@ colorscheme OceanicNext
 set background=dark
 
 
-syntax on
 
 set autoindent
 set backupdir=~/.vim/tmp
-set clipboard^=unnamedplus
+set clipboard=unnamedplus
 set cursorline
 set directory=~/.vim/tmp
 set encoding=utf-8
