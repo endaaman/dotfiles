@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 if 0 | endif
 
 if &compatible
@@ -23,14 +25,17 @@ NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'editorconfig/editorconfig-vim'
 NeoBundle 'fatih/vim-go'
 NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'mattn/jscomplete-vim'
 NeoBundle 'mhartington/oceanic-next'
 NeoBundle 'mxw/vim-jsx'
+NeoBundle 'myhere/vim-nodejs-complete'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'ryanoasis/vim-devicons'
 NeoBundle 'simeji/winresizer'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'tomtom/tcomment_vim'
+NeoBundle 'tpope/vim-surround'
 
 call neobundle#end()
 
@@ -46,7 +51,6 @@ colorscheme OceanicNext
 set background=dark
 
 
-scriptencoding utf-8
 syntax on
 
 set autoindent
@@ -78,9 +82,15 @@ set undodir=~/.vim/tmp
 set wildmenu
 set write
 set mouse=a
+set completeopt=noinsert
+
 
 autocmd InsertEnter,InsertLeave * set cursorline!
 
+let g:nodejs_complete_config = {
+\  'js_compl_fn': 'jscomplete#CompleteJS',
+\  'max_node_compl_len': 15
+\}
 
 let g:indent_guides_enable_on_vim_startup=1
 let g:indent_guides_start_level= 1

@@ -32,6 +32,10 @@ eval "$(pyenv virtualenv-init -)"
 # PHP
 [[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc
 
+# GO
+export GOPATH=~/.go
+
+
 export PATH="$HOME/bin:$PATH"
 export XDG_CONFIG_HOME=$HOME/.config
 
