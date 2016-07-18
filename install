@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if ! which git >/dev/null 2>&1; then
+  echo 'Please install git'
+  exit 1
+fi
+
+
 CYAN='\033[0;34m'
 NC='\033[0m'
 
