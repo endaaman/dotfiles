@@ -20,9 +20,9 @@ zstyle ':completion:*:processes' command 'ps x -o pid,s,args'
 # prompt
 PROMPT="%F{cyan}%~%f "
 if [ ${EUID:-${UID}} = 0 ]; then
-    PROMPT=$PROMPT"%F{yellow}#%f "
+  PROMPT=$PROMPT"%F{yellow}#%f "
 else
-    PROMPT=$PROMPT"%F{yellow}$%f "
+  PROMPT=$PROMPT"%F{yellow}$%f "
 fi
 RPROMPT='$(git_super_status)'
 

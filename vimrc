@@ -17,26 +17,29 @@ NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
+NeoBundle 'Shougo/neoyank.vim'
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/vimproc'
+NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'editorconfig/editorconfig-vim'
 NeoBundle 'fatih/vim-go'
+NeoBundle 'jiangmiao/auto-pairs'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'mattn/jscomplete-vim'
 NeoBundle 'mhartington/oceanic-next'
 NeoBundle 'mxw/vim-jsx'
 NeoBundle 'myhere/vim-nodejs-complete'
-NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'ryanoasis/vim-devicons'
+NeoBundle 'shawncplus/phpcomplete.vim'
 NeoBundle 'simeji/winresizer'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-surround'
-NeoBundle 'shawncplus/phpcomplete.vim'
+NeoBundle 'altercation/vim-colors-solarized'
 
 call neobundle#end()
 
@@ -44,12 +47,13 @@ filetype plugin indent on
 
 NeoBundleCheck
 
-syntax on
-
+syntax enable
+let g:solarized_termcolors=256
 set t_Co=256
 autocmd ColorScheme * highlight Normal ctermbg=none
 autocmd ColorScheme * highlight LineNr ctermbg=none
 colorscheme OceanicNext
+" colorscheme solarized
 set background=dark
 
 
@@ -57,6 +61,7 @@ set autoindent
 set backupdir=~/.vim/tmp
 set clipboard=unnamedplus
 set cursorline
+set cursorcolumn
 set directory=~/.vim/tmp
 set encoding=utf-8
 set expandtab
@@ -64,7 +69,7 @@ set expandtab
 set hlsearch
 set ignorecase
 set list
-set listchars=tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
+set listchars=tab:\|\ ,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
 set modifiable
 set nobackup
 set nocompatible
@@ -84,25 +89,20 @@ set write
 set mouse=a
 
 autocmd InsertEnter,InsertLeave * set cursorline!
+autocmd InsertEnter,InsertLeave * set cursorcolumn!
 
 autocmd BufWritePre * if @% !~ '\.md$' | :%s/\s\+$//e | endif
 autocmd BufWritePre * :%s/\t\+$//e
 
+inoremap jj <Esc>
+vnoremap v $h
 
 let g:nodejs_complete_config = {
 \  'js_compl_fn': 'jscomplete#CompleteJS',
 \  'max_node_compl_len': 15
 \}
 
-
-let g:indent_guides_enable_on_vim_startup=1
-let g:indent_guides_start_level= 1
-let g:indent_guides_guide_size = 1
-" let g:indent_guides_color_change_percent = 30
-let g:indent_guides_auto_colors=0
-hi IndentGuidesOdd ctermbg=24
-hi IndentGuidesEven ctermbg=23
-let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'vimfiler']
+let g:indentLine_color_term = 23
 
 
 let g:multi_cursor_next_key='<C-d>'
@@ -134,13 +134,19 @@ set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
 let g:vimfiler_safe_mode_by_default = 0
 " let g:vimfiler_edit_action = 'tabopen'
 
-nnoremap <silent> <Tab> :<C-u>VimFiler -split -simple -no-quit<CR>
+nnoremap <silent> <Tab> :<C-u>VimFilerSplit -no-quit<CR>
 
 autocmd FileType vimfiler nmap <buffer> <Enter>  <Plug>(vimfiler_expand_or_edit)
 autocmd FileType vimfiler nmap <buffer> o        <Plug>(vimfiler_cd_or_edit)
 autocmd FileType vimfiler nmap <buffer> H        <nop>
 autocmd FileType vimfiler nmap <buffer> h        <nop>
 autocmd FileType vimfiler nmap <buffer> l        <Plug>(vimfiler_expand_tree)
+
+let g:vimfiler_tree_leaf_icon = ' '
+let g:vimfiler_tree_opened_icon = '▾'
+let g:vimfiler_tree_closed_icon = '▸'
+" let g:vimfiler_file_icon = '-'
+let g:vimfiler_marked_file_icon = '*'
 
 
 let g:unite_source_grep_command = 'ag'
