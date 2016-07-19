@@ -1,5 +1,6 @@
 export VTE_CJK_WIDTH=1
 export EDITOR=vim
+export TERM=xterm-256color
 
 
 # colors

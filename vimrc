@@ -16,11 +16,11 @@ NeoBundle 'ConradIrwin/vim-bracketed-paste'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/neosnippet-snippets' 
+NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimfiler' 
-NeoBundle 'Shougo/vimproc' 
+NeoBundle 'Shougo/vimfiler'
+NeoBundle 'Shougo/vimproc'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'editorconfig/editorconfig-vim'
 NeoBundle 'fatih/vim-go'
@@ -36,6 +36,7 @@ NeoBundle 'simeji/winresizer'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-surround'
+NeoBundle 'shawncplus/phpcomplete.vim'
 
 call neobundle#end()
 
@@ -50,7 +51,6 @@ autocmd ColorScheme * highlight Normal ctermbg=none
 autocmd ColorScheme * highlight LineNr ctermbg=none
 colorscheme OceanicNext
 set background=dark
-
 
 
 set autoindent
@@ -82,24 +82,29 @@ set undodir=~/.vim/tmp
 set wildmenu
 set write
 set mouse=a
-set completeopt=noinsert
-
 
 autocmd InsertEnter,InsertLeave * set cursorline!
+
+autocmd BufWritePre * if @% !~ '\.md$' | :%s/\s\+$//e | endif
+autocmd BufWritePre * :%s/\t\+$//e
+
 
 let g:nodejs_complete_config = {
 \  'js_compl_fn': 'jscomplete#CompleteJS',
 \  'max_node_compl_len': 15
 \}
 
+
 let g:indent_guides_enable_on_vim_startup=1
 let g:indent_guides_start_level= 1
 let g:indent_guides_guide_size = 1
 " let g:indent_guides_color_change_percent = 30
 let g:indent_guides_auto_colors=0
-hi IndentGuidesOdd ctermbg=24
+" hi IndentGuidesOdd ctermbg=24
 hi IndentGuidesEven ctermbg=23
 let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'vimfiler']
+
+
 let g:multi_cursor_next_key='<C-d>'
 let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
@@ -107,12 +112,21 @@ let g:multi_cursor_quit_key='<Esc>'
 let g:multi_cursor_start_key='<C-d>'
 
 
+let g:neocomplete#enable_at_startup = 1
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+
+let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+
+
+autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
+let g:phpcomplete_mappings = {
+  \ 'jump_to_def': ',g',
+  \ }
+
+
 set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
-
-let g:phpcomplete_index_composer_command= '/usr/local/bin/composer'
-
-autocmd  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
-
 
 " nnoremap <silent> <Leader>fe :<C-u>VimFilerBufferDir -quit<CR>
 
@@ -120,7 +134,6 @@ autocmd  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
 let g:vimfiler_safe_mode_by_default = 0
 " let g:vimfiler_edit_action = 'tabopen'
 
-" nnoremap <silent> <Tab> :<C-u>VimFiler -split -simple -winwidth=40 -no-quit<CR>
 nnoremap <silent> <Tab> :<C-u>VimFiler -split -simple -no-quit<CR>
 
 autocmd FileType vimfiler nmap <buffer> <Enter>  <Plug>(vimfiler_expand_or_edit)
@@ -141,9 +154,8 @@ vnoremap /g y:Unite grep::-iRn:<C-R>=escape(@", '\\.*$^[]')<CR><CR>
 
 call unite#custom#source('buffer', 'converters', ['converter_smart_path'])
 
-
 nnoremap <silent> [unite]a :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
-nnoremap <silent> [unite]f :<C-u>Unite<Space>buffer file_mru<CR>
+nnoremap <silent> [unite]f :<C-u>Unite<Space>file_mru<CR>
 nnoremap <silent> [unite]d :<C-u>Unite<Space>directory_mru<CR>
 nnoremap <silent> [unite]b :<C-u>Unite<Space>buffer<CR>
 nnoremap <silent> [unite]r :<C-u>Unite<Space>register<CR>
