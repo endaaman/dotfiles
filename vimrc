@@ -57,7 +57,6 @@ colorscheme OceanicNext
 " colorscheme solarized
 set background=dark
 
-
 set autoindent
 set backupdir=~/.vim/tmp
 set clipboard=unnamedplus
@@ -69,6 +68,7 @@ set expandtab
 set hlsearch
 set ignorecase
 set laststatus=2
+set lazyredraw
 set list
 set listchars=tab:\|\ ,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
 set modifiable
@@ -85,6 +85,7 @@ set smarttab
 set softtabstop=2
 set tabstop=2
 set timeout timeoutlen=1000 ttimeoutlen=50
+set ttyfast
 set undodir=~/.vim/tmp
 set wildmenu
 set write
