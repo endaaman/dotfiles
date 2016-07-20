@@ -24,8 +24,10 @@ NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'editorconfig/editorconfig-vim'
 NeoBundle 'fatih/vim-go'
+NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'jiangmiao/auto-pairs'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'mattn/jscomplete-vim'
@@ -39,7 +41,6 @@ NeoBundle 'simeji/winresizer'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-surround'
-NeoBundle 'altercation/vim-colors-solarized'
 
 call neobundle#end()
 
@@ -61,16 +62,17 @@ set autoindent
 set backupdir=~/.vim/tmp
 set clipboard=unnamedplus
 set cursorline
-set cursorcolumn
 set directory=~/.vim/tmp
 set encoding=utf-8
 set expandtab
 set expandtab
 set hlsearch
 set ignorecase
+set laststatus=2
 set list
 set listchars=tab:\|\ ,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
 set modifiable
+set mouse=a
 set nobackup
 set nocompatible
 set nowrap
@@ -86,10 +88,10 @@ set timeout timeoutlen=1000 ttimeoutlen=50
 set undodir=~/.vim/tmp
 set wildmenu
 set write
-set mouse=a
+
 
 autocmd InsertEnter,InsertLeave * set cursorline!
-autocmd InsertEnter,InsertLeave * set cursorcolumn!
+" autocmd InsertEnter,InsertLeave * set cursorcolumn!
 
 autocmd BufWritePre * if @% !~ '\.md$' | :%s/\s\+$//e | endif
 autocmd BufWritePre * :%s/\t\+$//e
@@ -104,6 +106,10 @@ let g:nodejs_complete_config = {
 
 let g:indentLine_color_term = 23
 
+
+let g:lightline = {
+  \ 'colorscheme': 'jellybeans'
+  \ }
 
 let g:multi_cursor_next_key='<C-d>'
 let g:multi_cursor_prev_key='<C-p>'
@@ -120,10 +126,10 @@ endif
 let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 
 
-autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
-let g:phpcomplete_mappings = {
-  \ 'jump_to_def': ',g',
-  \ }
+" autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
+" let g:phpcomplete_mappings = {
+"   \ 'jump_to_def': ',g',
+"   \ }
 
 
 set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
@@ -134,7 +140,7 @@ set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
 let g:vimfiler_safe_mode_by_default = 0
 " let g:vimfiler_edit_action = 'tabopen'
 
-nnoremap <silent> <Tab> :<C-u>VimFilerSplit -no-quit<CR>
+nnoremap <silent> <Tab> :<C-u>VimFiler -split -simple -no-quit<CR>
 
 autocmd FileType vimfiler nmap <buffer> <Enter>  <Plug>(vimfiler_expand_or_edit)
 autocmd FileType vimfiler nmap <buffer> o        <Plug>(vimfiler_cd_or_edit)
