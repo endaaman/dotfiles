@@ -26,6 +26,7 @@ NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'editorconfig/editorconfig-vim'
+NeoBundle 'elzr/vim-json'
 NeoBundle 'fatih/vim-go'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'jiangmiao/auto-pairs'
@@ -90,6 +91,7 @@ set undodir=~/.vim/tmp
 set wildmenu
 set write
 
+let g:vim_json_syntax_conceal = 0
 
 autocmd InsertEnter,InsertLeave * set cursorline!
 " autocmd InsertEnter,InsertLeave * set cursorcolumn!
