@@ -17,7 +17,7 @@ ln -fs ~/dotfiles/gitignore_global ~/.gitignore_global
 ln -fs ~/dotfiles/zshrc ~/.zshrc
 ln -fs ~/dotfiles/vimrc ~/.vimrc
 ln -fs ~/dotfiles/vimperatorrc ~/.vimperatorrc
-
+ln -fs ~/dotfiles/Xmodmap ~/.Xmodmap
 
 mkdir -p ~/.vim
 ln -sf ~/.vim ~/.config/nvim
