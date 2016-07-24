@@ -12,6 +12,7 @@
   pl = pull
   ps = push
   cm = commit -m
+  am = commit --amend
 [color]
   ui = true
   diff = true
