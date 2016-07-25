@@ -37,11 +37,12 @@ NeoBundle 'mxw/vim-jsx'
 NeoBundle 'myhere/vim-nodejs-complete'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'ryanoasis/vim-devicons'
-NeoBundle 'shawncplus/phpcomplete.vim'
+" NeoBundle 'shawncplus/phpcomplete.vim'
 NeoBundle 'simeji/winresizer'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-surround'
+NeoBundle 'vim-scripts/Align'
 
 call neobundle#end()
 
@@ -80,6 +81,7 @@ set nowrap
 set number
 set ruler
 set shiftwidth=2
+set showbreak=↪
 set showcmd
 set smartcase
 set smarttab
