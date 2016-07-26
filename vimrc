@@ -42,6 +42,7 @@ NeoBundle 'simeji/winresizer'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-surround'
+NeoBundle 'vim-scripts/sudo.vim'
 NeoBundle 'vim-scripts/Align'
 
 call neobundle#end()
