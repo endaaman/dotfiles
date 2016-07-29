@@ -6,13 +6,14 @@
 
 [alias]
   a = add
-  s = status
   c = commit
+  cm = commit -m
   co = checkout
+  fe = fetch
   pl = pull
   ps = push
-  cm = commit -m
-  am = commit --amend
+  s = status
+
 [color]
   ui = true
   diff = true
