@@ -44,6 +44,7 @@ NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'vim-scripts/sudo.vim'
 NeoBundle 'vim-scripts/Align'
+NeoBundle 'vim-scripts/nginx.vim'
 
 call neobundle#end()
 
@@ -101,9 +102,13 @@ autocmd InsertEnter,InsertLeave * set cursorline!
 
 autocmd BufWritePre * if @% !~ '\.md$' | :%s/\s\+$//e | endif
 autocmd BufWritePre * :%s/\t\+$//e
+autocmd BufRead,BufNewFile /etc/nginx/* set ft=nginx
+
 
 inoremap jj <Esc>
 vnoremap v $h
+cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
+
 
 let g:nodejs_complete_config = {
 \  'js_compl_fn': 'jscomplete#CompleteJS',
