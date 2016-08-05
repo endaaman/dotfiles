@@ -69,7 +69,6 @@ set cursorline
 set directory=~/.vim/tmp
 set encoding=utf-8
 set expandtab
-set expandtab
 set hlsearch
 set ignorecase
 set laststatus=2
