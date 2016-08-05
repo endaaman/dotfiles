@@ -22,6 +22,7 @@ NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/vimproc'
+NeoBundle 'Shougo/vimshell'
 NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'altercation/vim-colors-solarized'
@@ -37,14 +38,13 @@ NeoBundle 'mxw/vim-jsx'
 NeoBundle 'myhere/vim-nodejs-complete'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'ryanoasis/vim-devicons'
-" NeoBundle 'shawncplus/phpcomplete.vim'
 NeoBundle 'simeji/winresizer'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-surround'
-NeoBundle 'vim-scripts/sudo.vim'
 NeoBundle 'vim-scripts/Align'
 NeoBundle 'vim-scripts/nginx.vim'
+NeoBundle 'vim-scripts/sudo.vim'
 
 call neobundle#end()
 
@@ -61,6 +61,7 @@ colorscheme OceanicNext
 " colorscheme solarized
 set background=dark
 
+set ambiwidth=double
 set autoindent
 set backupdir=~/.vim/tmp
 set clipboard=unnamedplus
@@ -95,6 +96,11 @@ set undodir=~/.vim/tmp
 set wildmenu
 set write
 
+" set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
+if has('gui_running')
+  set guifont=Ubuntu\ Mono\ 11
+endif
+
 let g:vim_json_syntax_conceal = 0
 
 autocmd InsertEnter,InsertLeave * set cursorline!
@@ -108,7 +114,10 @@ autocmd BufRead,BufNewFile /etc/nginx/* set ft=nginx
 inoremap jj <Esc>
 vnoremap v $h
 cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
-
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
 
 let g:nodejs_complete_config = {
 \  'js_compl_fn': 'jscomplete#CompleteJS',
@@ -143,7 +152,6 @@ let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 "   \ }
 
 
-set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
 
 " nnoremap <silent> <Leader>fe :<C-u>VimFilerBufferDir -quit<CR>
 
