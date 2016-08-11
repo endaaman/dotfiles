@@ -12,17 +12,19 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 
+" NeoBundle 'Shougo/neosnippet'
+" NeoBundle 'Shougo/neosnippet-snippets'
+" NeoBundle 'vim-scripts/Align'
 NeoBundle 'ConradIrwin/vim-bracketed-paste'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'Shougo/neoyank.vim'
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/vimshell'
+NeoBundle 'Xuyuanp/nerdtree-git-plugin'
 NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'altercation/vim-colors-solarized'
@@ -31,6 +33,7 @@ NeoBundle 'elzr/vim-json'
 NeoBundle 'fatih/vim-go'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'jiangmiao/auto-pairs'
+NeoBundle 'jistr/vim-nerdtree-tabs'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'mattn/jscomplete-vim'
 NeoBundle 'mhartington/oceanic-next'
@@ -38,11 +41,11 @@ NeoBundle 'mxw/vim-jsx'
 NeoBundle 'myhere/vim-nodejs-complete'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'ryanoasis/vim-devicons'
+NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'simeji/winresizer'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-surround'
-NeoBundle 'vim-scripts/Align'
 NeoBundle 'vim-scripts/nginx.vim'
 NeoBundle 'vim-scripts/sudo.vim'
 
@@ -117,6 +120,7 @@ nnoremap n nzz
 nnoremap N Nzz
 nnoremap * *zz
 nnoremap # #zz
+nnoremap <Tab> <C-w>w
 
 let g:nodejs_complete_config = {
 \  'js_compl_fn': 'jscomplete#CompleteJS',
@@ -150,15 +154,14 @@ let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 "   \ 'jump_to_def': ',g',
 "   \ }
 
+nnoremap <silent> <C-n> :NERDTreeTabsToggle<cr>
 
-
-" nnoremap <silent> <Leader>fe :<C-u>VimFilerBufferDir -quit<CR>
 
 " let g:vimfiler_as_default_explorer = 1
-let g:vimfiler_safe_mode_by_default = 0
+" let g:vimfiler_safe_mode_by_default = 0
 " let g:vimfiler_edit_action = 'tabopen'
 
-nnoremap <silent> <Tab> :<C-u>VimFiler -split -simple -no-quit<CR>
+" nnoremap <silent> <Tab> :<C-u>VimFiler -split -simple -no-quit<CR>
 
 autocmd FileType vimfiler nmap <buffer> <Enter>  <Plug>(vimfiler_expand_or_edit)
 autocmd FileType vimfiler nmap <buffer> o        <Plug>(vimfiler_cd_or_edit)
@@ -174,7 +177,7 @@ let g:vimfiler_marked_file_icon = '*'
 
 
 let g:unite_source_grep_command = 'ag'
-let g:unite_source_grep_default_opts = '--nocolor --nogroup'
+" let g:unite_source_grep_default_opts = '--nocolor --nogroup'
 let g:unite_source_grep_max_candidates = 200
 let g:unite_source_grep_recursive_opt = ''
 " let g:unite_enable_start_insert=1
