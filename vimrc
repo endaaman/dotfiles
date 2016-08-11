@@ -101,6 +101,8 @@ set write
 " set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
 if has('gui_running')
   set guifont=Ubuntu\ Mono\ 11
+  set lines=40
+  set columns=120
 endif
 
 let g:vim_json_syntax_conceal = 0
