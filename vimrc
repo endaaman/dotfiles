@@ -126,6 +126,7 @@ nnoremap N Nzz
 nnoremap * *zz
 nnoremap # #zz
 nnoremap <Tab> <C-w>w
+nnoremap <S-Tab> <C-w>W
 
 let g:nodejs_complete_config = {
 \  'js_compl_fn': 'jscomplete#CompleteJS',
