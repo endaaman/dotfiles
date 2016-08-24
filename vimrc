@@ -34,6 +34,7 @@ NeoBundle 'fatih/vim-go'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'jiangmiao/auto-pairs'
 NeoBundle 'jistr/vim-nerdtree-tabs'
+NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'mattn/jscomplete-vim'
 NeoBundle 'mhartington/oceanic-next'
@@ -67,6 +68,7 @@ set background=dark
 set ambiwidth=double
 set autoindent
 set backupdir=~/.vim/tmp
+set breakindent
 set clipboard=unnamedplus
 set cursorline
 set directory=~/.vim/tmp
@@ -96,6 +98,7 @@ set timeout timeoutlen=1000 ttimeoutlen=50
 set ttyfast
 set undodir=~/.vim/tmp
 set wildmenu
+set wrap
 set write
 
 " set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
