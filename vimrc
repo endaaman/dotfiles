@@ -133,7 +133,13 @@ let g:nodejs_complete_config = {
 \  'max_node_compl_len': 15
 \}
 
+
 let g:indentLine_color_term = 23
+
+
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
 
 
 let g:lightline = {
@@ -153,13 +159,14 @@ if !exists('g:neocomplete#sources#omni#input_patterns')
 endif
 
 let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-
+let g:neocomplete#sources#omni#input_patterns.go = '\h\w\.\w*'
 
 " autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
 " let g:phpcomplete_mappings = {
 "   \ 'jump_to_def': ',g',
 "   \ }
 
+let NERDTreeShowHidden=1
 nnoremap <silent> <C-n> :NERDTreeTabsToggle<cr>
 
 

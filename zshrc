@@ -64,8 +64,8 @@ fi
 
 
 # GO
-if [ -d "$HOME/.go" ]; then
-  export GOPATH=~/.go
+if [ -d "$HOME/go" ]; then
+  export GOPATH=~/go
   export PATH=$PATH:$GOPATH/bin
   export GO15VENDOREXPERIMENT=1
 fi
