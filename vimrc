@@ -119,7 +119,6 @@ autocmd BufWritePre * :%s/\t\+$//e
 autocmd BufRead,BufNewFile /etc/nginx/* set ft=nginx
 
 
-inoremap jj <Esc>
 vnoremap v $h
 cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 nnoremap n nzz
