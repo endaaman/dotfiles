@@ -36,7 +36,7 @@ fi
 # node.js
 if [ -d "$HOME/.nodebrew" ]; then
   export PATH=$HOME/.nodebrew/current/bin:$PATH
-  nodebrew use 4 > /dev/null
+  nodebrew use 6 > /dev/null
 fi
 
 
