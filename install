@@ -16,6 +16,7 @@ ln -fs ~/dotfiles/gitconfig ~/.gitconfig
 ln -fs ~/dotfiles/gitignore_global ~/.gitignore_global
 ln -fs ~/dotfiles/zshrc ~/.zshrc
 ln -fs ~/dotfiles/vimrc ~/.vimrc
+ln -fs ~/dotfiles/config.fish ~/.config/fish/config.fish
 ln -fs ~/dotfiles/vimperatorrc ~/.vimperatorrc
 ln -fs ~/dotfiles/Xmodmap ~/.Xmodmap
 
@@ -99,19 +100,6 @@ if $ruby; then
     git pull
     cd
   fi
-fi
-
-
-if [ ! -d '.git-prompt' ]; then
-  printf "\n"
-  printf "${CYAN}Installing zsh-git-prompt${NC}\n"
-  git clone https://github.com/olivierverdier/zsh-git-prompt.git ~/.git-prompt
-  printf "${CYAN}Done${NC}\n"
-else
-  cd ~/.git-prompt
-  git pull
-  cd
-  printf "${CYAN}Updating git-prompt${NC}\n"
 fi
 
 
