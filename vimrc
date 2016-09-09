@@ -28,6 +28,7 @@ NeoBundle 'Xuyuanp/nerdtree-git-plugin'
 NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'dag/vim-fish'
 NeoBundle 'editorconfig/editorconfig-vim'
 NeoBundle 'elzr/vim-json'
 NeoBundle 'fatih/vim-go'
@@ -50,6 +51,7 @@ NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'vim-scripts/nginx.vim'
 NeoBundle 'vim-scripts/sudo.vim'
+
 
 call neobundle#end()
 
@@ -101,6 +103,8 @@ set undodir=~/.vim/tmp
 set wildmenu
 set wrap
 set write
+set shell=sh
+
 
 " set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
 if has('gui_running')
