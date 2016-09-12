@@ -51,9 +51,9 @@ if [ -d "$HOME/.pyenv" ];
   . (pyenv virtualenv-init - | psub)
 end
 
-if [ -d "$HOME/.phpbrew" ];
-  source ~/.phpbrew/bashrc
-end
+# if [ -d "$HOME/.phpbrew" ];
+#   . ~/.phpbrew/bashrc
+# end
 
 if [ -d "$HOME/go" ]
   set -gx GOPATH ~/go
