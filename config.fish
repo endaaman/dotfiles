@@ -72,27 +72,29 @@ end
 
 
 ###* git status
-set __fish_git_prompt_showdirtystate 'yes'
-set __fish_git_prompt_showstashstate 'yes'
-set __fish_git_prompt_showuntrackedfiles 'yes'
-set __fish_git_prompt_showupstream 'yes'
-set __fish_git_prompt_color_branch yellow
-set __fish_git_prompt_color_upstream_ahead green
-set __fish_git_prompt_color_upstream_behind red
-
-# emoji
-set __fish_git_prompt_char_dirtystate '⚡ '
-set __fish_git_prompt_char_stagedstate '→ '
-set __fish_git_prompt_char_untrackedfiles '☡ '
-set __fish_git_prompt_char_stashstate '↩ '
-set __fish_git_prompt_char_upstream_ahead '➕ '
-set __fish_git_prompt_char_upstream_behind '➖ '
+set -g __fish_git_prompt_show_informative_status 1
+set -g __fish_git_prompt_hide_untrackedfiles 1
+set -g __fish_git_prompt_color_branch magenta
+set -g __fish_git_prompt_showupstream "informative"
+set -g __fish_git_prompt_char_upstream_ahead "↑ "
+set -g __fish_git_prompt_char_upstream_behind "↓ "
+set -g __fish_git_prompt_char_upstream_prefix ""
+set -g __fish_git_prompt_char_stagedstate "●1 "
+set -g __fish_git_prompt_char_dirtystate "✚ "
+set -g __fish_git_prompt_char_untrackedfiles "…"
+set -g __fish_git_prompt_char_conflictedstate "✖ "
+set -g __fish_git_prompt_char_cleanstate "✔ "
+set -g __fish_git_prompt_color_upstream normal
+set -g __fish_git_prompt_color_dirtystate blue
+set -g __fish_git_prompt_color_stagedstate yellow
+set -g __fish_git_prompt_color_invalidstate red
+set -g __fish_git_prompt_color_untrackedfiles $fish_color_normal
+set -g __fish_git_prompt_color_cleanstate green
 
 
 ###* prompt
 
 set -g default_user ken
-set -g pad ""
 
 function prompt_pwd --description 'Print the current working directory, NOT shortened to fit the prompt'
   if test "$PWD" != "$HOME"
@@ -117,7 +119,6 @@ end
 function show_status -d "Function to show the current status"
   if [ -n "$SSH_CLIENT" ]
     prompt_segment blue white " SSH: "
-    set pad ""
   end
 end
 
@@ -137,14 +138,13 @@ function show_user -d "Show user"
     if [ "$USER" != "$HOST" ]
       prompt_segment normal white "@"
       prompt_segment normal green "$host "
-      set pad ""
     end
-    end
+  end
 end
 
 function show_pwd -d "Show the current directory"
   set -l pwd (prompt_pwd)
-  prompt_segment normal cyan "$pad$pwd "
+  prompt_segment normal cyan " $pwd "
 end
 
 function show_prompt -d "Shows prompt with cue for current priv"
@@ -175,8 +175,11 @@ end
 
 function fish_right_prompt -d "Prints right prompt"
   set_color normal
-  printf '%s ' (__fish_git_prompt)
+  # echo "("
+  # set_color purple
+  echo (__fish_git_prompt)
   set_color normal
+  # echo ")"
 end
 
 
@@ -194,6 +197,9 @@ end
 
 function __fish_lxc_config_subcommand --description 'Test if lxc has yet to be given the subcommand for config'
   set cmd (commandline -opc)
+  if test (count $cmd) -le 1
+    return 1
+  end
   if [ $cmd[2] != "config" ]
     return 1
   end
@@ -221,31 +227,31 @@ function __fish_print_lxc_images --description 'Print a list of lxc images'
 end
 
 
-complete -c lxc -f -n '__fish_lxc_no_subcommand' -a config -d "Manage configuration"
-complete -c lxc -f -n '__fish_lxc_no_subcommand' -a copy -d "Copy containers within or in between lxd instances"
-complete -c lxc -f -n '__fish_lxc_no_subcommand' -a delete -d "Delete containers or container snapshots"
-complete -c lxc -f -n '__fish_lxc_no_subcommand' -a exec -d "Execute the specified command in a container"
-complete -c lxc -f -n '__fish_lxc_no_subcommand' -a file -d "Manage files on a container"
-complete -c lxc -f -n '__fish_lxc_no_subcommand' -a help -d "Presents details on how to use LXD"
-complete -c lxc -f -n '__fish_lxc_no_subcommand' -a image -d "Manipulate container images"
-complete -c lxc -f -n '__fish_lxc_no_subcommand' -a info -d "List information on LXD servers and containers"
-complete -c lxc -f -n '__fish_lxc_no_subcommand' -a launch -d "Launch a container from a particular image"
-complete -c lxc -f -n '__fish_lxc_no_subcommand' -a list -d "Lists the available resources"
-complete -c lxc -f -n '__fish_lxc_no_subcommand' -a move -d "Move containers within or in between lxd instances"
-complete -c lxc -f -n '__fish_lxc_no_subcommand' -a profile -d "Manage configuration profiles"
-complete -c lxc -f -n '__fish_lxc_no_subcommand' -a publish -d "Publish containers as images"
-complete -c lxc -f -n '__fish_lxc_no_subcommand' -a remote -d "Manage remote LXD servers"
-complete -c lxc -f -n '__fish_lxc_no_subcommand' -a restart -d "Changes state of one or more containers to restart"
-complete -c lxc -f -n '__fish_lxc_no_subcommand' -a restore -d "Set the current state of a resource back to a snapshot"
+complete -c lxc -f -n '__fish_lxc_no_subcommand' -a config   -d "Manage configuration"
+complete -c lxc -f -n '__fish_lxc_no_subcommand' -a copy     -d "Copy containers within or in between lxd instances"
+complete -c lxc -f -n '__fish_lxc_no_subcommand' -a delete   -d "Delete containers or container snapshots"
+complete -c lxc -f -n '__fish_lxc_no_subcommand' -a exec     -d "Execute the specified command in a container"
+complete -c lxc -f -n '__fish_lxc_no_subcommand' -a file     -d "Manage files on a container"
+complete -c lxc -f -n '__fish_lxc_no_subcommand' -a help     -d "Presents details on how to use LXD"
+complete -c lxc -f -n '__fish_lxc_no_subcommand' -a image    -d "Manipulate container images"
+complete -c lxc -f -n '__fish_lxc_no_subcommand' -a info     -d "List information on LXD servers and containers"
+complete -c lxc -f -n '__fish_lxc_no_subcommand' -a launch   -d "Launch a container from a particular image"
+complete -c lxc -f -n '__fish_lxc_no_subcommand' -a list     -d "Lists the available resources"
+complete -c lxc -f -n '__fish_lxc_no_subcommand' -a move     -d "Move containers within or in between lxd instances"
+complete -c lxc -f -n '__fish_lxc_no_subcommand' -a profile  -d "Manage configuration profiles"
+complete -c lxc -f -n '__fish_lxc_no_subcommand' -a publish  -d "Publish containers as images"
+complete -c lxc -f -n '__fish_lxc_no_subcommand' -a remote   -d "Manage remote LXD servers"
+complete -c lxc -f -n '__fish_lxc_no_subcommand' -a restart  -d "Changes state of one or more containers to restart"
+complete -c lxc -f -n '__fish_lxc_no_subcommand' -a restore  -d "Set the current state of a resource back to a snapshot"
 complete -c lxc -f -n '__fish_lxc_no_subcommand' -a snapshot -d "Create a read-only snapshot of a container"
-complete -c lxc -f -n '__fish_lxc_no_subcommand' -a start -d "Changes state of one or more containers to start"
-complete -c lxc -f -n '__fish_lxc_no_subcommand' -a stop -d "Changes state of one or more containers to stop"
-complete -c lxc -f -n '__fish_lxc_no_subcommand' -a version -d "Prints the version number of this client tool"
+complete -c lxc -f -n '__fish_lxc_no_subcommand' -a start    -d "Changes state of one or more containers to start"
+complete -c lxc -f -n '__fish_lxc_no_subcommand' -a stop     -d "Changes state of one or more containers to stop"
+complete -c lxc -f -n '__fish_lxc_no_subcommand' -a version  -d "Prints the version number of this client tool"
 
-complete -c lxc -A -f -n '__fish_seen_subcommand_from exec'    -a '(__fish_print_lxc_containers running)' -d "Running"
-complete -c lxc -A -f -n '__fish_seen_subcommand_from restart' -a '(__fish_print_lxc_containers running)' -d "Running"
-complete -c lxc -A -f -n '__fish_seen_subcommand_from stop'    -a '(__fish_print_lxc_containers running)' -d "Running"
-complete -c lxc -A -f -n '__fish_seen_subcommand_from start'   -a '(__fish_print_lxc_containers stopped)' -d "Stopped"
+complete -c lxc -f -n '__fish_seen_subcommand_from exec'    -a '(__fish_print_lxc_containers running)' -d "Running"
+complete -c lxc -f -n '__fish_seen_subcommand_from restart' -a '(__fish_print_lxc_containers running)' -d "Running"
+complete -c lxc -f -n '__fish_seen_subcommand_from stop'    -a '(__fish_print_lxc_containers running)' -d "Running"
+complete -c lxc -f -n '__fish_seen_subcommand_from start'   -a '(__fish_print_lxc_containers stopped)' -d "Stopped"
 
 complete -c lxc -f -n '__fish_lxc_config_subcommand' -a device -d "Config for Device"
 complete -c lxc -f -n '__fish_lxc_config_subcommand' -a get    -d "Get container or server configuration key"
