@@ -49,6 +49,7 @@ NeoBundle 'simeji/winresizer'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-surround'
+NeoBundle 'vim-scripts/copypath.vim'
 NeoBundle 'vim-scripts/nginx.vim'
 NeoBundle 'vim-scripts/sudo.vim'
 
@@ -114,6 +115,8 @@ if has('gui_running')
 endif
 
 let g:vim_json_syntax_conceal = 0
+
+let g:copypath_copy_to_unnamed_register = 1
 
 autocmd InsertEnter,InsertLeave * set cursorline!
 " autocmd InsertEnter,InsertLeave * set cursorcolumn!
