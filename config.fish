@@ -27,7 +27,7 @@ alias docker-cleani="docker images -q -f \"dangling=true\" | xargs --no-run-if-e
 alias tap_production="export NODE_ENV=production"
 alias untap_production="unset NODE_ENV"
 
-alias reload-zshrc='exec zsh -l'
+alias reload-fish='exec fish -l'
 
 
 ###* xxxenv
