@@ -42,6 +42,7 @@ NeoBundle 'mhartington/oceanic-next'
 NeoBundle 'mxw/vim-jsx'
 NeoBundle 'myhere/vim-nodejs-complete'
 NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'rhysd/conflict-marker.vim'
 NeoBundle 'rking/ag.vim'
 NeoBundle 'ryanoasis/vim-devicons'
 NeoBundle 'scrooloose/nerdtree'
@@ -49,9 +50,9 @@ NeoBundle 'simeji/winresizer'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-surround'
+NeoBundle 'vim-scripts/copypath.vim'
 NeoBundle 'vim-scripts/nginx.vim'
 NeoBundle 'vim-scripts/sudo.vim'
-
 
 call neobundle#end()
 
@@ -115,6 +116,8 @@ endif
 
 let g:vim_json_syntax_conceal = 0
 
+let g:copypath_copy_to_unnamed_register = 1
+
 autocmd InsertEnter,InsertLeave * set cursorline!
 " autocmd InsertEnter,InsertLeave * set cursorcolumn!
 
@@ -132,10 +135,10 @@ nnoremap # #zz
 nnoremap <Tab> <C-w>w
 nnoremap <S-Tab> <C-w>W
 
-let g:nodejs_complete_config = {
-\  'js_compl_fn': 'jscomplete#CompleteJS',
-\  'max_node_compl_len': 15
-\}
+" let g:nodejs_complete_config = {
+" \  'js_compl_fn': 'jscomplete#CompleteJS',
+" \  'max_node_compl_len': 15
+" \}
 
 
 let g:indentLine_color_term = 23
