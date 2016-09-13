@@ -144,7 +144,7 @@ end
 
 function show_pwd -d "Show the current directory"
   set -l pwd (prompt_pwd)
-  prompt_segment normal cyan " $pwd "
+  prompt_segment normal cyan " $pwd"
 end
 
 function show_prompt -d "Shows prompt with cue for current priv"
@@ -155,9 +155,9 @@ function show_prompt -d "Shows prompt with cue for current priv"
     echo -n -s " "
   else
     if [ $RETVAL -ne 0 ]
-      prompt_segment normal yellow "🐡  "
+      prompt_segment normal yellow " 🐡  "
     else
-      prompt_segment normal yellow "🐟  "
+      prompt_segment normal yellow " 🐟  "
     end
   end
 
@@ -167,9 +167,9 @@ end
 function fish_prompt
   set -g RETVAL $status
   show_status
-  show_virtualenv
   show_user
   show_pwd
+  show_virtualenv
   show_prompt
 end
 
