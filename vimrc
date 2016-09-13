@@ -42,6 +42,7 @@ NeoBundle 'mhartington/oceanic-next'
 NeoBundle 'mxw/vim-jsx'
 NeoBundle 'myhere/vim-nodejs-complete'
 NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'rhysd/conflict-marker.vim'
 NeoBundle 'rking/ag.vim'
 NeoBundle 'ryanoasis/vim-devicons'
 NeoBundle 'scrooloose/nerdtree'
@@ -52,7 +53,6 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'vim-scripts/copypath.vim'
 NeoBundle 'vim-scripts/nginx.vim'
 NeoBundle 'vim-scripts/sudo.vim'
-
 
 call neobundle#end()
 

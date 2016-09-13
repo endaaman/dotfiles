@@ -11,16 +11,19 @@ NC='\033[0m'
 
 cd
 
+mkdir -p ~/.vim
+mkdir -p ~/.config/nvim
+mkdir -p ~/.config/fish/functions
+
 ln -fs ~/dotfiles/editorconfig ~/.editorconfig
 ln -fs ~/dotfiles/gitconfig ~/.gitconfig
 ln -fs ~/dotfiles/gitignore_global ~/.gitignore_global
 ln -fs ~/dotfiles/zshrc ~/.zshrc
 ln -fs ~/dotfiles/vimrc ~/.vimrc
 ln -fs ~/dotfiles/config.fish ~/.config/fish/config.fish
+ln -fs ~/dotfiles/fishfile ~/.config/fish/fishfile
 ln -fs ~/dotfiles/vimperatorrc ~/.vimperatorrc
 ln -fs ~/dotfiles/Xmodmap ~/.Xmodmap
-
-mkdir -p ~/.vim
 ln -sf ~/.vim ~/.config/nvim
 ln -sf ~/.vimrc ~/.config/nvim/init.vim
 
@@ -29,18 +32,31 @@ touch ~/.gitconfig_local
 nodejs=false
 python=false
 ruby=false
+fisherman=false
 
 for i in "$@" ; do
   case "$i" in
-    'nodejs' | 'node' ) nodejs=true ;;
-    'python' | 'py' ) python=true ;;
-    'ruby' | 'rb' ) ruby=true ;;
+    'nodejs'    | 'node' ) nodejs=true ;;
+    'python'    | 'py'   ) python=true ;;
+    'ruby'      | 'rb'   ) ruby=true ;;
+    'fisherman' | 'fm'   ) fisherman=true ;;
   esac
 done
 
+if $fisherman; then
+  if ! which fish >/dev/null 2>&1; then
+    echo 'Please install fish'
+    exit 1
+  fi
+  if [ ! -f "${HOME}/.config/fish/functions/fisher.fish" ]; then
+    printf "\n"
+    printf "${CYAN}Installing fisherman${NC}\n"
+    curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
+  fi
+fi
 
 if $nodejs; then
-  if [ ! -d '.nodebrew' ]; then
+  if [ ! -d "${HOME}/.nodebrew" ]; then
     printf "\n"
     printf "${CYAN}Installing nodebrew${NC}\n"
     curl -L git.io/nodebrew | perl - setup
@@ -54,7 +70,7 @@ fi
 
 
 if $python; then
-  if [ ! -d '.pyenv' ]; then
+  if [ ! -d "${HOME}/.pyenv" ]; then
     printf "\n"
     printf "${CYAN}Installing pyenv${NC}\n"
     git clone https://github.com/yyuu/pyenv.git ~/.pyenv
@@ -65,7 +81,7 @@ if $python; then
     cd
   fi
 
-  if [ ! -d '.pyenv/plugins/pyenv-virtualenv' ]; then
+  if [ ! -d "${HOME}.pyenv/plugins/pyenv-virtualenv" ]; then
     printf "\n"
     printf "${CYAN}Installing pyenv-virtualenv${NC}\n"
     git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
@@ -79,7 +95,7 @@ fi
 
 
 if $ruby; then
-  if [ ! -d '.rbenv' ]; then
+  if [ ! -d "${HOME}/.rbenv" ]; then
     printf "\n"
     printf "${CYAN}Installing rbenv${NC}\n"
     git clone https://github.com/rbenv/rbenv.git ~/.rbenv
@@ -90,7 +106,7 @@ if $ruby; then
     cd
   fi
 
-  if [ ! -d '.rbenv/plugins/ruby-build' ]; then
+  if [ ! -d "${HOME}/.rbenv/plugins/ruby-build" ]; then
     printf "\n"
     printf "${CYAN}Installing ruby-build${NC}\n"
     git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
