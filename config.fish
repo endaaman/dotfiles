@@ -1,12 +1,5 @@
 # 🐡　🐠　🐟
 
-###* Oh My Fish
-
-set -q XDG_DATA_HOME
-  and set -x OMF_PATH "$XDG_DATA_HOME/omf"
-  or set -x OMF_PATH "$HOME/.local/share/omf"
-source $OMF_PATH/init.fish
-
 ###* user environments
 
 set -x PATH $HOME/bin $PATH
