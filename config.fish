@@ -111,7 +111,7 @@ end
 
 function show_status -d "Function to show the current status"
   if [ -n "$SSH_CLIENT" ]
-    prompt_segment blue white " SSH: "
+    prompt_segment blue white "SSH: "
   end
 end
 
@@ -126,7 +126,7 @@ function show_user -d "Show user"
   if [ "$USER" != "$default_user" -o -n "$SSH_CLIENT" ]
     set -l host (hostname -s)
     set -l who (whoami)
-    prompt_segment normal yellow " $who"
+    prompt_segment normal yellow "$who"
 
     if [ "$USER" != "$HOST" ]
       prompt_segment normal white "@"
@@ -137,7 +137,7 @@ end
 
 function show_pwd -d "Show the current directory"
   set -l pwd (prompt_pwd)
-  prompt_segment normal cyan " $pwd"
+  prompt_segment normal cyan "$pwd"
 end
 
 function show_prompt -d "Shows prompt with cue for current priv"
@@ -145,7 +145,6 @@ function show_prompt -d "Shows prompt with cue for current priv"
   if [ $uid -eq 0 ]
     prompt_segment normal yellow " # "
     set_color normal
-    echo -n -s " "
   else
     if [ $RETVAL -ne 0 ]
       prompt_segment normal yellow " 🐡  "
