@@ -1,12 +1,5 @@
 # 🐡　🐠　🐟
 
-###* Oh My Fish
-
-set -q XDG_DATA_HOME
-  and set -x OMF_PATH "$XDG_DATA_HOME/omf"
-  or set -x OMF_PATH "$HOME/.local/share/omf"
-source $OMF_PATH/init.fish
-
 ###* user environments
 
 set -x PATH $HOME/bin $PATH
@@ -60,9 +53,9 @@ if [ -d "$HOME/.pyenv" ];
   . (pyenv virtualenv-init - | psub)
 end
 
-if [ -d "$HOME/.phpbrew" ];
-  source ~/.phpbrew/bashrc
-end
+# if [ -d "$HOME/.phpbrew" ];
+#   . ~/.phpbrew/bashrc
+# end
 
 if [ -d "$HOME/go" ]
   set -x GOPATH ~/go
@@ -118,7 +111,7 @@ end
 
 function show_status -d "Function to show the current status"
   if [ -n "$SSH_CLIENT" ]
-    prompt_segment blue white " SSH: "
+    prompt_segment blue white "SSH: "
   end
 end
 
@@ -133,7 +126,7 @@ function show_user -d "Show user"
   if [ "$USER" != "$default_user" -o -n "$SSH_CLIENT" ]
     set -l host (hostname -s)
     set -l who (whoami)
-    prompt_segment normal yellow " $who"
+    prompt_segment normal yellow "$who"
 
     if [ "$USER" != "$HOST" ]
       prompt_segment normal white "@"
@@ -144,7 +137,7 @@ end
 
 function show_pwd -d "Show the current directory"
   set -l pwd (prompt_pwd)
-  prompt_segment normal cyan " $pwd "
+  prompt_segment normal cyan "$pwd"
 end
 
 function show_prompt -d "Shows prompt with cue for current priv"
@@ -152,12 +145,11 @@ function show_prompt -d "Shows prompt with cue for current priv"
   if [ $uid -eq 0 ]
     prompt_segment normal yellow " # "
     set_color normal
-    echo -n -s " "
   else
     if [ $RETVAL -ne 0 ]
-      prompt_segment normal yellow "🐡  "
+      prompt_segment normal yellow " 🐡  "
     else
-      prompt_segment normal yellow "🐟  "
+      prompt_segment normal yellow " 🐟  "
     end
   end
 
@@ -167,9 +159,9 @@ end
 function fish_prompt
   set -g RETVAL $status
   show_status
-  show_virtualenv
   show_user
   show_pwd
+  show_virtualenv
   show_prompt
 end
 
