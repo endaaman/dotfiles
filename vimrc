@@ -5,7 +5,6 @@ set nocompatible
 let s:dein_dir = expand('~/.cache/dein')
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
-
 if &runtimepath !~# '/dein.vim'
   if !isdirectory(s:dein_repo_dir)
     execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
@@ -25,15 +24,16 @@ if dein#check_install()
 endif
 
 filetype plugin indent on
-
 syntax enable
+
 let g:solarized_termcolors=256
 set t_Co=256
+set background=dark
 autocmd ColorScheme * highlight Normal ctermbg=none
 autocmd ColorScheme * highlight LineNr ctermbg=none
 colorscheme OceanicNext
 " colorscheme solarized
-set background=dark
+
 
 set ambiwidth=double
 set autoindent
@@ -77,6 +77,8 @@ if has('gui_running')
   set guifont=Ubuntu\ Mono\ 11
   set lines=40
   set columns=120
+else
+  highlight Comment cterm=none
 endif
 
 let g:vim_json_syntax_conceal = 0
@@ -91,41 +93,41 @@ autocmd BufWritePre * :%s/\t\+$//e
 autocmd BufRead,BufNewFile /etc/nginx/* set ft=nginx
 autocmd BufEnter * lcd %:p:h
 
+noremap J 7jzz
+noremap K 7kzz
+noremap H ^
+noremap L $
+noremap m :
+noremap <Space> "
+nnoremap <silent> <C-f> :bn<CR>
+nnoremap <silent> <C-b> :bp<CR>
+
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap * *zz
 nnoremap # #zz
-nnoremap <C-j> <C-f>zz
-nnoremap <C-k> <C-b>zz
-nnoremap J <C-d>zz
-nnoremap K <C-u>zz
-nnoremap <C-f> <C-f>zz
-nnoremap <C-b> <C-b>zz
-nnoremap H ^
-nnoremap L $
-nnoremap <C-d> J
-nnoremap <C-u> K
+nnoremap o o<Esc>
+nnoremap O O<Esc>
+nnoremap <C-j> "rdd"rp
+nnoremap <C-k> "rddk"rP
+nnoremap <C-h> <C-o>
+nnoremap <C-l> <C-i>
+nnoremap <C-]> <C-l>
 nnoremap <Tab> <C-w>w
 nnoremap <S-Tab> <C-w>W
-nnoremap m :
-nnoremap <Return> o
-nnoremap <S-Return> O
 nnoremap <C-y> :x<CR>
 nnoremap <C-s> :w<CR>
 nnoremap <C-q> :q<CR>
 nnoremap <silent> <C-m> :noh<CR>
-
 nnoremap ZZ <nop>
 nnoremap ZQ <nop>
+nnoremap Q <Nop>
 
 vnoremap v $h
-vnoremap H <
-vnoremap L >
+vnoremap <C-h> <gv
+vnoremap <C-l> >gv
 
 cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
-
-inoremap <C-l> <Del>
-inoremap <S-Space> <C-x>
 
 nnoremap <silent> <C-n> :NERDTreeFind<CR>
 
@@ -142,8 +144,8 @@ let g:go_highlight_methods = 3
 let g:go_highlight_structs = 3
 
 let g:lightline = {
-  \ 'colorscheme': 'jellybeans'
-  \ }
+\ 'colorscheme': 'jellybeans'
+\ }
 
 let g:neocomplete#enable_at_startup = 1
 if !exists('g:neocomplete#sources#omni#input_patterns')
@@ -187,7 +189,8 @@ let g:unite_source_grep_max_candidates = 200
 let g:unite_source_grep_recursive_opt = ''
 " let g:unite_enable_start_insert=1
 let g:unite_source_history_yank_enable =1
-nmap <Space> [unite]
+" nmap <Space> [unite]
+nmap , [unite]
 vnoremap /g y:Unite grep::-iRn:<C-r>=escape(@", '\\.*$^[]')<CR><CR>
 
 call unite#custom#source('buffer', 'converters', ['converter_smart_path'])
@@ -206,3 +209,4 @@ autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()"{{{
   nmap <buffer> <ESC> <Plug>(unite_exit)
 endfunction"}}}
+
