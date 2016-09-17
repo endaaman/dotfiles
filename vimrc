@@ -14,6 +14,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " NeoBundle 'Shougo/neosnippet'
 " NeoBundle 'Shougo/neosnippet-snippets'
+" NeoBundle 'terryma/vim-multiple-cursors'
 " NeoBundle 'vim-scripts/Align'
 NeoBundle 'ConradIrwin/vim-bracketed-paste'
 NeoBundle 'Shougo/neocomplete.vim'
@@ -47,7 +48,6 @@ NeoBundle 'rking/ag.vim'
 NeoBundle 'ryanoasis/vim-devicons'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'simeji/winresizer'
-NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'vim-scripts/copypath.vim'
@@ -88,9 +88,11 @@ set modifiable
 set mouse=a
 set nobackup
 set nocompatible
+set noswapfile
 set nowrap
 set number
 set ruler
+set shell=sh
 set shiftwidth=2
 set showbreak=↪
 set showcmd
@@ -104,10 +106,7 @@ set undodir=~/.vim/tmp
 set wildmenu
 set wrap
 set write
-set shell=sh
 
-
-" set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
 if has('gui_running')
   set guifont=Ubuntu\ Mono\ 11
   set lines=40
@@ -118,22 +117,51 @@ let g:vim_json_syntax_conceal = 0
 
 let g:copypath_copy_to_unnamed_register = 1
 
-autocmd InsertEnter,InsertLeave * set cursorline!
-" autocmd InsertEnter,InsertLeave * set cursorcolumn!
+autocmd InsertLeave * set cursorline
+autocmd InsertEnter * set nocursorline
 
 autocmd BufWritePre * if @% !~ '\.md$' | :%s/\s\+$//e | endif
 autocmd BufWritePre * :%s/\t\+$//e
 autocmd BufRead,BufNewFile /etc/nginx/* set ft=nginx
+autocmd BufEnter * lcd %:p:h
 
-
-vnoremap v $h
-cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap * *zz
 nnoremap # #zz
+nnoremap <C-j> <C-f>zz
+nnoremap <C-k> <C-b>zz
+nnoremap J <C-d>zz
+nnoremap K <C-u>zz
+nnoremap <C-f> <C-f>zz
+nnoremap <C-b> <C-b>zz
+nnoremap H ^
+nnoremap L $
+nnoremap <C-d> J
+nnoremap <C-u> K
 nnoremap <Tab> <C-w>w
 nnoremap <S-Tab> <C-w>W
+nnoremap m :
+nnoremap <Return> o
+nnoremap <S-Return> O
+nnoremap <C-y> :x<CR>
+nnoremap <C-s> :w<CR>
+nnoremap <C-q> :q<CR>
+nnoremap <silent> <C-m> :noh<CR>
+
+nnoremap ZZ <nop>
+nnoremap ZQ <nop>
+
+vnoremap v $h
+vnoremap H <
+vnoremap L >
+
+cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
+
+inoremap <C-l> <Del>
+inoremap <S-Space> <C-x>
+
+nnoremap <silent> <C-n> :NERDTreeFind<CR>
 
 " let g:nodejs_complete_config = {
 " \  'js_compl_fn': 'jscomplete#CompleteJS',
@@ -143,22 +171,13 @@ nnoremap <S-Tab> <C-w>W
 
 let g:indentLine_color_term = 23
 
-
 let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-
+let g:go_highlight_methods = 3
+let g:go_highlight_structs = 3
 
 let g:lightline = {
   \ 'colorscheme': 'jellybeans'
   \ }
-
-let g:multi_cursor_next_key='<C-d>'
-let g:multi_cursor_prev_key='<C-p>'
-let g:multi_cursor_skip_key='<C-x>'
-let g:multi_cursor_quit_key='<Esc>'
-let g:multi_cursor_start_key='<C-d>'
-
 
 let g:neocomplete#enable_at_startup = 1
 if !exists('g:neocomplete#sources#omni#input_patterns')
@@ -174,7 +193,7 @@ let g:neocomplete#sources#omni#input_patterns.go = '\h\w\.\w*'
 "   \ }
 
 let NERDTreeShowHidden=1
-nnoremap <silent> <C-n> :NERDTreeTabsToggle<cr>
+" nnoremap <silent> <C-n> :NERDTreeTabsToggle<cr>
 
 
 " let g:vimfiler_as_default_explorer = 1
@@ -203,7 +222,7 @@ let g:unite_source_grep_recursive_opt = ''
 " let g:unite_enable_start_insert=1
 let g:unite_source_history_yank_enable =1
 nmap <Space> [unite]
-vnoremap /g y:Unite grep::-iRn:<C-R>=escape(@", '\\.*$^[]')<CR><CR>
+vnoremap /g y:Unite grep::-iRn:<C-r>=escape(@", '\\.*$^[]')<CR><CR>
 
 call unite#custom#source('buffer', 'converters', ['converter_smart_path'])
 
