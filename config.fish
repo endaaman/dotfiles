@@ -5,6 +5,7 @@
 set -x PATH $HOME/bin $PATH
 set -x XDG_CONFIG_HOME $HOME/.config
 set -x VTE_CJK_WIDTH 1
+set -x TERM xterm
 
 function fish_greeting
 end
