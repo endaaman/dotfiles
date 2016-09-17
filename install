@@ -20,6 +20,7 @@ ln -fs ~/dotfiles/gitconfig ~/.gitconfig
 ln -fs ~/dotfiles/gitignore_global ~/.gitignore_global
 ln -fs ~/dotfiles/zshrc ~/.zshrc
 ln -fs ~/dotfiles/vimrc ~/.vimrc
+ln -fs ~/dotfiles/dein.toml ~/.vim/dein.toml
 ln -fs ~/dotfiles/config.fish ~/.config/fish/config.fish
 ln -fs ~/dotfiles/fishfile ~/.config/fish/fishfile
 ln -fs ~/dotfiles/vimperatorrc ~/.vimperatorrc

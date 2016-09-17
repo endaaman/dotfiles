@@ -1,64 +1,30 @@
 scriptencoding utf-8
 
-if 0 | endif
+set nocompatible
 
-if &compatible
-  set nocompatible
+let s:dein_dir = expand('~/.cache/dein')
+let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+
+
+if &runtimepath !~# '/dein.vim'
+  if !isdirectory(s:dein_repo_dir)
+    execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
+  endif
+  execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
 endif
 
-set runtimepath^=~/.vim/bundle/neobundle.vim/
+if dein#load_state(s:dein_dir)
+  call dein#begin(s:dein_dir)
+  call dein#load_toml(expand('~/.vim/dein.toml'), {'lazy': 0})
+  call dein#end()
+  call dein#save_state()
+endif
 
-call neobundle#begin(expand('~/.vim/bundle/'))
-
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-" NeoBundle 'Shougo/neosnippet'
-" NeoBundle 'Shougo/neosnippet-snippets'
-" NeoBundle 'terryma/vim-multiple-cursors'
-" NeoBundle 'vim-scripts/Align'
-NeoBundle 'ConradIrwin/vim-bracketed-paste'
-NeoBundle 'Shougo/neocomplete.vim'
-NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'Shougo/neoyank.vim'
-NeoBundle 'Shougo/unite-outline'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimfiler'
-NeoBundle 'Shougo/vimproc'
-NeoBundle 'Shougo/vimshell'
-NeoBundle 'Xuyuanp/nerdtree-git-plugin'
-NeoBundle 'Yggdroot/indentLine'
-NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'dag/vim-fish'
-NeoBundle 'editorconfig/editorconfig-vim'
-NeoBundle 'elzr/vim-json'
-NeoBundle 'fatih/vim-go'
-NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'jiangmiao/auto-pairs'
-NeoBundle 'jistr/vim-nerdtree-tabs'
-NeoBundle 'junegunn/vim-easy-align'
-NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'mattn/jscomplete-vim'
-NeoBundle 'mhartington/oceanic-next'
-NeoBundle 'mxw/vim-jsx'
-NeoBundle 'myhere/vim-nodejs-complete'
-NeoBundle 'pangloss/vim-javascript'
-NeoBundle 'rhysd/conflict-marker.vim'
-NeoBundle 'rking/ag.vim'
-NeoBundle 'ryanoasis/vim-devicons'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'simeji/winresizer'
-NeoBundle 'tomtom/tcomment_vim'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'vim-scripts/copypath.vim'
-NeoBundle 'vim-scripts/nginx.vim'
-NeoBundle 'vim-scripts/sudo.vim'
-
-call neobundle#end()
+if dein#check_install()
+  call dein#install()
+endif
 
 filetype plugin indent on
-
-NeoBundleCheck
 
 syntax enable
 let g:solarized_termcolors=256
@@ -240,6 +206,3 @@ autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()"{{{
   nmap <buffer> <ESC> <Plug>(unite_exit)
 endfunction"}}}
-
-
-
