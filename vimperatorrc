@@ -1,7 +1,11 @@
+" vi: set ft=vim :
+
 nnoremap j <Down>
 nnoremap k <Up>
 nnoremap h <C-PageUp>
 nnoremap l <C-PageDown>
+nnoremap J <PageUp>
+nnoremap K <PageDown>
 
 nnoremap <C-h> <Left>
 nnoremap <C-l> <Right>
