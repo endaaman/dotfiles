@@ -24,7 +24,9 @@ ln -fs ~/dotfiles/dein.toml ~/.vim/dein.toml
 ln -fs ~/dotfiles/config.fish ~/.config/fish/config.fish
 ln -fs ~/dotfiles/fishfile ~/.config/fish/fishfile
 ln -fs ~/dotfiles/vimperatorrc ~/.vimperatorrc
+ln -fs ~/dotfiles/xsession ~/.xsession
 ln -fs ~/dotfiles/Xmodmap ~/.Xmodmap
+ln -fs ~/dotfiles/Xdefaults ~/.Xdefaults
 ln -sf ~/.vim ~/.config/nvim
 ln -sf ~/.vimrc ~/.config/nvim/init.vim
 

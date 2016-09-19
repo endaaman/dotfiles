@@ -37,7 +37,7 @@ alias reload-fish='exec fish -l'
 
 if [ -d "$HOME/.nodebrew" ];
   set -x PATH $HOME/.nodebrew/current/bin $PATH
-  nodebrew use 4 > /dev/null
+  nodebrew use 6 > /dev/null
 end
 
 if [ -d "$HOME/.rbenv" ];
@@ -70,14 +70,14 @@ set -g __fish_git_prompt_show_informative_status 1
 set -g __fish_git_prompt_hide_untrackedfiles 1
 set -g __fish_git_prompt_color_branch magenta
 set -g __fish_git_prompt_showupstream "informative"
-set -g __fish_git_prompt_char_upstream_ahead "↑ "
-set -g __fish_git_prompt_char_upstream_behind "↓ "
+set -g __fish_git_prompt_char_upstream_ahead "↑"
+set -g __fish_git_prompt_char_upstream_behind "↓"
 set -g __fish_git_prompt_char_upstream_prefix ""
 set -g __fish_git_prompt_char_stagedstate "● "
 set -g __fish_git_prompt_char_dirtystate "✚ "
 set -g __fish_git_prompt_char_untrackedfiles "…"
 set -g __fish_git_prompt_char_conflictedstate "✖ "
-set -g __fish_git_prompt_char_cleanstate "✔ "
+set -g __fish_git_prompt_char_cleanstate "✔"
 set -g __fish_git_prompt_color_upstream normal
 set -g __fish_git_prompt_color_dirtystate blue
 set -g __fish_git_prompt_color_stagedstate yellow
@@ -168,11 +168,8 @@ end
 
 function fish_right_prompt -d "Prints right prompt"
   set_color normal
-  # echo "("
-  # set_color purple
   echo (__fish_git_prompt)
   set_color normal
-  # echo ")"
 end
 
 
