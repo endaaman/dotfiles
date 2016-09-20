@@ -1,4 +1,3 @@
-autocmd!
 scriptencoding utf-8
 if !1 | finish | endif
 set nocompatible
@@ -42,7 +41,7 @@ colorscheme OceanicNext
 " colorscheme solarized
 
 
-set ambiwidth=double
+" set ambiwidth=double
 set autoindent
 set backupdir=~/.vim/tmp
 set breakindent
@@ -228,6 +227,8 @@ nmap <Space> [unite]
 vnoremap /g y:Unite grep::-iRn:<C-r>=escape(@", '\\.*$^[]')<CR><CR>
 
 call unite#custom#source('buffer', 'converters', ['converter_smart_path'])
+call unite#custom_source('file', 'ignore_pattern', '')
+call unite#custom#source('file', 'matchers', 'matcher_default')
 
 nnoremap <silent> [unite]a :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
 nnoremap <silent> [unite]f :<C-u>Unite<Space>file_mru<CR>
