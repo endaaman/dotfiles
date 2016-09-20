@@ -112,6 +112,7 @@ noremap m :
 noremap x "_x
 noremap , "
 noremap s <Nop>
+noremap S <Nop>
 nnoremap <C-h> zz
 
 nnoremap <silent> <C-f> :bp<CR>
