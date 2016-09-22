@@ -1,4 +1,4 @@
-# 🐡　🐠　🐟
+# 🐡 🐟 🐠
 
 ###* user environments
 
@@ -22,6 +22,7 @@ end
 alias g="git"
 alias v="vim"
 alias ll='ls -ahlF'
+alias lp='ls -ahlF | peco'
 
 alias nr="npm run"
 alias pm="python manage.py"
@@ -108,6 +109,16 @@ if [ -d "$HOME/go" ]
   set -x GO15VENDOREXPERIMENT 1
 end
 
+if [ -d "$HOME/.stack/programs/x86_64-linux/current" ];
+  set -gx GHC_PATH "$HOME/.stack/programs/x86_64-linux/current/bin"
+  set -gx PATH $GHC_PATH $PATH
+end
+
+function stack_link_current
+  set latest (find ~/.stack/programs/x86_64-linux/* -maxdepth 0 -type d | grep '\/ghc-[0-9]\.[0-9]\.[0-9]$' | tail -n1)
+  ln -fs $latest ~/.stack/programs/x86_64-linux/current
+end
+
 
 ###* git status
 
@@ -115,14 +126,14 @@ set -g __fish_git_prompt_show_informative_status 1
 set -g __fish_git_prompt_hide_untrackedfiles 1
 set -g __fish_git_prompt_color_branch magenta
 set -g __fish_git_prompt_showupstream "informative"
-set -g __fish_git_prompt_char_upstream_ahead "↑"
-set -g __fish_git_prompt_char_upstream_behind "↓"
-set -g __fish_git_prompt_char_upstream_prefix ""
+set -g __fish_git_prompt_char_upstream_ahead "↑ "
+set -g __fish_git_prompt_char_upstream_behind "↓ "
+set -g __fish_git_prompt_char_upstream_prefix "U"
 set -g __fish_git_prompt_char_stagedstate "● "
 set -g __fish_git_prompt_char_dirtystate "✚ "
 set -g __fish_git_prompt_char_untrackedfiles "…"
 set -g __fish_git_prompt_char_conflictedstate "✖ "
-set -g __fish_git_prompt_char_cleanstate "✔"
+set -g __fish_git_prompt_char_cleanstate "✔ "
 set -g __fish_git_prompt_color_upstream normal
 set -g __fish_git_prompt_color_dirtystate blue
 set -g __fish_git_prompt_color_stagedstate yellow

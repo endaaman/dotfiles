@@ -37,7 +37,13 @@ URxvt.color14: #5FB3B3
 URxvt.color15: #D8DEE9
 URxvt.lefterSpace: -1
 URxvt.cursorBlink: 1
-URxvt.font: xft:Ubuntu Mono:size=12:antialiase=true,xft:TakaoGothic:size=12,xft:Symbola:size=12
+! URxvt.font: xft:Ubuntu Mono:size=12:antialiase=true,xft:TakaoGothic:size=12,xft:Noto Sans Mono CJK JP Regular:size=12,xft:Symbola:size=12
+! xft:TakaoGothic:size=12,\
+URxvt.font: \
+  xft:Ubuntu Mono:size=11,\
+  xft:TakaoGothic:size=11,\
+  xft:Symbola:size=7
+URxvt.letterSpace: -1
 
 ! Utils:
 #ifndef URXVT_PERL_LIB

@@ -27,8 +27,9 @@ ln -fs ~/dotfiles/vimperatorrc ~/.vimperatorrc
 ln -fs ~/dotfiles/xsession ~/.xsession
 ln -fs ~/dotfiles/Xmodmap ~/.Xmodmap
 ln -fs ~/dotfiles/Xdefaults ~/.Xdefaults
-ln -sf ~/.vim ~/.config/nvim
-ln -sf ~/.vimrc ~/.config/nvim/init.vim
+ln -fs ~/dotfiles/vim ~/.vim/autoload
+ln -fs ~/.vim ~/.config/nvim
+ln -fs ~/.vimrc ~/.config/nvim/init.vim
 
 touch ~/.gitconfig_local
 

@@ -1,13 +1,13 @@
 scriptencoding utf-8
 if !1 | finish | endif
 set nocompatible
-syntax enable
+syntax on
+
 " augroup source-vimrc
 "   autocmd!
 "   autocmd BufWritePost *vimrc source $MYVIMRC | set foldmethod=marker
 "   autocmd BufWritePost *gvimrc if has('gui_running') source $MYGVIMRC
 " augroup END
-
 
 let s:dein_dir = expand('~/.cache/dein')
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
@@ -30,13 +30,26 @@ if dein#check_install()
   call dein#install()
 endif
 
+" set runtimepath+=~/.vim/autoload/
+" runtime! ~/.vim/autoload/*.vim
+
 filetype plugin indent on
+
+
+if has('gui_running')
+  set guifont=Ubuntu\ Mono\ 11
+  set lines=40
+  set columns=120
+else
+  highlight Comment cterm=none
+  autocmd ColorScheme * highlight Normal ctermbg=none
+  autocmd ColorScheme * highlight LineNr ctermbg=none
+endif
+
 
 let g:solarized_termcolors=256
 set t_Co=256
 set background=dark
-autocmd ColorScheme * highlight Normal ctermbg=none
-autocmd ColorScheme * highlight LineNr ctermbg=none
 colorscheme OceanicNext
 " colorscheme solarized
 
@@ -83,21 +96,12 @@ set wrap
 set write
 " set backspace=indent,eol,start
 
-if has('gui_running')
-  set guifont=Ubuntu\ Mono\ 11
-  set lines=40
-  set columns=120
-else
-  highlight Comment cterm=none
-endif
-
 let g:vim_json_syntax_conceal = 0
 
 let g:copypath_copy_to_unnamed_register = 1
 
 autocmd InsertLeave * set cursorline
 autocmd InsertEnter * set nocursorline
-
 autocmd BufWritePre * if @% !~ '\.md$' | :%s/\s\+$//e | endif
 autocmd BufWritePre * :%s/\t\+$//e
 autocmd BufRead,BufNewFile /etc/nginx/* set ft=nginx
@@ -112,7 +116,6 @@ noremap m :
 noremap x "_x
 noremap , "
 noremap S <Nop>
-nnoremap <C-h> zz
 
 nnoremap <silent> <C-f> :bp<CR>
 nnoremap <silent> <C-b> :bn<CR>
@@ -126,23 +129,25 @@ nnoremap # #zz
 nnoremap o o<Esc>
 nnoremap O O<Esc>
 nnoremap Y y$
-nnoremap <C-j> "rdd"rp
-nnoremap <C-k> "rddk"rP
-nnoremap <C-h> <Nop>
-nnoremap <C-x> <Nop>
-nnoremap <C-d> <Nop>
-nnoremap <C-u> <Nop> " use in plugin
-nnoremap <Tab> <C-w>w
+nnoremap <C-j> "zdd"zp
+nnoremap <C-k> "zddk"zP
 nnoremap <S-Tab> <C-w>W
-nnoremap <C-y> :x<CR>
+nnoremap <Tab> <C-w>w
+nnoremap <C-x> :x<CR>
 nnoremap <C-s> :w<CR>
 nnoremap <C-q> :q<CR>
+nnoremap <C-h> zz
 nnoremap <silent> <C-m> :noh<CR>
 nnoremap ZZ <nop>
 nnoremap ZQ <nop>
 nnoremap Q <Nop>
-nnoremap + <C-a>
 nnoremap - <C-x>
+nnoremap + <C-a>
+
+nnoremap <C-h> <Nop>
+nnoremap <C-d> <Nop>
+nnoremap <C-u> <Nop>
+nnoremap <C-y> <nop>
 
 vnoremap v $h
 vnoremap <C-h> <gv
@@ -155,6 +160,7 @@ inoremap <Left> <Nop>
 inoremap <Right> <Nop>
 inoremap <C-l> <Del>
 inoremap <BS> <Nop>
+inoremap <C-s> <C-o>:w<CR>
 
 cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 
@@ -198,10 +204,11 @@ let NERDTreeShowHidden=1
 
 
 " let g:vimfiler_as_default_explorer = 1
-" let g:vimfiler_safe_mode_by_default = 0
 " let g:vimfiler_edit_action = 'tabopen'
+let g:vimfiler_safe_mode_by_default = 0
+let g:vimfiler_ignore_pattern = ''
 
-" nnoremap <silent> <Tab> :<C-u>VimFiler -split -simple -no-quit<CR>
+nnoremap <silent> <C-y> :<C-u>VimFiler -split -no-quit<CR>
 
 autocmd FileType vimfiler nmap <buffer> <Enter>  <Plug>(vimfiler_expand_or_edit)
 autocmd FileType vimfiler nmap <buffer> o        <Plug>(vimfiler_cd_or_edit)
@@ -212,7 +219,7 @@ autocmd FileType vimfiler nmap <buffer> l        <Plug>(vimfiler_expand_tree)
 let g:vimfiler_tree_leaf_icon = ' '
 let g:vimfiler_tree_opened_icon = '▾'
 let g:vimfiler_tree_closed_icon = '▸'
-" let g:vimfiler_file_icon = '-'
+let g:vimfiler_file_icon = '-'
 let g:vimfiler_marked_file_icon = '*'
 
 

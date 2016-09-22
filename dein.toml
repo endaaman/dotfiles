@@ -133,3 +133,6 @@ repo = 'kana/vim-textobj-user'
 [[plugins]]
 repo = 'thinca/vim-textobj-between'
 
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
