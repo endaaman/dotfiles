@@ -15,21 +15,40 @@ mkdir -p ~/.vim
 mkdir -p ~/.config/nvim
 mkdir -p ~/.config/fish/functions
 
-ln -fs ~/dotfiles/editorconfig ~/.editorconfig
+# git
 ln -fs ~/dotfiles/gitconfig ~/.gitconfig
 ln -fs ~/dotfiles/gitignore_global ~/.gitignore_global
+
+# zsh
 ln -fs ~/dotfiles/zshrc ~/.zshrc
-ln -fs ~/dotfiles/vimrc ~/.vimrc
-ln -fs ~/dotfiles/dein.toml ~/.vim/dein.toml
+
+# fish
 ln -fs ~/dotfiles/config.fish ~/.config/fish/config.fish
 ln -fs ~/dotfiles/fishfile ~/.config/fish/fishfile
-ln -fs ~/dotfiles/vimperatorrc ~/.vimperatorrc
+
+# vim
+ln -fs ~/dotfiles/vimrc ~/.vimrc
+ln -fs ~/dotfiles/dein.toml ~/.vim/dein.toml
+
+# neovim
+ln -fs ~/.vim ~/.config/nvim
+ln -fs ~/.vimrc ~/.config/nvim/init.vim
+
+# x window system
 ln -fs ~/dotfiles/xsession ~/.xsession
 ln -fs ~/dotfiles/Xmodmap ~/.Xmodmap
 ln -fs ~/dotfiles/Xdefaults ~/.Xdefaults
-ln -fs ~/dotfiles/vim ~/.vim/autoload
-ln -fs ~/.vim ~/.config/nvim
-ln -fs ~/.vimrc ~/.config/nvim/init.vim
+
+# fonts
+ln -fs ~/dotfiles/fonts.conf ~/.config/fontconfig/fonts.conf
+ln -fs ~/dotfiles/fonts ~/.fonts/dotfiles
+
+# editorconfig
+ln -fs ~/dotfiles/editorconfig ~/.editorconfig
+
+# vimperator
+ln -fs ~/dotfiles/vimperatorrc ~/.vimperatorrc
+
 
 touch ~/.gitconfig_local
 

@@ -30,11 +30,7 @@ if dein#check_install()
   call dein#install()
 endif
 
-" set runtimepath+=~/.vim/autoload/
-" runtime! ~/.vim/autoload/*.vim
-
 filetype plugin indent on
-
 
 if has('gui_running')
   set guifont=Ubuntu\ Mono\ 11
@@ -47,14 +43,11 @@ else
 endif
 
 
-let g:solarized_termcolors=256
-set t_Co=256
 set background=dark
 colorscheme OceanicNext
-" colorscheme solarized
 
 
-" set ambiwidth=double
+set ambiwidth=double
 set autoindent
 set backupdir=~/.vim/tmp
 set breakindent
@@ -80,7 +73,7 @@ set number
 set ruler
 set shell=sh
 set shiftwidth=2
-set showbreak=↪
+set showbreak=↳
 set showcmd
 set showmatch
 set smartcase
@@ -94,11 +87,7 @@ set updatetime=1000
 set wildmenu
 set wrap
 set write
-" set backspace=indent,eol,start
 
-let g:vim_json_syntax_conceal = 0
-
-let g:copypath_copy_to_unnamed_register = 1
 
 autocmd InsertLeave * set cursorline
 autocmd InsertEnter * set nocursorline
@@ -108,6 +97,13 @@ autocmd BufRead,BufNewFile /etc/nginx/* set ft=nginx
 autocmd BufEnter * execute ":lcd " . expand("%:p:h")
 autocmd FileType nerdtree setlocal nolist
 
+map <Up> <Nop>
+map <Down> <Nop>
+map <Left> <Nop>
+map <Right> <Nop>
+
+noremap j gj
+noremap k gk
 noremap J <C-d>zz
 noremap K <C-u>zz
 noremap H ^
@@ -156,10 +152,6 @@ vnoremap <C-h> <gv
 vnoremap <C-l> >gv
 vnoremap * "zy:let @/ = @z<CR>n
 
-inoremap <Up> <Nop>
-inoremap <Down> <Nop>
-inoremap <Left> <Nop>
-inoremap <Right> <Nop>
 inoremap <C-l> <Del>
 inoremap <BS> <Nop>
 inoremap <C-s> <C-o>:w<CR>
@@ -174,6 +166,10 @@ command! -range -nargs=0 -bar JsonTool <line1>,<line2>!python -m json.tool
 " \  'js_compl_fn': 'jscomplete#CompleteJS',
 " \  'max_node_compl_len': 15
 " \}
+
+let g:vim_json_syntax_conceal = 0
+
+let g:copypath_copy_to_unnamed_register = 1
 
 let g:winresizer_start_key = '<C-u>'
 

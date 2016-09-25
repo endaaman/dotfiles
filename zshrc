@@ -1,3 +1,28 @@
+# prompt
+PROMPT="%F{cyan}%~%f "
+if [ ${EUID:-${UID}} = 0 ]; then
+  PROMPT=$PROMPT"%F{yellow}#%f "
+else
+  PROMPT=$PROMPT"%F{yellow}$%f "
+fi
+
+
+# zplug
+if [ -d ~/.zplug ]; then
+  source ~/.zplug/init.zsh
+  zplug "olivierverdier/zsh-git-prompt", use:"zshrc.sh"
+
+  if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+      echo; zplug install
+    fi
+  fi
+  zplug load
+  RPROMPT='$(git_super_status)'
+fi
+
+
 # zsh specifics
 autoload -Uz colors
 colors
@@ -17,6 +42,7 @@ stty start undef
 # alias
 alias g="git"
 alias v="vim"
+alias nv="nvim"
 alias ll='ls -ahlF'
 
 alias nr="npm run"
@@ -36,7 +62,7 @@ alias untap_production="unset NODE_ENV"
 alias reload-zshrc='exec zsh -l'
 
 function peco_cd() {
-  local dir=$(find . -maxdepth 5 -type d ! -path "*/.*"| peco)
+  local dir=$(find . -maxdepth 1 -type d ! -path "*/.*"| peco)
   if [ ! -z "$dir" ] ; then
     cd "$dir"
     zle accept-line
@@ -50,65 +76,53 @@ alias gh='cd `ghq list -p | peco`'
 
 
 # envs
-export VTE_CJK_WIDTH=1
+# export VTE_CJK_WIDTH=1
 export EDITOR=vim
 export TERM=xterm-256color
-export XDG_CONFIG_HOME=$HOME/.config
+export XDG_CONFIG_HOME=~/.config
 
-export PATH="$HOME/bin:$PATH"
+export PATH=~/bin:$PATH
 
 
 # node.js
-if [ -d "$HOME/.nodebrew" ]; then
-  export PATH=$HOME/.nodebrew/current/bin:$PATH
+if [ -d ~/.nodebrew ]; then
+  export PATH=~/.nodebrew/current/bin:$PATH
   nodebrew use 6 > /dev/null
 fi
 
 
 # ruby
-if [ -d "$HOME/.rbenv" ]; then
-  export PATH=$HOME/.rbenv/bin:$PATH
+if [ -d ~/.rbenv ]; then
+  export PATH=~/.rbenv/bin:$PATH
   eval "$(rbenv init -)"
 fi
 
 
 # python
-if [ -d "$HOME/.pyenv" ]; then
+if [ -d ~/.pyenv ]; then
   export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-  export PYENV_ROOT="$HOME/.pyenv"
-  export PATH="$PYENV_ROOT/bin:$PATH"
+  export PYENV_ROOT=$HOME/.pyenv
+  export PATH=$PYENV_ROOT/bin:$PATH
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
 fi
 
 
 # PHP
-if [ -d "$HOME/.phpbrew" ]; then
+if [ -d ~/.phpbrew ]; then
   source ~/.phpbrew/bashrc
 fi
 
 
 # GO
-if [ -d "$HOME/go" ]; then
+if [ -d ~/go ]; then
   export GOPATH=~/go
   export PATH=$PATH:$GOPATH/bin
   export GO15VENDOREXPERIMENT=1
 fi
 
 
-# for git
-if [ -d "$HOME/.git-prompt" ]; then
-  source ~/.git-prompt/zshrc.sh
-fi
 
 
-# prompt
-PROMPT="%F{cyan}%~%f "
-if [ ${EUID:-${UID}} = 0 ]; then
-  PROMPT=$PROMPT"%F{yellow}#%f "
-else
-  PROMPT=$PROMPT"%F{yellow}$%f "
-fi
-RPROMPT='$(git_super_status)'
 
 
