@@ -5,7 +5,9 @@ set -gx XDG_CONFIG_HOME $HOME/.config
 set -gx VTE_CJK_WIDTH 1
 
 set -x PATH $HOME/bin $PATH
-set -x TERM xterm
+set -x TERM xterm-256color
+set -x EDITOR=vim
+
 
 function fish_greeting
 end
@@ -130,9 +132,9 @@ set -g __fish_git_prompt_char_upstream_ahead "↑"
 set -g __fish_git_prompt_char_upstream_behind "↓"
 set -g __fish_git_prompt_char_upstream_prefix ""
 set -g __fish_git_prompt_char_stagedstate "●"
-set -g __fish_git_prompt_char_dirtystate "✚ "
+set -g __fish_git_prompt_char_dirtystate "✚"
 set -g __fish_git_prompt_char_untrackedfiles "…"
-set -g __fish_git_prompt_char_conflictedstate "✖ "
+set -g __fish_git_prompt_char_conflictedstate "✖"
 set -g __fish_git_prompt_char_cleanstate "✔"
 set -g __fish_git_prompt_color_upstream normal
 set -g __fish_git_prompt_color_dirtystate blue

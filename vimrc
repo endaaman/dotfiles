@@ -47,7 +47,7 @@ set background=dark
 colorscheme OceanicNext
 
 
-set ambiwidth=double
+" set ambiwidth=double
 set autoindent
 set backupdir=~/.vim/tmp
 set breakindent
@@ -79,6 +79,7 @@ set showmatch
 set smartcase
 set smarttab
 set softtabstop=2
+set t_Co=256
 set tabstop=2
 set timeout timeoutlen=1000 ttimeoutlen=50
 set ttyfast
@@ -87,7 +88,6 @@ set updatetime=1000
 set wildmenu
 set wrap
 set write
-
 
 autocmd InsertLeave * set cursorline
 autocmd InsertEnter * set nocursorline
