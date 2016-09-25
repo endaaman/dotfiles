@@ -137,17 +137,19 @@ nnoremap <C-x> :x<CR>
 nnoremap <C-s> :w<CR>
 nnoremap <C-q> :q<CR>
 nnoremap <C-h> zz
+nnoremap <C-e> ;
 nnoremap <silent> <C-m> :noh<CR>
 nnoremap ZZ <nop>
 nnoremap ZQ <nop>
 nnoremap Q <Nop>
+nnoremap ; Ea
 nnoremap - <C-x>
 nnoremap + <C-a>
 
-nnoremap <C-h> <Nop>
 nnoremap <C-d> <Nop>
-nnoremap <C-u> <Nop>
-nnoremap <C-y> <nop>
+nnoremap <C-u> <Nop> " Resizer
+nnoremap <C-y> <nop> " vimfiler
+nnoremap <C-n> <nop> " NERDTree
 
 vnoremap v $h
 vnoremap <C-h> <gv
@@ -166,6 +168,7 @@ cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 
 nnoremap <silent> <C-n> :NERDTreeFind<CR> <C-l>
 
+command! -range -nargs=0 -bar JsonTool <line1>,<line2>!python -m json.tool
 
 " let g:nodejs_complete_config = {
 " \  'js_compl_fn': 'jscomplete#CompleteJS',
@@ -173,7 +176,6 @@ nnoremap <silent> <C-n> :NERDTreeFind<CR> <C-l>
 " \}
 
 let g:winresizer_start_key = '<C-u>'
-
 
 let g:indentLine_color_term = 23
 
@@ -219,7 +221,7 @@ autocmd FileType vimfiler nmap <buffer> l        <Plug>(vimfiler_expand_tree)
 let g:vimfiler_tree_leaf_icon = ' '
 let g:vimfiler_tree_opened_icon = '▾'
 let g:vimfiler_tree_closed_icon = '▸'
-let g:vimfiler_file_icon = '-'
+let g:vimfiler_file_icon = ''
 let g:vimfiler_marked_file_icon = '*'
 
 

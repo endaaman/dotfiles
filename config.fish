@@ -1,10 +1,10 @@
 # 🐡 🐟 🐠
 
 ###* user environments
+set -gx XDG_CONFIG_HOME $HOME/.config
+set -gx VTE_CJK_WIDTH 1
 
 set -x PATH $HOME/bin $PATH
-set -x XDG_CONFIG_HOME $HOME/.config
-set -x VTE_CJK_WIDTH 1
 set -x TERM xterm
 
 function fish_greeting
@@ -128,7 +128,7 @@ set -g __fish_git_prompt_color_branch magenta
 set -g __fish_git_prompt_showupstream "informative"
 set -g __fish_git_prompt_char_upstream_ahead "↑ "
 set -g __fish_git_prompt_char_upstream_behind "↓ "
-set -g __fish_git_prompt_char_upstream_prefix "U"
+set -g __fish_git_prompt_char_upstream_prefix ""
 set -g __fish_git_prompt_char_stagedstate "● "
 set -g __fish_git_prompt_char_dirtystate "✚ "
 set -g __fish_git_prompt_char_untrackedfiles "…"

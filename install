@@ -33,10 +33,13 @@ ln -fs ~/.vimrc ~/.config/nvim/init.vim
 
 touch ~/.gitconfig_local
 
+changed=false
+
 nodejs=false
 python=false
 ruby=false
 fisherman=false
+zplug=false
 
 for i in "$@" ; do
   case "$i" in
@@ -44,83 +47,121 @@ for i in "$@" ; do
     'python'    | 'py'   ) python=true ;;
     'ruby'      | 'rb'   ) ruby=true ;;
     'fisherman' | 'fm'   ) fisherman=true ;;
+    'zplug'     | 'zp'   ) zplug=true ;;
+    'all' )
+      nodejs=true
+      python=true
+      ruby=true
+      fisherman=true
+      zplug=true
   esac
 done
 
-if $fisherman; then
-  if ! which fish >/dev/null 2>&1; then
-    echo 'Please install fish'
-    exit 1
-  fi
-  if [ ! -f "${HOME}/.config/fish/functions/fisher.fish" ]; then
-    printf "\n"
-    printf "${CYAN}Installing fisherman${NC}\n"
-    curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
-  fi
-fi
 
 if $nodejs; then
-  if [ ! -d "${HOME}/.nodebrew" ]; then
-    printf "\n"
-    printf "${CYAN}Installing nodebrew${NC}\n"
+  changed=true
+  if [ ! -d ~/.nodebrew ]; then
+    echo
+    echo -e "${CYAN}Installing nodebrew${NC}"
     curl -L git.io/nodebrew | perl - setup
-    printf "${CYAN}Installing node.js v4${NC}\n"
+    echo -e "${CYAN}Installing node.js v4${NC}"
     ~/.nodebrew/nodebrew install-binary 4
   else
-    printf "${CYAN}Updating nodebrew${NC}\n"
+    echo -e "${CYAN}Updating nodebrew${NC}"
     ~/.nodebrew/nodebrew selfupdate
   fi
 fi
 
 
 if $python; then
-  if [ ! -d "${HOME}/.pyenv" ]; then
-    printf "\n"
-    printf "${CYAN}Installing pyenv${NC}\n"
+  changed=true
+  if [ ! -d ~/.pyenv ]; then
+    echo
+    echo -e "${CYAN}Installing pyenv${NC}"
     git clone https://github.com/yyuu/pyenv.git ~/.pyenv
   else
-    printf "${CYAN}Updating pyenv${NC}\n"
+    echo -e "${CYAN}Updating pyenv${NC}"
     cd ~/.pyenv
     git pull
     cd
+    echo
   fi
 
-  if [ ! -d "${HOME}.pyenv/plugins/pyenv-virtualenv" ]; then
-    printf "\n"
-    printf "${CYAN}Installing pyenv-virtualenv${NC}\n"
+  if [ ! -d ~/.pyenv/plugins/pyenv-virtualenv ]; then
+    echo
+    echo -e "${CYAN}Installing pyenv-virtualenv${NC}"
     git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
   else
-    printf "${CYAN}Updating pyenv-virtualenv${NC}\n"
+    echo -e "${CYAN}Updating pyenv-virtualenv${NC}"
     cd ~/.pyenv/plugins/pyenv-virtualenv
     git pull
     cd
+    echo
   fi
 fi
 
 
 if $ruby; then
-  if [ ! -d "${HOME}/.rbenv" ]; then
-    printf "\n"
-    printf "${CYAN}Installing rbenv${NC}\n"
+  changed=true
+  if [ ! -d ~/.rbenv ]; then
+    echo
+    echo -e "${CYAN}Installing rbenv${NC}"
     git clone https://github.com/rbenv/rbenv.git ~/.rbenv
   else
-    printf "${CYAN}Updating rbenv${NC}\n"
+    echo -e "${CYAN}Updating rbenv${NC}"
     cd ~/.rbenv
     git pull
     cd
+    echo
   fi
 
-  if [ ! -d "${HOME}/.rbenv/plugins/ruby-build" ]; then
-    printf "\n"
-    printf "${CYAN}Installing ruby-build${NC}\n"
+  if [ ! -d ~/.rbenv/plugins/ruby-build ]; then
+    echo
+    echo -e "${CYAN}Installing ruby-build${NC}"
     git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
   else
-    printf "${CYAN}Updating ruby-build${NC}\n"
+    echo -e "${CYAN}Updating ruby-build${NC}"
     cd ~/.rbenv/plugins/ruby-build
     git pull
     cd
+    echo
   fi
 fi
 
 
-printf "\n${CYAN}All has been done.${NC}\n"
+if $zplug; then
+  changed=true
+  if [ ! -d ~/.zplug ]; then
+    echo
+    echo -e "${CYAN}Installing zplug${NC}"
+    curl -sL zplug.sh/installer | zsh
+  else
+    echo -e "${CYAN}Updating zplug${NC}"
+    cd ~/.zplug
+    git pull
+    cd
+    echo
+  fi
+fi
+
+
+if $fisherman; then
+  changed=true
+  if ! which fish >/dev/null 2>&1; then
+    echo -e "${CYAN}Please install fish${NC}"
+    exit 1
+  fi
+  if [ ! -f "~/.config/fish/functions/fisher.fish" ]; then
+    echo
+    echo -e "${CYAN}Installing fisherman${NC}"
+    curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
+    echo
+  fi
+fi
+
+if $changed; then
+  echo -e "${CYAN}Done.${NC}"
+else
+  echo -e "${CYAN}Nothing to do.${NC}"
+fi
+

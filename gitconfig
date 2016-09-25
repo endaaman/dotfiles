@@ -17,3 +17,5 @@
 [color]
   ui = true
   diff = true
+[ghq]
+  root = ~/src

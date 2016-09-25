@@ -1,7 +1,5 @@
-fisherman/await
 fisherman/docker-completion
 barnybug/docker-fish-completion
-fisherman/fzf
 fisherman/getopts
-fisherman/last_job_id
+peco/peco
 fisherman/z
