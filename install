@@ -14,6 +14,8 @@ cd
 mkdir -p ~/.vim
 mkdir -p ~/.config/nvim
 mkdir -p ~/.config/fish/functions
+mkdir -p ~/.config/fontconfig
+mkdir -p ~/.fonts
 
 # git
 ln -fs ~/dotfiles/gitconfig ~/.gitconfig
