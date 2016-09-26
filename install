@@ -43,7 +43,7 @@ ln -fs ~/dotfiles/Xdefaults ~/.Xdefaults
 
 # fonts
 ln -fs ~/dotfiles/fonts.conf ~/.config/fontconfig/fonts.conf
-ln -fs ~/dotfiles/fonts ~/.fonts/dotfiles
+ln -fs ~/dotfiles/fonts/ ~/.fonts/
 
 # editorconfig
 ln -fs ~/dotfiles/editorconfig ~/.editorconfig
