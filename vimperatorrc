@@ -16,6 +16,8 @@ nnoremap <A-Right> <C-PageDown>
 nnoremap yt :js util.copyToClipboard(buffer.title)
 nnoremap ym :js util.copyToClipboard('[' + buffer.title + '](' + buffer.URL + ')')
 
+set hintchars=ifjklasdhguonmerwc
+
 ignorekeys clear
 ignorekeys add mail\\.google\\.com
 ignorekeys add live\\.nicovideo\\.jp/watch

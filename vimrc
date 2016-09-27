@@ -133,16 +133,15 @@ nnoremap <C-x> :x<CR>
 nnoremap <C-s> :w<CR>
 nnoremap <C-q> :q<CR>
 nnoremap <C-h> zz
-nnoremap <C-e> ;
 nnoremap <silent> <C-m> :noh<CR>
 nnoremap ZZ <nop>
 nnoremap ZQ <nop>
 nnoremap Q <Nop>
-nnoremap ; Ea
 nnoremap - <C-x>
 nnoremap + <C-a>
 
 nnoremap <C-d> <Nop>
+nnoremap <C-a> <Nop>
 nnoremap <C-u> <Nop> " Resizer
 nnoremap <C-y> <nop> " vimfiler
 nnoremap <C-n> <nop> " NERDTree
@@ -150,6 +149,7 @@ nnoremap <C-n> <nop> " NERDTree
 vnoremap v $h
 vnoremap <C-h> <gv
 vnoremap <C-l> >gv
+vnoremap <Space> o
 vnoremap * "zy:let @/ = @z<CR>n
 
 inoremap <C-l> <Del>
