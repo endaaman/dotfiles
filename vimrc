@@ -113,10 +113,10 @@ noremap x "_x
 noremap , "
 noremap S <Nop>
 
-nnoremap <silent> <C-f> :bp<CR>
-nnoremap <silent> <C-b> :bn<CR>
-nnoremap <silent> <Left> :tabp<CR>
-nnoremap <silent> <Right> :tabn<CR>
+nnoremap <silent> <C-f> :<C-u>bp<CR>
+nnoremap <silent> <C-b> :<C-u>bn<CR>
+nnoremap <silent> <Left> :<C-u>tabp<CR>
+nnoremap <silent> <Right> :<C-u>tabn<CR>
 
 nnoremap n nzz
 nnoremap N Nzz
@@ -129,11 +129,11 @@ nnoremap <C-j> "zdd"zp
 nnoremap <C-k> "zddk"zP
 nnoremap <S-Tab> <C-w>W
 nnoremap <Tab> <C-w>w
-nnoremap <C-x> :x<CR>
-nnoremap <C-s> :w<CR>
-nnoremap <C-q> :q<CR>
+nnoremap <C-x> :<C-u>x<CR>
+nnoremap <C-s> :<C-u>w<CR>
+nnoremap <C-q> :<C-u>q<CR>
 nnoremap <C-h> zz
-nnoremap <silent> <C-m> :noh<CR>
+nnoremap <silent> <C-m> :<C-u>noh<CR>
 nnoremap ZZ <nop>
 nnoremap ZQ <nop>
 nnoremap Q <Nop>
@@ -154,11 +154,13 @@ vnoremap * "zy:let @/ = @z<CR>n
 
 inoremap <C-l> <Del>
 inoremap <BS> <Nop>
-inoremap <C-s> <C-o>:w<CR>
+inoremap <C-s> <C-o>:<C-u>w<CR>
 
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
 cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 
-nnoremap <silent> <C-n> :NERDTreeFind<CR> <C-l>
+nnoremap <silent> <C-n> :<C-u>NERDTreeFind<CR> <C-l>
 
 command! -range -nargs=0 -bar JsonTool <line1>,<line2>!python -m json.tool
 
