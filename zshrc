@@ -28,8 +28,8 @@ autoload -Uz colors
 colors
 eval `dircolors -b`
 
-compinit
 autoload -Uz compinit
+compinit
 zstyle ':completion:*' list-colors $LS_COLORS
 # zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' ignore-parents parent pwd ..
