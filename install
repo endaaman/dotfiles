@@ -11,7 +11,7 @@ NC='\033[0m'
 
 cd
 
-mkdir -p ~/.vim
+mkdir -p ~/.vim/tmp
 mkdir -p ~/.config/nvim
 mkdir -p ~/.config/fish/functions
 mkdir -p ~/.config/fontconfig
