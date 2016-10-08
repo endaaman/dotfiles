@@ -1,5 +1,4 @@
 clear Lock
 keysym Caps_Lock = Escape
-keysym Zenkaku_Hankaku = Escape
 keysym Hiragana_Katakana = Henkan_Mode
 
