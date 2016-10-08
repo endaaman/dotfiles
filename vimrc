@@ -47,7 +47,7 @@ set background=dark
 colorscheme OceanicNext
 
 
-" set ambiwidth=double
+set ambiwidth=double
 set autoindent
 set backupdir=~/.vim/tmp
 set breakindent
