@@ -160,7 +160,7 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 
-nnoremap <silent> <C-n> :<C-u>NERDTreeFind<CR> <C-l>
+nnoremap <silent> <C-n> :<C-u>NERDTree<CR> <C-l>
 
 command! -range -nargs=0 -bar JsonTool <line1>,<line2>!python -m json.tool
 
