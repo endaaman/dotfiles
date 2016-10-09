@@ -71,11 +71,11 @@ for i in "$@" ; do
     'keymap1' )
       echo -e "${CYAN}Activate keymap1${NC}"
       ln -sf ~/dotfiles/Xmodmap1 ~/.Xmodmap
-      exit 0
+      ;;
     'keymap2' )
       echo -e "${CYAN}Activate keymap2${NC}"
       ln -sf ~/dotfiles/Xmodmap2 ~/.Xmodmap
-      exit 0
+      ;;
     'all' )
       nodejs=true
       python=true
