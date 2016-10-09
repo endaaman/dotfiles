@@ -1,0 +1,5 @@
+! vi: set ft=xmodmap :
+keysym Hiragana_Katakana = Henkan_Mode
+clear Lock
+keysym Caps_Lock = Escape
+
