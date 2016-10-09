@@ -11,6 +11,7 @@ fi
 if [ -d ~/.zplug ]; then
   source ~/.zplug/init.zsh
   zplug "olivierverdier/zsh-git-prompt", use:"zshrc.sh"
+  zplug "Winetricks/winetricks", as:command, use:src/winetricks
 
   if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -124,11 +125,6 @@ fi
 
 
 # wine
-export WINE_VERSION=1.9.19
 export WINEARCH=win32
-export WINEPREFIX=~/wine
-pol_path=~/.PlayOnLinux/wine/linux-x86/$WINE_VERSION/bin
-if [ -d $pol_path ]; then
-  export PATH=$pol_path:$PATH
-fi
+export WINEPREFIX=~/wineprefixes/current
 
