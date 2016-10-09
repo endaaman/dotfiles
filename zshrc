@@ -60,6 +60,7 @@ alias tap_production="export NODE_ENV=production"
 alias untap_production="unset NODE_ENV"
 
 alias reload-zshrc='exec zsh -l'
+alias reload-xmodmap='setxkbmap && xmodmap ~/.Xmodmap'
 
 function peco_cd() {
   local dir=$(find . -maxdepth 1 -type d ! -path "*/.*"| peco)
