@@ -5,7 +5,6 @@ if ! which git >/dev/null 2>&1; then
   exit 1
 fi
 
-
 CYAN='\033[0;34m'
 NC='\033[0m'
 
@@ -69,6 +68,14 @@ for i in "$@" ; do
     'ruby'      | 'rb'   ) ruby=true ;;
     'fisherman' | 'fm'   ) fisherman=true ;;
     'zplug'     | 'zp'   ) zplug=true ;;
+    'keymap1' )
+      echo -e "${CYAN}Activate keymap1${NC}"
+      ln -sf ~/dotfiles/Xmodmap1 ~/.Xmodmap
+      exit 0
+    'keymap2' )
+      echo -e "${CYAN}Activate keymap2${NC}"
+      ln -sf ~/dotfiles/Xmodmap2 ~/.Xmodmap
+      exit 0
     'all' )
       nodejs=true
       python=true
@@ -183,6 +190,6 @@ fi
 if $changed; then
   echo -e "${CYAN}Done.${NC}"
 else
-  echo -e "${CYAN}Nothing to do.${NC}"
+  echo -e "${CYAN}Done linking.${NC}"
 fi
 
