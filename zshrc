@@ -89,7 +89,7 @@ alias gh='cd `ghq list -p | peco`'
 
 
 # envs
-# export VTE_CJK_WIDTH=1
+export VTE_CJK_WIDTH=1
 export EDITOR=vim
 export TERM=xterm-256color
 export XDG_CONFIG_HOME=~/.config
