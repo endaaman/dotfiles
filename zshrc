@@ -63,6 +63,11 @@ alias untap_production="unset NODE_ENV"
 alias reload-zshrc='exec zsh -l'
 alias reload-xmodmap='setxkbmap && xmodmap ~/.Xmodmap'
 
+if which trash-put &> /dev/null; then
+  alias rm='trash-put'
+fi
+
+
 function peco_cd() {
   local dir=$(find . -maxdepth 1 -type d ! -path "*/.*"| peco)
   if [ ! -z "$dir" ] ; then
