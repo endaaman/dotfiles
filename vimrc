@@ -44,10 +44,10 @@ endif
 
 set background=dark
 colorscheme OceanicNext
-
 set ambiwidth=double
 set autoindent
 set backupdir=~/.vim/tmp
+set backspace=2
 set breakindent
 set clipboard=unnamedplus
 set cursorline
