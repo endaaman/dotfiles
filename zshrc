@@ -76,6 +76,12 @@ function peco_cd() {
   fi
 }
 zle -N peco_cd
+
+
+function lp() {
+  ls -AlF $@ | peco
+}
+
 bindkey '^J' peco_cd
 
 alias gh='cd `ghq list -p | peco`'
