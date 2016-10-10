@@ -40,7 +40,7 @@ ln -fs ~/.vimrc ~/.config/nvim/init.vim
 
 # x window system
 ln -fs ~/dotfiles/xsession ~/.xsession
-# ln -fs ~/dotfiles/Xmodmap ~/.Xmodmap
+ln -fs ~/dotfiles/Xmodmap ~/.Xmodmap
 ln -fs ~/dotfiles/Xdefaults ~/.Xdefaults
 
 # fonts
