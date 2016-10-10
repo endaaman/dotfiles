@@ -1,13 +1,12 @@
+" vi: set ft=vim :
+set all&
+autocmd!
 scriptencoding utf-8
 if !1 | finish | endif
-set nocompatible
+if !&compatible
+  set nocompatible
+endif
 syntax on
-
-" augroup source-vimrc
-"   autocmd!
-"   autocmd BufWritePost *vimrc source $MYVIMRC | set foldmethod=marker
-"   autocmd BufWritePost *gvimrc if has('gui_running') source $MYGVIMRC
-" augroup END
 
 let s:dein_dir = expand('~/.cache/dein')
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
@@ -45,7 +44,6 @@ endif
 
 set background=dark
 colorscheme OceanicNext
-
 
 set ambiwidth=double
 set autoindent
