@@ -53,6 +53,10 @@ ln -fs ~/dotfiles/editorconfig ~/.editorconfig
 # vimperator
 ln -fs ~/dotfiles/vimperatorrc ~/.vimperatorrc
 
+# compton
+ln -fs ~/dotfiles/compton.conf ~/.config/compton.conf
+ln -fs ~/.config/compton.conf ~/.config/marco-compton.conf
+
 
 touch ~/.gitconfig_local
 
