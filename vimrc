@@ -94,7 +94,7 @@ autocmd BufWritePre * if @% !~ '\.md$' | :%s/\s\+$//e | endif
 autocmd BufWritePre * :%s/\t\+$//e
 autocmd BufRead,BufNewFile /etc/nginx/* set ft=nginx
 autocmd BufEnter * execute ":lcd " . expand("%:p:h")
-autocmd FileType nerdtree setlocal nolist
+autocmd FileType nerdtree setlocaDTreeust
 
 map <Up> <Nop>
 map <Down> <Nop>
@@ -133,8 +133,8 @@ nnoremap <C-s> :<C-u>w<CR>
 nnoremap <C-q> :<C-u>q<CR>
 nnoremap <C-h> zz
 nnoremap <silent> <C-m> :<C-u>noh<CR>
-nnoremap ZZ <nop>
-nnoremap ZQ <nop>
+nnoremap ZZ <Nop>
+nnoremap ZQ <Nop>
 nnoremap Q <Nop>
 nnoremap - <C-x>
 nnoremap + <C-a>
@@ -149,7 +149,7 @@ vnoremap v $h
 vnoremap <C-h> <gv
 vnoremap <C-l> >gv
 vnoremap <Space> o
-vnoremap * "zy:let @/ = @z<CR>nN
+vnoremap * "zy:<C-u>let @/ = @z\|set hlsearch<CR>gv
 
 inoremap <C-l> <Del>
 inoremap <BS> <Nop>
