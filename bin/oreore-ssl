@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+  echo "Please specify name" 1>&2
+  exit 1
+fi
+
+openssl genrsa 4096 > `echo $1`.key
+openssl req -new -key `echo $1`.key > `echo $1`.csr
+openssl x509 -days 3650 -req -signkey `echo $1`.key < `echo  $1`.csr > `echo $1`.crt

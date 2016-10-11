@@ -1,0 +1,28 @@
+#!/bin/bash
+
+destdir=~/.config/plank/dock1/launchers
+
+fullfile=$(readlink -f $1)
+filename=$(basename $fullfile)
+extension="${filename##*.}"
+appname="${filename%.*}"
+
+if [ $extension != 'desktop' ] ; then
+  echo "filetype must be desktop"
+  exit 1
+fi
+
+if [ ! -r $fullfile ] ; then
+  echo "$1 does not exist"
+  exit 1
+fi
+
+cd $destdir || exit 1
+dest=$destdir/$appname.dockitem
+
+
+echo > $dest
+echo [plankitemsdockitempreferences] >> $dest
+echo "launcher=file://$line" >> $dest
+
+echo wrote file $dest

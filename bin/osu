@@ -1,0 +1,6 @@
+#!/bin/bash
+
+xset m 0 0 && \
+WINEARCH=win32 \
+WINEPREFIX=/home/ken/wineprefixes/current \
+wine /home/ken/wineprefixes/current/drive_c/Program\ Files/osu/osu\!.exe -opengl
