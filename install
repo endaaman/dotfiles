@@ -14,6 +14,7 @@ mkdir -p ~/.vim/tmp
 mkdir -p ~/.config/nvim
 mkdir -p ~/.config/fish/functions
 mkdir -p ~/.config/fontconfig
+mkdir -p ~/.config/peco
 mkdir -p ~/.fonts
 
 mkdir -p ~/src
@@ -22,6 +23,7 @@ mkdir -p ~/wineprefixes
 # git
 ln -fs ~/dotfiles/gitconfig ~/.gitconfig
 ln -fs ~/dotfiles/gitignore_global ~/.gitignore_global
+touch ~/.gitconfig_local
 
 # zsh
 ln -fs ~/dotfiles/zshrc ~/.zshrc
@@ -56,6 +58,9 @@ ln -fs ~/dotfiles/vimperatorrc ~/.vimperatorrc
 # compton
 ln -fs ~/dotfiles/compton.conf ~/.config/compton.conf
 ln -fs ~/.config/compton.conf ~/.config/marco-compton.conf
+
+# peco
+ln -fs ~/dotfiles/peco.json ~/.config/peco/config.json
 
 
 touch ~/.gitconfig_local

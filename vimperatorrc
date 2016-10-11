@@ -6,6 +6,7 @@ nnoremap h <C-PageUp>
 nnoremap l <C-PageDown>
 nnoremap J <PageDown>
 nnoremap K <PageUp>
+nnoremap <C-m> :<C-h>noh<CR>
 
 nnoremap <C-h> <Left>
 nnoremap <C-l> <Right>
@@ -13,8 +14,8 @@ nnoremap <C-l> <Right>
 nnoremap <A-Left> <C-PageUp>
 nnoremap <A-Right> <C-PageDown>
 
-nnoremap yt :js util.copyToClipboard(buffer.title)
-nnoremap ym :js util.copyToClipboard('[' + buffer.title + '](' + buffer.URL + ')')
+nnoremap yt :js util.copyToClipboard(buffer.title)<CR>
+nnoremap ym :js util.copyToClipboard('[' + buffer.title + '](' + buffer.URL + ')')<CR>
 
 set hintchars=ifjklasdhguonmerwc
 

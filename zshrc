@@ -39,20 +39,34 @@ zstyle ':completion:*:processes' command 'ps x -o pid,s,args'
 stty stop undef
 stty start undef
 
+DIRSTACKSIZE=100
+setopt AUTO_PUSHD
 
-# alias
+autoload -Uz compinit && compinit
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*:cd:*' ignore-parents parent pwd
+zstyle ':completion:*:descriptions' format '%BCompleting%b %U%d%u'
+
+
+# aliases and functions
 alias g="git"
 alias v="vim"
 alias nv="nvim"
 alias ll='ls -ahlF'
 
+alias cb="xsel --clipboard --input"
+alias cbp="xsel --clipboard --output"
+alias gh='cd `ghq list -p | peco`'
+alias ppp='ps aux | peco'
+
+alias rz='exec zsh -l'
+alias rx='setxkbmap && xmodmap ~/.Xmodmap'
+
 alias nr="npm run"
 alias pm="python manage.py"
 alias be="bundle exec"
 alias j2c="js2coffee"
-
-alias cb="xsel --clipboard --input"
-alias cbp="xsel --clipboard --output"
 alias xopen="xdg-open"
 alias docker-clean="docker ps -a -q -f \"status=exited\" | xargs --no-run-if-empty docker rm -v"
 alias docker-cleani="docker images -q -f \"dangling=true\" | xargs --no-run-if-empty docker rmi"
@@ -60,32 +74,25 @@ alias docker-cleani="docker images -q -f \"dangling=true\" | xargs --no-run-if-e
 alias tap_production="export NODE_ENV=production"
 alias untap_production="unset NODE_ENV"
 
-alias reload-zshrc='exec zsh -l'
-alias reload-xmodmap='setxkbmap && xmodmap ~/.Xmodmap'
-
 if which trash-put &> /dev/null; then
   alias rm='trash-put'
 fi
 
-
-function peco_cd() {
+function pcd() {
   local dir=$(find . -maxdepth 1 -type d ! -path "*/.*"| peco)
   if [ ! -z "$dir" ] ; then
     cd "$dir"
     zle accept-line
   fi
 }
-zle -N peco_cd
-
 
 function lp() {
   ls -AlF $@ | peco
 }
 
-bindkey '^J' peco_cd
 
-alias gh='cd `ghq list -p | peco`'
-
+# key bindings
+bindkey '^J' delete-char
 
 
 # envs

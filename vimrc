@@ -41,7 +41,6 @@ else
   autocmd ColorScheme * highlight LineNr ctermbg=none
 endif
 
-
 set background=dark
 colorscheme OceanicNext
 set ambiwidth=double
