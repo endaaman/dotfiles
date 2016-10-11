@@ -60,7 +60,7 @@ alias cbp="xsel --clipboard --output"
 alias gh='cd `ghq list -p | peco`'
 alias ppp='ps aux | peco'
 
-alias rz='exec zsh -l'
+alias rrr='exec zsh -l'
 alias rx='setxkbmap && xmodmap ~/.Xmodmap'
 
 alias nr="npm run"
@@ -73,6 +73,7 @@ alias docker-cleani="docker images -q -f \"dangling=true\" | xargs --no-run-if-e
 
 alias tap_production="export NODE_ENV=production"
 alias untap_production="unset NODE_ENV"
+
 
 if which trash-put &> /dev/null; then
   alias rm='trash-put'
@@ -90,6 +91,9 @@ function lp() {
   ls -AlF $@ | peco
 }
 
+function cbf() {
+  cat $1 | xsel --clipboard --input
+}
 
 # key bindings
 bindkey '^J' delete-char
@@ -102,6 +106,7 @@ export TERM=xterm-256color
 export XDG_CONFIG_HOME=~/.config
 
 export PATH=~/bin:$PATH
+export PATH=~/dotfiles/bin:$PATH
 
 
 # node.js

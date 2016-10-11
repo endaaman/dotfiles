@@ -43,6 +43,7 @@ endif
 
 set background=dark
 colorscheme OceanicNext
+
 set ambiwidth=double
 set autoindent
 set backupdir=~/.vim/tmp
@@ -81,6 +82,7 @@ set tabstop=2
 set timeout timeoutlen=1000 ttimeoutlen=50
 set ttyfast
 set undodir=~/.vim/tmp
+set undofile
 set updatetime=1000
 set wildmenu
 set wrap
@@ -147,7 +149,7 @@ vnoremap v $h
 vnoremap <C-h> <gv
 vnoremap <C-l> >gv
 vnoremap <Space> o
-vnoremap * "zy:let @/ = @z<CR>n
+vnoremap * "zy:let @/ = @z<CR>nN
 
 inoremap <C-l> <Del>
 inoremap <BS> <Nop>
@@ -197,6 +199,7 @@ let g:neocomplete#sources#omni#input_patterns.go = '\h\w\.\w*'
 
 let g:WebDevIconsNerdTreeAfterGlyphPadding = '  '
 let NERDTreeShowHidden=1
+let NERDTreeHijackNetrw=0
 
 
 
