@@ -93,7 +93,7 @@ function lp() {
   ls -AlF $@ | peco
 }
 
-function cbf() {
+function catcb() {
   cat $1 | xsel --clipboard --input
 }
 

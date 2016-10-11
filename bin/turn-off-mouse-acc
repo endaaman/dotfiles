@@ -1,0 +1,4 @@
+#!/bin/bash
+
+xset m 0 0
+xset q | grep -A 1 Pointer
