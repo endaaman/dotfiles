@@ -12,6 +12,7 @@ if [ -d ~/.zplug ]; then
   source ~/.zplug/init.zsh
   zplug "olivierverdier/zsh-git-prompt", use:"zshrc.sh"
   zplug "Winetricks/winetricks", as:command, use:src/winetricks
+  zplug "motemen/ghq", as:command, from:gh-r, rename-to:ghq
 
   if ! zplug check --verbose; then
     printf "Install? [y/N]: "

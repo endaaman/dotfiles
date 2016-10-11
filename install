@@ -22,7 +22,7 @@ mkdir -p ~/wineprefixes
 
 # git
 ln -fs ~/dotfiles/gitconfig ~/.gitconfig
-ln -fs ~/dotfiles/gitignore_global ~/.gitignore_global
+ln -fs ~/dotfiles/gitscripts ~/.gitscripts
 touch ~/.gitconfig_local
 
 # zsh
