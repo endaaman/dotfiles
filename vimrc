@@ -35,6 +35,7 @@ if has('gui_running')
   set guifont=Ubuntu\ Mono\ 11
   set lines=40
   set columns=120
+  set ambiwidth=double
 else
   highlight Comment cterm=none
   autocmd ColorScheme * highlight Normal ctermbg=none
@@ -94,7 +95,9 @@ autocmd BufWritePre * if @% !~ '\.md$' | :%s/\s\+$//e | endif
 autocmd BufWritePre * :%s/\t\+$//e
 autocmd BufRead,BufNewFile /etc/nginx/* set ft=nginx
 autocmd BufEnter * execute ":lcd " . expand("%:p:h")
-autocmd FileType nerdtree setlocaDTreeust
+autocmd FileType nerdtree setlocal nolist
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 map <Up> <Nop>
 map <Down> <Nop>
