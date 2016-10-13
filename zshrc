@@ -55,15 +55,16 @@ zstyle ':completion:*:descriptions' format '%BCompleting%b %U%d%u'
 alias g="git"
 alias v="vim"
 alias nv="nvim"
+alias l='ls -hlF'
 alias ll='ls -ahlF'
 
 alias cb="xsel --clipboard --input"
 alias cbp="xsel --clipboard --output"
 alias gh='cd `ghq list -p | peco`'
-alias ppp='ps aux | peco'
+alias psp='ps aux | peco'
 
-alias rrr='exec zsh -l'
-alias rx='setxkbmap && xmodmap ~/.Xmodmap'
+alias rr='exec zsh -l'
+alias xm='setxkbmap && xmodmap ~/.Xmodmap'
 
 alias nr="npm run"
 alias pm="python manage.py"
