@@ -5,3 +5,4 @@ export QT_IM_MODULE=fcitx
 export XMODIFIERS="@im=fcitx"
 export GST_TAG_ENCODING=CP932
 
+setxkbmap && xmodmap ~/.Xmodmap
