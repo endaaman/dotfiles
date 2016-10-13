@@ -49,7 +49,6 @@ ln -fs ~/.vimrc ~/.config/nvim/init.vim
 ln -fs ~/dotfiles/xsession ~/.xsession
 ln -fs ~/dotfiles/xprofile ~/.xprofile
 ln -fs ~/dotfiles/Xmodmap ~/.Xmodmap
-ln -fs ~/dotfiles/Xdefaults ~/.Xdefaults
 
 # fonts
 ln -fs ~/dotfiles/fonts.conf ~/.config/fontconfig/fonts.conf
