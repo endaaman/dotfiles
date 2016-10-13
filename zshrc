@@ -94,8 +94,8 @@ function lp() {
   ls -AlF $@ | peco
 }
 
-function catcb() {
-  cat $1 | xsel --clipboard --input
+function catc() {
+  tee $1 | xsel --clipboard --input
 }
 
 function copy-buffer(){
