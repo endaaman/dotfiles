@@ -113,12 +113,11 @@ noremap L $
 noremap m :
 noremap x "_x
 noremap , "
-noremap S <Nop>
 
-nnoremap <silent> <C-f> :<C-u>bp<CR>
-nnoremap <silent> <C-b> :<C-u>bn<CR>
-nnoremap <silent> <Left> :<C-u>tabp<CR>
-nnoremap <silent> <Right> :<C-u>tabn<CR>
+nnoremap <C-f> :<C-u>bp<CR>
+nnoremap <C-b> :<C-u>bn<CR>
+nnoremap <Left> :<C-u>tabp<CR>
+nnoremap <Right> :<C-u>tabn<CR>
 
 nnoremap n nzz
 nnoremap N Nzz
@@ -135,18 +134,12 @@ nnoremap <C-x> :<C-u>x<CR>
 nnoremap <C-s> :<C-u>w<CR>
 nnoremap <C-q> :<C-u>q<CR>
 nnoremap <C-h> zz
-nnoremap <silent> <C-m> :<C-u>noh<CR>
+nnoremap <C-u> :<C-u>noh<CR>
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 nnoremap Q <Nop>
 nnoremap - <C-x>
 nnoremap + <C-a>
-
-nnoremap <C-d> <Nop>
-nnoremap <C-a> <Nop>
-nnoremap <C-u> <Nop> " Resizer
-nnoremap <C-y> <nop> " vimfiler
-nnoremap <C-n> <nop> " NERDTree
 
 vnoremap v $h
 vnoremap <C-h> <gv
@@ -166,6 +159,15 @@ nnoremap <silent> <C-n> :<C-u>NERDTree<CR> <C-l>
 
 command! -range -nargs=0 -bar JsonTool <line1>,<line2>!python -m json.tool
 
+noremap S <Nop>
+noremap <C-a> <Nop>
+noremap <C-d> <Nop>
+noremap <C-u> <Nop>
+noremap <C-m> <Nop>
+noremap <C-e> <Nop> " Resizer
+noremap <C-y> <nop> " vimfiler
+noremap <C-n> <nop> " NERDTree
+
 " let g:nodejs_complete_config = {
 " \  'js_compl_fn': 'jscomplete#CompleteJS',
 " \  'max_node_compl_len': 15
@@ -175,7 +177,7 @@ let g:vim_json_syntax_conceal = 0
 
 let g:copypath_copy_to_unnamed_register = 1
 
-let g:winresizer_start_key = '<C-u>'
+let g:winresizer_start_key = '<C-e>'
 
 let g:indentLine_color_term = 23
 
