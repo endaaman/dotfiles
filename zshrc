@@ -70,6 +70,7 @@ alias pm="python manage.py"
 alias be="bundle exec"
 alias j2c="js2coffee"
 alias xo="xdg-open"
+alias pp="peco"
 alias docker-clean="docker ps -a -q -f \"status=exited\" | xargs --no-run-if-empty docker rm -v"
 alias docker-cleani="docker images -q -f \"dangling=true\" | xargs --no-run-if-empty docker rmi"
 
@@ -97,8 +98,16 @@ function catcb() {
   cat $1 | xsel --clipboard --input
 }
 
+function copy-buffer(){
+  print -rn $BUFFER | xsel --clipboard --input
+  # zle -M "pbcopy: ${BUFFER}"
+}
+
+zle -N copy-buffer
+
 # key bindings
 bindkey '^J' delete-char
+bindkey '^S' copy-buffer
 
 
 # envs
