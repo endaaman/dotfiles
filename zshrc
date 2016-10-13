@@ -95,7 +95,7 @@ function lp() {
 }
 
 function catc() {
-  tee $1 | xsel --clipboard --input
+  cat $1 | xsel --clipboard --input
 }
 
 function copy-buffer(){
