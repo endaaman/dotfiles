@@ -15,8 +15,7 @@ mkdir -p ~/.config/nvim
 mkdir -p ~/.config/fish/functions
 mkdir -p ~/.config/fontconfig
 mkdir -p ~/.config/peco
-mkdir -p ~/.fonts
-
+mkdir -p ~/.local/share/fonts
 mkdir -p ~/src
 mkdir -p ~/wineprefixes
 
@@ -52,7 +51,7 @@ ln -fs ~/dotfiles/Xmodmap ~/.Xmodmap
 
 # fonts
 ln -fs ~/dotfiles/fonts.conf ~/.config/fontconfig/fonts.conf
-ln -fsn ~/dotfiles/fonts ~/.fonts/dotfiles
+ln -fsn ~/dotfiles/fonts ~/.local/share/fonts/dotfiles
 
 # editorconfig
 ln -fs ~/dotfiles/editorconfig ~/.editorconfig
