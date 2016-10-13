@@ -17,8 +17,6 @@ nnoremap <A-Right> <C-PageDown>
 nnoremap yt :js util.copyToClipboard(buffer.title)<CR>
 nnoremap ym :js util.copyToClipboard('[' + buffer.title + '](' + buffer.URL + ')')<CR>
 
-inoremap <C-a> <Ins><C-a><Ins>
-
 
 set hintchars=ifjklasdhguonmerwc
 highlight Hint font-family: monospace; font-size: 16px; font-weight: bold; text-transform: uppercase; color: white; background-color: red; border-color: ButtonShadow; border-width: 0px; border-style: solid; padding: 0px 1px 0px 1px;
