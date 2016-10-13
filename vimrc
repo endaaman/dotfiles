@@ -159,14 +159,15 @@ nnoremap <silent> <C-n> :<C-u>NERDTree<CR> <C-l>
 
 command! -range -nargs=0 -bar JsonTool <line1>,<line2>!python -m json.tool
 
-noremap S <Nop>
-noremap <C-a> <Nop>
-noremap <C-d> <Nop>
-noremap <C-u> <Nop>
-noremap <C-m> <Nop>
-noremap <C-e> <Nop> " Resizer
-noremap <C-y> <nop> " vimfiler
-noremap <C-n> <nop> " NERDTree
+nnoremap S <Nop>
+nnoremap <C-a> <Nop>
+nnoremap <C-d> <Nop>
+nnoremap <C-m> <Nop>
+nnoremap <C-e> <Nop> " Resizer
+nnoremap <C-y> <nop> " vimfiler
+nnoremap <C-n> <nop> " NERDTree
+nnoremap <C-u> <Nop>
+
 
 " let g:nodejs_complete_config = {
 " \  'js_compl_fn': 'jscomplete#CompleteJS',
