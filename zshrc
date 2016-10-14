@@ -101,12 +101,12 @@ function catc() {
 
 function copy-buffer(){
   print -rn $BUFFER | xsel --clipboard --input
-  # zle -M "pbcopy: ${BUFFER}"
 }
-
 zle -N copy-buffer
 
+
 # key bindings
+bindkey '^[l' delete-char
 bindkey '^J' delete-char
 bindkey '^S' copy-buffer
 
@@ -116,26 +116,22 @@ export VTE_CJK_WIDTH=1
 export EDITOR=vim
 export TERM=xterm-256color
 export XDG_CONFIG_HOME=~/.config
+export WINEARCH=win32
+export WINEPREFIX=~/wineprefixes/current
 
 export PATH=~/bin:$PATH
 export PATH=~/dotfiles/bin:$PATH
 
-
-# node.js
 if [ -d ~/.nodebrew ]; then
   export PATH=~/.nodebrew/current/bin:$PATH
   nodebrew use 6 > /dev/null
 fi
 
-
-# ruby
 if [ -d ~/.rbenv ]; then
   export PATH=~/.rbenv/bin:$PATH
   eval "$(rbenv init -)"
 fi
 
-
-# python
 if [ -d ~/.pyenv ]; then
   export PYENV_VIRTUALENV_DISABLE_PROMPT=1
   export PYENV_ROOT=$HOME/.pyenv
@@ -144,22 +140,13 @@ if [ -d ~/.pyenv ]; then
   eval "$(pyenv virtualenv-init -)"
 fi
 
-
-# PHP
 if [ -d ~/.phpbrew ]; then
   source ~/.phpbrew/bashrc
 fi
 
-
-# GO
 if [ -d ~/go ]; then
   export GOPATH=~/go
   export PATH=$PATH:$GOPATH/bin
   export GO15VENDOREXPERIMENT=1
 fi
-
-
-# wine
-export WINEARCH=win32
-export WINEPREFIX=~/wineprefixes/current
 
