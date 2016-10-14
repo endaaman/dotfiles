@@ -126,8 +126,8 @@ nnoremap # #zz
 nnoremap o o<Esc>
 nnoremap O O<Esc>
 nnoremap Y y$
-nnoremap <C-j> "zdd"zp
-nnoremap <C-k> "zddk"zP
+" nnoremap <C-j> "zdd"zp
+" nnoremap <C-k> "zddk"zP
 nnoremap <S-Tab> <C-w>W
 nnoremap <Tab> <C-w>w
 nnoremap <C-x> :<C-u>x<CR>
