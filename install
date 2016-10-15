@@ -67,7 +67,9 @@ ln -fs ~/.config/compton.conf ~/.config/marco-compton.conf
 ln -fs ~/dotfiles/peco.json ~/.config/peco/config.json
 
 
+zsh -ci 'zcompile ~/.zshrc'
 touch ~/.gitconfig_local
+
 
 changed=false
 
