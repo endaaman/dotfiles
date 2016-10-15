@@ -165,7 +165,6 @@ nnoremap <C-d> <Nop>
 nnoremap <C-m> <Nop>
 nnoremap <C-e> <Nop> " Resizer
 nnoremap <C-y> <nop> " vimfiler
-nnoremap <C-n> <nop> " NERDTree
 nnoremap <C-u> <Nop>
 
 
