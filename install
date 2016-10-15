@@ -45,8 +45,8 @@ ln -fs ~/.vim ~/.config/nvim
 ln -fs ~/.vimrc ~/.config/nvim/init.vim
 
 # x window system
-ln -fs ~/dotfiles/xsession ~/.xsession
-ln -fs ~/dotfiles/xprofile ~/.xprofile
+# ln -fs ~/dotfiles/xsession ~/.xsession
+# ln -fs ~/dotfiles/xprofile ~/.xprofile
 ln -fs ~/dotfiles/Xmodmap ~/.Xmodmap
 
 # fonts
