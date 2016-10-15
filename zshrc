@@ -91,6 +91,14 @@ function pcd() {
   fi
 }
 
+function vl() {
+  local dir=$(find . -maxdepth 1 -type f ! -path "*/.*"| peco)
+  if [ -r "$dir" ] ; then
+    vim "$dir"
+    zle accept-line
+  fi
+}
+
 function lp() {
   ls -AlF $@ | peco
 }
