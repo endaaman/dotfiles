@@ -16,6 +16,7 @@ nnoremap <A-Right> <C-PageDown>
 
 nnoremap yt :js util.copyToClipboard(buffer.title)<CR>
 nnoremap ym :js util.copyToClipboard('[' + buffer.title + '](' + buffer.URL + ')')<CR>
+nnoremap ya :js util.copyToClipboard('<a href="' + buffer.URL + '">' + buffer.title + '</a>')<CR>
 
 
 set hintchars=ifjklasdhguonmerwc
