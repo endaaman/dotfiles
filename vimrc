@@ -132,8 +132,6 @@ nnoremap <S-Tab> <C-w>W
 nnoremap <Tab> <C-w>w
 nnoremap <C-x> :<C-u>x<CR>
 nnoremap <C-s> :<C-u>w<CR>
-nnoremap <C-q> :<C-u>q<CR>
-nnoremap <C-h> zz
 nnoremap <C-u> :<C-u>noh<CR>
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
@@ -142,10 +140,10 @@ nnoremap - <C-x>
 nnoremap + <C-a>
 
 vnoremap v $h
-vnoremap <C-h> <gv
-vnoremap <C-l> >gv
 vnoremap <Space> o
 vnoremap * "zy:<C-u>let @/ = @z\|set hlsearch<CR>gv
+vnoremap > >gv
+vnoremap < <gv
 
 inoremap <C-l> <Del>
 inoremap <BS> <Nop>
@@ -155,14 +153,16 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 
-nnoremap <silent> <C-n> :<C-u>NERDTree<CR> <C-l>
+nnoremap <C-n> :<C-u>NERDTree<CR> <C-l>
 
-command! -range -nargs=0 -bar JsonTool <line1>,<line2>!python -m json.tool
+" command! -range -nargs=0 -bar JsonTool <line1>,<line2>!python -m json.tool
 
 nnoremap S <Nop>
 nnoremap <C-a> <Nop>
 nnoremap <C-d> <Nop>
 nnoremap <C-m> <Nop>
+nnoremap <C-c> <Nop>
+nnoremap <C-q> <Nop> " tmux prefix
 nnoremap <C-e> <Nop> " Resizer
 nnoremap <C-y> <nop> " vimfiler
 
