@@ -195,6 +195,9 @@ endif
 
 let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 let g:neocomplete#sources#omni#input_patterns.go = '\h\w\.\w*'
+let g:neocomplete#sources#omni#input_patterns.py = '\h\w\.\w*'
+
+autocmd FileType php setlocal omnifunc=jedi#completions
 
 " autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
 " let g:phpcomplete_mappings = {
