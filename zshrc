@@ -48,6 +48,19 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
 zstyle ':completion:*:descriptions' format '%BCompleting%b %U%d%u'
 
+autoload -Uz add-zsh-hock
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+
+mkdir -p $HOME/.cache/shell/
+
+zstyle ':completion:*' recent-dirs-insert both
+zstyle ':chpwd:*' recent-dirs-max 500
+zstyle ':chpwd:*' recent-dirs-default true
+zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/shell/chpwd-recent-dirs"
+zstyle ':chpwd:*' recent-dirs-pushd true
+
+setopt auto_cd
+
 
 # aliases and functions
 alias g="git"
@@ -81,17 +94,28 @@ if which trash-put &> /dev/null; then
   alias rm='trash-put'
 fi
 
-function pcd() {
+function cl() {
   local dir=$(find . -maxdepth 1 -type d ! -path "*/.*"| peco)
   if [ ! -z "$dir" ] ; then
     cd "$dir"
   fi
 }
 
+function cdr-peco() {
+  local dir=$(cdr -l | awk '{ print $2 }' | peco)
+  if [ -n $dir ]; then
+    BUFFER="cd $dir"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N cdr-peco
+
+
 function gh() {
   local dir=$(ghq list -p | peco)
   if [ ! -z "$dir" ] ; then
-    cd "$dir"
+    cd $dir
   fi
 }
 
@@ -117,9 +141,10 @@ zle -N copy-buffer
 
 
 # key bindings
-bindkey '^[l' delete-char
+bindkey -e
 bindkey '^J' delete-char
 bindkey '^S' copy-buffer
+bindkey '^G' cdr-peco
 
 
 # envs
