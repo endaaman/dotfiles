@@ -60,7 +60,6 @@ alias ll='ls -ahlF'
 
 alias cb="xsel --clipboard --input"
 alias cbp="xsel --clipboard --output"
-alias gh='cd `ghq list -p | peco`'
 alias psp='ps aux | peco'
 
 alias rr='exec zsh -l'
@@ -88,7 +87,13 @@ function pcd() {
   local dir=$(find . -maxdepth 1 -type d ! -path "*/.*"| peco)
   if [ ! -z "$dir" ] ; then
     cd "$dir"
-    zle accept-line
+  fi
+}
+
+function gh() {
+  local dir=$(ghq list -p | peco)
+  if [ ! -z "$dir" ] ; then
+    cd "$dir"
   fi
 }
 
@@ -96,7 +101,6 @@ function vl() {
   local dir=$(find . -maxdepth 1 -type f ! -path "*/.*"| peco)
   if [ -r "$dir" ] ; then
     vim "$dir"
-    zle accept-line
   fi
 }
 
