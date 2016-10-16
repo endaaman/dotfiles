@@ -126,10 +126,11 @@ nnoremap # #zz
 nnoremap o o<Esc>
 nnoremap O O<Esc>
 nnoremap Y y$
+nnoremap <Tab> <C-w>w
+nnoremap <S-Tab> <C-w>W
+nnoremap <C-a> ggVG
 nnoremap <C-j> "zdd"zp
 nnoremap <C-k> "zddk"zP
-nnoremap <S-Tab> <C-w>W
-nnoremap <Tab> <C-w>w
 nnoremap <C-x> :<C-u>x<CR>
 nnoremap <C-s> :<C-u>w<CR>
 nnoremap <C-u> :<C-u>noh<CR>
@@ -158,7 +159,6 @@ nnoremap <C-n> :<C-u>NERDTree<CR> <C-l>
 " command! -range -nargs=0 -bar JsonTool <line1>,<line2>!python -m json.tool
 
 nnoremap S <Nop>
-nnoremap <C-a> <Nop>
 nnoremap <C-d> <Nop>
 nnoremap <C-m> <Nop>
 nnoremap <C-c> <Nop>
