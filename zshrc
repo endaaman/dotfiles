@@ -81,7 +81,7 @@ alias pm="python manage.py"
 alias be="bundle exec"
 alias j2c="js2coffee"
 alias xo="xdg-open"
-alias pp="peco"
+
 alias echo-path="echo \$PATH | sed 's/:/\\n/g'"
 alias docker-clean="docker ps -a -q -f 'status=exited' | xargs --no-run-if-empty docker rm -v"
 alias docker-cleani="docker images -q -f 'dangling=true' | xargs --no-run-if-empty docker rmi"
@@ -89,6 +89,14 @@ alias docker-cleani="docker images -q -f 'dangling=true' | xargs --no-run-if-emp
 alias tap_production="export NODE_ENV=production"
 alias untap_production="unset NODE_ENV"
 
+alias -g A='| awk'
+alias -g G='| grep'
+alias -g H='| head'
+alias -g L='| less'
+alias -g P='| peco'
+alias -g S='| sed'
+alias -g T='| tail'
+alias -g W='| wc'
 
 if which trash-put &> /dev/null; then
   alias rm='trash-put'
