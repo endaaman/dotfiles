@@ -1,9 +1,9 @@
 # prompt
 PROMPT="%F{cyan}%~%f "
 if [ ${EUID:-${UID}} = 0 ]; then
-  PROMPT=$PROMPT"%F{yellow}#%f "
+  PROMPT=$PROMPT"%(?.%F{yellow}.%F{red})%f "
 else
-  PROMPT=$PROMPT"%F{yellow}$%f "
+  PROMPT=$PROMPT"%(?.%F{yellow}.%F{red})$%f "
 fi
 
 
