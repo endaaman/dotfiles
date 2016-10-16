@@ -139,3 +139,8 @@ repo = 'tpope/vim-fugitive'
 [[plugins]]
 repo = 'keith/tmux.vim'
 
+[[plugins]]
+repo = 'davidhalter/jedi-vim'
+
+[[plugins]]
+repo = 'tkztmk/vim-vala'
