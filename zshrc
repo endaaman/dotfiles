@@ -153,7 +153,7 @@ bindkey -e
 bindkey '^J' delete-char
 bindkey '^S' copy-buffer
 bindkey '^G' cdr-peco
-
+bindkey '^[[Z' reverse-menu-complete
 
 # envs
 export VTE_CJK_WIDTH=1
