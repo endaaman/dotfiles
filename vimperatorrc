@@ -24,6 +24,8 @@ highlight Hint font-family: monospace; font-size: 16px; font-weight: bold; text-
 
 ignorekeys clear
 ignorekeys add mail\\.google\\.com
+ignorekeys add docs\\.google\\.com
+ignorekeys add twitter\\.com
 ignorekeys add live\\.nicovideo\\.jp/watch
 
 echo "vimperatorrc has been sourced"
