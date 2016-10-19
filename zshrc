@@ -26,23 +26,22 @@ fi
 
 # zsh specifics
 autoload -Uz colors
+autoload -Uz compinit
+
 colors
+compinit
 eval `dircolors -b`
 
-autoload -Uz compinit
-compinit
 zstyle ':completion:*' list-colors $LS_COLORS
-# zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' ignore-parents parent pwd ..
 zstyle ':completion:*:processes' command 'ps x -o pid,s,args'
 
+# disable C-q C-s
 stty stop undef
 stty start undef
 
 DIRSTACKSIZE=100
 setopt AUTO_PUSHD
-
-autoload -Uz compinit && compinit
 
 zstyle ':completion:*' menu select
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
