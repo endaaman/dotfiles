@@ -158,7 +158,6 @@ nnoremap <C-n> :<C-u>NERDTree<CR> <C-l>
 
 " command! -range -nargs=0 -bar JsonTool <line1>,<line2>!python -m json.tool
 
-nnoremap S <Nop>
 nnoremap <C-d> <Nop>
 nnoremap <C-m> <Nop>
 nnoremap <C-c> <Nop>
