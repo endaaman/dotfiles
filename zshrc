@@ -1,7 +1,9 @@
-# prompt
+
 local dirname="%F{cyan}%~%f"
-if [ -n "$SSH_CLIENT" ]; then
-  local hostname="$(hostname):"
+if [ -n "$SSH_CLIENT" -o -n "$container" ]; then
+  local hostname="%F{blue}$(hostname)%f"
+  local username="%F{magent}%n%f"
+  local pre_prompt="[$username@$hostname] "
 fi
 
 if [ ${EUID:-${UID}} = 0 ]; then
@@ -9,12 +11,11 @@ if [ ${EUID:-${UID}} = 0 ]; then
 else
   local prompt_symbol='$'
 fi
-local prompt_colored_symbol="%(?.%F{yellow}.%F{red})$prompt_symbol%f "
+local prompt_symbol="%(?.%F{yellow}.%F{magenta})$prompt_symbol%f"
 
-PROMPT="$hostname$dirname $prompt_colored_symbol"
+PROMPT="$pre_prompt$dirname $prompt_symbol "
 
 
-# zplug
 if [ -d ~/.zplug ]; then
   source ~/.zplug/init.zsh
   zplug "olivierverdier/zsh-git-prompt", use:"zshrc.sh"
@@ -31,12 +32,14 @@ if [ -d ~/.zplug ]; then
 fi
 
 
-# zsh specifics
-autoload -Uz colors
-autoload -Uz compinit
+autoload -Uz colors; colors
+autoload -Uz compinit; compinit
+autoload -Uz promptinit; promptinit
+autoload -Uz add-zsh-hock
+autoload -Uz chpwd_recent_dirs
+autoload -Uz add-zsh-hook
+autoload -Uz cdr
 
-colors
-compinit
 eval `dircolors -b`
 
 zstyle ':completion:*' list-colors $LS_COLORS
@@ -48,14 +51,19 @@ stty stop undef
 stty start undef
 
 DIRSTACKSIZE=100
+HISTSIZE=100000
+SAVEHIST=100000
+
 setopt AUTO_PUSHD
+setopt hist_ignore_dups
+setopt share_history
+setopt hist_ignore_space
+unsetopt promptcr
 
 zstyle ':completion:*' menu select
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
 zstyle ':completion:*:descriptions' format '%BCompleting%b %U%d%u'
 
-autoload -Uz add-zsh-hock
-autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 
 mkdir -p $HOME/.cache/shell/
 
