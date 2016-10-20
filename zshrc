@@ -1,9 +1,13 @@
 
+
 local dirname="%F{cyan}%~%f"
-if [ -n "$SSH_CLIENT" -o -n "$container" ]; then
-  local hostname="%F{blue}$(hostname)%f"
-  local username="%F{magent}%n%f"
-  local pre_prompt="[$username@$hostname] "
+
+if [ -n "$container" ]; then
+  local pre_prompt="[%F{green}LXC%f]"
+fi
+
+if [ -n "$SSH_CLIENT" ]; then
+  local pre_prompt="(%F{green}SSH%f:%F{green}$(hostname)%f)"
 fi
 
 if [ ${EUID:-${UID}} = 0 ]; then
