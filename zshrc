@@ -7,7 +7,7 @@ if [ -n "$container" ]; then
 fi
 
 if [ -n "$SSH_CLIENT" ]; then
-  local pre_prompt="(%F{green}SSH%f:%F{green}$(hostname)%f)"
+  local pre_prompt="(%F{green}SSH%f:%F{magenta}$(hostname)%f)"
 fi
 
 if [ ${EUID:-${UID}} = 0 ]; then
@@ -171,6 +171,7 @@ bindkey -e
 bindkey '^L' delete-char
 bindkey '^S' copy-buffer
 bindkey '^G' cdr-peco
+bindkey '^@' clear-screen
 bindkey '^[[Z' reverse-menu-complete
 
 bindkey '^[[1~' beginning-of-line
