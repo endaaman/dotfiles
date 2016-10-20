@@ -154,6 +154,11 @@ bindkey '^S' copy-buffer
 bindkey '^G' cdr-peco
 bindkey '^[[Z' reverse-menu-complete
 
+bindkey '^[[1~' beginning-of-line
+bindkey '^[[4~' end-of-line
+bindkey '^[[3~' delete-char
+
+
 # envs
 export VTE_CJK_WIDTH=1
 export EDITOR=vim
