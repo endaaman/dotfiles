@@ -15,6 +15,7 @@ mkdir -p ~/.config/nvim
 mkdir -p ~/.config/fish/functions
 mkdir -p ~/.config/fontconfig
 mkdir -p ~/.config/peco
+mkdir -p ~/.config/byobu
 mkdir -p ~/.local/share/fonts
 mkdir -p ~/src
 mkdir -p ~/wineprefixes
