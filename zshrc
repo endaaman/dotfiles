@@ -1,10 +1,17 @@
 # prompt
-PROMPT="%F{cyan}%~%f "
-if [ ${EUID:-${UID}} = 0 ]; then
-  PROMPT=$PROMPT"%(?.%F{yellow}.%F{red})%f "
-else
-  PROMPT=$PROMPT"%(?.%F{yellow}.%F{red})$%f "
+local dirname="%F{cyan}%~%f"
+if [ -n "$SSH_CLIENT" ]; then
+  local hostname="$(hostname):"
 fi
+
+if [ ${EUID:-${UID}} = 0 ]; then
+  local prompt_symbol='#'
+else
+  local prompt_symbol='$'
+fi
+local prompt_colored_symbol="%(?.%F{yellow}.%F{red})$prompt_symbol%f "
+
+PROMPT="$hostname$dirname $prompt_colored_symbol"
 
 
 # zplug
