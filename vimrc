@@ -163,6 +163,7 @@ nnoremap <C-n> :<C-u>NERDTree<CR> <C-l>
 
 nnoremap <C-m> <Nop>
 nnoremap <C-c> <Nop>
+nnoremap <C-p> <Nop>
 nnoremap <C-q> <Nop> " tmux prefix
 nnoremap <C-e> <Nop> " Resizer
 nnoremap <C-y> <nop> " vimfiler
