@@ -62,7 +62,6 @@ setopt AUTO_PUSHD
 setopt hist_ignore_dups
 setopt share_history
 setopt hist_ignore_space
-unsetopt promptcr
 
 zstyle ':completion:*' menu select
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
@@ -107,14 +106,14 @@ alias docker-cleani="docker images -q -f 'dangling=true' | xargs --no-run-if-emp
 alias tap_production="export NODE_ENV=production"
 alias untap_production="unset NODE_ENV"
 
-alias -g A='| awk'
-alias -g G='| grep'
-alias -g H='| head'
-alias -g L='| less'
-alias -g P='| peco'
-alias -g S='| sed'
-alias -g T='| tail'
-alias -g W='| wc'
+alias A='awk'
+alias G='grep'
+alias H='head'
+alias L='less'
+alias P='peco'
+alias S='sed'
+alias T='tail'
+alias W='wc'
 
 if which trash-put &> /dev/null; then
   alias rm='trash-put'
