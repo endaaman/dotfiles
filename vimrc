@@ -91,18 +91,18 @@ set write
 
 autocmd InsertLeave * set cursorline
 autocmd InsertEnter * set nocursorline
+
+autocmd BufRead,BufNewFile *.json.jbuilder set ft=ruby
+autocmd BufRead,BufNewFile /etc/nginx/* set ft=nginx
+
 autocmd BufWritePre * if @% !~ '\.md$' | :%s/\s\+$//e | endif
 autocmd BufWritePre * :%s/\t\+$//e
-autocmd BufRead,BufNewFile /etc/nginx/* set ft=nginx
-autocmd BufEnter * execute ":lcd " . expand("%:p:h")
+
 autocmd FileType nerdtree setlocal nolist
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd BufEnter * execute ":lcd " . expand("%:p:h")
 
-map <Up> <Nop>
-map <Down> <Nop>
-map <Left> <Nop>
-map <Right> <Nop>
 
 noremap j gj
 noremap k gk
@@ -116,8 +116,10 @@ noremap , "
 
 nnoremap <C-f> :<C-u>bp<CR>
 nnoremap <C-b> :<C-u>bn<CR>
-nnoremap <Left> :<C-u>tabp<CR>
-nnoremap <Right> :<C-u>tabn<CR>
+nnoremap <C-h> :<C-u>tabp<CR>
+nnoremap <C-l> :<C-u>tabn<CR>
+nnoremap <C-@> <C-l>
+
 
 nnoremap n nzz
 nnoremap N Nzz
@@ -131,6 +133,7 @@ nnoremap <S-Tab> <C-w>W
 nnoremap <C-a> ggVG
 nnoremap <C-j> "zdd"zp
 nnoremap <C-k> "zddk"zP
+nnoremap <C-d> :<C-u>q<CR>
 nnoremap <C-x> :<C-u>x<CR>
 nnoremap <C-s> :<C-u>w<CR>
 nnoremap <C-u> :<C-u>noh<CR>
@@ -158,7 +161,6 @@ nnoremap <C-n> :<C-u>NERDTree<CR> <C-l>
 
 " command! -range -nargs=0 -bar JsonTool <line1>,<line2>!python -m json.tool
 
-nnoremap <C-d> <Nop>
 nnoremap <C-m> <Nop>
 nnoremap <C-c> <Nop>
 nnoremap <C-q> <Nop> " tmux prefix
