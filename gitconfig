@@ -14,7 +14,9 @@
   ps = push
   s = status
   br = branch
-  C = !git add . && git commit
+  rb = rebase
+  cc = !git add . && git commit
+  aac = !git add . && git commit --amend
 
 [color]
   ui = true
