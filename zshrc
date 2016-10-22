@@ -181,6 +181,9 @@ bindkey '^[[3~' delete-char
 # envs
 export VTE_CJK_WIDTH=1
 export EDITOR=vim
+export FCEDIT="$EDITOR"
+export VISUAL="$EDITOR"
+export SUDO_EDITOR="$EDITOR"
 export TERM=xterm-256color
 export XDG_CONFIG_HOME=~/.config
 export WINEARCH=win32
