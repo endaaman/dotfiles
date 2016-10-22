@@ -49,7 +49,7 @@ set ambiwidth=double
 set autoindent
 set backupdir=~/.vim/tmp
 set backspace=2
-set breakindent
+" set breakindent
 set clipboard=unnamedplus
 set cursorline
 set directory=~/.vim/tmp
