@@ -36,10 +36,12 @@ if has('gui_running')
   set lines=40
   set columns=120
   set ambiwidth=double
+  hi Search cterm=NONE ctermfg=grey ctermbg=blue
 else
   highlight Comment cterm=none
   autocmd ColorScheme * highlight Normal ctermbg=none
   autocmd ColorScheme * highlight LineNr ctermbg=none
+  hi Search guibg=peru guifg=wheat
 endif
 
 set background=dark
@@ -121,13 +123,6 @@ noremap m :
 noremap x "_x
 noremap , "
 
-nnoremap <C-f> :<C-u>bp<CR>
-nnoremap <C-b> :<C-u>bn<CR>
-nnoremap <C-h> :<C-u>tabp<CR>
-nnoremap <C-l> :<C-u>tabn<CR>
-nnoremap <C-@> <C-l>
-
-
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap * *zz
@@ -135,6 +130,7 @@ nnoremap # #zz
 nnoremap o o<Esc>
 nnoremap O O<Esc>
 nnoremap Y y$
+nnoremap G Gzz
 nnoremap <Tab> <C-w>w
 nnoremap <S-Tab> <C-w>W
 nnoremap <C-a> ggVG
@@ -147,13 +143,19 @@ nnoremap <C-u> :<C-u>noh<CR>
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 nnoremap Q <Nop>
-nnoremap + <C-a>
 nnoremap - <C-x>
-nnoremap <Up> <C-a>
+nnoremap + <C-a>
 nnoremap <Down> <C-x>
+nnoremap <Up> <C-a>
+nnoremap * viw"zy:<C-u>let @/ = @z\|set hlsearch<CR>
 
 nnoremap <expr> i IndentWithI()
 
+nnoremap <C-f> :<C-u>bp<CR>
+nnoremap <C-b> :<C-u>bn<CR>
+nnoremap <C-h> :<C-u>tabp<CR>
+nnoremap <C-l> :<C-u>tabn<CR>
+nnoremap <C-@> <C-l>
 
 vnoremap v $h
 vnoremap <Space> o
@@ -169,17 +171,18 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 
-nnoremap <C-n> :<C-u>NERDTree<CR> <C-l>
 
 " command! -range -nargs=0 -bar JsonTool <line1>,<line2>!python -m json.tool
 
 nnoremap <C-m> <Nop>
 nnoremap <C-c> <Nop>
+nnoremap <C-n> <nop>
 nnoremap <Left> <Nop>
 nnoremap <Right> <Nop>
+nnoremap <C-g> :<C-u>NERDTree<CR> <C-l>
 nnoremap <C-y> <Nop> " tmux prefix
 nnoremap <C-e> <Nop> " Resizer
-nnoremap <C-p> <nop> " vimfiler
+nnoremap <C-p> <nop> " Vimfiler
 
 
 " let g:nodejs_complete_config = {
