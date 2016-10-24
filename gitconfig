@@ -15,8 +15,8 @@
   s = status
   br = branch
   rb = rebase
-  cc = !git add . && git commit
-  aac = !git add . && git commit --amend
+  ac = !git add . && git commit
+  aca = !git add . && git commit --amend
 
 [color]
   ui = true
