@@ -89,6 +89,14 @@ set wildmenu
 set wrap
 set write
 
+function! IndentWithI()
+  if len(getline('.')) == 0
+     return "cc"
+  else
+    return "i"
+  endif
+endfunction
+
 autocmd InsertLeave * set cursorline
 autocmd InsertEnter * set nocursorline
 
@@ -102,7 +110,6 @@ autocmd FileType nerdtree setlocal nolist
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " autocmd BufEnter * execute ":lcd " . expand("%:p:h")
-
 
 noremap j gj
 noremap k gk
@@ -140,8 +147,13 @@ nnoremap <C-u> :<C-u>noh<CR>
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 nnoremap Q <Nop>
-nnoremap - <C-x>
 nnoremap + <C-a>
+nnoremap - <C-x>
+nnoremap <Up> <C-a>
+nnoremap <Down> <C-x>
+
+nnoremap <expr> i IndentWithI()
+
 
 vnoremap v $h
 vnoremap <Space> o
@@ -163,10 +175,11 @@ nnoremap <C-n> :<C-u>NERDTree<CR> <C-l>
 
 nnoremap <C-m> <Nop>
 nnoremap <C-c> <Nop>
-nnoremap <C-p> <Nop>
-nnoremap <C-q> <Nop> " tmux prefix
+nnoremap <Left> <Nop>
+nnoremap <Right> <Nop>
+nnoremap <C-y> <Nop> " tmux prefix
 nnoremap <C-e> <Nop> " Resizer
-nnoremap <C-y> <nop> " vimfiler
+nnoremap <C-p> <nop> " vimfiler
 
 
 " let g:nodejs_complete_config = {
