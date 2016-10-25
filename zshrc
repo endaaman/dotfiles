@@ -80,11 +80,17 @@ setopt auto_cd
 
 
 # aliases and functions
-alias g="git"
-alias v="vim"
-alias nv="nvim"
 alias l='ls -hlF'
 alias ll='ls -ahlF'
+alias g="git"
+alias v="vim"
+alias m="m"
+alias nv="nvim"
+alias nr="npm run"
+alias pm="python manage.py"
+alias be="bundle exec"
+alias j2c="js2coffee"
+alias xo="xdg-open"
 
 alias cb="xsel --clipboard --input"
 alias cbp="xsel --clipboard --output"
@@ -93,18 +99,9 @@ alias psp='ps aux | peco'
 alias rr='exec zsh -l'
 alias xm='setxkbmap && xmodmap ~/.Xmodmap'
 
-alias nr="npm run"
-alias pm="python manage.py"
-alias be="bundle exec"
-alias j2c="js2coffee"
-alias xo="xdg-open"
-
-alias echo-path="echo \$PATH | sed 's/:/\\n/g'"
+alias path="echo \$PATH | sed 's/:/\\n/g'"
 alias docker-clean="docker ps -a -q -f 'status=exited' | xargs --no-run-if-empty docker rm -v"
 alias docker-cleani="docker images -q -f 'dangling=true' | xargs --no-run-if-empty docker rmi"
-
-alias tap_production="export NODE_ENV=production"
-alias untap_production="unset NODE_ENV"
 
 alias A='awk'
 alias G='grep'
