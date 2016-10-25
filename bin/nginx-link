@@ -17,12 +17,13 @@ Available commands:
     help     - Show this message
 '''
 
-availableDir='/etc/nginx/site-available/'
-enabledDir='/etc/nginx/site-enabled/'
+availableDir='/etc/nginx/sites-available/'
+enabledDir='/etc/nginx/sites-enabled/'
 
 args = sys.argv
 
-def link(params):
+
+def link(params = []):
     if len(params) < 1:
         print('Not enough argument')
         exit(1)
@@ -40,7 +41,7 @@ def link(params):
         print('Needs to be .conf file')
         exit(1)
 
-    if os.path.exists(srcPath):
+    if os.path.exists(dstPath):
         print('Already exists: %s' % dstPath)
         exit(1)
 
@@ -50,10 +51,10 @@ def link(params):
         print('Need to become root. enter password')
         passwd = (getpass.getpass() + '\n').encode()
         subprocess.run(('sudo', '-S', 'ln','-s', srcPath, dstPath), input=passwd, check=True)
-    print('Linked: %s -> %s' % (srcpath, dstpath))
+    print('Linked: %s -> %s' % (srcPath, dstPath))
 
 
-def unlink(params):
+def unlink(params = []):
     if len(params) < 1:
         print('Not enough argument')
         exit(1)
@@ -84,7 +85,7 @@ def unlink(params):
     print('Deleted: %s' % (targetPath))
 
 
-def enable(params):
+def enable(params = []):
     if len(params) < 1:
         print('Not enough argument')
         exit(1)
@@ -98,24 +99,21 @@ def enable(params):
         print('Does not exists: %s' % srcPath)
         exit(1)
 
-    if not os.path.islink(srcPath):
-        print('Specified file which is not symlink. Delete it in yourself')
-        exit(1)
-
     fileName = os.path.basename(srcPath)
     dstPath = os.path.join(enabledDir, fileName)
 
-    if os.path.exists(dstPath):
-        if os.path.islink(dstPath):
-            dstTarget = os.readlink(dstPath)
-            if dstTarget is srcPath:
-                print('Already linked: %s -> %s' % (dstPath, srcPath))
-                exit(0)
-            else:
-                print('Already linked: %s -> %s' % (dstPath, dstTarget))
-                print('Trying to link: %s -> %s' % (dstPath, srcPath))
-                exit(1)
+    if os.path.islink(dstPath):
+        dstTarget = os.readlink(dstPath)
+        if dstTarget is srcPath:
+            print('Already linked: %s -> %s' % (dstPath, srcPath))
+            print('Nothing to do.')
+            exit(0)
         else:
+            print('Already linked: %s -> `%s`' % (dstPath, dstTarget))
+            print('Trying to link: %s -> `%s`' % (dstPath, srcPath))
+            exit(1)
+    else:
+        if os.path.exists(dstPath):
             print('Already exist hard file: %s' % (dstPath))
             exit(1)
 
@@ -128,7 +126,7 @@ def enable(params):
     print('Linked: %s -> %s' % (srcPath, dstPath))
 
 
-def disable(params):
+def disable(params = []):
     if len(params) < 1:
         print('Not enough argument')
         exit(1)
@@ -138,9 +136,11 @@ def disable(params):
         param = param + '.conf'
 
     targetPath = os.path.join(enabledDir, param)
-    if not os.path.isfile(targetPath):
-        print('Does not exists: %s' % targetPath)
-        exit(1)
+
+    if not os.path.exists(targetPath):
+        if not os.path.islink(targetPath):
+            print('Does not exists: %s' % targetPath)
+            exit(1)
 
     if not os.path.islink(targetPath):
         print('%s is not symlink' % targetPath)
@@ -159,13 +159,13 @@ def disable(params):
     print('Deleted: %s' % (targetPath))
 
 
-def _list(params):
+def _list(params = []):
     availableFiles = os.listdir(availableDir)
     enabledFiles = os.listdir(enabledDir)
 
     print('Availables:')
     if len(availableFiles) < 1:
-        print('  no files')
+        print('    no files')
     for f in availableFiles:
         ff = os.path.join(availableDir, f)
         if os.path.islink(ff):
@@ -177,7 +177,7 @@ def _list(params):
 
     print('Enabled:')
     if len(enabledFiles) < 1:
-        print('  no files')
+        print('    no files')
     for f in enabledFiles:
         ff = os.path.join(enabledDir, f)
         if os.path.islink(ff):
@@ -205,6 +205,8 @@ if len(args) < 2:
 
 if args[1] in commands:
     commands[args[1]](args[2:] if len(args) > 2 else [])
+    if args[1] != 'list':
+        _list()
 else:
     _help()
 
