@@ -1,0 +1,212 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import os
+import sys
+import subprocess
+import getpass
+import tempfile
+
+usage = '''Usage: nginx-link [subcommand] [options]
+Available commands:
+    list     - list linking status
+    link     - link to /etc/nginx/site-available/
+    unkink   - delete link of /etc/nginx/site-available/xxx.conf
+    enable   - link to /etc/nginx/site-available/xxx.conf to /etc/nginx/site-enabled/xxx.conf
+    disable  - delete link of /etc/nginx/site-enabled/xxx.conf
+    help     - Show this message
+'''
+
+availableDir='/etc/nginx/site-available/'
+enabledDir='/etc/nginx/site-enabled/'
+
+args = sys.argv
+
+def link(params):
+    if len(params) < 1:
+        print('Not enough argument')
+        exit(1)
+
+    srcPath = os.path.abspath(params[0])
+    if not os.path.isfile(srcPath):
+        print('does not exist')
+        exit(1)
+
+    fileName = os.path.basename(srcPath)
+    baseName, extName = os.path.splitext(srcPath)
+    dstPath = os.path.join(availableDir, fileName)
+
+    if extName != '.conf':
+        print('Needs to be .conf file')
+        exit(1)
+
+    if os.path.exists(srcPath):
+        print('Already exists: %s' % dstPath)
+        exit(1)
+
+    if os.geteuid() is 0:
+        os.symlink(srcPath, dstPath)
+    else:
+        print('Need to become root. enter password')
+        passwd = (getpass.getpass() + '\n').encode()
+        subprocess.run(('sudo', '-S', 'ln','-s', srcPath, dstPath), input=passwd, check=True)
+    print('Linked: %s -> %s' % (srcpath, dstpath))
+
+
+def unlink(params):
+    if len(params) < 1:
+        print('Not enough argument')
+        exit(1)
+
+    param = params[0]
+    if param.split('.')[-1] != 'conf':
+        param = param + '.conf'
+
+    targetPath = os.path.join(availableDir, param)
+    if not os.path.isfile(targetPath):
+        print('Does not exists: %s' % targetPath)
+        exit(1)
+
+    if not os.path.islink(targetPath):
+        print('%s is not symlink' % targetPath)
+        answer = input('Sure to delete this? (yes/no): ' % (targetPath))
+        if answer != 'yes':
+            print('Answered %s != yes' % (answer))
+            exit(1)
+
+    if os.geteuid() is 0:
+        os.remove(targetPath)
+    else:
+        print('Need to become root. enter password')
+        passwd = (getpass.getpass() + '\n').encode()
+        subprocess.run(('sudo', '-S', 'rm', targetPath), input=passwd, check=True)
+
+    print('Deleted: %s' % (targetPath))
+
+
+def enable(params):
+    if len(params) < 1:
+        print('Not enough argument')
+        exit(1)
+
+    param = params[0]
+    if param.split('.')[-1] != 'conf':
+        param = param + '.conf'
+
+    srcPath = os.path.join(availableDir, param)
+    if not os.path.isfile(srcPath):
+        print('Does not exists: %s' % srcPath)
+        exit(1)
+
+    if not os.path.islink(srcPath):
+        print('Specified file which is not symlink. Delete it in yourself')
+        exit(1)
+
+    fileName = os.path.basename(srcPath)
+    dstPath = os.path.join(enabledDir, fileName)
+
+    if os.path.exists(dstPath):
+        if os.path.islink(dstPath):
+            dstTarget = os.readlink(dstPath)
+            if dstTarget is srcPath:
+                print('Already linked: %s -> %s' % (dstPath, srcPath))
+                exit(0)
+            else:
+                print('Already linked: %s -> %s' % (dstPath, dstTarget))
+                print('Trying to link: %s -> %s' % (dstPath, srcPath))
+                exit(1)
+        else:
+            print('Already exist hard file: %s' % (dstPath))
+            exit(1)
+
+    if os.geteuid() is 0:
+        os.symlink(srcPath, dstPath)
+    else:
+        print('Need to become root. enter password')
+        passwd = (getpass.getpass() + '\n').encode()
+        subprocess.run(('sudo', '-S', 'ln','-s', srcPath, dstPath), input=passwd, check=True)
+    print('Linked: %s -> %s' % (srcPath, dstPath))
+
+
+def disable(params):
+    if len(params) < 1:
+        print('Not enough argument')
+        exit(1)
+
+    param = params[0]
+    if param.split('.')[-1] != 'conf':
+        param = param + '.conf'
+
+    targetPath = os.path.join(enabledDir, param)
+    if not os.path.isfile(targetPath):
+        print('Does not exists: %s' % targetPath)
+        exit(1)
+
+    if not os.path.islink(targetPath):
+        print('%s is not symlink' % targetPath)
+        answer = input('Sure to delete this? (yes/no): ' % (targetPath))
+        if answer != 'yes':
+            print('Answered %s != yes' % (answer))
+            exit(1)
+
+    if os.geteuid() is 0:
+        os.remove(targetPath)
+    else:
+        print('Need to become root. enter password')
+        passwd = (getpass.getpass() + '\n').encode()
+        subprocess.run(('sudo', '-S', 'rm', targetPath), input=passwd, check=True)
+
+    print('Deleted: %s' % (targetPath))
+
+
+def _list(params):
+    availableFiles = os.listdir(availableDir)
+    enabledFiles = os.listdir(enabledDir)
+
+    print('Availables:')
+    if len(availableFiles) < 1:
+        print('  no files')
+    for f in availableFiles:
+        ff = os.path.join(availableDir, f)
+        if os.path.islink(ff):
+            real = os.readlink(ff)
+            print('    %s -> %s' % (f, real))
+        else:
+            print('    %s' % (f))
+
+
+    print('Enabled:')
+    if len(enabledFiles) < 1:
+        print('  no files')
+    for f in enabledFiles:
+        ff = os.path.join(enabledDir, f)
+        if os.path.islink(ff):
+            real = os.readlink(ff)
+            print('    %s -> %s' % (f, real))
+        else:
+            print('    %s' % (f))
+
+
+def _help(params = []):
+    print(usage)
+
+commands ={
+    'link': link,
+    'unlink': unlink,
+    'enable': enable,
+    'disable': disable,
+    'list': _list,
+    'help': _help,
+}
+
+if len(args) < 2:
+    _help()
+    exit(0)
+
+if args[1] in commands:
+    commands[args[1]](args[2:] if len(args) > 2 else [])
+else:
+    _help()
+
+
+
