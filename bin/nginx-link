@@ -9,11 +9,11 @@ import tempfile
 
 usage = '''Usage: nginx-link [subcommand] [options]
 Available commands:
-    list     - list linking status
-    link     - link to /etc/nginx/site-available/
-    unkink   - delete link of /etc/nginx/site-available/xxx.conf
-    enable   - link to /etc/nginx/site-available/xxx.conf to /etc/nginx/site-enabled/xxx.conf
-    disable  - delete link of /etc/nginx/site-enabled/xxx.conf
+    list     - List linking status
+    link     - Link to /etc/nginx/site-available/
+    unkink   - Delete link of /etc/nginx/site-available/xxx.conf
+    enable   - Link to /etc/nginx/site-available/xxx.conf to /etc/nginx/site-enabled/xxx.conf
+    disable  - Delete link of /etc/nginx/site-enabled/xxx.conf
     help     - Show this message
 '''
 
