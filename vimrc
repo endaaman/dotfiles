@@ -91,14 +91,6 @@ set wildmenu
 set wrap
 set write
 
-function! IndentWithI()
-  if len(getline('.')) == 0
-     return "cc"
-  else
-    return "i"
-  endif
-endfunction
-
 autocmd InsertLeave * set cursorline
 autocmd InsertEnter * set nocursorline
 
@@ -112,6 +104,22 @@ autocmd FileType nerdtree setlocal nolist
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " autocmd BufEnter * execute ":lcd " . expand("%:p:h")
+
+function! IndentWithI()
+  if len(getline('.')) == 0
+     return 'cc'
+  else
+    return 'i'
+  endif
+endfunction
+
+function! SwapWithAboveLine()
+  if line('.') == 1
+    return ''
+  else
+    return '"zddk"zP'
+  endif
+endfunction
 
 noremap j gj
 noremap k gk
@@ -135,7 +143,7 @@ nnoremap <Tab> <C-w>w
 nnoremap <S-Tab> <C-w>W
 nnoremap <C-a> ggVG
 nnoremap <C-j> "zdd"zp
-nnoremap <C-k> "zddk"zP
+nnoremap <expr> <C-k> SwapWithAboveLine()
 nnoremap <C-d> :<C-u>q<CR>
 nnoremap <C-x> :<C-u>x<CR>
 nnoremap <C-s> :<C-u>w<CR>
@@ -162,6 +170,7 @@ vnoremap <Space> o
 vnoremap * "zy:<C-u>let @/ = @z\|set hlsearch<CR>gv
 vnoremap > >gv
 vnoremap < <gv
+" vnoremap p :<C-u>"0p<CR>
 
 inoremap <C-l> <Del>
 inoremap <BS> <Nop>
@@ -170,9 +179,6 @@ inoremap <C-s> <C-o>:<C-u>w<CR>
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
-
-
-" command! -range -nargs=0 -bar JsonTool <line1>,<line2>!python -m json.tool
 
 nnoremap <C-m> <Nop>
 nnoremap <C-c> <Nop>
@@ -184,11 +190,12 @@ nnoremap <C-y> <Nop> " tmux prefix
 nnoremap <C-e> <Nop> " Resizer
 nnoremap <C-p> <nop> " Vimfiler
 
-
 " let g:nodejs_complete_config = {
 " \  'js_compl_fn': 'jscomplete#CompleteJS',
 " \  'max_node_compl_len': 15
 " \}
+
+" command! -range -nargs=0 -bar JsonTool <line1>,<line2>!python -m json.tool
 
 let g:vim_json_syntax_conceal = 0
 
@@ -227,7 +234,7 @@ autocmd FileType php setlocal omnifunc=jedi#completions
 
 let g:WebDevIconsNerdTreeAfterGlyphPadding = '  '
 let NERDTreeShowHidden=1
-let NERDTreeHijackNetrw=0
+let NERDTreeHijackNetrw=1
 
 
 
@@ -250,20 +257,25 @@ let g:vimfiler_tree_closed_icon = '▸'
 let g:vimfiler_file_icon = ''
 let g:vimfiler_marked_file_icon = '*'
 
-
-let g:unite_source_grep_command = 'ag'
 " let g:unite_source_grep_default_opts = '--nocolor --nogroup'
 let g:unite_source_grep_max_candidates = 200
 let g:unite_source_grep_recursive_opt = ''
 " let g:unite_enable_start_insert=1
 let g:unite_source_history_yank_enable =1
-
-nmap <Space> [unite]
-vnoremap /g y:Unite grep::-iRn:<C-r>=escape(@", '\\.*$^[]')<CR><CR>
+let g:unite_enable_ignore_case = 1
+let g:unite_enable_smart_case = 1
+if executable('ag')
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  let g:unite_source_grep_recursive_opt = ''
+endif
 
 call unite#custom#source('buffer', 'converters', ['converter_smart_path'])
 call unite#custom_source('file', 'ignore_pattern', '')
 call unite#custom#source('file', 'matchers', 'matcher_default')
+
+nmap <Space> [unite]
+vnoremap /g y:Unite grep::-iRn:<C-r>=escape(@", '\\.*$^[]')<CR><CR>
 
 nnoremap <silent> [unite]a :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
 nnoremap <silent> [unite]f :<C-u>Unite<Space>file_mru<CR>
@@ -282,7 +294,6 @@ autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()"{{{
   nmap <buffer> <ESC> <Plug>(unite_exit)
 endfunction"}}}
-
 
 
 let g:jedi#goto_command = "<leader>d"
