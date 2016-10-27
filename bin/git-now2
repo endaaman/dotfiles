@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 PREFIX="from now"
 MESSAGE="[${PREFIX}] `date +\"%Y/%m/%d %T\"`"

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 target_shell=$1
 
