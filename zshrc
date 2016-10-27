@@ -100,8 +100,6 @@ alias rr='exec zsh -l'
 alias xm='setxkbmap && xmodmap ~/.Xmodmap'
 
 alias path="echo \$PATH | sed 's/:/\\n/g'"
-alias docker-clean="docker ps -a -q -f 'status=exited' | xargs --no-run-if-empty docker rm -v"
-alias docker-cleani="docker images -q -f 'dangling=true' | xargs --no-run-if-empty docker rmi"
 
 alias tap_production="export NODE_ENV=production"
 alias untap_production="unset NODE_ENV"
