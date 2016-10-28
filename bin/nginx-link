@@ -5,7 +5,6 @@ import os
 import sys
 import subprocess
 import getpass
-import tempfile
 
 usage = '''Usage: nginx-link [subcommand] [options]
 Available commands:
@@ -20,7 +19,6 @@ Available commands:
 availableDir='/etc/nginx/sites-available/'
 enabledDir='/etc/nginx/sites-enabled/'
 
-args = sys.argv
 
 
 def link(params = []):
@@ -190,6 +188,7 @@ def _list(params = []):
 def _help(params = []):
     print(usage)
 
+
 commands ={
     'link': link,
     'unlink': unlink,
@@ -198,6 +197,8 @@ commands ={
     'list': _list,
     'help': _help,
 }
+
+args = sys.argv
 
 if len(args) < 2:
     _help()
