@@ -84,6 +84,7 @@ alias l='ls -hlF'
 alias ll='ls -ahlF'
 alias g="git"
 alias v="vim"
+alias vi="vim -u NONE"
 alias m="m"
 alias nv="nvim"
 alias nr="npm run"
