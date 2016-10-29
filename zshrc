@@ -2,7 +2,7 @@ local dirname="%F{cyan}%~%f"
 local is_root=false
 
 if [ -n "$container" ]; then
-  local pre_prompt="[%F{green}LXC%f]"
+  local pre_prompt="(%F{green}LXC%f:%F{magenta}$(hostname)%f)"
 fi
 
 if [ -n "$SSH_CLIENT" ]; then
