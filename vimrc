@@ -2,7 +2,7 @@
 set all&
 autocmd!
 augroup MyAutoGroup
-  autocmd!
+autocmd!
 augroup END
 scriptencoding utf-8
 if !1 | finish | endif
@@ -32,23 +32,23 @@ if dein#check_install()
   call dein#install()
 endif
 
-filetype plugin indent on
-
 if has('gui_running')
   set guifont=Ubuntu\ Mono\ 11
   set lines=40
   set columns=120
   set ambiwidth=double
-  hi Search cterm=NONE ctermfg=grey ctermbg=blue
+  highlight Search cterm=NONE ctermfg=grey ctermbg=blue
 else
-  highlight Comment cterm=none
   autocmd ColorScheme * highlight Normal ctermbg=none
   autocmd ColorScheme * highlight LineNr ctermbg=none
-  hi Search guibg=peru guifg=wheat
 endif
 
 set background=dark
+filetype plugin indent on
 colorscheme OceanicNext
+
+highlight Comment cterm=none
+highlight Search guibg=peru guifg=wheat
 
 set ambiwidth=double
 set autoindent
