@@ -1,6 +1,5 @@
-
-
 local dirname="%F{cyan}%~%f"
+local is_root=false
 
 if [ -n "$container" ]; then
   local pre_prompt="[%F{green}LXC%f]"
@@ -11,6 +10,7 @@ if [ -n "$SSH_CLIENT" ]; then
 fi
 
 if [ ${EUID:-${UID}} = 0 ]; then
+  is_root=true
   local prompt_symbol='#'
 else
   local prompt_symbol='$'
@@ -20,7 +20,7 @@ local prompt_symbol="%(?.%F{yellow}.%F{magenta})$prompt_symbol%f"
 PROMPT="$pre_prompt$dirname $prompt_symbol "
 
 
-if [ -d ~/.zplug ]; then
+if [ -d ~/.zplug -a ! $is_root ]; then
   source ~/.zplug/init.zsh
   zplug "olivierverdier/zsh-git-prompt", use:"zshrc.sh"
   zplug "zsh-users/zsh-completions"
