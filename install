@@ -28,6 +28,9 @@ touch ~/.gitconfig_local
 # zsh
 ln -fs ~/dotfiles/zshrc ~/.zshrc
 
+# bash
+ln -fs ~/dotfiles/bashrc ~/.bashrc
+
 # tmux
 ln -fs ~/dotfiles/tmux.conf ~/.tmux.conf
 ln -fsn ~/dotfiles/tmux.d ~/.tmux.d

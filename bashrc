@@ -1,0 +1,1 @@
+complete -cf sudo
