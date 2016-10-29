@@ -20,7 +20,7 @@ local prompt_symbol="%(?.%F{yellow}.%F{magenta})$prompt_symbol%f"
 PROMPT="$pre_prompt$dirname $prompt_symbol "
 
 
-if [ -d ~/.zplug -a ! $is_root ]; then
+if [ -d ~/.zplug -a $is_root = false ]; then
   source ~/.zplug/init.zsh
   zplug "olivierverdier/zsh-git-prompt", use:"zshrc.sh"
   zplug "zsh-users/zsh-completions"
