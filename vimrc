@@ -1,6 +1,9 @@
 " vi: set ft=vim :
 set all&
 autocmd!
+augroup MyAutoGroup
+  autocmd!
+augroup END
 scriptencoding utf-8
 if !1 | finish | endif
 if !&compatible
@@ -51,7 +54,6 @@ set ambiwidth=double
 set autoindent
 set backupdir=~/.vim/tmp
 set backspace=2
-" set breakindent
 set clipboard=unnamedplus
 set cursorline
 set directory=~/.vim/tmp
@@ -90,6 +92,11 @@ set updatetime=1000
 set wildmenu
 set wrap
 set write
+
+if (v:version == 704 && has("patch338")) || v:version >= 705
+  set breakindent
+  autocmd MyAutoGroup BufEnter * set breakindentopt=min:20,shift:0
+endif
 
 autocmd InsertLeave * set cursorline
 autocmd InsertEnter * set nocursorline
