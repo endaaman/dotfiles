@@ -4,9 +4,8 @@ keycode 19 = 0 bar 0 bar
 keycode 34 = bracketleft braceleft bracketleft braceleft
 keycode 35 = bracketright braceright bracketright braceright
 keycode 51 = at grave at grave
-keycode 132 = BackSpace BackSpace BackSpace BackSpace
+keycode 132 = backslash underscore backslash underscore
 
-keysym Hiragana_Katakana = Return
+keysym Hiragana_Katakana = BackSpace
 clear Lock
 keysym Caps_Lock = Escape
-
