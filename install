@@ -74,6 +74,7 @@ ln -fs ~/dotfiles/peco.json ~/.config/peco/config.json
 zsh -ci 'zcompile ~/.zshrc'
 touch ~/.gitconfig_local
 
+setxkbmap && xmodmap ~/.Xmodmap
 
 changed=false
 
@@ -90,14 +91,6 @@ for i in "$@" ; do
     'ruby'      | 'rb'   ) ruby=true ;;
     'fisherman' | 'fm'   ) fisherman=true ;;
     'zplug'     | 'zp'   ) zplug=true ;;
-    'keymap1' )
-      echo -e "${CYAN}Activate keymap1${NC}"
-      ln -sf ~/dotfiles/Xmodmap1 ~/.Xmodmap
-      ;;
-    'keymap2' )
-      echo -e "${CYAN}Activate keymap2${NC}"
-      ln -sf ~/dotfiles/Xmodmap2 ~/.Xmodmap
-      ;;
     'all' )
       nodejs=true
       python=true
