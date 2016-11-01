@@ -5,16 +5,20 @@
   editor = vim -c \"set fenc=utf-8\"
 
 [alias]
+  a = add
+  br = branch
   c = commit
-  cm = commit -m
   ca = commit --amend
+  cm = commit -m
   co = checkout
+  f = fetch
   fe = fetch
   pl = pull
   ps = push
-  s = status
-  br = branch
   rb = rebase
+  rs = reset
+  s = status
+  st = stash
   ac = !git add . && git commit
   aca = !git add . && git commit --amend
 
