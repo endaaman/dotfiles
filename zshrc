@@ -2,8 +2,8 @@ local dirname="%F{cyan}%~%f"
 local is_root=false
 
 if [ -n "$container" ]; then
-  local upper="${container^^}"
-  local pre_prompt="(%F{green}upper%f:%F{magenta}$(hostname)%f)"
+  local upper=`echo "$container" | sed 's/./\U&/g'`
+  local pre_prompt="(%F{green}$upper%f:%F{magenta}$(hostname)%f)"
 fi
 
 if [ -n "$SSH_CLIENT" ]; then
