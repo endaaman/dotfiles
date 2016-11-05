@@ -148,3 +148,6 @@ repo = 'davidhalter/jedi-vim'
 
 [[plugins]]
 repo = 'tkztmk/vim-vala'
+
+[[plugins]]
+repo = 'mattn/emmet-vim'
