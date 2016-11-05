@@ -1,10 +1,10 @@
 ! vi: set ft=xmodmap :
 
-keycode 19 = 0 bar 0 bar
+keycode 19 = 0 underscore 0 underscore
 keycode 34 = bracketleft braceleft bracketleft braceleft
 keycode 35 = bracketright braceright bracketright braceright
 keycode 51 = at grave at grave
-keycode 132 = backslash underscore backslash underscore
+! keycode 132 = backslash underscore backslash underscore
 
 keysym Hiragana_Katakana = BackSpace
 clear Lock
