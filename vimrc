@@ -192,10 +192,12 @@ nnoremap <C-c> <Nop>
 nnoremap <C-n> <nop>
 nnoremap <Left> <Nop>
 nnoremap <Right> <Nop>
+nnoremap <C-t> <Nop> " tmux prefix
+nnoremap <C-y> <Nop> " Resizer
+nnoremap <C-e> <Nop> " emmet
+
 nnoremap <C-g> :<C-u>NERDTree<CR> <C-l>
-nnoremap <C-y> <Nop> " tmux prefix
-nnoremap <C-e> <Nop> " Resizer
-nnoremap <C-p> <nop> " Vimfiler
+" nnoremap <silent> <C-y> :<C-u>VimFiler -split -no-quit<CR>
 
 " let g:nodejs_complete_config = {
 " \  'js_compl_fn': 'jscomplete#CompleteJS',
@@ -203,6 +205,8 @@ nnoremap <C-p> <nop> " Vimfiler
 " \}
 
 " command! -range -nargs=0 -bar JsonTool <line1>,<line2>!python -m json.tool
+
+let g:user_emmet_leader_key='<C-e>'
 
 let g:vim_json_syntax_conceal = 0
 
@@ -250,7 +254,6 @@ let NERDTreeHijackNetrw=1
 let g:vimfiler_safe_mode_by_default = 0
 let g:vimfiler_ignore_pattern = ''
 
-nnoremap <silent> <C-y> :<C-u>VimFiler -split -no-quit<CR>
 
 autocmd FileType vimfiler nmap <buffer> <Enter>  <Plug>(vimfiler_expand_or_edit)
 autocmd FileType vimfiler nmap <buffer> o        <Plug>(vimfiler_cd_or_edit)
