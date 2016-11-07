@@ -2,7 +2,7 @@
 set all&
 autocmd!
 augroup MyAutoGroup
-autocmd!
+  autocmd!
 augroup END
 scriptencoding utf-8
 if !1 | finish | endif
@@ -50,7 +50,7 @@ colorscheme OceanicNext
 highlight Comment cterm=none
 highlight Search guibg=peru guifg=wheat
 
-set ambiwidth=double
+" set ambiwidth=double
 set autoindent
 set backupdir=~/.vim/tmp
 set backspace=2
@@ -136,7 +136,6 @@ noremap H ^
 noremap L $
 noremap m :
 noremap x "_x
-noremap , "
 
 nnoremap n nzz
 nnoremap N Nzz
