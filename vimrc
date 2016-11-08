@@ -130,8 +130,8 @@ endfunction
 
 noremap j gj
 noremap k gk
-noremap J <C-d>zz
-noremap K <C-u>zz
+noremap J gjzz
+noremap K gkzz
 noremap H ^
 noremap L $
 noremap m :
@@ -165,10 +165,10 @@ nnoremap * viw"zy:<C-u>let @/ = @z\|set hlsearch<CR>
 
 nnoremap <expr> i IndentWithI()
 
-nnoremap <C-f> :<C-u>bp<CR>
-nnoremap <C-b> :<C-u>bn<CR>
-nnoremap <C-h> :<C-u>tabp<CR>
-nnoremap <C-l> :<C-u>tabn<CR>
+nnoremap <C-f> <C-d>zz
+nnoremap <C-b> <C-u>zz
+nnoremap <C-n> :<C-u>tabp<CR>
+nnoremap <C-p> :<C-u>tabn<CR>
 nnoremap <C-@> <C-l>
 
 vnoremap v $h
@@ -189,6 +189,8 @@ cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 nnoremap <C-m> <Nop>
 nnoremap <C-c> <Nop>
 nnoremap <C-n> <nop>
+nnoremap <C-h> <nop>
+nnoremap <C-l> <nop>
 nnoremap <Left> <Nop>
 nnoremap <Right> <Nop>
 nnoremap <C-t> <Nop> " tmux prefix
