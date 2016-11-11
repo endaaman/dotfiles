@@ -130,8 +130,12 @@ endfunction
 
 noremap j gj
 noremap k gk
-noremap J gjzz
-noremap K gkzz
+noremap J <C-d>zz
+noremap K <C-u>zz
+" noremap J gjzz
+" noremap K gkzz
+" nnoremap <C-f> <C-d>zz
+" nnoremap <C-b> <C-u>zz
 noremap H ^
 noremap L $
 noremap m :
@@ -165,10 +169,8 @@ nnoremap * viw"zy:<C-u>let @/ = @z\|set hlsearch<CR>
 
 nnoremap <expr> i IndentWithI()
 
-nnoremap <C-f> <C-d>zz
-nnoremap <C-b> <C-u>zz
-nnoremap <C-n> :<C-u>tabp<CR>
-nnoremap <C-p> :<C-u>tabn<CR>
+nnoremap <C-n> :<C-u>tabn<CR>
+nnoremap <C-p> :<C-u>tabp<CR>
 nnoremap <C-@> <C-l>
 
 vnoremap v $h
@@ -178,8 +180,8 @@ vnoremap > >gv
 vnoremap < <gv
 " vnoremap p :<C-u>"0p<CR>
 
-inoremap <C-l> <Del>
 inoremap <BS> <Nop>
+inoremap <C-l> <Del>
 inoremap <C-s> <C-o>:<C-u>w<CR>
 
 cnoremap <C-p> <Up>
@@ -188,7 +190,6 @@ cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 
 nnoremap <C-m> <Nop>
 nnoremap <C-c> <Nop>
-nnoremap <C-n> <nop>
 nnoremap <C-h> <nop>
 nnoremap <C-l> <nop>
 nnoremap <Left> <Nop>
