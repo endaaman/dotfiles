@@ -1,0 +1,237 @@
+[[plugins]]
+repo = 'mhartington/oceanic-next'
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_add = '''
+  let g:lightline = {
+  \ 'colorscheme': 'jellybeans'
+  \ }
+'''
+
+[[plugins]]
+repo = 'Shougo/vimproc'
+hook_post_update = '''
+  if dein#util#_is_windows()
+    let cmd = 'tools\\update-dll-mingw'
+  elseif dein#util#_is_cygwin()
+    let cmd = 'make -f make_cygwin.mak'
+  elseif executable('gmake')
+    let cmd = 'gmake'
+  else
+    let cmd = 'make'
+  endif
+  let g:dein#plugin.build = cmd
+'''
+
+[[plugins]]
+repo = 'Shougo/unite.vim'
+depends = ['vimproc']
+hook_add = '''
+  " let g:unite_source_grep_default_opts = "--nocolor --nogroup"
+  let g:unite_source_grep_max_candidates = 200
+  let g:unite_source_grep_recursive_opt = ""
+  " let g:unite_enable_start_insert=1
+  let g:unite_source_history_yank_enable =1
+  let g:unite_enable_ignore_case = 1
+  let g:unite_enable_smart_case = 1
+  if executable("ag")
+    let g:unite_source_grep_command = "ag"
+    let g:unite_source_grep_default_opts = "--nogroup --nocolor --column"
+    let g:unite_source_grep_recursive_opt = ""
+  endif
+
+  " call unite#custom#source("buffer", "converters", ["converter_smart_path"])
+  " call unite#custom_source("file", "ignore_pattern", "")
+  " call unite#custom#source("file", "matchers", "matcher_default")
+
+  nmap <Space> [unite]
+  vnoremap /g y:Unite grep::-iRn:<C-r>=escape(@", "\\.*$^[]")<CR><CR>
+
+  nnoremap <silent> [unite]a :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
+  nnoremap <silent> [unite]f :<C-u>Unite<Space>file_mru<CR>
+  nnoremap <silent> [unite]d :<C-u>Unite<Space>directory_mru<CR>
+  nnoremap <silent> [unite]b :<C-u>Unite<Space>buffer<CR>
+  nnoremap <silent> [unite]m :<C-u>Unite<Space>file_mru<CR>
+  nnoremap <silent> [unite]r :<C-u>Unite<Space>register<CR>
+  nnoremap <silent> [unite]t :<C-u>Unite<Space>tab<CR>
+  nnoremap <silent> [unite]h :<C-u>Unite<Space>history/yank<CR>
+  nnoremap <silent> [unite]o :<C-u>Unite<Space>outline<CR>
+  nnoremap <silent> [unite]g :<C-u>Unite<Space>grep<CR>
+  nnoremap <silent> [unite]<CR> :<C-u>Unite<Space>file_rec:!<CR>
+
+  autocmd FileType unite call s:unite_my_settings()
+
+  function! s:unite_my_settings()"{{{
+    nmap <buffer> <ESC> <Plug>(unite_exit)
+  endfunction"}}}
+'''
+
+
+[[plugins]]
+repo = 'Shougo/unite-outline'
+depends = ['vimproc', 'unite.vim']
+
+[[plugins]]
+repo = 'Shougo/vimfiler'
+depends = ['vimproc']
+hook_add = '''
+  " let g:vimfiler_as_default_explorer = 1
+  " let g:vimfiler_edit_action = 'tabopen'
+  let g:vimfiler_safe_mode_by_default = 0
+  let g:vimfiler_ignore_pattern = ''
+  autocmd FileType vimfiler nmap <buffer> <Enter>  <Plug>(vimfiler_expand_or_edit)
+  autocmd FileType vimfiler nmap <buffer> o        <Plug>(vimfiler_cd_or_edit)
+  autocmd FileType vimfiler nmap <buffer> H        <nop>
+  autocmd FileType vimfiler nmap <buffer> h        <nop>
+  autocmd FileType vimfiler nmap <buffer> l        <Plug>(vimfiler_expand_tree)
+  let g:vimfiler_tree_leaf_icon = ' '
+  let g:vimfiler_tree_opened_icon = '▾'
+  let g:vimfiler_tree_closed_icon = '▸'
+  let g:vimfiler_file_icon = ''
+  let g:vimfiler_marked_file_icon = '*'
+'''
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+
+[[plugins]]
+repo = 'Shougo/neoyank.vim'
+
+[[plugins]]
+repo = 'Shougo/vimshell'
+
+
+[[plugins]]
+repo = 'ryanoasis/vim-devicons'
+hook_add = '''
+  let g:WebDevIconsNerdTreeAfterGlyphPadding = '  '
+'''
+
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+hook_add = '''
+  autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+  nnoremap <C-g> :<C-u>NERDTree<CR> <C-l>
+  let g:WebDevIconsNerdTreeAfterGlyphPadding = '  '
+  let NERDTreeShowHidden=1
+  let NERDTreeHijackNetrw=1
+'''
+
+[[plugins]]
+repo = 'Xuyuanp/nerdtree-git-plugin'
+
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+
+[[plugins]]
+repo = 'jiangmiao/auto-pairs'
+
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+hook_add = '''
+let g:indentLine_color_term = 23
+'''
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+
+[[plugins]]
+repo = 'rking/ag.vim'
+
+[[plugins]]
+repo = 'rhysd/conflict-marker.vim'
+
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'
+
+
+[[plugins]]
+repo = 'simeji/winresizer'
+hook_add = '''
+  let g:winresizer_start_key = '<C-y>'
+'''
+
+[[plugins]]
+repo = 'tomtom/tcomment_vim'
+
+[[plugins]]
+repo = 'tpope/vim-surround'
+
+[[plugins]]
+repo = 'vim-scripts/copypath.vim'
+
+[[plugins]]
+repo = 'vim-scripts/sudo.vim'
+
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+
+[[plugins]]
+repo = 'thinca/vim-textobj-between'
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
+
+
+[[plugins]]
+repo = 'mxw/vim-jsx'
+
+[[plugins]]
+repo = 'myhere/vim-nodejs-complete'
+
+[[plugins]]
+repo = 'fatih/vim-go'
+hook_add = '''
+  let g:go_highlight_functions = 1
+  let g:go_highlight_methods = 3
+  let g:go_highlight_structs = 3
+'''
+
+[[plugins]]
+repo = 'kchmck/vim-coffee-script'
+
+[[plugins]]
+repo = 'mattn/jscomplete-vim'
+
+[[plugins]]
+repo = 'pangloss/vim-javascript'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+
+[[plugins]]
+repo = 'keith/tmux.vim'
+
+[[plugins]]
+repo = 'davidhalter/jedi-vim'
+
+[[plugins]]
+repo = 'tkztmk/vim-vala'
+
+[[plugins]]
+repo = 'mattn/emmet-vim'
+hook_add = '''
+  let g:user_emmet_leader_key='<C-y>'
+'''
+
+[[plugins]]
+repo = 'vim-scripts/nginx.vim'
+
+[[plugins]]
+repo = 'dag/vim-fish'
+
+[[plugins]]
+repo = 'elzr/vim-json'
+hook_add = '''
+  let g:vim_json_syntax_conceal = 0
+'''
