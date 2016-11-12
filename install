@@ -82,6 +82,7 @@ python=false
 ruby=false
 fisherman=false
 zplug=false
+dein=false
 
 for i in "$@" ; do
   case "$i" in
@@ -90,12 +91,14 @@ for i in "$@" ; do
     'ruby'      | 'rb'   ) ruby=true ;;
     'fisherman' | 'fm'   ) fisherman=true ;;
     'zplug'     | 'zp'   ) zplug=true ;;
+    'dein'      | 'dn'   ) dein=true ;;
     'all' )
       nodejs=true
       python=true
       ruby=true
       fisherman=true
       zplug=true
+      dein=true
   esac
 done
 
@@ -197,6 +200,25 @@ if $fisherman; then
     echo
     echo -e "${CYAN}Installing fisherman${NC}"
     curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
+    echo
+  fi
+fi
+
+
+if $dein; then
+  changed=true
+  dein_base_dir=~/.cache/dein/repos/github.com/Shougo
+  dein_dir=$dein_base_dir/dein.vim
+  mkdir -p "$dein_base_dir"
+  if [ ! -d $dein_dir ]; then
+    echo
+    echo -e "${CYAN}Installing dein${NC}"
+    git clone https://github.com/Shougo/dein.vim $dein_dir
+  else
+    echo -e "${CYAN}Updating dein${NC}"
+    cd $dein_dir
+    git pull
+    cd
     echo
   fi
 fi
