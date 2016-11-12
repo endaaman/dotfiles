@@ -17,7 +17,7 @@ autocmd StdinReadPre * let s:std_in=1
 
 
 if has('gui_running')
-  set guifont=Ubuntu\ Mono\ 11
+  set guifont=Monospace\ 11
   autocmd VimEnter * set lines=40
   autocmd VimEnter * set columns=120
   set ambiwidth=double
