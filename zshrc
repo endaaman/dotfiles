@@ -23,11 +23,11 @@ PROMPT="$pre_prompt$dirname $prompt_symbol "
 
 if [ -d ~/.zplug -a $is_root = false ]; then
   source ~/.zplug/init.zsh
-  zplug "olivierverdier/zsh-git-prompt", use:"zshrc.sh"
-  zplug "zsh-users/zsh-completions"
+  zplug 'olivierverdier/zsh-git-prompt', use:'zshrc.sh'
+  zplug 'zsh-users/zsh-completions'
 
   if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
+    printf 'Install? [y/N]: '
     if read -q; then
       echo; zplug install
     fi
