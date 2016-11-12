@@ -105,7 +105,7 @@ repo = 'Shougo/vimshell'
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
 hook_add = '''
-  let g:WebDevIconsNerdTreeAfterGlyphPadding = '  '
+  " let g:WebDevIconsNerdTreeAfterGlyphPadding = '  '
 '''
 
 [[plugins]]
@@ -138,7 +138,7 @@ repo = 'junegunn/vim-easy-align'
 [[plugins]]
 repo = 'Yggdroot/indentLine'
 hook_add = '''
-let g:indentLine_color_term = 23
+  let g:indentLine_color_term = 23
 '''
 
 [[plugins]]
