@@ -1,6 +1,5 @@
 [[plugins]]
 repo = 'Shougo/neocomplete.vim'
-depends = ['vimproc']
 hook_add = '''
   inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
   inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<TAB>"
@@ -14,6 +13,6 @@ hook_add = '''
   let g:neocomplete#sources#omni#input_patterns.go = '\h\w\.\w*'
   let g:neocomplete#sources#omni#input_patterns.py = '\h\w\.\w*'
 
-  autocmd FileType php setlocal omnifunc=jedi#completions
+  autocmd FileType python setlocal omnifunc=jedi#completions
 '''
 
