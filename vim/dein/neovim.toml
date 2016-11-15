@@ -15,4 +15,9 @@ hook_add = '''
 [[plugins]]
 repo = 'Shougo/denite.nvim'
 hook_add = '''
+  nnoremap <Leader>b :<C-u>Denite buffer<CR>
+  nnoremap <Leader>g :<C-u>Denite grep<CR>
+  nnoremap <Leader>f :<C-u>Denite file_rec<CR>
+  nnoremap <Leader>m :<C-u>Denite file_mru<CR>
+  nnoremap <Leader>c :<C-u>Denite colorscheme<CR>
 '''
