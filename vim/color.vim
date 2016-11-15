@@ -15,4 +15,5 @@ silent! colorscheme OceanicNext
 
 highlight Comment cterm=none
 highlight Search guibg=peru guifg=wheat
+highlight CursorLineNr term=bold cterm=NONE ctermfg=228
 
