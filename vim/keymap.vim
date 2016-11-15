@@ -14,6 +14,19 @@ function! SwapWithAboveLine()
   endif
 endfunction
 
+function! DeleteLineWithoutBreak()
+  if getline('.') == ''
+    return ''
+  else
+    return '^v$hx'
+  endif
+endfunction
+
+let mapleader = "\<Space>"
+
+nnoremap <Leader>i gg=G<C-o><C-o>zz
+nnoremap <Leader>r :<C-u>source ~/.vimrc\|e!<CR>
+
 noremap j gj
 noremap k gk
 noremap J <C-d>zz
@@ -40,7 +53,7 @@ nnoremap <S-Tab> <C-w>W
 nnoremap <C-a> ggVG
 nnoremap <C-j> "zdd"zp
 nnoremap <expr> <C-k> SwapWithAboveLine()
-nnoremap <C-d> :<C-u>q<CR>
+nnoremap <C-q> :<C-u>q<CR>
 nnoremap <C-x> :<C-u>x<CR>
 nnoremap <C-s> :<C-u>w<CR>
 nnoremap <C-u> :<C-u>noh<CR>
@@ -54,6 +67,7 @@ nnoremap <Up> <C-a>
 nnoremap * viw"zy:<C-u>let @/ = @z\|set hlsearch<CR>
 
 nnoremap <expr> i IndentWithI()
+nnoremap <expr> <C-d> DeleteLineWithoutBreak()
 
 nnoremap <C-n> :<C-u>tabn<CR>
 nnoremap <C-p> :<C-u>tabp<CR>
@@ -74,8 +88,7 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 
-nnoremap <C-m> :<C-u>source ~/.vimrc\|e!<CR>
-nnoremap <C-c> <Nop>
+nnoremap <C-m> <Nop>
 nnoremap <C-h> <nop>
 nnoremap <C-l> <nop>
 nnoremap <Left> <Nop>
