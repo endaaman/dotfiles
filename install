@@ -47,7 +47,7 @@ ln -fsn ~/dotfiles/vim ~/.vim
 # neovim
 ln -fs ~/dotfiles/vim/init.vim ~/.config/nvim/init.vim
 
-# x window system
+# x org
 # ln -fs ~/dotfiles/xsession ~/.xsession
 # ln -fs ~/dotfiles/xprofile ~/.xprofile
 ln -fs ~/dotfiles/Xmodmap ~/.Xmodmap
