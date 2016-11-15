@@ -10,3 +10,9 @@ hook_add = '''
   inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
   inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<TAB>"
 '''
+
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+hook_add = '''
+'''
