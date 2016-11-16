@@ -15,6 +15,7 @@ function! SwapWithAboveLine()
 endfunction
 
 function! DeleteLineWithoutBreak()
+
   if getline('.') == ''
     return ''
   else
@@ -22,10 +23,11 @@ function! DeleteLineWithoutBreak()
   endif
 endfunction
 
+
+
 let mapleader = "\<Space>"
 
 nnoremap <Leader>i gg=G<C-o><C-o>zz
-nnoremap <Leader>r :<C-u>source ~/.vimrc\|e!<CR>
 
 noremap j gj
 noremap k gk
@@ -53,10 +55,10 @@ nnoremap <S-Tab> <C-w>W
 nnoremap <C-a> ggVG
 nnoremap <C-j> "zdd"zp
 nnoremap <expr> <C-k> SwapWithAboveLine()
-nnoremap <C-q> :<C-u>q<CR>
+nnoremap <C-d> :<C-u>q<CR>
 nnoremap <C-x> :<C-u>x<CR>
 nnoremap <C-s> :<C-u>w<CR>
-nnoremap <C-u> :<C-u>noh<CR>
+nnoremap <C-m> :<C-u>noh<CR>
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 nnoremap Q <Nop>
@@ -67,7 +69,7 @@ nnoremap <Up> <C-a>
 nnoremap * viw"zy:<C-u>let @/ = @z\|set hlsearch<CR>
 
 nnoremap <expr> i IndentWithI()
-nnoremap <expr> <C-d> DeleteLineWithoutBreak()
+nnoremap <expr> <C-u> DeleteLineWithoutBreak()
 
 nnoremap <C-n> :<C-u>tabn<CR>
 nnoremap <C-p> :<C-u>tabp<CR>
@@ -80,15 +82,12 @@ vnoremap > >gv
 vnoremap < <gv
 " vnoremap p :<C-u>"0p<CR>
 
-inoremap <BS> <Nop>
 inoremap <C-l> <Del>
-inoremap <C-s> <C-o>:<C-u>w<CR>
 
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 
-nnoremap <C-m> <Nop>
 nnoremap <C-h> <nop>
 nnoremap <C-l> <nop>
 nnoremap <Left> <Nop>
@@ -97,3 +96,9 @@ nnoremap <C-t> <Nop> " tmux prefix
 nnoremap <C-y> <Nop> " Resizer
 nnoremap <C-e> <Nop> " emmet
 
+
+if has('nvim')
+  nnoremap <Leader>r :<C-u>source ~/.config/nvim/init.vim\|e!<CR>
+else
+  nnoremap <Leader>r :<C-u>source ~/.vimrc\|e!<CR>
+endif
