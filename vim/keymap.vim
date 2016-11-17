@@ -41,6 +41,10 @@ noremap H ^
 noremap L $
 noremap m :
 noremap x "_x
+noremap c "_c
+noremap C "_C
+noremap s "_s
+noremap S "_S
 
 nnoremap n nzz
 nnoremap N Nzz
@@ -55,6 +59,9 @@ nnoremap <S-Tab> <C-w>W
 nnoremap <C-a> ggVG
 nnoremap <C-j> "zdd"zp
 nnoremap <expr> <C-k> SwapWithAboveLine()
+nnoremap <C-l> zz
+nnoremap <C-h> <nop>
+nnoremap <C-q> :<C-u>qa<CR>
 nnoremap <C-d> :<C-u>q<CR>
 nnoremap <C-x> :<C-u>x<CR>
 nnoremap <C-s> :<C-u>w<CR>
@@ -88,8 +95,6 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 
-nnoremap <C-h> <nop>
-nnoremap <C-l> <nop>
 nnoremap <Left> <Nop>
 nnoremap <Right> <Nop>
 nnoremap <C-t> <Nop> " tmux prefix
