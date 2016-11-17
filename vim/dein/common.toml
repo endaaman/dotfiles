@@ -2,6 +2,9 @@
 repo = 'mhartington/oceanic-next'
 
 [[plugins]]
+repo = 'sickill/vim-monokai'
+
+[[plugins]]
 repo = 'itchyny/lightline.vim'
 hook_add = '''
   let g:lightline = {
@@ -179,7 +182,7 @@ repo = 'tkztmk/vim-vala'
 [[plugins]]
 repo = 'mattn/emmet-vim'
 hook_add = '''
-  let g:user_emmet_leader_key='<C-y>'
+  let g:user_emmet_leader_key='<C-e>'
 '''
 
 [[plugins]]
