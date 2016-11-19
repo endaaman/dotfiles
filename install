@@ -73,7 +73,7 @@ ln -fs ~/dotfiles/peco.json ~/.config/peco/config.json
 zsh -ci 'zcompile ~/.zshrc'
 touch ~/.gitconfig_local
 
-if ! which setxkbmap >/dev/null 2>&1; then
+if which setxkbmap >/dev/null 2>&1; then
   setxkbmap && xmodmap ~/.Xmodmap
 fi
 
