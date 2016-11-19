@@ -28,6 +28,7 @@ endfunction
 let mapleader = "\<Space>"
 
 nnoremap <Leader>i gg=G<C-o><C-o>zz
+nnoremap <Leader>e :<C-u>e!<CR>
 
 noremap j gj
 noremap k gk
