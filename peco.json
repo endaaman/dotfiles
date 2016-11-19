@@ -1,7 +1,9 @@
 {
   "Keymap": {
+    "C-j": "peco.SelectDown",
     "C-k": "peco.SelectUp",
-    "C-j": "peco.SelectDown"
+    "Tab": "peco.SelectDown",
+    "M-[,Z": "peco.SelectUp"
   },
   "Style": {
     "Selected": ["underline", "on_white", "black"],
