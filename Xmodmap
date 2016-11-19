@@ -11,20 +11,14 @@ keycode 35 = bracketright braceright bracketright braceright
 ! 47: ;
 keycode 47 = colon semicolon colon semicolon
 ! 48: :
-keycode 48 = at grave at grave
+keycode 48 = quotedbl apostrophe quotedbl apostrophe
 ! 51: ]
-keycode 51 = Return NoSymbol Return
-! 49: Zenkaku_Hankaku
-keycode 49 = plus asterisk plus asterisk
+keycode 51 = at grave at grave
 ! 97: \ (left-bottonm)
 keycode 97 = plus asterisk plus asterisk
 
 
-
 !!! PREFIX !!!
-
-! 132: Hiragana_Katakana
-! keycode 132 = backslash underscore backslash underscore
 
 keysym Henkan_Mode = Hiragana_Katakana
 ! keysym Henkan_Mode = Return
