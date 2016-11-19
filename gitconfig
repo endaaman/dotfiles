@@ -6,6 +6,7 @@
 
 [alias]
   a = add
+  aa = add .
   br = branch
   c = commit
   ca = commit --amend
