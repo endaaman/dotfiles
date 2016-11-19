@@ -72,8 +72,8 @@ Composition	F8	DisplayAsHalfWidth
 Conversion	F8	DisplayAsHalfWidth
 Composition	F9	DisplayAsFullAlphanumeric
 Conversion	F9	DisplayAsFullAlphanumeric
-DirectInput	Henkan	IMEOn
-Precomposition	Henkan	IMEOn
+DirectInput	Hiragana	IMEOn
+Precomposition	Hiragana	IMEOn
 Composition	Home	MoveCursorToBeginning
 Conversion	Home	SegmentFocusFirst
 Composition	Left	MoveCursorLeft
