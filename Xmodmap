@@ -1,13 +1,35 @@
 ! vi: set ft=xmodmap :
 
+!!! NORMAL !!!
+
+! 19: 0
 keycode 19 = 0 underscore 0 underscore
+! 34: @
 keycode 34 = bracketleft braceleft bracketleft braceleft
+! 35: [
 keycode 35 = bracketright braceright bracketright braceright
-keycode 51 = at grave at grave
+! 47: ;
+keycode 47 = colon semicolon colon semicolon
+! 48: :
+keycode 48 = at grave at grave
+! 51: ]
+keycode 51 = Return NoSymbol Return
+! 49: Zenkaku_Hankaku
+keycode 49 = plus asterisk plus asterisk
+! 97: \ (left-bottonm)
+keycode 97 = plus asterisk plus asterisk
+
+
+
+!!! PREFIX !!!
+
+! 132: Hiragana_Katakana
 ! keycode 132 = backslash underscore backslash underscore
 
-keysym Hiragana_Katakana = Henkan_Mode
+keysym Henkan_Mode = Hiragana_Katakana
 ! keysym Henkan_Mode = Return
 ! keysym Hiragana_Katakana = Return
+
 clear Lock
 keysym Caps_Lock = Escape
+keysym Zenkaku_Hankaku = Escape

@@ -29,6 +29,7 @@ let mapleader = "\<Space>"
 
 nnoremap <Leader>i gg=G<C-o><C-o>zz
 nnoremap <Leader>e :<C-u>e!<CR>
+nnoremap <Leader>u :<C-u>:noh<CR>
 
 noremap j gj
 noremap k gk
@@ -66,7 +67,7 @@ nnoremap <C-q> :<C-u>qa<CR>
 nnoremap <C-d> :<C-u>q<CR>
 nnoremap <C-x> :<C-u>x<CR>
 nnoremap <C-s> :<C-u>w<CR>
-nnoremap <C-m> :<C-u>noh<CR>
+nnoremap <C-m> zz
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 nnoremap Q <Nop>
