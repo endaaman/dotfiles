@@ -30,6 +30,7 @@ let mapleader = "\<Space>"
 nnoremap <Leader>i gg=G<C-o><C-o>zz
 nnoremap <Leader>e :<C-u>e!<CR>
 nnoremap <Leader>u :<C-u>:noh<CR>
+nnoremap <expr> <Leader>d DeleteLineWithoutBreak()
 
 noremap j gj
 noremap k gk
@@ -61,8 +62,7 @@ nnoremap <S-Tab> <C-w>W
 nnoremap <C-a> ggVG
 nnoremap <C-j> "zdd"zp
 nnoremap <expr> <C-k> SwapWithAboveLine()
-nnoremap <C-l> zz
-nnoremap <C-h> <nop>
+nnoremap <C-u> :<C-u>noh<CR>
 nnoremap <C-q> :<C-u>qa<CR>
 nnoremap <C-d> :<C-u>q<CR>
 nnoremap <C-x> :<C-u>x<CR>
@@ -78,7 +78,6 @@ nnoremap <Up> <C-a>
 nnoremap * viw"zy:<C-u>let @/ = @z\|set hlsearch<CR>
 
 nnoremap <expr> i IndentWithI()
-nnoremap <expr> <C-u> DeleteLineWithoutBreak()
 
 nnoremap <C-n> :<C-u>tabn<CR>
 nnoremap <C-p> :<C-u>tabp<CR>

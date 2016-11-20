@@ -1,23 +1,5 @@
 ! vi: set ft=xmodmap :
 
-!!! NORMAL !!!
-
-! 19: 0
-keycode 19 = 0 underscore 0 underscore
-! 34: @
-keycode 34 = bracketleft braceleft bracketleft braceleft
-! 35: [
-keycode 35 = bracketright braceright bracketright braceright
-! 47: ;
-keycode 47 = colon semicolon colon semicolon
-! 48: :
-keycode 48 = quotedbl apostrophe quotedbl apostrophe
-! 51: ]
-keycode 51 = at grave at grave
-! 97: \ (left-bottonm)
-keycode 97 = plus asterisk plus asterisk
-
-
 !!! PREFIX !!!
 
 keysym Henkan_Mode = Hiragana_Katakana
@@ -27,3 +9,41 @@ keysym Henkan_Mode = Hiragana_Katakana
 clear Lock
 keysym Caps_Lock = Escape
 keysym Zenkaku_Hankaku = Escape
+
+
+
+!!! NORMAL !!!
+
+! 11: 2 -> 2 @
+keycode 11 = 2 at 2 at
+
+! 16: 7 -> 7 `
+keycode 16 = 7 grave 7 grave
+
+! 19: 0 -> 0 +
+keycode 19 = 0 plus 0 plus
+
+! 21: ^ -> * |
+! keycode 21 = asciicircum asciitilde asciicircum asciitilde
+
+! 132: \(top) -> * |
+keycode 132 = asterisk bar asterisk bar
+
+! 34: @ -> [ {
+keycode 34 = bracketleft braceleft bracketleft braceleft
+
+! 35: [ -> ] }
+keycode 35 = bracketright braceright bracketright braceright
+
+! 47: ; -> : ;
+keycode 47 = colon semicolon colon semicolon
+
+! 48: : -> ' "
+keycode 48 = apostrophe quotedbl apostrophe quotedbl
+
+! 51: ] -> @ `
+! keycode 51 = at grave at grave
+keycode 51 = Return
+
+! 97: \(bottonm) -> + *
+! keycode 97 = plus asterisk plus asterisk

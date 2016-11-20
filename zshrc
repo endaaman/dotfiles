@@ -102,8 +102,8 @@ alias xm='setxkbmap && xmodmap ~/.Xmodmap'
 
 alias path="echo \$PATH | sed 's/:/\\n/g'"
 
-alias tap_production="export NODE_ENV=production"
-alias untap_production="unset NODE_ENV"
+alias tap_production="export NODE_ENV=production; export RAILS_ENV=production"
+alias untap_production="unset NODE_ENV; unset RAILS_ENV"
 
 alias A='awk'
 alias G='grep'
