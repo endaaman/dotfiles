@@ -2,7 +2,7 @@
 
 !!! PREFIX !!!
 
-keysym Henkan_Mode = Hiragana_Katakana
+! keysym Henkan_Mode = Hiragana_Katakana
 ! keysym Henkan_Mode = Return
 ! keysym Hiragana_Katakana = Return
 
@@ -42,8 +42,8 @@ keycode 47 = colon semicolon colon semicolon
 keycode 48 = apostrophe quotedbl apostrophe quotedbl
 
 ! 51: ] -> @ `
-! keycode 51 = at grave at grave
-keycode 51 = Return
+keycode 51 = at grave at grave
+! keycode 51 = Return
 
 ! 97: \(bottonm) -> + *
 ! keycode 97 = plus asterisk plus asterisk
