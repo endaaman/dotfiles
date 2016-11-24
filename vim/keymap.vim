@@ -42,7 +42,6 @@ noremap K <C-u>zz
 " nnoremap <C-b> <C-u>zz
 noremap H ^
 noremap L $
-noremap m :
 noremap x "_x
 noremap c "_c
 noremap C "_C
