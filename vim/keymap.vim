@@ -78,6 +78,7 @@ nnoremap * viw"zy:<C-u>let @/ = @z\|set hlsearch<CR>
 
 nnoremap <expr> i IndentWithI()
 
+nnoremap <C-t> :<C-u>tabnew<CR>
 nnoremap <C-n> :<C-u>tabn<CR>
 nnoremap <C-p> :<C-u>tabp<CR>
 nnoremap <C-@> <C-l>
@@ -97,9 +98,9 @@ cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 
 nnoremap <Left> <Nop>
 nnoremap <Right> <Nop>
-nnoremap <C-t> <Nop> " tmux prefix
-nnoremap <C-y> <Nop> " Resizer
-nnoremap <C-e> <Nop> " emmet
+nnoremap <C-q> <Nop> "tmux prefix
+nnoremap <C-y> <Nop> "Resizer
+nnoremap <C-e> <Nop> "emmet
 
 
 if has('nvim')
