@@ -23,6 +23,16 @@ function! DeleteLineWithoutBreak()
   endif
 endfunction
 
+function! RestoreRegister()
+  let @" = s:restore_reg
+  return ''
+endfunction
+
+function! s:Repl()
+  let s:restore_reg = @"
+  return "p@=RestoreRegister()\<cr>"
+endfunction
+
 
 
 let mapleader = "\<Space>"
@@ -47,6 +57,13 @@ noremap c "_c
 noremap C "_C
 noremap s "_s
 noremap S "_S
+
+
+nnoremap <silent> p p`]
+vnoremap <silent> y y`]
+vnoremap <silent> p p`]
+vmap <silent> <expr> p <sid>Repl()
+
 
 nnoremap n nzz
 nnoremap N Nzz
@@ -82,6 +99,7 @@ nnoremap <C-t> :<C-u>tabnew<CR>
 nnoremap <C-n> :<C-u>tabn<CR>
 nnoremap <C-p> :<C-u>tabp<CR>
 nnoremap <C-@> <C-l>
+
 
 vnoremap v $h
 vnoremap <Space> o
