@@ -15,3 +15,6 @@ indent_style = tab
 
 [*.php]
 indent_style = tab
+
+[*.blade.php]
+indent_style = space
