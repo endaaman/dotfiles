@@ -15,10 +15,10 @@ keysym Zenkaku_Hankaku = Escape
 !!! NORMAL !!!
 
 ! 11: 2 -> 2 @
-keycode 11 = 2 at 2 at
+! keycode 11 = 2 at 2 at
 
 ! 16: 7 -> 7 `
-keycode 16 = 7 grave 7 grave
+! keycode 16 = 7 grave 7 grave
 
 ! 19: 0 -> 0 +
 keycode 19 = 0 plus 0 plus
