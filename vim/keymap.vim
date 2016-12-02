@@ -40,7 +40,7 @@ let mapleader = "\<Space>"
 nnoremap <Leader>i gg=G<C-o><C-o>zz
 nnoremap <Leader>e :<C-u>e!<CR>
 nnoremap <Leader>u :<C-u>:noh<CR>
-noremap <Leader>s :%s/
+noremap <Leader>s :s/
 nnoremap <expr> <Leader>d DeleteLineWithoutBreak()
 
 noremap j gj
