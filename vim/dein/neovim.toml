@@ -1,7 +1,6 @@
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
 hook_add = '''
-  " let g:deoplete#enable_at_startup = 1
   let g:deoplete#enable_at_startup = 1
   if !exists('g:deoplete#omni#input_patterns')
     let g:deoplete#omni#input_patterns = {}
@@ -20,4 +19,53 @@ hook_add = '''
   nnoremap <Leader>f :<C-u>Denite file_rec<CR>
   nnoremap <Leader>m :<C-u>Denite file_mru<CR>
   nnoremap <Leader>c :<C-u>Denite colorscheme<CR>
+
+  call denite#custom#map(
+  \ 'insert',
+  \ '<Tab>',
+  \ '<denite:move_to_next_line>',
+  \ 'noremap'
+  \)
+  call denite#custom#map(
+  \ 'insert',
+  \ '<S-Tab>',
+  \ '<denite:move_to_previous_line>',
+  \ 'noremap'
+  \)
+  call denite#custom#map(
+  \ 'insert',
+  \ '<C-j>',
+  \ '<denite:choose_action>',
+  \ 'noremap'
+  \)
+  call denite#custom#map(
+  \ 'insert',
+  \ '<C-t>',
+  \ '<denite:do_action:tabopen>',
+  \ 'noremap'
+  \)
+  call denite#custom#map(
+  \ 'insert',
+  \ '<C-s>',
+  \ '<denite:do_action:split>',
+  \ 'noremap'
+  \)
+  call denite#custom#map(
+  \ 'insert',
+  \ '<C-v>',
+  \ '<denite:do_action:vsplit>',
+  \ 'noremap'
+  \)
+  call denite#custom#map(
+  \ 'insert',
+  \ '<C-y>',
+  \ '<denite:do_action:yank>',
+  \ 'noremap'
+  \)
+
+  call denite#custom#source(
+  \ 'file_rec', 'matchers', ['matcher_cpsm'])
+
+  call denite#custom#source(
+  \ 'file_mru', 'matchers', ['matcher_fuzzy', 'matcher_project_files'])
 '''
