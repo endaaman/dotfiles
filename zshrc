@@ -207,6 +207,7 @@ if [ -d ~/.pyenv ]; then
   export PATH=$PYENV_ROOT/bin:$PATH
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
+  pyenv global system
 fi
 
 if [ -d ~/.phpbrew ]; then
