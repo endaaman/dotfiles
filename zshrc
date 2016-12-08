@@ -1,24 +1,24 @@
-local dirname="%F{cyan}%~%f"
-local is_root=false
+dirname="%F{cyan}%~%f"
+is_root=false
 
 if [ -n "$container" ]; then
-  local upper=`echo "$container" | sed 's/./\U&/g'`
-  local pre_prompt="(%F{green}$upper%f:%F{magenta}$(hostname)%f)"
+  upper=`echo "$container" | sed 's/./\U&/g'`
+  pre_prompt="(%F{green}$upper%f:%F{magenta}$(hostname)%f)"
 fi
 
 if [ -n "$SSH_CLIENT" ]; then
-  local pre_prompt="(%F{green}SSH%f:%F{magenta}$(hostname)%f)"
+  pre_prompt="(%F{green}SSH%f:%F{magenta}$(hostname)%f)"
 fi
 
 if [ ${EUID:-${UID}} = 0 ]; then
   is_root=true
-  local prompt_symbol='#'
+  prompt_symbol='#'
 else
-  local prompt_symbol='$'
+  prompt_symbol='$'
 fi
-local prompt_symbol="%(?.%F{yellow}.%F{magenta})$prompt_symbol%f"
+prompt_colored_symbol="%(?.%F{yellow}.%F{magenta})$prompt_symbol%f"
 
-PROMPT="$pre_prompt$dirname $prompt_symbol "
+PROMPT="$pre_prompt$dirname $prompt_colored_symbol "
 
 
 if [ -d ~/.zplug -a $is_root = false ]; then
@@ -179,7 +179,11 @@ bindkey '^[[3~' delete-char
 
 # envs
 export VTE_CJK_WIDTH=1
-export EDITOR=vim
+if which nvim &> /dev/null; then
+  export EDITOR=nvim
+else
+  export EDITOR=vim
+fi
 export FCEDIT="$EDITOR"
 export VISUAL="$EDITOR"
 export SUDO_EDITOR="$EDITOR"

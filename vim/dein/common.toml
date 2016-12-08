@@ -1,4 +1,10 @@
 [[plugins]]
+repo = 'Shougo/vimshell'
+
+[[plugins]]
+repo = 'rking/ag.vim'
+
+[[plugins]]
 repo = 'mhartington/oceanic-next'
 
 [[plugins]]
@@ -16,40 +22,11 @@ hook_add = '''
 repo = 'Shougo/vimproc'
 build = 'make'
 
-
-[[plugins]]
-repo = 'Shougo/unite-outline'
-depends = ['vimproc', 'unite.vim']
-
-[[plugins]]
-repo = 'Shougo/vimfiler'
-depends = ['vimproc']
-hook_add = '''
-  " let g:vimfiler_as_default_explorer = 1
-  " let g:vimfiler_edit_action = 'tabopen'
-  let g:vimfiler_safe_mode_by_default = 0
-  let g:vimfiler_ignore_pattern = ''
-  autocmd FileType vimfiler nmap <buffer> <Enter>  <Plug>(vimfiler_expand_or_edit)
-  autocmd FileType vimfiler nmap <buffer> o        <Plug>(vimfiler_cd_or_edit)
-  autocmd FileType vimfiler nmap <buffer> H        <nop>
-  autocmd FileType vimfiler nmap <buffer> h        <nop>
-  autocmd FileType vimfiler nmap <buffer> l        <Plug>(vimfiler_expand_tree)
-  let g:vimfiler_tree_leaf_icon = ' '
-  let g:vimfiler_tree_opened_icon = '▾'
-  let g:vimfiler_tree_closed_icon = '▸'
-  let g:vimfiler_file_icon = ''
-  let g:vimfiler_marked_file_icon = '*'
-'''
-
 [[plugins]]
 repo = 'Shougo/neomru.vim'
 
 [[plugins]]
 repo = 'Shougo/neoyank.vim'
-
-[[plugins]]
-repo = 'Shougo/vimshell'
-
 
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
@@ -63,13 +40,12 @@ hook_add = '''
   autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
   nnoremap <C-g> :<C-u>NERDTree<CR> <C-l>
   let g:WebDevIconsNerdTreeAfterGlyphPadding = '  '
-  let NERDTreeShowHidden=1
-  let NERDTreeHijackNetrw=1
+  let NERDTreeShowHidden = 1
+  let NERDTreeHijackNetrw = 1
 '''
 
 [[plugins]]
 repo = 'Xuyuanp/nerdtree-git-plugin'
-
 
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
@@ -94,14 +70,10 @@ hook_add = '''
 repo = 'airblade/vim-gitgutter'
 
 [[plugins]]
-repo = 'rking/ag.vim'
-
-[[plugins]]
 repo = 'rhysd/conflict-marker.vim'
 
 [[plugins]]
 repo = 'editorconfig/editorconfig-vim'
-
 
 [[plugins]]
 repo = 'simeji/winresizer'
@@ -134,61 +106,3 @@ repo = 'tpope/vim-fugitive'
 repo = 'nixprime/cpsm'
 build = 'env PY3=ON ./install.sh'
 
-
-
-
-[[plugins]]
-repo = 'mxw/vim-jsx'
-
-[[plugins]]
-repo = 'myhere/vim-nodejs-complete'
-
-[[plugins]]
-repo = 'fatih/vim-go'
-hook_add = '''
-  let g:go_highlight_functions = 1
-  let g:go_highlight_methods = 3
-  let g:go_highlight_structs = 3
-'''
-
-[[plugins]]
-repo = 'kchmck/vim-coffee-script'
-
-[[plugins]]
-repo = 'mattn/jscomplete-vim'
-
-[[plugins]]
-repo = 'pangloss/vim-javascript'
-
-[[plugins]]
-repo = 'cespare/vim-toml'
-
-[[plugins]]
-repo = 'keith/tmux.vim'
-
-[[plugins]]
-repo = 'davidhalter/jedi-vim'
-
-[[plugins]]
-repo = 'tkztmk/vim-vala'
-
-[[plugins]]
-repo = 'mattn/emmet-vim'
-hook_add = '''
-  let g:user_emmet_leader_key='<C-e>'
-'''
-
-[[plugins]]
-repo = 'vim-scripts/nginx.vim'
-
-[[plugins]]
-repo = 'dag/vim-fish'
-
-[[plugins]]
-repo = 'elzr/vim-json'
-hook_add = '''
-  let g:vim_json_syntax_conceal = 0
-'''
-
-[[plugins]]
-repo = 'nikvdp/ejs-syntax'

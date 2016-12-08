@@ -1,0 +1,70 @@
+[[plugins]]
+repo = 'mattn/emmet-vim'
+hook_add = '''
+  let g:user_emmet_leader_key='<C-e>'
+'''
+
+
+[[plugins]]
+repo = 'mxw/vim-jsx'
+on_ft = ['javascript']
+
+[[plugins]]
+repo = 'myhere/vim-nodejs-complete'
+on_ft = ['javascript']
+
+[[plugins]]
+repo = 'mattn/jscomplete-vim'
+on_ft = ['javascript']
+
+[[plugins]]
+repo = 'pangloss/vim-javascript'
+on_ft = ['javascript']
+
+[[plugins]]
+repo = 'kchmck/vim-coffee-script'
+on_ft = ['coffee']
+
+[[plugins]]
+repo = 'fatih/vim-go'
+on_ft = ['go']
+hook_add = '''
+  let g:go_highlight_functions = 1
+  let g:go_highlight_methods = 3
+  let g:go_highlight_structs = 3
+'''
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+# on_ft = ['toml']
+
+[[plugins]]
+repo = 'keith/tmux.vim'
+on_ft = ['tmux']
+
+[[plugins]]
+repo = 'davidhalter/jedi-vim'
+on_ft = ['python']
+
+[[plugins]]
+repo = 'tkztmk/vim-vala'
+on_ft = ['vala']
+
+[[plugins]]
+repo = 'vim-scripts/nginx.vim'
+on_ft = ['nginx']
+
+[[plugins]]
+repo = 'dag/vim-fish'
+on_ft = ['fish']
+
+[[plugins]]
+repo = 'elzr/vim-json'
+on_ft = ['json']
+hook_add = '''
+  let g:vim_json_syntax_conceal = 0
+'''
+
+[[plugins]]
+repo = 'nikvdp/ejs-syntax'
+on_ft = ['ejs']

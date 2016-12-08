@@ -2,7 +2,7 @@
   path = ~/.gitconfig_local
 [core]
   excludesfile = ~/.gitignore_global
-  editor = vim -c \"set fenc=utf-8\"
+  editor = $EDITOR -c \"set fenc=utf-8\"
 
 [alias]
   a = add

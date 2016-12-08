@@ -1,5 +1,6 @@
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
+on_i = 1
 hook_add = '''
   let g:deoplete#enable_at_startup = 1
   if !exists('g:deoplete#omni#input_patterns')
@@ -10,14 +11,16 @@ hook_add = '''
   inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<TAB>"
 '''
 
-
 [[plugins]]
 repo = 'Shougo/denite.nvim'
 hook_add = '''
   nnoremap <Leader>b :<C-u>Denite buffer<CR>
-  nnoremap <Leader>g :<C-u>Denite grep<CR>
+  nnoremap <Leader>a :<C-u>Denite directory_rec<CR>
   nnoremap <Leader>f :<C-u>Denite file_rec<CR>
   nnoremap <Leader>m :<C-u>Denite file_mru<CR>
+  nnoremap <Leader>l :<C-u>Denite line<CR>
+  nnoremap <Leader>g :<C-u>Denite grep<CR>
+  nnoremap <Leader>y :<C-u>Denite neoyank<CR>
   nnoremap <Leader>c :<C-u>Denite colorscheme<CR>
 
   call denite#custom#map(

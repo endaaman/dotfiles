@@ -10,11 +10,12 @@ if isdirectory(s:dein_repo_dir)
   execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
 
   call dein#begin(s:dein_dir)
-  call dein#load_toml(expand('~/.vim/dein/common.toml'), {'lazy': 0})
+  call dein#load_toml(expand('~/.vim/dein/syntax.toml'), {})
+  call dein#load_toml(expand('~/.vim/dein/common.toml'), {})
   if has('nvim')
-    call dein#load_toml(expand('~/.vim/dein/neovim.toml'), {'lazy': 0})
+    call dein#load_toml(expand('~/.vim/dein/neovim.toml'), {})
   else
-    call dein#load_toml(expand('~/.vim/dein/vim.toml'), {'lazy': 0})
+    call dein#load_toml(expand('~/.vim/dein/vim.toml'), {})
   endif
   call dein#end()
   call dein#save_state()

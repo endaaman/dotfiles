@@ -67,5 +67,3 @@ set wildmenu
 set wrap
 set write
 
-
-

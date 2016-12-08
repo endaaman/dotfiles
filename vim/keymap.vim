@@ -15,7 +15,6 @@ function! SwapWithAboveLine()
 endfunction
 
 function! DeleteLineWithoutBreak()
-
   if getline('.') == ''
     return ''
   else
@@ -41,7 +40,8 @@ nnoremap <Leader>i gg=G<C-o><C-o>zz
 nnoremap <Leader>e :<C-u>e!<CR>
 nnoremap <Leader>u :<C-u>:noh<CR>
 noremap <Leader>s :s/
-nnoremap <expr> <Leader>d DeleteLineWithoutBreak()
+nnoremap <Leader><Leader> zz
+nnoremap <Leader>d g0"_D
 
 noremap j gj
 noremap k gk
@@ -84,7 +84,7 @@ nnoremap <C-q> :<C-u>qa<CR>
 nnoremap <C-d> :<C-u>q<CR>
 nnoremap <C-x> :<C-u>x<CR>
 nnoremap <C-s> :<C-u>w<CR>
-nnoremap <C-m> zz
+nnoremap <C-m> <Nop>
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 nnoremap Q <Nop>
@@ -113,6 +113,8 @@ inoremap <C-l> <Del>
 
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
 cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 
 nnoremap <Left> <Nop>
@@ -127,3 +129,4 @@ if has('nvim')
 else
   nnoremap <Leader>r :<C-u>source ~/.vimrc\|e!<CR>
 endif
+
