@@ -9,8 +9,7 @@
 clear Lock
 keysym Caps_Lock = Escape
 keysym Zenkaku_Hankaku = Escape
-
-
+keysym Escape = Zenkaku_Hankaku
 
 !!! NORMAL !!!
 

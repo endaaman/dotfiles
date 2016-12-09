@@ -166,7 +166,7 @@ zle -N copy-buffer
 
 # key bindings
 bindkey -e
-bindkey '^L' delete-char
+# bindkey '^L' delete-char # C-l
 bindkey '^S' copy-buffer
 bindkey '^G' cdr-peco
 bindkey '^@' clear-screen

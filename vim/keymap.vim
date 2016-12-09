@@ -14,24 +14,17 @@ function! SwapWithAboveLine()
   endif
 endfunction
 
-function! DeleteLineWithoutBreak()
-  if getline('.') == ''
-    return ''
+function! PutTextWithoutOverrideRegister()
+  let line_len = strlen(getline('.'))
+  execute "normal! `>"
+  let col_loc = col('.')
+  execute 'normal! gv"_x'
+  if line_len == col_loc
+    execute 'normal! p'
   else
-    return '^v$hx'
+    execute 'normal! P'
   endif
 endfunction
-
-function! RestoreRegister()
-  let @" = s:restore_reg
-  return ''
-endfunction
-
-function! s:Repl()
-  let s:restore_reg = @"
-  return "p@=RestoreRegister()\<cr>"
-endfunction
-
 
 
 let mapleader = "\<Space>"
@@ -40,17 +33,13 @@ nnoremap <Leader>i gg=G<C-o><C-o>zz
 nnoremap <Leader>e :<C-u>e!<CR>
 nnoremap <Leader>u :<C-u>:noh<CR>
 noremap <Leader>s :s/
-nnoremap <Leader><Leader> zz
+nnoremap <Leader>j zz
 nnoremap <Leader>d g0"_D
 
 noremap j gj
 noremap k gk
 noremap J <C-d>zz
 noremap K <C-u>zz
-" noremap J gjzz
-" noremap K gkzz
-" nnoremap <C-f> <C-d>zz
-" nnoremap <C-b> <C-u>zz
 noremap H ^
 noremap L $
 noremap x "_x
@@ -60,10 +49,10 @@ noremap s "_s
 noremap S "_S
 
 
-nnoremap <silent> p p`]
-vnoremap <silent> y y`]
-vnoremap <silent> p p`]
-vmap <silent> <expr> p <sid>Repl()
+nnoremap p p`]
+vnoremap y y`]
+" vnoremap p "_x`<p`]
+" vnoremap p :<C-u>call PutTextWithoutOverrideRegister()<CR>
 
 
 nnoremap n nzz
