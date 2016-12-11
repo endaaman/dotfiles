@@ -18,7 +18,20 @@ _lxc() {
         (config)
           _arguments -C \
             {--help,--help}'[Show help]' \
+            '1: :__lxc_config_commands' \
             && ret=0
+            case $words[2] in
+              (device)
+                _arguments -C \
+                  '2: :__lxc_config_device_commands' \
+                  && ret=0
+                ;;
+              (trust)
+                _arguments -C \
+                  '2: :__lxc_config_trust_commands' \
+                  && ret=0
+                ;;
+            esac
           ;;
         (copy)
           _arguments -C \
@@ -28,7 +41,7 @@ _lxc() {
         (delete)
           _arguments -C \
             {--help,--help}'[Show help]' \
-            '1: :__lxc_containers_stopped' \
+            '*: :__lxc_containers_stopped' \
             && ret=0
           ;;
         (exec)
@@ -123,12 +136,13 @@ _lxc() {
         (start)
           _arguments -C \
             {--help,--help}'[Show help]' \
-            '1: :__lxc_containers_stopped' \
+            '*: :__lxc_containers_stopped' \
             && ret=0
           ;;
         (stop)
           _arguments -C \
             {--help,--help}'[Show help]' \
+            '*: :__lxc_containers_running' \
             && ret=0
           ;;
       esac
@@ -166,6 +180,42 @@ __lxc_commands() {
     _describe -t commands Commands _c
 }
 
+__lxc_config_commands() {
+    local -a _c
+    _c=(
+      'device:Manage device config'
+      'get:Get container or server configuration key'
+      'set:Set container or server configuration key'
+      'unset:Unset container or server configuration key'
+      'edit:Edit container or server configuration key'
+      'trust:Manage certs config'
+    )
+    _describe -t config_commands 'Config commands' _c
+}
+
+__lxc_config_device_commands() {
+    local -a _c
+    _c=(
+      'add:Add a device to a container'
+      'get:Get a device property'
+      'set:Set a device property'
+      'unset:Unset a device property'
+      'list:List devices for container'
+      'show:Show full device details for container'
+      'remove:Remove device from container'
+    )
+    _describe -t config_device_commands 'Config device commands' _c
+}
+
+__lxc_config_trust_commands() {
+    local -a _c
+    _c=(
+      'list:List all trusted certs'
+      'add:Add certfile.crt to trusted hosts'
+      'remove:Remove the cert from trusted hosts'
+    )
+    _describe -t config_trust_commands 'Config trust commands' _c
+}
 
 __lxc_containers_running () {
     local -a _containers
