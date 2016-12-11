@@ -13,7 +13,6 @@ autocmd BufWritePre * if @% !~ '\.md$' | :%s/\s\+$//e | endif
 autocmd BufWritePre * :%s/\t\+$//e
 
 autocmd FileType nerdtree setlocal nolist
-autocmd StdinReadPre * let s:std_in=1
 
 
 if has('gui_running')
