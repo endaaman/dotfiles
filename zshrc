@@ -37,13 +37,12 @@ if [ -d ~/.zplug -a $is_root = false ]; then
 fi
 
 
+autoload -Uz add-zsh-hock
+autoload -Uz cdr
+autoload -Uz chpwd_recent_dirs
 autoload -Uz colors; colors
 autoload -Uz compinit; compinit
 autoload -Uz promptinit; promptinit
-autoload -Uz add-zsh-hock
-autoload -Uz chpwd_recent_dirs
-autoload -Uz add-zsh-hook
-autoload -Uz cdr
 
 eval `dircolors -b`
 
@@ -59,25 +58,44 @@ DIRSTACKSIZE=100
 HISTSIZE=100000
 SAVEHIST=100000
 
-setopt AUTO_PUSHD
-setopt hist_ignore_dups
-setopt share_history
+setopt always_last_prompt
+setopt append_history
+setopt auto_cd
+setopt auto_list
+setopt auto_menu
+setopt auto_pushd
+setopt autoremoveslash
+setopt complete_in_word
+setopt extended_glob
+setopt extended_history
+setopt glob
+setopt glob_complete
+setopt hist_ignore_all_dups
 setopt hist_ignore_space
-
-zstyle ':completion:*' menu select
-zstyle ':completion:*:cd:*' ignore-parents parent pwd
-zstyle ':completion:*:descriptions' format '%BCompleting%b %U%d%u'
-
+setopt hist_no_store
+setopt hist_reduce_blanks
+setopt hist_verify
+setopt list_packed
+setopt list_types
+setopt magic_equal_subst
+setopt mark_dirs
+setopt no_flow_control
+setopt numeric_glob_sort
+setopt print_eight_bit
+setopt pushd_ignore_dups
+setopt rec_exact
+setopt share_history
+unsetopt list_beep
 
 mkdir -p $HOME/.cache/shell/
-
-zstyle ':completion:*' recent-dirs-insert both
-zstyle ':chpwd:*' recent-dirs-max 500
 zstyle ':chpwd:*' recent-dirs-default true
 zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/shell/chpwd-recent-dirs"
+zstyle ':chpwd:*' recent-dirs-max 500
 zstyle ':chpwd:*' recent-dirs-pushd true
-
-setopt auto_cd
+zstyle ':completion:*' menu select
+zstyle ':completion:*' recent-dirs-insert both
+zstyle ':completion:*:cd:*' ignore-parents parent pwd
+zstyle ':completion:*:descriptions' format '%BCompleting%b %U%d%u'
 
 
 # aliases and functions
