@@ -1,0 +1,60 @@
+#!/usr/bin/env zsh
+
+function nyan() {
+    typeset -a modes
+
+    help() {
+        echo 'Usage: nyan <mode>'
+        echo
+        echo 'Modes:'
+        echo '  neko, usagi, kuma, github'
+    }
+
+    neko() {
+        echo ' ∧_∧'
+        echo "ฅ'ω'ฅ ＜ ﾆｬｰﾝ"
+    }
+
+    usagi() {
+        echo '    /) /)'
+        echo '_(　_ ๑❛ᴗ❛)_ ＜ ﾆｬｰﾝ'
+    }
+
+    kuma() {
+        echo '(´(ｪ)`) ＜ ﾆｬｰﾝ'
+    }
+
+    github() {
+        echo '=͟͟͞͞=͟͟͞͞=͟͟͞͞　(\ (\'
+        echo '=͟͟͞͞=͟͟͞͞=͟͟͞͞(,, 0 ω 0) ＜ ﾆｬｰﾝ'
+        echo '=͟͟͞͞=͟͟͞͞=͟͟͞͞(/ (/ \) \)'
+    }
+
+    while [ $1 ]; do
+        case $1 in
+            -h|--help)
+                help
+                return
+                ;;
+            *)
+                modes=($modes[*] $1)
+                ;;
+        esac
+        shift
+    done
+
+    if (( $#modes == 0 )); then
+        neko
+        return
+    fi
+
+    for mode in $modes; do
+        if type $mode > /dev/null 2>&1; then
+            $mode
+        else
+            echo "No such mode \"$mode\""
+        fi
+    done
+}
+
+nyan $@

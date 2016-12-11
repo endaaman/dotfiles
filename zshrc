@@ -41,13 +41,17 @@ autoload -Uz add-zsh-hock
 autoload -Uz cdr
 autoload -Uz chpwd_recent_dirs
 autoload -Uz colors; colors
-autoload -Uz compinit; compinit
+autoload -Uz compinit; compinit -u
 autoload -Uz promptinit; promptinit
 
 eval `dircolors -b`
 
-zstyle ':completion:*' list-colors $LS_COLORS
+zstyle ':completion:*' format '%B%d%b'
+zstyle ':completion:*' group-name ''
 zstyle ':completion:*' ignore-parents parent pwd ..
+zstyle ':completion:*' list-colors $LS_COLORS
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*:warnings' format 'No matches for: %d'
 zstyle ':completion:*:processes' command 'ps x -o pid,s,args'
 
 # disable C-q C-s
@@ -241,3 +245,6 @@ if [ -d ~/go ]; then
   export GO15VENDOREXPERIMENT=1
 fi
 
+
+source ~/dotfiles/zsh/functions/_lxd.zsh
+source ~/dotfiles/zsh/functions/_nyan.zsh
