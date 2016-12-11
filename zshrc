@@ -119,9 +119,9 @@ if which trash-put &> /dev/null; then
 fi
 
 function cl() {
-  local dir=$(find . -maxdepth 1 -type d ! -path "*/.*"| peco)
-  if [ ! -z "$dir" ] ; then
-    cd "$dir"
+  local file=$(find . -maxdepth 1 -type d ! -path "*/.*"| peco)
+  if [ ! -z "$file" ] ; then
+    cd "$file"
   fi
 }
 
@@ -144,9 +144,9 @@ function gh() {
 }
 
 function vl() {
-  local dir=$(find . -maxdepth 1 -type f ! -path "*/.*"| peco)
-  if [ -r "$dir" ] ; then
-    vim "$dir"
+  local file=$(find . -maxdepth 1 -type f ! -path "*/.*"| peco)
+  if [ -r "$file" ] ; then
+    nvim "$file"
   fi
 }
 
