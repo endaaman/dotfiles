@@ -77,20 +77,20 @@ _lxc() {
         (help)
           _arguments -C \
             {--help,--help}'[Show help]' \
-          '1: :__lxc_commands' \
+            '1: :__lxc_commands' \
             && ret=0
           ;;
         (image)
           _arguments -C \
             {--help,--help}'[Show help]' \
-          '1: :__lxc_image_commands' \
+            '1: :__lxc_image_commands' \
             && ret=0
             case $words[2] in
               (alias)
                 _arguments -C \
                   '2: :__lxc_image_alias_commands' \
                   && ret=0
-                ;;
+            esac
           ;;
         (info)
           _arguments -C \
@@ -169,9 +169,7 @@ _lxc() {
       esac
       ;;
   esac
-
   return ret
-
 }
 
 __lxc_commands() {
