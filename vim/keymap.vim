@@ -32,8 +32,9 @@ let g:mapleader = "\<Space>"
 nnoremap <Leader>i gg=G<C-o><C-o>zz
 nnoremap <Leader>e :<C-u>e!<CR>
 noremap <Leader>s :s/
-nnoremap <Leader>j zz
+nnoremap <Leader>j J
 nnoremap <Leader>d g0"_D
+nnoremap <Leader><space> zz
 
 noremap j gj
 noremap k gk
