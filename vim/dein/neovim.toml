@@ -74,7 +74,6 @@ hook_add = '''
   \ 'noremap'
   \)
 
-
   call denite#custom#filter('matcher_ignore_globs', 'ignore_globs', [
   \ '*~', '*.o', '*.exe', '*.bak',
   \ '.DS_Store', '*.pyc', '*.sw[po]', '*.class',

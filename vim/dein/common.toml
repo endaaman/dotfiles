@@ -39,7 +39,7 @@ repo = 'scrooloose/nerdtree'
 hook_add = '''
   autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
   nnoremap <C-g> :<C-u>NERDTree<CR> <C-l>
-  let g:WebDevIconsNerdTreeAfterGlyphPadding = '  '
+  let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
   let NERDTreeShowHidden = 1
   let NERDTreeHijackNetrw = 1
 '''
