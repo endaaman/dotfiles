@@ -106,3 +106,15 @@ repo = 'tpope/vim-fugitive'
 repo = 'nixprime/cpsm'
 build = 'env PY3=ON ./install.sh'
 
+[[plugins]]
+repo = 'davidhalter/jedi-vim'
+on_ft = ['python']
+hook_add = '''
+  let g:jedi#goto_command = "<leader>1"
+  let g:jedi#goto_assignments_command = "<leader>2"
+  let g:jedi#goto_definitions_command = "<leader>3"
+  let g:jedi#documentation_command = "<Leader>4"
+  let g:jedi#usages_command = "<leader>5"
+  let g:jedi#completions_command = "<Leader>6"
+  let g:jedi#rename_command = "<leader>7"
+'''

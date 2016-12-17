@@ -43,10 +43,6 @@ repo = 'keith/tmux.vim'
 on_ft = ['tmux']
 
 [[plugins]]
-repo = 'davidhalter/jedi-vim'
-on_ft = ['python']
-
-[[plugins]]
 repo = 'tkztmk/vim-vala'
 on_ft = ['vala']
 
