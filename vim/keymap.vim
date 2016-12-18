@@ -98,7 +98,7 @@ vnoremap > >gv
 vnoremap < <gv
 " vnoremap p :<C-u>"0p<CR>
 
-inoremap <C-l> <Del>
+inoremap <C-d> <Del>
 
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
