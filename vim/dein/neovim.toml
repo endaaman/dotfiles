@@ -11,6 +11,12 @@ hook_add = '''
 
   inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
   inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<TAB>"
+
+  let g:deoplete#omni#functions = {}
+  let g:deoplete#omni#input_patterns = {}
+
+  let g:deoplete#omni#input_patterns.python = '\h\w*\|[^. \t]\.\w*'
+  let g:deoplete#omni#functions.python = 'jedi#completions'
 '''
 
 [[plugins]]
@@ -45,7 +51,7 @@ hook_add = '''
   \)
   call denite#custom#map(
   \ '_',
-  \ '<C-j>',
+  \ '<C-m>',
   \ '<denite:choose_action>',
   \ 'noremap'
   \)
