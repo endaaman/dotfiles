@@ -7,21 +7,33 @@
 [alias]
   a = add
   aa = add .
+  ac = !git add . && git commit
+  aca = !git add . && git commit --amend
   br = branch
   c = commit
   ca = commit --amend
   cm = commit -m
   co = checkout
+  cp = cherry-pick
+  d = diff
   f = fetch
   fe = fetch
+  gr = grep
+  l = log
+  l1 = log -n 10 --oneline --no-merges
+  l1m = log -n 10 --oneline
+  lp = log -p -1
+  lpn = log -p -1 --name-only
   pl = pull
   ps = push
   rb = rebase
+  rb2 = rebase -i HEAD~2
+  rb3 = rebase -i HEAD~3
+  rb4 = rebase -i HEAD~4
   rs = reset
   s = status
+  s = status -u
   st = stash
-  ac = !git add . && git commit
-  aca = !git add . && git commit --amend
 
 [color]
   ui = true
