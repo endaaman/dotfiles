@@ -77,8 +77,8 @@ nnoremap <C-m> <Nop>
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 nnoremap Q <Nop>
-nnoremap - <C-x>
-nnoremap + <C-a>
+nnoremap - <C-a>
+nnoremap + <C-x>
 nnoremap <Down> <C-x>
 nnoremap <Up> <C-a>
 nnoremap * viw"zy:<C-u>let @/ = @z\|set hlsearch<CR>
