@@ -63,13 +63,13 @@ hook_add = '''
   \)
   call denite#custom#map(
   \ 'insert',
-  \ '<C-s>',
+  \ '<C-p>',
   \ '<denite:do_action:split>',
   \ 'noremap'
   \)
   call denite#custom#map(
   \ 'insert',
-  \ '<C-v>',
+  \ '<C-s>',
   \ '<denite:do_action:vsplit>',
   \ 'noremap'
   \)
