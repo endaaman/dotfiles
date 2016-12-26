@@ -1,6 +1,9 @@
 syntax enable
 set t_Co=256
 set background=dark
+" if (has("termguicolors"))
+"  set termguicolors
+" endif
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
@@ -16,4 +19,3 @@ silent! colorscheme OceanicNext
 highlight Comment cterm=none
 highlight Search guibg=peru guifg=wheat
 highlight CursorLineNr term=bold cterm=NONE ctermfg=228
-
