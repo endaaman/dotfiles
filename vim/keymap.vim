@@ -29,13 +29,14 @@ endfunction
 
 let g:mapleader = "\<Space>"
 
+noremap <Leader>s :s/
+noremap <Leader>j J
+noremap <Leader>k K
+noremap <Leader><space> zz
 nnoremap <Leader>i gg=G<C-o><C-o>zz
 nnoremap <Leader>e :<C-u>e!<CR>
-noremap <Leader>s :s/
-nnoremap <Leader>j J
 nnoremap <Leader>v g0v$h
 nnoremap <Leader>d g0"_D
-nnoremap <Leader><space> zz
 nnoremap <Leader>/ :<C-u>let @/ = @0\|set hlsearch<CR>
 
 noremap j gj
