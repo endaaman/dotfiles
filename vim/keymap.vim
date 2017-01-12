@@ -111,9 +111,9 @@ cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 
 nnoremap <Left> <Nop>
 nnoremap <Right> <Nop>
-nnoremap <C-q> <Nop> "tmux prefix
-nnoremap <C-y> <Nop> "Resizer
-nnoremap <C-e> <Nop> "emmet
+nnoremap <C-q> <Nop>
+nnoremap <C-y> <Nop>
+nnoremap <C-e> <Nop>
 
 
 if has('nvim')
