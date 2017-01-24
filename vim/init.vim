@@ -19,11 +19,8 @@ endif
 
 syntax on
 
-let g:python3_host_prog = '/usr/bin/python3'
-
 set runtimepath+=~/.vim
 runtime! base.vim
 runtime! keymap.vim
 runtime! dein.vim
 runtime! color.vim
-
