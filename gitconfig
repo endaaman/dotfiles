@@ -31,7 +31,7 @@
   rb3 = rebase -i HEAD~3
   rb4 = rebase -i HEAD~4
   rs = reset
-  s = status
+  rsf = checkout HEAD --
   s = status -u
   st = stash
 

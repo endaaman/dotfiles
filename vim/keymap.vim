@@ -26,18 +26,24 @@ function! PutTextWithoutOverrideRegister()
   endif
 endfunction
 
+function! SearchByRegister()
+  let @/ = @0
+  set hlsearch
+  return 'n'
+endfunction
+
 
 let g:mapleader = "\<Space>"
 
-noremap <Leader>s :s/
-noremap <Leader>j J
-noremap <Leader>k K
-noremap <Leader><space> zz
-nnoremap <Leader>i gg=G<C-o><C-o>zz
-nnoremap <Leader>e :<C-u>e!<CR>
-nnoremap <Leader>v g0v$h
-nnoremap <Leader>d g0"_D
-nnoremap <Leader>/ :<C-u>let @/ = @0\|set hlsearch<CR>
+noremap <Space>s :s/
+noremap <Space>j J
+noremap <Space>k K
+noremap <Space><space> zz
+nnoremap <Space>i gg=G<C-o><C-o>zz
+nnoremap <Space>e :<C-u>e!<CR>
+nnoremap <Space>v g0v$h
+nnoremap <Space>d g0"_D
+nnoremap <expr> <Space>/ SearchByRegister()
 
 noremap j gj
 noremap k gk
@@ -95,10 +101,11 @@ nnoremap <C-@> <C-l>
 
 
 vnoremap v $h
-vnoremap <Space> o
 vnoremap * "zy:<C-u>let @/ = @z\|set hlsearch<CR>gv
 vnoremap > >gv
 vnoremap < <gv
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
 " vnoremap p :<C-u>"0p<CR>
 
 inoremap <C-d> <Del>

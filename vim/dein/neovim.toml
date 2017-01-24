@@ -22,14 +22,14 @@ hook_add = '''
 [[plugins]]
 repo = 'Shougo/denite.nvim'
 hook_add = '''
-  nnoremap <Leader>b :<C-u>Denite buffer<CR>
-  nnoremap <Leader>a :<C-u>Denite directory_rec<CR>
-  nnoremap <Leader>f :<C-u>Denite file_rec<CR>
-  nnoremap <Leader>m :<C-u>Denite file_mru<CR>
-  nnoremap <Leader>l :<C-u>Denite line<CR>
-  nnoremap <Leader>g :<C-u>Denite grep<CR>
-  nnoremap <Leader>y :<C-u>Denite neoyank<CR>
-  nnoremap <Leader>c :<C-u>Denite colorscheme<CR>
+  nnoremap <Space>b :<C-u>Denite buffer<CR>
+  nnoremap <Space>a :<C-u>Denite directory_rec<CR>
+  nnoremap <Space>f :<C-u>Denite file_rec<CR>
+  nnoremap <Space>m :<C-u>Denite file_mru<CR>
+  nnoremap <Space>l :<C-u>Denite line<CR>
+  nnoremap <Space>g :<C-u>Denite grep<CR>
+  nnoremap <Space>y :<C-u>Denite neoyank<CR>
+  nnoremap <Space>c :<C-u>Denite colorscheme<CR>
 
   call denite#custom#map(
   \ '_',
@@ -88,12 +88,14 @@ hook_add = '''
   \ 'node_modules/', '*.ttf', 'vendor/'
   \ ])
 
+  call denite#custom#var('file_rec', 'command',  ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+
   if executable('ag')
     call denite#custom#var('grep', 'command', ['ag'])
-    call denite#custom#var('grep', 'recursive_opts', [])
-    call denite#custom#var('grep', 'final_opts', [])
-    call denite#custom#var('grep', 'separator', [])
     call denite#custom#var('grep', 'default_opts', ['--nocolor', '--nogroup'])
+    call denite#custom#var('grep', 'final_opts', [])
+    call denite#custom#var('grep', 'recursive_opts', [])
+    call denite#custom#var('grep', 'separator', [])
   endif
 
   call denite#custom#source(
