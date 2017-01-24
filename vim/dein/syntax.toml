@@ -45,8 +45,12 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'jwalton512/vim-blade'
+on_ft = ['php']
+
+[[plugins]]
 repo = 'cespare/vim-toml'
-# on_ft = ['toml']
+on_ft = ['toml']
 
 [[plugins]]
 repo = 'keith/tmux.vim'
