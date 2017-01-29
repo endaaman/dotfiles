@@ -19,10 +19,6 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'Shougo/vimproc'
-build = 'make'
-
-[[plugins]]
 repo = 'Shougo/neomru.vim'
 
 [[plugins]]
@@ -31,7 +27,7 @@ repo = 'Shougo/neoyank.vim'
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
 hook_add = '''
-  " let g:WebDevIconsNerdTreeAfterGlyphPadding = '  '
+  let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
 '''
 
 [[plugins]]
@@ -39,9 +35,8 @@ repo = 'scrooloose/nerdtree'
 hook_add = '''
   autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
   nnoremap <C-g> :<C-u>NERDTree<CR> <C-l>
-  let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
-  let NERDTreeShowHidden = 1
-  let NERDTreeHijackNetrw = 1
+  let g:NERDTreeShowHidden = 1
+  let g:NERDTreeHijackNetrw = 1
 '''
 
 [[plugins]]
@@ -59,6 +54,9 @@ repo = 'jiangmiao/auto-pairs'
 
 [[plugins]]
 repo = 'junegunn/vim-easy-align'
+hook_add = '''
+  map ga <Plug>(EasyAlign)
+'''
 
 [[plugins]]
 repo = 'Yggdroot/indentLine'

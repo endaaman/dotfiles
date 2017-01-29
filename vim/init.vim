@@ -19,7 +19,6 @@ endif
 
 syntax on
 
-set runtimepath+=~/.vim
 runtime! base.vim
 runtime! keymap.vim
 runtime! dein.vim

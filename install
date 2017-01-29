@@ -11,7 +11,6 @@ NC='\033[0m'
 cd
 
 mkdir -p ~/.cache/vim
-mkdir -p ~/.config/nvim
 mkdir -p ~/.config/fish/functions
 mkdir -p ~/.config/fontconfig
 mkdir -p ~/.config/peco
@@ -42,10 +41,10 @@ ln -fs ~/dotfiles/fishfile ~/.config/fish/fishfile
 
 # vim
 ln -fs ~/dotfiles/vim/init.vim ~/.vimrc
-ln -fsn ~/dotfiles/vim ~/.vim
+ln -fsn ~/dotfiles/vim ~/.nvi
 
 # neovim
-ln -fs ~/dotfiles/vim/init.vim ~/.config/nvim/init.vim
+ln -fsn ~/dotfiles/vim ~/.config/nvim
 
 # x org
 # ln -fs ~/dotfiles/xsession ~/.xsession
