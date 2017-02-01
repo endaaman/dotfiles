@@ -38,7 +38,6 @@ let g:mapleader = "\<Space>"
 noremap <Space>s :s/
 noremap <Space>j J
 noremap <Space>k K
-noremap <Space><space> zz
 nnoremap <Space>i gg=G<C-o><C-o>zz
 nnoremap <Space>e :<C-u>e!<CR>
 nnoremap <Space>v g0v$h
@@ -82,7 +81,6 @@ nnoremap <C-q> :<C-u>qa<CR>
 nnoremap <C-d> :<C-u>q<CR>
 nnoremap <C-x> :<C-u>x<CR>
 nnoremap <C-s> :<C-u>w<CR>
-nnoremap <C-m> <Nop>
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 nnoremap Q <Nop>
@@ -90,15 +88,15 @@ nnoremap - <C-a>
 nnoremap + <C-x>
 nnoremap <Down> <C-x>
 nnoremap <Up> <C-a>
-nnoremap * viw"zy:<C-u>let @/ = @z\|set hlsearch<CR>
-
-nnoremap <expr> i IndentWithI()
-
 nnoremap <C-t> :<C-u>tabnew<CR>
 nnoremap <C-n> :<C-u>tabn<CR>
 nnoremap <C-p> :<C-u>tabp<CR>
+nnoremap <Left> :tabm -1<CR>
+nnoremap <Right> :tabm +1<CR>
 nnoremap <C-@> <C-l>
 
+nnoremap * viw"zy:<C-u>let @/ = @z\|set hlsearch<CR>
+nnoremap <expr> i IndentWithI()
 
 vnoremap v $h
 vnoremap * "zy:<C-u>let @/ = @z\|set hlsearch<CR>gv
@@ -116,8 +114,7 @@ cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 
-nnoremap <Left> <Nop>
-nnoremap <Right> <Nop>
+nnoremap <C-m> <Nop>
 nnoremap <C-q> <Nop>
 nnoremap <C-y> <Nop>
 nnoremap <C-e> <Nop>

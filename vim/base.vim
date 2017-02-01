@@ -30,7 +30,7 @@ if has('nvim')
 else
 endif
 
-set ambiwidth=double
+" set ambiwidth=double
 set autoindent
 set backupdir=~/.cache/vim
 set backspace=2
