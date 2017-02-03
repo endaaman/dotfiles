@@ -1,3 +1,7 @@
+if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
+ zcompile ~/.zshrc
+fi
+
 dirname="%F{cyan}%~%f"
 is_root=false
 
@@ -46,13 +50,24 @@ autoload -Uz promptinit; promptinit
 
 eval `dircolors -b`
 
+
+mkdir -p $HOME/.cache/shell/
+zstyle ':chpwd:*' recent-dirs-default true
+zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/shell/chpwd-recent-dirs"
+zstyle ':chpwd:*' recent-dirs-max 500
+zstyle ':chpwd:*' recent-dirs-pushd true
 zstyle ':completion:*' format '%B%d%b'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' ignore-parents parent pwd ..
 zstyle ':completion:*' list-colors $LS_COLORS
+zstyle ':completion:*' menu select
+zstyle ':completion:*' recent-dirs-insert both
+zstyle ':completion:*' use-cache yes
 zstyle ':completion:*' verbose yes
-zstyle ':completion:*:warnings' format 'No matches for: %d'
+zstyle ':completion:*:cd:*' ignore-parents parent pwd
+zstyle ':completion:*:descriptions' format '%BCompleting%b %U%d%u'
 zstyle ':completion:*:processes' command 'ps x -o pid,s,args'
+zstyle ':completion:*:warnings' format 'No matches for: %d'
 
 # disable C-q C-s
 stty stop undef
@@ -91,15 +106,6 @@ setopt rec_exact
 setopt share_history
 unsetopt list_beep
 
-mkdir -p $HOME/.cache/shell/
-zstyle ':chpwd:*' recent-dirs-default true
-zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/shell/chpwd-recent-dirs"
-zstyle ':chpwd:*' recent-dirs-max 500
-zstyle ':chpwd:*' recent-dirs-pushd true
-zstyle ':completion:*' menu select
-zstyle ':completion:*' recent-dirs-insert both
-zstyle ':completion:*:cd:*' ignore-parents parent pwd
-zstyle ':completion:*:descriptions' format '%BCompleting%b %U%d%u'
 
 
 # aliases and functions

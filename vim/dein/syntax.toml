@@ -1,7 +1,16 @@
 [[plugins]]
-repo = 'mattn/emmet-vim'
+repo = 'davidhalter/jedi-vim'
+on_ft = ['python']
 hook_add = '''
-  let g:user_emmet_leader_key='<C-e>'
+  let g:jedi#goto_command = "<leader>kg"
+  let g:jedi#goto_assignments_command = "<leader>ka"
+  let g:jedi#goto_definitions_command = ""
+  let g:jedi#documentation_command = "<Leader>kd"
+  let g:jedi#usages_command = "<leader>ku"
+  let g:jedi#completions_command = "<Leader>kc"
+  let g:jedi#rename_command = "<leader>kr"
+
+  let g:jedi#completions_enabled = 0
 '''
 
 # [[plugins]]
@@ -18,7 +27,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'pangloss/vim-javascript'
-# on_ft = ['javascript', 'ejs', 'jst']
+on_ft = ['javascript', 'ejs', 'jst']
 
 [[plugins]]
 repo = 'elzr/vim-json'
@@ -27,9 +36,21 @@ hook_add = '''
   let g:vim_json_syntax_conceal = 0
 '''
 
-[[plugins]]
-repo = 'briancollins/vim-jst'
+# [[plugins]]
+# repo = 'briancollins/vim-jst'
 # on_ft = ['ejs', 'jst']
+# hook_add = '''
+#   autocmd BufNewFile,BufRead *.ejs set filetype=ejs
+#   autocmd BufNewFile,BufRead *._ejs set filetype=ejs
+#
+#   function! s:DetectEjs()
+#       if getline(1) =~ '^#!.*\<ejs\>'
+#           set filetype=ejs
+#       endif
+#   endfunction
+#
+#   autocmd BufNewFile,BufRead * call s:DetectEjs()
+# '''
 
 [[plugins]]
 repo = 'kchmck/vim-coffee-script'

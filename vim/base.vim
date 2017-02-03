@@ -6,9 +6,6 @@ endif
 autocmd InsertLeave * set cursorline
 autocmd InsertEnter * set nocursorline
 
-autocmd BufRead,BufNewFile *.json.jbuilder set ft=ruby
-autocmd BufRead,BufNewFile /etc/nginx/* set ft=nginx
-
 autocmd BufWritePre * if @% !~ '\.md$' | :%s/\s\+$//e | endif
 autocmd BufWritePre * :%s/\t\+$//e
 
