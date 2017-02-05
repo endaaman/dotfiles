@@ -10,6 +10,7 @@ NC='\033[0m'
 
 cd
 
+mkdir -p ~/.tmux.d
 mkdir -p ~/.cache/vim
 mkdir -p ~/.config/fish/functions
 mkdir -p ~/.config/fontconfig
