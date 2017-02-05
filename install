@@ -32,8 +32,7 @@ ln -fs ~/dotfiles/bashrc ~/.bashrc
 
 # tmux
 ln -fs ~/dotfiles/tmux.conf ~/.tmux.conf
-ln -fsn ~/dotfiles/tmux.d ~/.tmux.d
-ln -fs ~/dotfiles/tmux.d/keys.conf ~/.config/byobu/.tmux.conf
+ln -fs ~/dotfiles/byobu.conf ~/.config/byobu/.tmux.conf
 
 # fish
 ln -fs ~/dotfiles/config.fish ~/.config/fish/config.fish
