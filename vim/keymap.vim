@@ -50,6 +50,7 @@ noremap J <C-d>zz
 noremap K <C-u>zz
 noremap H ^
 noremap L $
+noremap <C-Space> zz
 noremap x "_x
 noremap c "_c
 noremap C "_C
