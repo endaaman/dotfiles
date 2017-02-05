@@ -1,0 +1,25 @@
+# vi: set ft=conf :
+
+black      = #1B2B34
+hl_black   = #343D46
+
+red        = #EC5f67
+hl_red     = #EC5f67
+
+green      = #99C794
+hl_green   = #99C794
+
+yellow     = #FAC863
+hl_yellow  = #FAC863
+
+blue       = #6699CC
+hl_blue    = #6699CC
+
+magenta    = #C594C5
+hl_magenta = #C594C5
+
+cyan       = #5FB3B3
+hl_cyan    = #5FB3B3
+
+white      = #C0C5CE
+hl_white   = #C0C5CE

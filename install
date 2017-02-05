@@ -60,6 +60,11 @@ ln -fsn ~/dotfiles/fonts ~/.local/share/fonts/dotfiles
 # editorconfig
 ln -fs ~/dotfiles/editorconfig ~/.editorconfig
 
+# mlterm
+ln -fs ~/dotfiles/mlterm/main ~/.mlterm/main
+ln -fs ~/dotfiles/mlterm/color ~/.mlterm/color
+ln -fs ~/dotfiles/mlterm/aafont ~/.mlterm/aafont
+
 # vimperator
 ln -fs ~/dotfiles/vimperatorrc ~/.vimperatorrc
 
@@ -111,8 +116,8 @@ if $nodejs; then
     echo
     echo -e "${CYAN}Installing nodebrew${NC}"
     curl -L git.io/nodebrew | perl - setup
-    echo -e "${CYAN}Installing node.js v4${NC}"
-    ~/.nodebrew/nodebrew install-binary 4
+    echo -e "${CYAN}Installing node.js v7${NC}"
+    ~/.nodebrew/nodebrew install-binary 7
   else
     echo -e "${CYAN}Updating nodebrew${NC}"
     ~/.nodebrew/nodebrew selfupdate

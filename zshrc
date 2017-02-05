@@ -225,7 +225,7 @@ export PATH=~/dotfiles/bin:$PATH
 
 if [ -d ~/.nodebrew ]; then
   export PATH=~/.nodebrew/current/bin:$PATH
-  nodebrew use 6 > /dev/null
+  nodebrew use 7 > /dev/null
 fi
 
 if [ -d ~/.rbenv ]; then

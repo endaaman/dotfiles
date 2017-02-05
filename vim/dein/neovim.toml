@@ -14,7 +14,6 @@ hook_add = '''
 
   let g:deoplete#omni#functions = {}
   let g:deoplete#omni#input_patterns = {}
-
   let g:deoplete#omni#input_patterns.python = '\h\w*\|[^. \t]\.\w*'
   let g:deoplete#omni#functions.python = 'jedi#completions'
 '''

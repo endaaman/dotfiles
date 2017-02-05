@@ -2,7 +2,7 @@ syntax enable
 set t_Co=256
 set background=dark
 
-" if (has("termguicolors"))
+" if has("termguicolors")
 "  set termguicolors
 " endif
 
