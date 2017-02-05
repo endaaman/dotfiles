@@ -94,6 +94,7 @@ setopt hist_ignore_space
 setopt hist_no_store
 setopt hist_reduce_blanks
 setopt hist_verify
+setopt ignoreeof
 setopt list_packed
 setopt list_types
 setopt magic_equal_subst

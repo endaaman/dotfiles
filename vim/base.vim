@@ -12,7 +12,7 @@ autocmd BufWritePre * :%s/\t\+$//e
 autocmd FileType nerdtree setlocal nolist
 
 
-if has('gui_running')
+if has('gui_running') || exists('g:nyaovim_version')
   set guifont=Monospace\ 11
   autocmd VimEnter * set lines=40
   autocmd VimEnter * set columns=120
@@ -24,6 +24,7 @@ if has('nvim')
   let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 0
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
   let g:python3_host_prog = '/usr/bin/python3'
+  set sh=zsh
 else
 endif
 

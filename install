@@ -68,6 +68,9 @@ ln -fs ~/dotfiles/mlterm/aafont ~/.mlterm/aafont
 # vimperator
 ln -fs ~/dotfiles/vimperatorrc ~/.vimperatorrc
 
+# nyaovim
+ln -fs ~/dotfiles/nyaovimrc.html ~/.config/nyaovim/nyaovimrc.html
+
 # compton
 ln -fs ~/dotfiles/compton.conf ~/.config/compton.conf
 ln -fs ~/.config/compton.conf ~/.config/marco-compton.conf

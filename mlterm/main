@@ -10,6 +10,8 @@ mod_meta_mode = esc
 input_method = fcitx
 use_login_shell = false
 
+use_clipboard = true
+
 use_scrollbar = false
 blink_cursor = true
 
