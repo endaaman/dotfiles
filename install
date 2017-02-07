@@ -16,6 +16,7 @@ mkdir -p ~/.config/fish/functions
 mkdir -p ~/.config/fontconfig
 mkdir -p ~/.config/peco
 mkdir -p ~/.config/byobu
+mkdir -p ~/.config/nyaovim
 mkdir -p ~/.local/share/fonts
 mkdir -p ~/src
 mkdir -p ~/wineprefixes
@@ -63,7 +64,9 @@ ln -fs ~/dotfiles/editorconfig ~/.editorconfig
 # mlterm
 ln -fs ~/dotfiles/mlterm/main ~/.mlterm/main
 ln -fs ~/dotfiles/mlterm/color ~/.mlterm/color
-ln -fs ~/dotfiles/mlterm/aafont ~/.mlterm/aafont
+ln -fs ~/dotfiles/mlterm/font ~/.mlterm/font
+ln -fs ~/dotfiles/mlterm/font ~/.mlterm/aafont
+ln -fs ~/dotfiles/mlterm/key ~/.mlterm/key
 
 # vimperator
 ln -fs ~/dotfiles/vimperatorrc ~/.vimperatorrc

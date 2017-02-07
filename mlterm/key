@@ -1,0 +1,3 @@
+# vi: set ft=conf :
+
+Mod+v=INSERT_SELECTION

@@ -1,7 +1,7 @@
 # vi: set ft=conf :
 
 geometry = 96x32
-fontsize = 14
+fontsize = 16
 line_space = 0
 
 mod_meta_key = alt
@@ -19,8 +19,7 @@ use_anti_alias = true
 use_cp932_ucs_for_xft = true
 
 only_use_unicode_font = true
-not_use_unicode_font = true
-# col_size_of_width_a = 2
+# col_size_of_width_a = 1
 use_variable_column_width = true
 
 fg_color = white

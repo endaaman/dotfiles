@@ -77,6 +77,7 @@ DIRSTACKSIZE=100
 HISTSIZE=100000
 SAVEHIST=100000
 
+# setopt ignoreeof # disable C-d
 setopt always_last_prompt
 setopt append_history
 setopt auto_cd
@@ -94,7 +95,6 @@ setopt hist_ignore_space
 setopt hist_no_store
 setopt hist_reduce_blanks
 setopt hist_verify
-setopt ignoreeof
 setopt list_packed
 setopt list_types
 setopt magic_equal_subst
