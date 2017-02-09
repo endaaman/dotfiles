@@ -22,4 +22,3 @@ syntax on
 runtime! base.vim
 runtime! keymap.vim
 runtime! dein.vim
-runtime! color.vim

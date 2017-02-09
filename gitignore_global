@@ -1,9 +1,10 @@
-,/*
-.sass-cache
-*.pyc
-.python-version
-.vagrant
-.envrc
-*.swp
-.netrwhist
+,/
+.vim/
 
+*.pyc
+*.swp
+.envrc
+.netrwhist
+.python-version
+.sass-cache
+.vagrant

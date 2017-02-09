@@ -109,21 +109,23 @@ unsetopt list_beep
 
 
 
-# aliases and functions
+### Aliases
+alias sudo='sudo -E '
 alias l='ls -hlF'
 alias ll='ls -ahlF'
-alias g="git"
-alias v="vim"
-alias vi="vim -u NONE"
-alias n="nvim"
-alias nr="npm run"
-alias pm="python manage.py"
-alias be="bundle exec"
-alias j2c="js2coffee"
-alias xo="xdg-open"
+alias g='git'
+alias t='tig --all'
+alias v='vim'
+alias vi='vim -u NONE'
+alias n='nvim'
+alias xo='xdg-open'
 
-alias cb="xsel --clipboard --input"
-alias cbp="xsel --clipboard --output"
+alias nr='npm run'
+alias pm='python manage.py'
+alias be='bundle exec'
+
+alias cb='xsel --clipboard --input'
+alias cbp='xsel --clipboard --output'
 alias psp='ps aux | peco'
 
 alias rr='exec zsh -l'
@@ -131,8 +133,8 @@ alias xm='setxkbmap && xmodmap ~/.Xmodmap'
 
 alias path="echo \$PATH | sed 's/:/\\n/g'"
 
-alias tap_production="export NODE_ENV=production; export RAILS_ENV=production"
-alias untap_production="unset NODE_ENV; unset RAILS_ENV"
+alias tap_production='export NODE_ENV=production; export RAILS_ENV=production'
+alias untap_production='unset NODE_ENV; unset RAILS_ENV'
 
 alias A='awk'
 alias G='grep'
@@ -146,6 +148,8 @@ alias W='wc'
 if which trash-put &> /dev/null; then
   alias rm='trash-put'
 fi
+
+### Aliases
 
 function cl() {
   local file=$(find . -maxdepth 1 -type d ! -path "*/.*"| peco)

@@ -19,17 +19,20 @@
   f = fetch
   fe = fetch
   gr = grep
+  i = rebase -i
+  i2 = rebase -i @~2
+  i3 = rebase -i @~3
+  i4 = rebase -i @~4
+  i5 = rebase -i @~5
+  i6 = rebase -i @~6
   l = log
   l1 = log -n 10 --oneline --no-merges
   l1m = log -n 10 --oneline
   lp = log -p -1
   lpn = log -p -1 --name-only
   pl = pull
-  ps = push
+  ps = push -u
   rb = rebase
-  rb2 = rebase -i HEAD~2
-  rb3 = rebase -i HEAD~3
-  rb4 = rebase -i HEAD~4
   rs = reset
   rsf = checkout HEAD --
   s = status -u
@@ -40,3 +43,5 @@
   diff = true
 [ghq]
   root = ~/src
+[http "https://gopkg.in"]
+  followRedirects = true

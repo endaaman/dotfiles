@@ -67,6 +67,9 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'posva/vim-vue'
+
+[[plugins]]
 repo = 'jwalton512/vim-blade'
 on_ft = ['php']
 

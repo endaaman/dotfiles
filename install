@@ -42,14 +42,12 @@ ln -fs ~/dotfiles/fishfile ~/.config/fish/fishfile
 
 # vim
 ln -fs ~/dotfiles/vim/init.vim ~/.vimrc
-ln -fsn ~/dotfiles/vim ~/.nvi
+ln -fsn ~/dotfiles/vim ~/.vim
 
 # neovim
 ln -fsn ~/dotfiles/vim ~/.config/nvim
 
-# x org
-# ln -fs ~/dotfiles/xsession ~/.xsession
-# ln -fs ~/dotfiles/xprofile ~/.xprofile
+# X org
 ln -fs ~/dotfiles/Xmodmap ~/.Xmodmap
 ln -fs ~/dotfiles/Xdefaults ~/.Xdefaults
 ln -fs ~/dotfiles/Xresources ~/.Xresources
@@ -60,6 +58,12 @@ ln -fsn ~/dotfiles/fonts ~/.local/share/fonts/dotfiles
 
 # editorconfig
 ln -fs ~/dotfiles/editorconfig ~/.editorconfig
+
+# editorconfig
+ln -fs ~/dotfiles/tigrc ~/.tigrc
+
+# peco
+ln -fs ~/dotfiles/peco.json ~/.config/peco/config.json
 
 # mlterm
 ln -fs ~/dotfiles/mlterm/main ~/.mlterm/main
@@ -77,9 +81,6 @@ ln -fs ~/dotfiles/nyaovimrc.html ~/.config/nyaovim/nyaovimrc.html
 # compton
 ln -fs ~/dotfiles/compton.conf ~/.config/compton.conf
 ln -fs ~/.config/compton.conf ~/.config/marco-compton.conf
-
-# peco
-ln -fs ~/dotfiles/peco.json ~/.config/peco/config.json
 
 
 touch ~/.gitconfig_local
