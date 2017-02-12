@@ -99,8 +99,8 @@ nnoremap + <C-x>
 nnoremap <Down> <C-x>
 nnoremap <Up> <C-a>
 nnoremap <C-t> :<C-u>tabnew<CR>
-nnoremap <C-n> :<C-u>tabn<CR>
-nnoremap <C-p> :<C-u>tabp<CR>
+nnoremap <C-n> gt
+nnoremap <C-p> gT
 nnoremap <Left> :tabm -1<CR>
 nnoremap <Right> :tabm +1<CR>
 nnoremap <C-@> <C-l>
@@ -122,7 +122,7 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
-cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
+" cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 
 nnoremap <C-m> <Nop>
 nnoremap <C-q> <Nop>

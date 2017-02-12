@@ -110,7 +110,15 @@ repo = 'scrooloose/nerdtree'
 hook_add = '''
   autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
   autocmd FileType nerdtree setlocal nolist
-  nnoremap <C-g> :<C-u>NERDTreeFind<CR> <C-l>
+  function! NERDTreeCustom()
+    if strlen(expand('%')) > 0
+      NERDTreeFind
+    else
+      NERDTree
+    endif
+  endfunction
+  command! -nargs=* -bar -bang -count=0 -complete=dir NERDTreeCustom <args>
+  nnoremap <C-g> :<C-u>call NERDTreeCustom()<CR>
   let g:NERDTreeShowHidden = 1
   let g:NERDTreeHijackNetrw = 1
 '''

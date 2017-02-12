@@ -78,6 +78,5 @@ set undodir=~/.cache/vim
 set undofile
 set updatetime=1000
 set wildmenu
-set wildmode=list:longest
 set wrap
 set write
