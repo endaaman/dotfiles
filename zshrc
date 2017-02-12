@@ -256,7 +256,3 @@ if [ -d ~/go ]; then
   export PATH=$PATH:$GOPATH/bin
   export GO15VENDOREXPERIMENT=1
 fi
-
-
-source ~/dotfiles/zsh/functions/_lxd.zsh
-source ~/dotfiles/zsh/functions/_nyan.zsh

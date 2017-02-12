@@ -4,7 +4,6 @@
 - Vim
 - Zsh 
 - tmux
-- mlterm
 - fonts.conf
 
 etc

@@ -20,11 +20,14 @@ mkdir -p ~/.config/nyaovim
 mkdir -p ~/.local/share/fonts
 mkdir -p ~/src
 mkdir -p ~/wineprefixes
+touch ~/.gitconfig_local
+if which setxkbmap >/dev/null 2>&1; then
+  setxkbmap && xmodmap ~/.Xmodmap
+fi
 
 # git
 ln -fs ~/dotfiles/gitconfig ~/.gitconfig
 ln -fs ~/dotfiles/gitscripts ~/.gitscripts
-touch ~/.gitconfig_local
 
 # zsh
 ln -fs ~/dotfiles/zshrc ~/.zshrc
@@ -38,7 +41,6 @@ ln -fs ~/dotfiles/byobu.conf ~/.config/byobu/.tmux.conf
 
 # fish
 ln -fs ~/dotfiles/config.fish ~/.config/fish/config.fish
-ln -fs ~/dotfiles/fishfile ~/.config/fish/fishfile
 
 # vim
 ln -fs ~/dotfiles/vim/init.vim ~/.vimrc
@@ -83,18 +85,11 @@ ln -fs ~/dotfiles/compton.conf ~/.config/compton.conf
 ln -fs ~/.config/compton.conf ~/.config/marco-compton.conf
 
 
-touch ~/.gitconfig_local
-
-if which setxkbmap >/dev/null 2>&1; then
-  setxkbmap && xmodmap ~/.Xmodmap
-fi
-
 changed=false
 
 nodejs=false
 python=false
 ruby=false
-fisherman=false
 zplug=false
 dein=false
 
@@ -103,14 +98,12 @@ for i in "$@" ; do
     'nodejs'    | 'node' ) nodejs=true ;;
     'python'    | 'py'   ) python=true ;;
     'ruby'      | 'rb'   ) ruby=true ;;
-    'fisherman' | 'fm'   ) fisherman=true ;;
     'zplug'     | 'zp'   ) zplug=true ;;
     'dein'      | 'dn'   ) dein=true ;;
     'all' )
       nodejs=true
       python=true
       ruby=true
-      fisherman=true
       zplug=true
       dein=true
   esac
@@ -173,7 +166,6 @@ if $ruby; then
     cd
     echo
   fi
-
   if [ ! -d ~/.rbenv/plugins/ruby-build ]; then
     echo
     echo -e "${CYAN}Installing ruby-build${NC}"
@@ -204,21 +196,6 @@ if $zplug; then
 fi
 
 
-if $fisherman; then
-  changed=true
-  if ! which fish >/dev/null 2>&1; then
-    echo -e "${CYAN}Please install fish${NC}"
-    exit 1
-  fi
-  if [ ! -f "~/.config/fish/functions/fisher.fish" ]; then
-    echo
-    echo -e "${CYAN}Installing fisherman${NC}"
-    curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
-    echo
-  fi
-fi
-
-
 if $dein; then
   changed=true
   dein_base_dir=~/.cache/dein/repos/github.com/Shougo
@@ -236,6 +213,7 @@ if $dein; then
     echo
   fi
 fi
+
 
 if $changed; then
   echo -e "${CYAN}Done.${NC}"
