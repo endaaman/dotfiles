@@ -15,8 +15,88 @@ hook_add = '''
 repo = 'itchyny/lightline.vim'
 hook_add = '''
   let g:lightline = {
-  \ 'colorscheme': 'jellybeans'
+  \ 'colorscheme': 'wombat',
+  \ 'mode_map': { 'c': 'NORMAL' },
+  \ 'active': {
+  \   'left': [
+  \     [ 'mode', 'paste' ],
+  \     [ 'fugitive', 'dirname', 'filename' ],
+  \   ],
+  \   'right': [
+  \     [ 'syntastic', 'lineinfo' ],
+  \     [ 'percent' ],
+  \     [ 'fileformat', 'fileencoding', 'filetype' ],
+  \   ],
+  \ },
+  \ 'component_function': {
+  \   'fugitive': 'LightLineFugitive',
+  \   'dirname': 'LightlineDirname',
+  \   'filename': 'LightlineFilename',
+  \   'fileformat': 'LightlineFileformat',
+  \   'filetype': 'LightlineFiletype',
+  \   'fileencoding': 'LightlineFileencoding',
+  \   'mode': 'LightlineMode',
+  \ },
+  " \ 'separator': { 'left': '', 'right': '' },
+  " \ 'subseparator': { 'left': '|', 'right': '|' }
+  \ 'separator': { 'left': '', 'right': '' },
+  \ 'subseparator': { 'left': '', 'right': '' }
   \ }
+
+  function! LightLineFugitive()
+    let fname = expand('%:t')
+    if fname =~ 'NERD_tree'
+      return ''
+    endif
+    return exists('*fugitive#head') ? fugitive#head() : ''
+  endfunction
+
+  function! LightlineDirname()
+    let fname = expand('%:t')
+    if fname =~ 'NERD_tree' || winwidth(0) <= 70
+      return ''
+    endif
+
+    let dirname = expand('%:h')
+    if dirname == '.'
+      return ''
+    endif
+    return dirname
+  endfunction
+
+  function! LightlineFilename()
+    let fname = expand('%:t')
+    if fname =~ 'NERD_tree'
+      let fname = ''
+    elseif fname == ''
+      let fname = '[No Name]'
+    endif
+    let fname =
+      \ (&readonly ? ' ' : '') .
+      \ fname .
+      \ (&modified ? ' +' : '')
+    return fname
+  endfunction
+
+  function! LightlineFileformat()
+    return winwidth(0) > 80 ? &fileformat : ''
+  endfunction
+
+  function! LightlineFiletype()
+    return winwidth(0) > 80 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+  endfunction
+
+  function! LightlineFileencoding()
+    return winwidth(0) > 80 ? (&fenc !=# '' ? &fenc : &enc) : ''
+  endfunction
+
+  function! LightlineMode()
+    let fname = expand('%:t')
+    if fname =~ 'NERD_tree'
+      return 'NERD Tree'
+    endif
+    return lightline#mode()
+  endfunction
 '''
 
 [[plugins]]
@@ -36,7 +116,7 @@ repo = 'scrooloose/nerdtree'
 hook_add = '''
   autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
   autocmd FileType nerdtree setlocal nolist
-  nnoremap <C-g> :<C-u>NERDTree<CR> <C-l>
+  nnoremap <C-g> :<C-u>NERDTreeFind<CR> <C-l>
   let g:NERDTreeShowHidden = 1
   let g:NERDTreeHijackNetrw = 1
 '''
@@ -80,7 +160,7 @@ repo = 'editorconfig/editorconfig-vim'
 [[plugins]]
 repo = 'simeji/winresizer'
 hook_add = '''
-  let g:winresizer_start_key = '<C-y>'
+  let g:winresizer_start_key = '<C-e>'
 '''
 
 [[plugins]]
