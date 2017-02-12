@@ -56,7 +56,7 @@ hook_add = '''
       return ''
     endif
     let dirname = expand('%:h')
-    return dirname == '.' ? '' : dirname
+    return dirname == '.' ? './' : './' . dirname
   endfunction
 
   function! LightlineFilename()
@@ -137,8 +137,6 @@ hook_add = '''
 [[plugins]]
 repo = 'Yggdroot/indentLine'
 hook_add = '''
-  let g:indentLine_color_term = 23
-  let g:indentLine_color_gui = '#708090'
   let g:indentLine_char = '¦'
 '''
 

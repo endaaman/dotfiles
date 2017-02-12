@@ -1,5 +1,3 @@
-# 🐡 🐟 🐠
-
 ###* user environments
 set -gx XDG_CONFIG_HOME $HOME/.config
 set -gx VTE_CJK_WIDTH 1
