@@ -16,7 +16,6 @@ repo = 'itchyny/lightline.vim'
 hook_add = '''
   let g:lightline = {
   \ 'colorscheme': 'wombat',
-  \ 'mode_map': { 'c': 'NORMAL' },
   \ 'active': {
   \   'left': [
   \     [ 'mode', 'paste' ],
@@ -56,12 +55,8 @@ hook_add = '''
     if fname =~ 'NERD_tree' || winwidth(0) <= 70
       return ''
     endif
-
     let dirname = expand('%:h')
-    if dirname == '.'
-      return ''
-    endif
-    return dirname
+    return dirname == '.' ? '' : dirname
   endfunction
 
   function! LightlineFilename()
@@ -71,11 +66,10 @@ hook_add = '''
     elseif fname == ''
       let fname = '[No Name]'
     endif
-    let fname =
+    return
       \ (&readonly ? ' ' : '') .
       \ fname .
       \ (&modified ? ' +' : '')
-    return fname
   endfunction
 
   function! LightlineFileformat()
