@@ -31,6 +31,8 @@ if has('nvim')
   set sh=zsh
   let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 0
   let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
+  " autocmd TermOpen * if &buftype == 'terminal' | :set nolist | endif
+  " autocmd TermClose * set list
 else
 endif
 
@@ -76,5 +78,6 @@ set undodir=~/.cache/vim
 set undofile
 set updatetime=1000
 set wildmenu
+set wildmode=list:longest
 set wrap
 set write

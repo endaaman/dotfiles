@@ -36,8 +36,9 @@ endfunction
 let g:mapleader = "\<Space>"
 
 if has('nvim')
-  nnoremap <Leader>r :<C-u>source ~/.config/nvim/init.vim\|e!<CR>
+  nnoremap <Space>t :<C-u>terminal<CR>
   tnoremap <silent> <ESC> <C-\><C-n>
+  nnoremap <Leader>r :<C-u>source ~/.config/nvim/init.vim\|e!<CR>
 else
   nnoremap <Leader>r :<C-u>source ~/.vimrc\|e!<CR>
 endif
