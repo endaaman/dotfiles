@@ -27,8 +27,9 @@ PROMPT="$pre_prompt$dirname $prompt_colored_symbol "
 
 if [ -d ~/.zplug -a $is_root = false ]; then
   source ~/.zplug/init.zsh
-  zplug 'olivierverdier/zsh-git-prompt', use:'zshrc.sh'
   zplug 'zsh-users/zsh-completions'
+  zplug 'olivierverdier/zsh-git-prompt', use:'zshrc.sh'
+  zplug 'endaaman/lxd-completion-zsh'
 
   if ! zplug check --verbose; then
     printf 'Install? [y/N]: '
