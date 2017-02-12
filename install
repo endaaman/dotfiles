@@ -44,6 +44,7 @@ ln -fs ~/dotfiles/config.fish ~/.config/fish/config.fish
 
 # vim
 ln -fs ~/dotfiles/vim/init.vim ~/.vimrc
+ln -fs ~/dotfiles/vimrc ~/.vimrc
 ln -fsn ~/dotfiles/vim ~/.vim
 
 # neovim
