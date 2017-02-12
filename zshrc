@@ -30,6 +30,9 @@ if [ -d ~/.zplug -a $is_root = false ]; then
   zplug 'zsh-users/zsh-completions'
   zplug 'olivierverdier/zsh-git-prompt', use:'zshrc.sh'
   zplug 'endaaman/lxd-completion-zsh'
+  zplug 'peco/peco', as:command, from:gh-r, frozen:1
+  zplug 'motemen/ghq', as:command, from:gh-r, rename-to:ghq
+  zplug 'stedolan/jq', as:command, from:gh-r, rename-to:jq
 
   if ! zplug check --verbose; then
     printf 'Install? [y/N]: '
