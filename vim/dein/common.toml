@@ -19,16 +19,16 @@ hook_add = '''
   \ 'active': {
   \   'left': [
   \     [ 'mode', 'paste' ],
-  \     [ 'fugitive', 'dirname', 'filename' ],
+  \     [ 'dirname', 'filename' ],
   \   ],
   \   'right': [
   \     [ 'syntastic', 'lineinfo' ],
   \     [ 'percent' ],
-  \     [ 'fileformat', 'fileencoding', 'filetype' ],
+  \     [ 'fugitive', 'fileformat', 'fileencoding', 'filetype' ],
   \   ],
   \ },
   \ 'component_function': {
-  \   'fugitive': 'LightLineFugitive',
+  " \   'fugitive': 'LightLineFugitive',
   \   'dirname': 'LightlineDirname',
   \   'filename': 'LightlineFilename',
   \   'fileformat': 'LightlineFileformat',
@@ -38,6 +38,7 @@ hook_add = '''
   \ },
   " \ 'separator': { 'left': '', 'right': '' },
   " \ 'subseparator': { 'left': '|', 'right': '|' }
+  "
   \ 'separator': { 'left': '', 'right': '' },
   \ 'subseparator': { 'left': '', 'right': '' }
   \ }
@@ -47,7 +48,7 @@ hook_add = '''
     if fname =~ 'NERD_tree'
       return ''
     endif
-    return exists('*fugitive#head') ? fugitive#head() : ''
+    return exists('*fugitive#head') ? '' . fugitive#head() : ''
   endfunction
 
   function! LightlineDirname()

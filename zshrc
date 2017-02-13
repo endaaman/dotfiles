@@ -254,6 +254,10 @@ if [ -d ~/.phpbrew ]; then
   source ~/.phpbrew/bashrc
 fi
 
+if [ -d ~/.config/composer/vendor/bin ]; then
+  export PATH=$PATH:$HOME/.config/composer/vendor/bin
+fi
+
 if [ -d ~/go ]; then
   export GOPATH=~/go
   export PATH=$PATH:$GOPATH/bin
