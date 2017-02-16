@@ -263,3 +263,6 @@ if [ -d ~/go ]; then
   export PATH=$PATH:$GOPATH/bin
   export GO15VENDOREXPERIMENT=1
 fi
+
+export OCAMLPARAM="_,bin-annot=1"
+export OPAMKEEPBUILDDIR=1
