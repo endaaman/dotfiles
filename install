@@ -17,6 +17,7 @@ mkdir -p ~/.config/fontconfig
 mkdir -p ~/.config/peco
 mkdir -p ~/.config/byobu
 mkdir -p ~/.config/nyaovim
+mkdir -p ~/.config/termite
 mkdir -p ~/.local/share/fonts
 mkdir -p ~/src
 mkdir -p ~/wineprefixes
@@ -54,6 +55,9 @@ ln -fsn ~/dotfiles/vim ~/.config/nvim
 ln -fs ~/dotfiles/Xmodmap ~/.Xmodmap
 ln -fs ~/dotfiles/Xdefaults ~/.Xdefaults
 ln -fs ~/dotfiles/Xresources ~/.Xresources
+
+# termite
+ln -fs ~/dotfiles/termite/config ~/.config/termite/config
 
 # fonts
 ln -fs ~/dotfiles/fonts.conf ~/.config/fontconfig/fonts.conf
