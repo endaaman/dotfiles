@@ -125,6 +125,13 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'tiagofumo/vim-nerdtree-syntax-highlight'
+hook_add = '''
+  let g:NERDTreeFileExtensionHighlightFullName = 1
+'''
+
+
+[[plugins]]
 repo = 'Xuyuanp/nerdtree-git-plugin'
 
 [[plugins]]
