@@ -18,7 +18,7 @@ if (v:version == 704 && has("patch338")) || v:version >= 705
 endif
 
 if has('gui_running') || exists('g:nyaovim_version')
-  set guifont=Monospace\ 11
+  set guifont=Monospace\ 10
   autocmd VimEnter * set lines=40
   autocmd VimEnter * set columns=120
   set ambiwidth=double

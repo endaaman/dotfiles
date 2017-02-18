@@ -25,9 +25,10 @@ hook_add = '''
   nnoremap <Space>a :<C-u>Denite directory_rec<CR>
   nnoremap <Space>f :<C-u>Denite file_rec<CR>
   nnoremap <Space>m :<C-u>Denite file_mru<CR>
-  nnoremap <Space>l :<C-u>Denite line<CR>
   nnoremap <Space>g :<C-u>Denite grep<CR>
   nnoremap <Space>y :<C-u>Denite neoyank<CR>
+  nnoremap <Space>r :<C-u>Denite register<CR>
+  nnoremap <Space>s :<C-u>Denite source<CR>
   nnoremap <Space>c :<C-u>Denite colorscheme<CR>
 
   call denite#custom#map(
@@ -102,6 +103,10 @@ hook_add = '''
 
   call denite#custom#source(
   \ 'file_rec', 'converters', ['converter_relative_word'])
+
+  call denite#custom#alias('source', 'file_rec/git', 'file_rec')
+  call denite#custom#var('file_rec/git', 'command',
+  \ ['git', 'ls-files', '-co', '--exclude-standard'])
 
   call denite#custom#source(
   \ 'file_mru', 'converters', ['converter_relative_word'])

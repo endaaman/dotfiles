@@ -14,73 +14,53 @@ function! SwapWithAboveLine()
   endif
 endfunction
 
-function! PutTextWithoutOverrideRegister()
-  let line_len = strlen(getline('.'))
-  execute "normal! `>"
-  let col_loc = col('.')
-  execute 'normal! gv"_x'
-  if line_len == col_loc
-    execute 'normal! p'
+function! SearchByRegister()
+  let splitted = split(@+, '\n')
+  if 0 < len(splitted)
+    let @/ = splitted[0]
+    return 'n'
   else
-    execute 'normal! P'
+    return ''
   endif
 endfunction
 
-function! SearchByRegister()
-  let @/ = @0
-  set hlsearch
-  return 'n'
-endfunction
-
-
 let g:mapleader = "\<Space>"
 
-if has('nvim')
-  nnoremap <Space>t :<C-u>terminal
-  tnoremap <silent> <ESC> <C-\><C-n>
-  nnoremap <Leader>r :<C-u>source ~/.config/nvim/init.vim\|e!<CR>
-else
-  nnoremap <Leader>r :<C-u>source ~/.vimrc\|e!<CR>
-endif
-
-
-noremap <Space>s :s/
 noremap <Space>j J
 noremap <Space>k K
-nnoremap <Space>i gg=G<C-o><C-o>zz
+noremap <Space>n <C-i>
+noremap <Space>p <C-o>
+noremap <Space>s :s/
 nnoremap <Space>e :<C-u>e!<CR>
-nnoremap <Space>v g0v$h
 nnoremap <Space>d g0"_D
 nnoremap <expr> <Space>/ SearchByRegister()
 
+nnoremap <expr> <Space><Space><Space><Space> ReloadConfigAndReopen()
+
+"
 noremap j gj
 noremap k gk
 noremap J <C-d>zz
 noremap K <C-u>zz
 noremap H ^
 noremap L $
+noremap <C-b> %
 noremap <C-Space> zz
 noremap x "_x
 noremap c "_c
 noremap C "_C
 noremap s "_s
 noremap S "_S
+noremap n nzz
+noremap N Nzz
+noremap G Gzz
 
-
-nnoremap p p`]
-vnoremap y y`]
-" vnoremap p "_x`<p`]
-" vnoremap p :<C-u>call PutTextWithoutOverrideRegister()<CR>
-
-
-nnoremap n nzz
-nnoremap N Nzz
 nnoremap * *zz
 nnoremap # #zz
 nnoremap o o<Esc>
 nnoremap O O<Esc>
+nnoremap p p`]
 nnoremap Y y$
-nnoremap G Gzz
 nnoremap <Tab> <C-w>w
 nnoremap <S-Tab> <C-w>W
 nnoremap <C-a> ggVG
@@ -105,16 +85,18 @@ nnoremap <Left> :tabm -1<CR>
 nnoremap <Right> :tabm +1<CR>
 nnoremap <C-@> <C-l>
 
-nnoremap * viw"zy:<C-u>let @/ = @z\|set hlsearch<CR>
+nnoremap * viw"zy:<C-u>let @/=@z\|set hlsearch<CR>n
 nnoremap <expr> i IndentWithI()
 
 vnoremap v $h
-vnoremap * "zy:<C-u>let @/ = @z\|set hlsearch<CR>gv
+vnoremap * "zy:<C-u>let @/=@z\|set hlsearch<CR>gv
 vnoremap > >gv
 vnoremap < <gv
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
-" vnoremap p :<C-u>"0p<CR>
+vnoremap y y`]
+vnoremap p <C-[>:<C-u>let @y=@+<CR>gvp`]:let @+=@y<CR>
+vnoremap O V:sort<CR>
 
 inoremap <C-d> <Del>
 
@@ -122,9 +104,16 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
-" cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 
+" unsed
+nnoremap <C-o> <Nop>
 nnoremap <C-m> <Nop>
 nnoremap <C-q> <Nop>
 nnoremap <C-y> <Nop>
 nnoremap <C-e> <Nop>
+
+if has('nvim')
+  nnoremap <Space>t :<C-u>tabnew\|terminal<CR>
+  tnoremap <silent> <ESC> <C-\><C-n>
+endif
+
