@@ -56,8 +56,15 @@ hook_add = '''
     if fname =~ 'NERD_tree' || winwidth(0) <= 70
       return ''
     endif
+
     let dirname = expand('%:h')
-    return dirname == '.' ? './' : './' . dirname
+    if dirname[0] == '/'
+      return dirname
+    elseif dirname == '.'
+      return './'
+    else
+      return './' . dirname
+    endif
   endfunction
 
   function! LightlineFilename()
