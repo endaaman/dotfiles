@@ -1,3 +1,5 @@
+# vim: ft=dosini cms=#%s
+
 [options]
 font = Monospace 11
 
