@@ -3,7 +3,7 @@ let g:dein#install_progress_type = 'title'
 let g:dein#install_message_type = 'none'
 let g:dein#enable_notification = 1
 
-let s:toml_dir = expand('<sfile>:p:h') . '/dein'
+let s:toml_dir = expand('<sfile>:p:h') . '/plugins'
 let s:dein_dir = expand('~/.cache/dein')
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
