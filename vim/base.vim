@@ -29,8 +29,8 @@ endif
 if has('nvim')
   let g:python3_host_prog = '/usr/bin/python3'
   set sh=zsh
-  let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 0
-  let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
+  let $NVIM_TUI_ENABLE_CURSOR_SHAPE=0
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
   " autocmd TermOpen * if &buftype == 'terminal' | :set nolist | endif
   " autocmd TermClose * set list
 else
@@ -39,6 +39,7 @@ endif
 if has('termguicolors')
   set termguicolors
 endif
+
 
 set autoindent
 set backupdir=~/.cache/vim
