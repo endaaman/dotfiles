@@ -53,7 +53,7 @@ hook_add = '''
 
   function! LightlineDirname()
     let fname = expand('%:t')
-    if fname =~ 'NERD_tree' || winwidth(0) <= 70
+    if fname =~ 'NERD_tree' || winwidth(0) <= 80
       return ''
     endif
 
