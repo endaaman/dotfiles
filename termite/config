@@ -28,8 +28,8 @@ cursor_shape = block
 foreground        = #d0d0d0
 foreground_bold   = #d0d0d0
 cursor            = #d0d0d0
-cursor_foreground = #151515
-background        = #151515
+cursor_foreground = #181818
+background        = #181818
 
 # 16 color space
 color0  = #151515
