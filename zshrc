@@ -2,25 +2,28 @@ if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
  zcompile ~/.zshrc
 fi
 
-dirname="%F{cyan}%~%f"
 is_root=false
-
-if [ -n "$container" ]; then
-  upper=`echo "$container" | sed 's/./\U&/g'`
-  pre_prompt="(%F{green}$upper%f:%F{magenta}$(hostname)%f)"
-fi
-
-if [ -n "$SSH_CLIENT" ]; then
-  pre_prompt="(%F{green}SSH%f:%F{magenta}$(hostname)%f)"
-fi
-
 if [ ${EUID:-${UID}} = 0 ]; then
   is_root=true
+fi
+
+if [ -n "$container" ] || [ -n "$SSH_CLIENT" ]; then
+  if [ -n "$container" ]; then
+    con=`echo "$container" | sed 's/./\U&/g'`
+  else
+    con=SSH
+  fi
+  pre_prompt="(%F{green}${con}%f:%F{magenta}$(hostname)%f)"
+fi
+
+dirname="%F{cyan}%~%f"
+
+if $is_root; then
   prompt_symbol='#'
 else
   prompt_symbol='$'
 fi
-prompt_colored_symbol="%(?.%F{yellow}.%F{magenta})$prompt_symbol%f"
+prompt_colored_symbol="%(?.%F{yellow}.%F{red})$prompt_symbol%f"
 
 PROMPT="$pre_prompt$dirname $prompt_colored_symbol "
 
