@@ -85,11 +85,11 @@ nnoremap <Left> :tabm -1<CR>
 nnoremap <Right> :tabm +1<CR>
 nnoremap <C-@> <C-l>
 
-nnoremap * viw"zy:<C-u>let @/=@z\|set hlsearch<CR>n
+nnoremap * viw"zy:<C-u>let @/=@z\|set hlsearch<CR>
 nnoremap <expr> i IndentWithI()
 
 vnoremap v $h
-vnoremap * "zy:<C-u>let @/=@z\|set hlsearch<CR>gv
+vnoremap * "zy:<C-u>let @/=@z\|set hlsearch<CR>
 vnoremap > >gv
 vnoremap < <gv
 vnoremap <Tab> >gv
