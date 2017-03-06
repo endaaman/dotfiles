@@ -30,6 +30,9 @@ noremap <Space>j J
 noremap <Space>k K
 noremap <Space>n <C-i>
 noremap <Space>p <C-o>
+noremap <Space>l <C-l>
+noremap <Space>i :<C-u>vs<CR>
+noremap <Space>- :<C-u>sp<CR>
 noremap <Space>s :s/
 nnoremap <Space>e :<C-u>e!<CR>
 nnoremap <Space>d g0"_D
@@ -61,32 +64,37 @@ nnoremap o o<Esc>
 nnoremap O O<Esc>
 nnoremap p p`]
 nnoremap Y y$
-nnoremap <Tab> <C-w>w
-nnoremap <S-Tab> <C-w>W
+
+nnoremap <Tab> gt
+nnoremap <S-Tab> gT
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <BS> <C-w>h
+nnoremap = <C-w>=
+nnoremap <C-n> "zdd"zp
+nnoremap <expr> <C-p> SwapWithAboveLine()
+
 nnoremap <C-a> ggVG
-nnoremap <C-j> "zdd"zp
-nnoremap <expr> <C-k> SwapWithAboveLine()
 nnoremap <C-u> :<C-u>noh<CR>
 nnoremap <C-q> :<C-u>qa<CR>
 nnoremap <C-d> :<C-u>q<CR>
 nnoremap <C-x> :<C-u>x<CR>
 nnoremap <C-s> :<C-u>w<CR>
+nnoremap <C-t> :<C-u>tabnew<CR>
+nnoremap <C-f> /
+nnoremap - <C-a>
+nnoremap + <C-x>
+nnoremap <Up> :tabm -1<CR>
+nnoremap <Down> :tabm +1<CR>
+nnoremap <Left> :tabm -1<CR>
+nnoremap <Right> :tabm +1<CR>
+nnoremap * viw"zy:<C-u>let @/=@z\|set hlsearch<CR>
+nnoremap <expr> i IndentWithI()
+
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 nnoremap Q <Nop>
-nnoremap - <C-a>
-nnoremap + <C-x>
-nnoremap <Down> <C-x>
-nnoremap <Up> <C-a>
-nnoremap <C-t> :<C-u>tabnew<CR>
-nnoremap <C-n> gt
-nnoremap <C-p> gT
-nnoremap <Left> :tabm -1<CR>
-nnoremap <Right> :tabm +1<CR>
-nnoremap <C-@> <C-l>
-
-nnoremap * viw"zy:<C-u>let @/=@z\|set hlsearch<CR>
-nnoremap <expr> i IndentWithI()
 
 vnoremap v $h
 vnoremap * "zy:<C-u>let @/=@z\|set hlsearch<CR>
