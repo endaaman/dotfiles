@@ -65,15 +65,16 @@ nnoremap O O<Esc>
 nnoremap p p`]
 nnoremap Y y$
 
-nnoremap <Tab> gt
-nnoremap <S-Tab> gT
+nnoremap <Tab> <C-w>w
+nnoremap <S-Tab> <C-w>W
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-nnoremap <BS> <C-w>h
+nnoremap <C-h> <C-w>h
+nnoremap <BS> <C-h>
+nnoremap <C-n> gt
+nnoremap <C-p> gT
 nnoremap = <C-w>=
-nnoremap <C-n> "zdd"zp
-nnoremap <expr> <C-p> SwapWithAboveLine()
 
 nnoremap <C-a> ggVG
 nnoremap <C-u> :<C-u>noh<CR>
@@ -85,8 +86,8 @@ nnoremap <C-t> :<C-u>tabnew<CR>
 nnoremap <C-f> /
 nnoremap - <C-a>
 nnoremap + <C-x>
-nnoremap <Up> :tabm -1<CR>
-nnoremap <Down> :tabm +1<CR>
+nnoremap <Down> "zdd"zp
+nnoremap <expr> <Up> SwapWithAboveLine()
 nnoremap <Left> :tabm -1<CR>
 nnoremap <Right> :tabm +1<CR>
 nnoremap * viw"zy:<C-u>let @/=@z\|set hlsearch<CR>
