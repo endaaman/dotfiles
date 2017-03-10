@@ -47,7 +47,6 @@ noremap J <C-d>zz
 noremap K <C-u>zz
 noremap H ^
 noremap L $
-noremap <C-b> %
 noremap <C-Space> zz
 noremap x "_x
 noremap c "_c
@@ -67,13 +66,15 @@ nnoremap Y y$
 
 nnoremap <Tab> <C-w>w
 nnoremap <S-Tab> <C-w>W
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-nnoremap <C-h> <C-w>h
-nnoremap <BS> <C-h>
 nnoremap <C-n> gt
 nnoremap <C-p> gT
+nnoremap <C-h> <C-w>h
+nnoremap <BS> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-f> "zdd"zp
+nnoremap <expr> <C-b> SwapWithAboveLine()
 nnoremap = <C-w>=
 
 nnoremap <C-a> ggVG
@@ -83,11 +84,8 @@ nnoremap <C-d> :<C-u>q<CR>
 nnoremap <C-x> :<C-u>x<CR>
 nnoremap <C-s> :<C-u>w<CR>
 nnoremap <C-t> :<C-u>tabnew<CR>
-nnoremap <C-f> /
 nnoremap - <C-a>
 nnoremap + <C-x>
-nnoremap <Down> "zdd"zp
-nnoremap <expr> <Up> SwapWithAboveLine()
 nnoremap <Left> :tabm -1<CR>
 nnoremap <Right> :tabm +1<CR>
 nnoremap * viw"zy:<C-u>let @/=@z\|set hlsearch<CR>
