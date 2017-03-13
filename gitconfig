@@ -12,9 +12,10 @@
   br = branch
   c = commit
   ca = commit --amend
+  chp = cherry-pick
   cm = commit -m
   co = checkout
-  cp = cherry-pick
+  cp = !git checkout $(git branch -a | peco | tr -d ' ' | tr -d '*')
   d = diff
   f = fetch
   fe = fetch
