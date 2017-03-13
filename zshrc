@@ -115,8 +115,6 @@ setopt share_history
 unsetopt list_beep
 
 
-
-### Aliases
 alias sudo='sudo -E '
 alias l='ls -hlF'
 alias ll='ls -ahlF --color=auto'
@@ -156,7 +154,10 @@ if which trash-put &> /dev/null; then
   alias rm='trash-put'
 fi
 
-### Aliases
+
+function __git_files () {
+    _wanted files expl 'local files' _files
+}
 
 function cl() {
   local file=$(find . -maxdepth 1 -type d ! -path "*/.*"| peco)
