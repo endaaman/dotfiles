@@ -11,6 +11,7 @@ NC='\033[0m'
 cd
 
 mkdir -p ~/.cache/vim
+mkdir -p ~/.mlterm
 mkdir -p ~/.config/fish/functions
 mkdir -p ~/.config/fontconfig
 mkdir -p ~/.config/peco
