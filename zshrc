@@ -31,6 +31,7 @@ PROMPT="$pre_prompt$dirname $prompt_colored_symbol "
 if [ -d ~/.zplug -a $is_root = false ]; then
   source ~/.zplug/init.zsh
   zplug 'zsh-users/zsh-completions'
+  zplug 'zsh-users/zsh-syntax-highlighting', defer:2
   zplug 'olivierverdier/zsh-git-prompt', use:'zshrc.sh'
   zplug 'endaaman/lxd-completion-zsh'
   zplug 'peco/peco', as:command, from:gh-r, frozen:1
@@ -238,7 +239,7 @@ export PATH=~/dotfiles/bin:$PATH
 
 if [ -d ~/.nodebrew ]; then
   export PATH=~/.nodebrew/current/bin:$PATH
-  nodebrew use 7 > /dev/null
+  nodebrew use 7 1>/dev/null
 fi
 
 if [ -d ~/.rbenv ]; then
