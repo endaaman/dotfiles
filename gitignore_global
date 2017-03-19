@@ -8,3 +8,5 @@
 .python-version
 .sass-cache
 .vagrant
+npm-debug.log
+node_modules/
