@@ -103,7 +103,8 @@ vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 vnoremap y y`]
 vnoremap p <C-[>:<C-u>let @y=@+<CR>gvp`]:let @+=@y<CR>
-vnoremap O V:sort<CR>
+vnoremap O :sort<CR>
+vnoremap <C-m> y
 
 inoremap <C-d> <Del>
 
