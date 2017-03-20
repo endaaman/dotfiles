@@ -68,6 +68,7 @@ nnoremap <Tab> <C-w>w
 nnoremap <S-Tab> <C-w>W
 nnoremap <C-n> gt
 nnoremap <C-p> gT
+nnoremap <C-o> gf
 nnoremap <C-h> <C-w>h
 nnoremap <BS> <C-w>h
 nnoremap <C-l> <C-w>l
@@ -114,7 +115,6 @@ cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 
 " unsed
-nnoremap <C-o> <Nop>
 nnoremap <C-m> <Nop>
 nnoremap <C-q> <Nop>
 nnoremap <C-y> <Nop>
