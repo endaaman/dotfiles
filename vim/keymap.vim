@@ -30,7 +30,7 @@ noremap <Space>j J
 noremap <Space>k K
 noremap <Space>n <C-i>
 noremap <Space>p <C-o>
-noremap <Space>l <C-l>
+noremap <Space>l :<C-u>nohlsearch<CR><C-l>
 noremap <Space>i :<C-u>vs<CR>
 noremap <Space>- :<C-u>sp<CR>
 noremap <Space>s :s/
@@ -40,7 +40,6 @@ nnoremap <expr> <Space>/ SearchByRegister()
 
 nnoremap <expr> <Space><Space><Space><Space> ReloadConfigAndReopen()
 
-"
 noremap j gj
 noremap k gk
 noremap J <C-d>zz
@@ -76,6 +75,8 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-f> "zdd"zp
 nnoremap <expr> <C-b> SwapWithAboveLine()
+nnoremap <C-m> yy
+nnoremap <CR> yy
 nnoremap = <C-w>=
 
 nnoremap <C-a> ggVG
@@ -115,7 +116,6 @@ cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 
 " unsed
-nnoremap <C-m> <Nop>
 nnoremap <C-q> <Nop>
 nnoremap <C-y> <Nop>
 nnoremap <C-e> <Nop>
