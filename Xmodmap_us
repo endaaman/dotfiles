@@ -1,8 +1,26 @@
 ! vi: set ft=xmodmap :
-
 clear Lock
 keysym Caps_Lock = Escape
 
-keycode 108 = Henkan_Mode
-keycode 47 = colon semicolon colon semicolon
-keycode 9 = grave asciitilde grave asciitilde
+clear Shift
+add Shift = Shift_L
+keysym Shift_R = Mode_switch
+
+keysym Alt_R = Henkan_Mode
+
+
+! 9: Escape
+keycode 9 = grave asciitilde
+! 47: ;
+keycode 47 = colon semicolon
+
+
+keycode 25 = w W Up Up
+keycode 38 = a A Left Left
+keycode 39 = s S Down Down
+keycode 40 = d D Right Right
+
+keycode 43 = h H Left Left
+keycode 44 = j J Down Down
+keycode 45 = k K Up Up
+keycode 46 = l L Right Right
