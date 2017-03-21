@@ -1,0 +1,8 @@
+! vi: set ft=xmodmap :
+
+clear Lock
+keysym Caps_Lock = Escape
+
+keycode 108 = Henkan_Mode
+keycode 47 = colon semicolon colon semicolon
+keycode 9 = grave asciitilde grave asciitilde

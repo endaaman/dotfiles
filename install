@@ -24,10 +24,6 @@ mkdir -p ~/wineprefixes
 
 touch ~/.gitconfig_local
 
-if which setxkbmap >/dev/null 2>&1; then
-  setxkbmap && xmodmap ~/.Xmodmap
-fi
-
 # git
 ln -fs ~/dotfiles/gitconfig ~/.gitconfig
 ln -fs ~/dotfiles/gitscripts ~/.gitscripts
@@ -54,7 +50,6 @@ ln -fsn ~/dotfiles/vim ~/.vim
 ln -fsn ~/dotfiles/vim ~/.config/nvim
 
 # X org
-ln -fs ~/dotfiles/Xmodmap ~/.Xmodmap
 ln -fs ~/dotfiles/Xdefaults ~/.Xdefaults
 ln -fs ~/dotfiles/Xresources ~/.Xresources
 
@@ -102,20 +97,31 @@ dein=false
 
 for i in "$@" ; do
   case "$i" in
-    'nodejs'    | 'node' ) nodejs=true ;;
-    'python'    | 'py'   ) python=true ;;
-    'ruby'      | 'rb'   ) ruby=true ;;
-    'zplug'     | 'zp'   ) zplug=true ;;
-    'dein'      | 'dn'   ) dein=true ;;
+    'nodejs' | 'node' ) nodejs=true ;;
+    'python' | 'py'   ) python=true ;;
+    'ruby'   | 'rb'   ) ruby=true ;;
+    'zplug'  | 'zp'   ) zplug=true ;;
+    'dein'   | 'dn'   ) dein=true ;;
     'all' )
       nodejs=true
       python=true
       ruby=true
       zplug=true
       dein=true
+      ;;
+    'us' )
+      ln -fs ~/dotfiles/Xmodmap_us ~/.Xmodmap
+      ;;
+    'jis' )
+      ln -fs ~/dotfiles/Xmodmap_jis ~/.Xmodmap
+      ;;
   esac
 done
 
+if [ `which setxkbmap` ] && [[ -e ~/.Xmodmap ]]; then
+  setxkbmap && xmodmap ~/.Xmodmap
+  echo -e "${CYAN}Loaded Xmodmap${NC}"
+fi
 
 if $nodejs; then
   changed=true
