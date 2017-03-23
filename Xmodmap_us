@@ -1,12 +1,14 @@
 ! vi: set ft=xmodmap :
-clear Lock
+clear lock
 keysym Caps_Lock = Escape
 
-clear Shift
-add Shift = Shift_L
-keysym Shift_R = Mode_switch
-
+remove mod1 = Alt_R
 keysym Alt_R = Henkan_Mode
+
+remove shift = Shift_R
+! 62: Shift_R
+! keycode 62 = Mode_switch NoSymbol Mode_switch
+keysym Shift_R = Mode_switch
 
 
 ! 9: Escape
@@ -20,7 +22,7 @@ keycode 38 = a A Left Left
 keycode 39 = s S Down Down
 keycode 40 = d D Right Right
 
-keycode 43 = h H Left Left
-keycode 44 = j J Down Down
-keycode 45 = k K Up Up
-keycode 46 = l L Right Right
+keycode 43 = h H Home Home
+keycode 44 = j J Next Next
+keycode 45 = k K Prior Prior
+keycode 46 = l L End End
