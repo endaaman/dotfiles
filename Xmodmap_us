@@ -2,12 +2,7 @@
 clear lock
 keysym Caps_Lock = Escape
 
-remove mod1 = Alt_R
-keysym Alt_R = Henkan_Mode
-
 remove shift = Shift_R
-! 62: Shift_R
-! keycode 62 = Mode_switch NoSymbol Mode_switch
 keysym Shift_R = Mode_switch
 
 
