@@ -1,10 +1,10 @@
 ! vi: set ft=xmodmap :
+
 clear lock
 keysym Caps_Lock = Escape
 
-remove shift = Shift_R
-keysym Shift_R = Mode_switch
-
+remove mod1 = Alt_R
+keysym Alt_R = Henkan_Mode
 
 ! 9: Escape
 keycode 9 = grave asciitilde
@@ -12,12 +12,11 @@ keycode 9 = grave asciitilde
 keycode 47 = colon semicolon
 
 
-keycode 25 = w W Up Up
-keycode 38 = a A Left Left
-keycode 39 = s S Down Down
-keycode 40 = d D Right Right
-
-keycode 43 = h H Home Home
-keycode 44 = j J Next Next
-keycode 45 = k K Prior Prior
-keycode 46 = l L End End
+! keycode 25 = w W Up Up
+! keycode 38 = a A Left Left
+! keycode 39 = s S Down Down
+! keycode 40 = d D Right Right
+! keycode 43 = h H Home Home
+! keycode 44 = j J Next Next
+! keycode 45 = k K Prior Prior
+! keycode 46 = l L End End
