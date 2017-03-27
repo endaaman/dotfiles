@@ -6,6 +6,10 @@ keysym Caps_Lock = Escape
 remove mod1 = Alt_R
 keysym Alt_R = Henkan_Mode
 
+remove shift = Shift_R
+keysym Shift_R = Muhenkan
+
+
 ! 9: Escape
 keycode 9 = grave asciitilde
 ! 47: ;
