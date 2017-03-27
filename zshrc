@@ -119,6 +119,8 @@ unsetopt list_beep
 alias sudo='sudo -E '
 alias l='ls -hlF'
 alias ll='ls -ahlF --color=auto'
+alias mv='mv -v'
+alias rename='rename -v'
 alias g='git'
 alias t='tig --all'
 alias v='vim'
