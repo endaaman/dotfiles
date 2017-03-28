@@ -100,3 +100,20 @@ on_ft = ['fish']
 [[plugins]]
 repo = 'def-lkb/ocp-indent-vim'
 on_ft = ['ocaml']
+
+[[plugins]]
+repo = 'racer-rust/vim-racer'
+on_ft = ['rust']
+hook_add = '''
+  set hidden
+  let g:racer_cmd = $HOME . '/.cargo/bin/racer'
+'''
+
+[[plugins]]
+repo = 'rust-lang/rust.vim'
+on_ft = ['rust']
+hook_add = '''
+  let g:rustfmt_autosave = 1
+  let g:rustfmt_command = $HOME . '/.cargo/bin/rustfmt'
+'''
+
