@@ -26,12 +26,16 @@
   i4 = rebase -i @~4
   i5 = rebase -i @~5
   i6 = rebase -i @~6
+  i7 = rebase -i @~7
+  i8 = rebase -i @~8
+  i9 = rebase -i @~9
   l = log
   l1 = log -n 10 --oneline --no-merges
   l1m = log -n 10 --oneline
   lp = log -p -1
   lpn = log -p -1 --name-only
   pl = pull
+  plr = pull --rebase
   ps = push -u
   rb = rebase
   rs = reset
