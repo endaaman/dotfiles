@@ -12,13 +12,13 @@
   br = branch
   c = commit
   ca = commit --amend
-  chp = cherry-pick
   cm = commit -m
   co = checkout
-  cp = !git checkout $(git branch -a | peco | tr -d ' ' | tr -d '*')
+  cob = checkout -b
+  cop = !git checkout $(git branch -a | peco | tr -d ' ' | tr -d '*')
+  cp = cherry-pick
   d = diff
   f = fetch
-  fe = fetch
   gr = grep
   i = rebase -i
   i2 = rebase -i @~2
@@ -30,8 +30,6 @@
   i8 = rebase -i @~8
   i9 = rebase -i @~9
   l = log
-  l1 = log -n 10 --oneline --no-merges
-  l1m = log -n 10 --oneline
   lp = log -p -1
   lpn = log -p -1 --name-only
   pl = pull
