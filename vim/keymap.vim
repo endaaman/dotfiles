@@ -75,8 +75,8 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-f> "zdd"zp
 nnoremap <expr> <C-b> SwapWithAboveLine()
-nnoremap <C-m> yy
-nnoremap <CR> yy
+nnoremap <C-m> Vy
+nnoremap <CR> Vy
 nnoremap = <C-w>=
 
 nnoremap <C-a> ggVG
