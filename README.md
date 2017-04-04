@@ -1,4 +1,4 @@
-# endaaman's dotfiles
+# dotfiles
 
 ![ss](https://static.endaaman.me/dotfiles-ss.png)
 
@@ -8,6 +8,7 @@
 - Vim
 - Zsh 
 - tmux
+- Xmodmap
 - fonts.conf
 
 etc
