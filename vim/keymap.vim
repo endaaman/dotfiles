@@ -48,6 +48,7 @@ noremap H ^
 noremap L $
 noremap <C-Space> zz
 noremap x "_x
+noremap X "_D
 noremap c "_c
 noremap C "_C
 noremap s "_s
