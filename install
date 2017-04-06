@@ -83,6 +83,9 @@ ln -fs ~/dotfiles/mlterm/key ~/.mlterm/key
 # vimperator
 ln -fs ~/dotfiles/vimperatorrc ~/.vimperatorrc
 
+# vimfx
+ln -fsn ~/dotfiles/vimfx ~/.config/vimfx
+
 # nyaovim
 ln -fs ~/dotfiles/nyaovimrc.html ~/.config/nyaovim/nyaovimrc.html
 
