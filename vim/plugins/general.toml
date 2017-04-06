@@ -176,7 +176,7 @@ repo = 'editorconfig/editorconfig-vim'
 [[plugins]]
 repo = 'simeji/winresizer'
 hook_add = '''
-  let g:winresizer_start_key = '<C-e>'
+  let g:winresizer_start_key = '<Space>r'
 '''
 
 [[plugins]]

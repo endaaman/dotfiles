@@ -12,7 +12,7 @@ if isdirectory(s:dein_repo_dir)
 
   call dein#begin(s:dein_dir)
   call dein#load_toml(s:toml_dir . '/syntax.toml', {})
-  call dein#load_toml(s:toml_dir . '/common.toml', {})
+  call dein#load_toml(s:toml_dir . '/general.toml', {})
   if has('nvim')
     call dein#load_toml(s:toml_dir . '/neovim.toml', {})
   else
