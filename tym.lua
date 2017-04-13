@@ -1,6 +1,6 @@
 config.shell = '/bin/zsh'
 config.font = 'Monospace 11'
-config.cursor_blink_mode = 'system'
+config.cursor_blink_mode = 'on'
 config.cjk_width = 'narrow'
 
 config.color_foreground        = '#d0d0d0'
