@@ -44,8 +44,8 @@ noremap j gj
 noremap k gk
 noremap J <C-d>zz
 noremap K <C-u>zz
-noremap H ^
-noremap L $
+noremap H g^
+noremap L g$
 noremap <C-Space> zz
 noremap x "_x
 noremap X "_D
