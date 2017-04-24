@@ -1,4 +1,3 @@
--- config.shell = '/bin/zsh'
 config.font = 'Monospace 11'
 config.cursor_blink_mode = 'on'
 config.cjk_width = 'narrow'
