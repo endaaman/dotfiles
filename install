@@ -205,7 +205,7 @@ if $zplug; then
   if [ ! -d ~/.zplug ]; then
     echo
     echo -e "${CYAN}Installing zplug${NC}"
-    curl -sL zplug.sh/installer | zsh
+    git clone https://github.com/zplug/zplug ~/.zplug
   else
     echo -e "${CYAN}Updating zplug${NC}"
     cd ~/.zplug
