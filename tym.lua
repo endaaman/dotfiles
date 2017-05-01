@@ -1,4 +1,4 @@
-config.font = 'Monospace 11'
+config.font = 'Monospace'
 config.cursor_blink_mode = 'on'
 config.cjk_width = 'narrow'
 
