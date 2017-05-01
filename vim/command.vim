@@ -2,6 +2,7 @@ function! SaveAsRoot()
   w !sudo tee % > /dev/null
   e!
 endfunction
+command! SaveAsRoot :call SaveAsRoot()
 
 
 function! ReloadConfigAndReopen()
@@ -13,7 +14,4 @@ function! ReloadConfigAndReopen()
   execute 'source ' . config
   e!
 endfunction
-
-
-command! SaveAsRoot :call SaveAsRoot()
 command! ReloadConfig :call ReloadConfig()

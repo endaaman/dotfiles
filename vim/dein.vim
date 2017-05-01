@@ -26,5 +26,7 @@ if isdirectory(s:dein_repo_dir)
   endif
 
   filetype plugin indent on
+
+  command! DeinUpdate :call dein#update()
 endif
 
