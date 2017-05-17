@@ -1,0 +1,20 @@
+#!/bin/bash
+
+inres="1920x1080"   # input resolution
+outres="1920x1080"  # output resolution
+fps="30"            # target FPS
+gop="30"            # i-frame interval, should be double of FPS,
+gopmin="15"         # min i-frame interval, should be equal to fps,
+threads="2"         # max 6
+cbr="1800k"         # constant bitrate (should be between 1000k - 3000k)
+quality="medium"    # one of the many FFMPEG preset
+audio_rate="44100"
+server="$1"
+livekey="$2"
+
+
+ffmpeg \
+  -f x11grab -s ${inres} -r ${fps} -i :0.0 -f alsa -i pulse -f flv -ac 2 -ar ${audio_rate} \
+  -vcodec libx264 -g ${gop} -keyint_min ${gopmin} -b:v ${cbr} -minrate ${cbr} -maxrate ${cbr} -pix_fmt yuv420p\
+  -s ${outres} -preset ${quality} -tune film -acodec libmp3lame -threads ${threads} -strict normal \
+  -bufsize ${cbr} "$server/$livekey"
