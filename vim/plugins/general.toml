@@ -168,6 +168,7 @@ hook_add = '''
 repo = 'Yggdroot/indentLine'
 hook_add = '''
   let g:indentLine_char = '¦'
+  let g:indentLine_fileTypeExclude = ['nerdtree']
 '''
 
 [[plugins]]
