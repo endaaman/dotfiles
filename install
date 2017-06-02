@@ -73,6 +73,9 @@ ln -fs ~/dotfiles/tigrc ~/.tigrc
 # peco
 ln -fs ~/dotfiles/peco.json ~/.config/peco/config.json
 
+# yaourt
+ln -fs ~/dotfiles/yaourtrc ~/.yaourtrc
+
 # mlterm
 ln -fs ~/dotfiles/mlterm/main ~/.mlterm/main
 ln -fs ~/dotfiles/mlterm/color ~/.mlterm/color
