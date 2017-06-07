@@ -117,6 +117,6 @@ hook_add = '''
   let g:rustfmt_command = $HOME . '/.cargo/bin/rustfmt'
 '''
 
-[[plugins]]
-repo = 'baabelfish/nvim-nim'
-on_ft = ['nim']
+# [[plugins]]
+# repo = 'baabelfish/nvim-nim'
+# on_ft = ['nim']
