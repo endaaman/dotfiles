@@ -275,3 +275,7 @@ fi
 
 export OCAMLPARAM="_,bin-annot=1"
 export OPAMKEEPBUILDDIR=1
+
+if [ -f ~/.zshrc.local ]; then
+  source ~/.zshrc.local
+fi
