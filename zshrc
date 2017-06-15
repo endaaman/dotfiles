@@ -128,6 +128,7 @@ alias v='vim'
 alias vi='vim -u NONE'
 alias n='nvim'
 alias xo='xdg-open'
+alias ja='export LANG=ja_JP.UTF-8'
 
 alias nr='npm run'
 alias pm='python manage.py'
