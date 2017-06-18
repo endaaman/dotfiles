@@ -27,6 +27,7 @@ touch ~/.gitconfig_local
 
 # git
 ln -fs ~/dotfiles/gitconfig ~/.gitconfig
+ln -fs ~/dotfiles/gitignore_global ~/.gitignore_global
 ln -fs ~/dotfiles/gitscripts ~/.gitscripts
 
 # zsh
