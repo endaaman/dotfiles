@@ -42,8 +42,8 @@ endif
 
 
 set autoindent
-set backupdir=~/.cache/vim
 set backspace=2
+set backupdir=~/.cache/vim
 set clipboard=unnamedplus
 set cursorline
 set directory=~/.cache/vim
@@ -62,9 +62,11 @@ set mouse=a
 set nobackup
 set noswapfile
 set nowrap
+set nowrapscan
 set number
 set ruler
 set shell=sh
+set scrolloff=10
 set shiftwidth=2
 set showbreak=↳
 set showcmd
