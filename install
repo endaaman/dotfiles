@@ -90,6 +90,9 @@ ln -fs ~/dotfiles/vimperatorrc ~/.vimperatorrc
 # vimfx
 ln -fsn ~/dotfiles/vimfx ~/.config/vimfx
 
+# ideavim
+ln -fs ~/dotfiles/ideavimrc ~/.ideavimrc
+
 # nyaovim
 ln -fs ~/dotfiles/nyaovimrc.html ~/.config/nyaovim/nyaovimrc.html
 
