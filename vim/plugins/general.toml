@@ -233,6 +233,7 @@ hook_add = '''
   let g:syntastic_error_symbol = '✗'
   " let g:syntastic_warning_symbol = '⚠'
 
-  let g:syntastic_c_check_header =1
-  let g:syntastic_cpp_check_header =1
+  let g:syntastic_c_check_header = 1
+  let g:syntastic_cpp_check_header = 1
+  let g:syntastic_c_auto_refresh_includes = 1
 '''
