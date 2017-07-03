@@ -1,3 +1,7 @@
+config.width = 120
+config.height = 32
+
+config.title = 'た〜みなる'
 config.font = 'Monospace 12'
 config.cursor_blink_mode = 'on'
 config.cjk_width = 'narrow'
