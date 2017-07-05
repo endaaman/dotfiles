@@ -1,3 +1,5 @@
+set clipboard=unnamed
+
 noremap <Space>j J
 noremap <Space>k K
 noremap <Space>l :<C-u>nohlsearch<CR><C-l>
@@ -42,6 +44,14 @@ nnoremap <C-m> Vy
 nnoremap <CR> Vy
 nnoremap = <C-w>=
 
+nnoremap <C-a> ggVG
+nnoremap <C-u> :<C-u>noh<CR>
+nnoremap <C-q> :<C-u>qa<CR>
+nnoremap <C-d> :<C-u>q<CR>
+nnoremap <C-x> :<C-u>x<CR>
+nnoremap <C-s> :<C-u>w<CR>
+nnoremap <C-t> :<C-u>tabnew<CR>
+
 vnoremap v $h
 vnoremap * "zy:<C-u>let @/=@z\|set hlsearch<CR>
 vnoremap > >gv
@@ -49,9 +59,10 @@ vnoremap < <gv
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 vnoremap y y`]
-vnoremap p <C-[>:<C-u>let @y=@+<CR>gvp`]:let @+=@y<CR>
+" vnoremap p <C-[>:<C-u>let @y=@+<CR>gvp`]:let @+=@y<CR>
 vnoremap O :sort<CR>
 vnoremap <C-m> y
+vnoremap <CR> y
 
 inoremap <C-d> <Del>
 
@@ -59,3 +70,5 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
+
+noremap <Space>r :source ~/.ideavimrc<CR>
