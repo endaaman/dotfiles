@@ -26,7 +26,7 @@ hook_add = '''
   nnoremap <Space>f :<C-u>Denite file_rec<CR>
   nnoremap <Space>m :<C-u>Denite file_mru<CR>
   nnoremap <Space>g :<C-u>Denite grep<CR>
-  nnoremap <Space>y :<C-u>Denite neoyank<CR>
+  nnoremap <Space>p :<C-u>Denite neoyank<CR>
   nnoremap <Space>r :<C-u>Denite register<CR>
   nnoremap <Space>s :<C-u>Denite source<CR>
   nnoremap <Space>c :<C-u>Denite colorscheme<CR>

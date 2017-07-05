@@ -1,9 +1,5 @@
 set clipboard=unnamed
 
-noremap <Space>j J
-noremap <Space>k K
-noremap <Space>l :<C-u>nohlsearch<CR><C-l>
-
 noremap j gj
 noremap k gk
 noremap J <C-d>zz
@@ -38,8 +34,7 @@ nnoremap <BS> <C-w>h
 nnoremap <C-l> <C-w>l
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
-nnoremap <C-f> "zdd"zp
-nnoremap <expr> <C-b> SwapWithAboveLine()
+nnoremap <C-f> *
 nnoremap <C-m> Vy
 nnoremap <CR> Vy
 nnoremap = <C-w>=
@@ -59,7 +54,6 @@ vnoremap < <gv
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 vnoremap y y`]
-" vnoremap p <C-[>:<C-u>let @y=@+<CR>gvp`]:let @+=@y<CR>
 vnoremap O :sort<CR>
 vnoremap <C-m> y
 vnoremap <CR> y
@@ -70,5 +64,35 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
+cnoremap <C-f> <Left>
+cnoremap <C-b> <Right>
 
 noremap <Space>r :source ~/.ideavimrc<CR>
+
+map <Space>j J
+map <Space>k K
+
+map <Space>a :action $SelectAll<CR>
+map <Space>b :action GotoDeclaration<CR>
+map <Space>c :action $Copy<CR>
+map <Space>d :action EditorDuplicate<CR>
+map <Space>e :action RecentFiles<CR>
+map <Space>f :action Find<CR>
+map <Space>g :action GotoLine<CR>
+map <Space>h :action TypeHierarchy<CR>
+map <Space>i :action ImplementMethods<CR>
+map <Space>m :action EditorScrollToCenter<CR>
+map <Space>n :action FileChooser.NewFolder<CR>
+map <Space>o :action OverrideMethods<CR>
+map <Space>p :action ParameterInfo<CR>
+map <Space>q :action GuiDesigner.QuickJavadoc<CR>
+map <Space>r :action Replace<CR>
+map <Space>s :action SaveAll<CR>
+map <Space>t :action Vcs.UpdateProject<CR>
+map <Space>u :action GotoSuperMethod<CR>
+map <Space>v :action $Paste<CR>
+map <Space>w :action EditorSelectWord<CR>
+map <Space>x :action $Cut<CR>
+map <Space>y :action EditorDeleteLine<CR>
+map <Space>[ :action EditorCodeBlockStart<CR>
+map <Space>] :action EditorCodeBlockEnd<CR>
