@@ -61,8 +61,6 @@ set modifiable
 set mouse=a
 set nobackup
 set noswapfile
-set nowrap
-set nowrapscan
 set number
 set ruler
 set shell=sh
