@@ -59,6 +59,7 @@ autoload -Uz promptinit; promptinit
 eval `dircolors -b`
 
 
+
 mkdir -p $HOME/.cache/shell/
 zstyle ':chpwd:*' recent-dirs-default true
 zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/shell/chpwd-recent-dirs"
@@ -99,6 +100,7 @@ setopt extended_history
 setopt glob
 setopt glob_complete
 setopt hist_ignore_all_dups
+setopt hist_ignore_dups
 setopt hist_ignore_space
 setopt hist_no_store
 setopt hist_reduce_blanks
@@ -225,6 +227,10 @@ bindkey '^[[3~' delete-char
 
 
 # envs
+export HISTFILE=${HOME}/.zsh_history
+export HISTSIZE=1000
+export SAVEHIST=100000
+
 export VTE_CJK_WIDTH=1
 if which nvim &> /dev/null; then
   export EDITOR=nvim
