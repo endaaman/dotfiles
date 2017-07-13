@@ -140,6 +140,7 @@ cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <C-f> <Right>
 cnoremap <C-b> <Left>
+cnoremap <C-d> <Delete>
 
 " unsed
 nnoremap <C-q> <Nop>
