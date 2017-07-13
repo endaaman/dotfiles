@@ -3,7 +3,7 @@ config.height = 32
 
 config.title = 'た〜みなる'
 config.font = 'Monospace 12'
-config.cursor_blink_mode = 'on'
+config.cursor_blink_mode = 'off'
 config.cjk_width = 'narrow'
 
 config.color_foreground        = '#d0d0d0'

@@ -36,11 +36,6 @@ if has('nvim')
 else
 endif
 
-if has('termguicolors')
-  set termguicolors
-endif
-
-
 set autoindent
 set backspace=2
 set backupdir=~/.cache/vim
@@ -49,6 +44,7 @@ set cursorline
 set directory=~/.cache/vim
 set encoding=utf-8
 set expandtab
+set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 set hlsearch
 set ignorecase
 set laststatus=2
@@ -61,10 +57,11 @@ set modifiable
 set mouse=a
 set nobackup
 set noswapfile
+set nowrap
 set number
 set ruler
-set shell=sh
 set scrolloff=10
+set shell=sh
 set shiftwidth=2
 set showbreak=↳
 set showcmd
@@ -73,11 +70,11 @@ set smartcase
 set smarttab
 set softtabstop=2
 set tabstop=2
+set termguicolors
 set timeout timeoutlen=1000 ttimeoutlen=50
 set ttyfast
 set undodir=~/.cache/vim
 set undofile
 set updatetime=1000
 set wildmenu
-set nowrap
 set write
