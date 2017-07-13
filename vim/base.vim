@@ -36,6 +36,11 @@ if has('nvim')
 else
 endif
 
+
+if has('termguicolors')
+  set termguicolors
+endif
+
 set autoindent
 set backspace=2
 set backupdir=~/.cache/vim
@@ -70,7 +75,6 @@ set smartcase
 set smarttab
 set softtabstop=2
 set tabstop=2
-set termguicolors
 set timeout timeoutlen=1000 ttimeoutlen=50
 set ttyfast
 set undodir=~/.cache/vim
