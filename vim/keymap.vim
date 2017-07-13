@@ -47,6 +47,7 @@ let g:mapleader = "\<Space>"
 noremap <Space>j J
 noremap <Space>k K
 noremap <Space>n *
+noremap <Space>l <C-l>
 noremap <Space>p <C-o>
 noremap <Space>i :<C-u>vs<CR>
 noremap <Space>- :<C-u>sp<CR>
