@@ -62,7 +62,7 @@ set modifiable
 set mouse=a
 set nobackup
 set noswapfile
-set nowrap
+set wrap
 set number
 set ruler
 set scrolloff=10
