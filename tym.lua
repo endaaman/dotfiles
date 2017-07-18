@@ -1,6 +1,7 @@
 config.width = 120
 config.height = 32
 
+config.shell = os.getenv('HOME') .. '/dotfiles/bin/tmux-attach-or-new'
 config.title = 'た〜みなる'
 config.font = 'Monospace 12'
 config.cursor_blink_mode = 'off'

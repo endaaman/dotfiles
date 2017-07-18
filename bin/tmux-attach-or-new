@@ -1,0 +1,6 @@
+#!/bin/bash
+
+tmux attach
+if [ $? -ne 0 ]; then
+  tmux new
+fi
