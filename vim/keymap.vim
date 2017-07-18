@@ -73,7 +73,7 @@ noremap X "_D
 noremap c "_c
 noremap C "_C
 noremap s "_s
-noremap S "_S
+nnoremap S "_S
 noremap n nzz
 noremap N Nzz
 noremap G Gzz
