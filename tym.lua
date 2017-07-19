@@ -13,14 +13,14 @@ config.color_cursor            = '#d0d0d0'
 config.color_cursor_foreground = '#181818'
 config.color_background        = '#181818'
 
-config.color_0  = '#181818' -- overwritten by color_background
+config.color_0  = '#181818'
 config.color_1  = '#ac4142'
 config.color_2  = '#90a959'
 config.color_3  = '#f4bf75'
 config.color_4  = '#6a9fb5'
 config.color_5  = '#aa759f'
 config.color_6  = '#75b5aa'
-config.color_7  = '#d0d0d0' -- overwritten by color_foreground
+config.color_7  = '#d0d0d0'
 config.color_8  = '#505050'
 config.color_9  = '#ac4142'
 config.color_10 = '#90a959'
