@@ -93,7 +93,7 @@ nnoremap <C-o> gf
 nnoremap <C-h> <C-w>h
 nnoremap <BS> <C-w>h
 nnoremap <C-l> <C-w>l
-nnoremap <C-f> *
+nnoremap <C-f>  viw"zy:<C-u>let @/=@z\|set hlsearch<CR>
 nnoremap <C-j> "zdd"zp
 nnoremap <expr> <C-k> SwapWithAboveLine()
 nnoremap <C-m> yy
@@ -113,7 +113,6 @@ nnoremap + <C-a>
 nnoremap <S-Up> <C-a>
 nnoremap <Left> :tabm -1<CR>
 nnoremap <Right> :tabm +1<CR>
-nnoremap * viw"zy:<C-u>let @/=@z\|set hlsearch<CR>
 nnoremap <expr> i IndentWithI()
 
 nnoremap ZZ <Nop>
@@ -146,6 +145,7 @@ cnoremap <C-d> <Delete>
 nnoremap <C-q> <Nop>
 nnoremap <C-y> <Nop>
 nnoremap <C-e> <Nop>
+nnoremap <C-b> <Nop>
 
 if has('nvim')
   nnoremap <Space>t :<C-u>tabnew\|terminal<CR>

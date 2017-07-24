@@ -212,10 +212,20 @@ function copy-buffer(){
 }
 zle -N copy-buffer
 
+function magic-return() {
+  if [[ -z $BUFFER ]]; then
+    # behavior when buffer is emptry
+    zle accept-line
+  else
+    zle accept-line
+  fi
+}
+zle -N magic-return
 
 # key bindings
 bindkey -e
 # bindkey '^L' delete-char # C-l
+bindkey "^M" magic-return
 bindkey '^S' copy-buffer
 bindkey '^G' cdr-peco
 bindkey '^@' clear-screen
