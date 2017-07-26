@@ -42,6 +42,7 @@ if has('termguicolors')
 endif
 
 set autoindent
+" set ambiwidth=double
 set backspace=2
 set backupdir=~/.cache/vim
 set clipboard=unnamedplus

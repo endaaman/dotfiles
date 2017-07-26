@@ -13,6 +13,13 @@ hook_add = '''
   let g:jedi#completions_enabled = 0
 '''
 
+[[plugins]]
+repo = 'dhruvasagar/vim-table-mode'
+hook_add = '''
+  let g:table_mode_always_active = 1
+'''
+on_ft = ['markdown']
+
 # [[plugins]]
 # repo = 'mxw/vim-jsx'
 # on_ft = ['javascript']
