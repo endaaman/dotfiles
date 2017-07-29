@@ -36,8 +36,6 @@ if bindings then
     tym.reload()
   end
 end
-
-
 -- color_0  : black (background)
 -- color_1  : red
 -- color_2  : green

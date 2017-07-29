@@ -48,4 +48,4 @@
 [ghq]
   root = ~/src
 [http "https://gopkg.in"]
-  followRedirects = true
+	followRedirects = true
