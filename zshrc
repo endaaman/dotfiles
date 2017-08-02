@@ -9,11 +9,15 @@ fi
 
 if [ -n "$container" ] || [ -n "$SSH_CLIENT" ]; then
   if [ -n "$container" ]; then
-    con=`echo "$container" | sed 's/./\U&/g'`
+    con="$(echo "$container" | sed 's/./\U&/g')"
   else
     con=SSH
   fi
-  pre_prompt="(%F{green}${con}%f:%F{magenta}$(hostname)%f)"
+  pre_prompt_content="%F{green}${con}%f:%F{magenta}$(hostname)%f"
+fi
+
+if [ -n "$pre_prompt_content" ]; then
+  pre_prompt="($pre_prompt_content)"
 fi
 
 dirname="%F{cyan}%~%f"
