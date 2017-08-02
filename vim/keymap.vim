@@ -93,12 +93,14 @@ nnoremap <C-o> gf
 nnoremap <C-h> <C-w>h
 nnoremap <BS> <C-w>h
 nnoremap <C-l> <C-w>l
-nnoremap <C-f>  viw"zy:<C-u>let @/=@z\|set hlsearch<CR>
+nnoremap *  viw"zy:<C-u>let @/=@z\|set hlsearch<CR>
 nnoremap <C-j> "zdd"zp
 nnoremap <expr> <C-k> SwapWithAboveLine()
 nnoremap <C-m> yy
 nnoremap <CR> yy
 nnoremap = <C-w>=
+nnoremap <C-f> :<C-u>bnext<CR>
+nnoremap <C-b> :<C-u>bprevious<CR>
 
 nnoremap <C-a> ggVG
 nnoremap <C-u> :<C-u>noh<CR>
