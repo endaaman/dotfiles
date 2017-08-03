@@ -72,12 +72,14 @@ noremap <Space>r :source ~/.ideavimrc<CR>
 map <Space>j J
 map <Space>k K
 
+map <Space><Space> :action SearchEverywhere<CR>
 map <Space>a :action $SelectAll<CR>
 map <Space>b :action GotoDeclaration<CR>
 map <Space>c :action $Copy<CR>
 map <Space>d :action EditorDuplicate<CR>
 map <Space>e :action RecentFiles<CR>
 map <Space>f :action Find<CR>
+map <Space>F :action FindInPath<CR>
 map <Space>g :action GotoLine<CR>
 map <Space>h :action TypeHierarchy<CR>
 map <Space>i :action ImplementMethods<CR>
