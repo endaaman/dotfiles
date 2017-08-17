@@ -41,6 +41,8 @@ if [ -d ~/.zplug -a $is_root = false ]; then
   zplug 'peco/peco', as:command, from:gh-r, frozen:1
   zplug 'motemen/ghq', as:command, from:gh-r, rename-to:ghq
   zplug 'stedolan/jq', as:command, from:gh-r, rename-to:jq
+  zplug 'junegunn/fzf-bin', as:command, from:gh-r, rename-to:fzf
+  zplug 'junegunn/fzf', as:command, use:bin/fzf-tmux
 
   if ! zplug check --verbose; then
     printf 'Install? [y/N]: '
