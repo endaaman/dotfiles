@@ -1,5 +1,5 @@
 if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
- zcompile ~/.zshrc
+  zcompile ~/.zshrc
 fi
 
 is_root=false
