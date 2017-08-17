@@ -37,6 +37,7 @@
   plr = pull --rebase
   ps = push -u
   rb = rebase
+  rr = !git rm -r --cached . > /dev/null && git add .
   rs = reset
   rsf = checkout HEAD --
   s = status -u
