@@ -125,8 +125,15 @@ unsetopt list_beep
 
 
 alias sudo='sudo -E '
-alias l='ls -hlF'
-alias ll='ls -ahlF --color=auto'
+
+
+if which trash-put &> /dev/null; then
+  alias l='exa -lb'
+  alias ll='exa -lb'
+else
+  alias l='ls -hlF'
+  alias ll='ls -ahlF --color=auto'
+fi
 alias mv='mv -v'
 alias cp='cp -v'
 alias rename='rename -v'

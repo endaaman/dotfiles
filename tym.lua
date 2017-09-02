@@ -30,12 +30,14 @@ config.color_13 = '#aa759f'
 config.color_14 = '#75b5aa'
 config.color_15 = '#f5f5f5'
 
-if bindings then
-  bindings['<Ctrl><Shift>r'] = function()
-    tym.notify(string.format("Reloaded: %s", tym.get_config_file_path()))
-    tym.reload()
-  end
+config.use_default_keymap = true
+
+keymap = {}
+keymap['<Ctrl><Shift>r'] = function()
+  tym.reload()
+  tym.notify('reloaded')
 end
+
 -- color_0  : black (background)
 -- color_1  : red
 -- color_2  : green
