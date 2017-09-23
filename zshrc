@@ -152,7 +152,7 @@ alias be='bundle exec'
 
 alias cb='xsel --clipboard --input'
 alias cbp='xsel --clipboard --output'
-alias psp='ps aux | peco'
+alias psp='ps aux | fzf'
 
 alias rr='exec zsh -l'
 alias xm='setxkbmap && xmodmap ~/.Xmodmap'
@@ -166,10 +166,11 @@ alias A='awk'
 alias G='grep'
 alias H='head'
 alias L='less'
-alias P='peco'
 alias S='sed'
 alias T='tail'
 alias W='wc'
+alias P='peco'
+alias F='fzf'
 
 if which trash-put &> /dev/null; then
   alias rm='trash-put'
@@ -181,39 +182,39 @@ function __git_files () {
 }
 
 function cl() {
-  local file=$(find . -maxdepth 1 -type d ! -path "*/.*"| peco)
+  local file=$(find . -maxdepth 1 -type d ! -path "*/.*"| fzf)
   if [ ! -z "$file" ] ; then
     cd "$file"
   fi
 }
 
-function cdr-peco() {
-  local dir=$(cdr -l | awk '{ print $2 }' | peco)
+function cdr() {
+  local dir=$(cdr -l | awk '{ print $2 }' | fzf)
   if [ -n $dir ]; then
     BUFFER="cd $dir"
     zle accept-line
   fi
   zle clear-screen
 }
-zle -N cdr-peco
+zle -N cdr
 
 
 function gh() {
-  local dir=$(ghq list -p | peco)
+  local dir=$(ghq list -p | fzf)
   if [ ! -z "$dir" ] ; then
     cd $dir
   fi
 }
 
 function vl() {
-  local file=$(find . -maxdepth 1 -type f ! -path "*/.*"| peco)
+  local file=$(find . -maxdepth 1 -type f ! -path "*/.*"| fzf)
   if [ -r "$file" ] ; then
     nvim "$file"
   fi
 }
 
 function lp() {
-  ls -AlF $@ | peco
+  ls -AlF $@ | fzf
 }
 
 function catc() {
@@ -235,13 +236,24 @@ function magic-return() {
 }
 zle -N magic-return
 
+
+function run-fglast {
+  if [[ -z $(jobs) ]]; then
+    return
+  fi
+  zle push-input
+  BUFFER="fg %"
+  zle accept-line
+}
+zle -N run-fglast
+
 # key bindings
 bindkey -e
-# bindkey '^L' delete-char # C-l
-bindkey "^M" magic-return
-bindkey '^S' copy-buffer
-bindkey '^G' cdr-peco
+bindkey "^m" magic-return
+bindkey '^s' copy-buffer
+bindkey '^g' cdr-peco
 bindkey '^@' clear-screen
+bindkey '^z' run-fglast
 bindkey '^[[Z' reverse-menu-complete
 
 bindkey '^[[1~' beginning-of-line
@@ -268,6 +280,7 @@ export XDG_CONFIG_HOME=~/.config
 export NO_AT_BRIDGE=1
 export WINEARCH=win32
 export WINEPREFIX=~/.wine
+export FZF_DEFAULT_OPTS='--height 40% --reverse --border --bind "tab:down,btab:up"'
 
 export PATH=~/bin:$PATH
 export PATH=~/dotfiles/bin:$PATH
