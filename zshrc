@@ -155,7 +155,8 @@ alias cbp='xsel --clipboard --output'
 alias psp='ps aux | fzf'
 
 alias rr='exec zsh -l'
-alias xm='setxkbmap && xmodmap ~/.Xmodmap'
+alias xm='setxkbmap -rules evdev -model us -layout us && xmodmap ~/.Xmodmap'
+alias xmj='setxkbmap -rules evdev -model jp106 -layout jp && xmodmap ~/.Xmodmap'
 
 alias path="echo \$PATH | sed 's/:/\\n/g'"
 
