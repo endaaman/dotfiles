@@ -132,6 +132,7 @@ vnoremap p <C-[>:<C-u>let @y=@+<CR>gvp`]:let @+=@y<CR>
 vnoremap O :sort<CR>
 vnoremap <C-m> y
 vnoremap <CR> y
+vnoremap R c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
 
 inoremap <C-d> <Del>
 
@@ -147,7 +148,6 @@ cnoremap <C-d> <Delete>
 nnoremap <C-q> <Nop>
 nnoremap <C-y> <Nop>
 nnoremap <C-e> <Nop>
-nnoremap <C-b> <Nop>
 
 if has('nvim')
   nnoremap <Space>t :<C-u>tabnew\|terminal<CR>

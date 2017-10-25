@@ -19,7 +19,7 @@ endif
 
 syntax on
 
-runtime! base.vim
+runtime! general.vim
 runtime! command.vim
 runtime! keymap.vim
 runtime! dein.vim

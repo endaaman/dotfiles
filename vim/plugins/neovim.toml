@@ -110,3 +110,14 @@ hook_add = '''
   call denite#custom#source(
   \ 'file_mru', 'converters', ['converter_relative_word'])
 '''
+
+[[plugins]]
+repo = 'autozimu/LanguageClient-neovim'
+hook_add = '''
+  set hidden
+  let g:LanguageClient_autoStart = 1
+  let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ 'javascript': ['/opt/javascript-typescript-langserver/lib/language-server-stdio.js'],
+    \ }
+'''

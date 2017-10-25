@@ -2,7 +2,33 @@
 repo = 'Shougo/vimshell.vim'
 
 [[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+repo = 'Shougo/echodoc.vim'
+hook_add = '''
+  set noshowmode
+  let g:echodoc_enable_at_startup = 1
+'''
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+
+[[plugins]]
+repo = 'Shougo/neoyank.vim'
+
+[[plugins]]
 repo = 'rking/ag.vim'
+
+# [[plugins]]
+# repo = 'junegunn/fzf'
+# build = './install'
+# merged = 0
+# rtp = ''
+
+# [[plugins]]
+# repo = 'junegunn/fzf.vim'
+# depends = ['fzf']
 
 [[plugins]]
 repo = 'chriskempson/base16-vim'
@@ -101,11 +127,6 @@ hook_add = '''
   endfunction
 '''
 
-[[plugins]]
-repo = 'Shougo/neomru.vim'
-
-[[plugins]]
-repo = 'Shougo/neoyank.vim'
 
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
@@ -147,9 +168,6 @@ hook_add = '''
   let g:nerdtree_plugin_open_cmd = 'xdg-open'
 '''
 
-
-[[plugins]]
-repo = 'Shougo/context_filetype.vim'
 
 [[plugins]]
 repo = 'osyo-manga/vim-precious'
@@ -236,4 +254,5 @@ hook_add = '''
   let g:syntastic_c_check_header = 1
   let g:syntastic_cpp_check_header = 1
   let g:syntastic_c_auto_refresh_includes = 1
+  let g:syntastic_cpp_auto_refresh_includes = 1
 '''
