@@ -81,11 +81,12 @@ hook_add = '''
   nnoremap <Space>b :<C-u>Denite buffer<CR>
   nnoremap <Space>a :<C-u>Denite directory_rec<CR>
   nnoremap <Space>m :<C-u>Denite file_mru<CR>
+  nnoremap <Space>o :<C-u>Denite file_old<CR>
   nnoremap <Space>g :<C-u>Denite grep<CR>
   nnoremap <Space>p :<C-u>Denite register<CR>
-  nnoremap <Space>s :<C-u>Denite source<CR>
   nnoremap <Space>c :<C-u>Denite colorscheme<CR>
   nnoremap <Space>d :<C-u>Denite file_rec/diff<CR>
+  nnoremap <Space>d :<C-u>Denite unite:outline<CR>
   nnoremap <Space>f :<C-u>Denite `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
 
   call denite#custom#alias('source', 'file_rec/git', 'file_rec')
@@ -132,3 +133,15 @@ hook_add = '''
 #     \ 'javascript': ['/opt/javascript-typescript-langserver/lib/language-server-stdio.js'],
 #     \ }
 # '''
+
+[[plugins]]
+repo = 'Shougo/vimproc'
+build = 'make'
+
+[[plugins]]
+repo = 'Shougo/unite-outline'
+depends = ['vimproc', 'unite.vim']
+
+[[plugins]]
+repo = 'Shougo/unite.vim'
+depends = ['vimproc']

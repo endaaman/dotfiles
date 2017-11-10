@@ -86,4 +86,3 @@ hook_add = '''
     nmap <buffer> <ESC> <Plug>(unite_exit)
   endfunction"}}}
 '''
-
