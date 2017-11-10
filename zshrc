@@ -7,6 +7,34 @@ if [ ${EUID:-${UID}} = 0 ]; then
   is_root=true
 fi
 
+
+###* zplug
+
+if [ -d ~/.zplug -a $is_root = false ]; then
+  source ~/.zplug/init.zsh
+  zplug 'zsh-users/zsh-completions'
+  zplug 'zsh-users/zsh-syntax-highlighting', defer:2
+  zplug 'olivierverdier/zsh-git-prompt', use:'zshrc.sh'
+  zplug 'endaaman/lxd-completion-zsh'
+  zplug 'peco/peco', as:command, from:gh-r, frozen:1
+  zplug 'motemen/ghq', as:command, from:gh-r, rename-to:ghq
+  zplug 'stedolan/jq', as:command, from:gh-r, rename-to:jq
+  zplug 'junegunn/fzf-bin', as:command, from:gh-r, rename-to:fzf
+  zplug 'junegunn/fzf', as:command, use:bin/fzf-tmux
+
+  if ! zplug check --verbose; then
+    printf 'Install? [y/N]: '
+    if read -q; then
+      echo; zplug install
+    fi
+  fi
+  zplug load
+  RPROMPT='$(git_super_status)'
+fi
+
+
+###* Prompt
+
 if [ -n "$container" ] || [ -n "$SSH_CLIENT" ]; then
   if [ -n "$container" ]; then
     con="$(echo "$container" | sed 's/./\U&/g')"
@@ -32,100 +60,7 @@ prompt_colored_symbol="%(?.%F{yellow}.%F{red})$prompt_symbol%f"
 PROMPT="$pre_prompt$dirname $prompt_colored_symbol "
 
 
-if [ -d ~/.zplug -a $is_root = false ]; then
-  source ~/.zplug/init.zsh
-  zplug 'zsh-users/zsh-completions'
-  zplug 'zsh-users/zsh-syntax-highlighting', defer:2
-  zplug 'olivierverdier/zsh-git-prompt', use:'zshrc.sh'
-  zplug 'endaaman/lxd-completion-zsh'
-  zplug 'peco/peco', as:command, from:gh-r, frozen:1
-  zplug 'motemen/ghq', as:command, from:gh-r, rename-to:ghq
-  zplug 'stedolan/jq', as:command, from:gh-r, rename-to:jq
-  zplug 'junegunn/fzf-bin', as:command, from:gh-r, rename-to:fzf
-  zplug 'junegunn/fzf', as:command, use:bin/fzf-tmux
-
-  if ! zplug check --verbose; then
-    printf 'Install? [y/N]: '
-    if read -q; then
-      echo; zplug install
-    fi
-  fi
-  zplug load
-  RPROMPT='$(git_super_status)'
-fi
-
-
-autoload -Uz add-zsh-hock
-autoload -Uz cdr
-autoload -Uz chpwd_recent_dirs
-autoload -Uz colors; colors
-autoload -Uz compinit; compinit -u
-autoload -Uz promptinit; promptinit
-
-eval `dircolors -b`
-
-
-
-mkdir -p $HOME/.cache/shell/
-zstyle ':chpwd:*' recent-dirs-default true
-zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/shell/chpwd-recent-dirs"
-zstyle ':chpwd:*' recent-dirs-max 500
-zstyle ':chpwd:*' recent-dirs-pushd true
-zstyle ':completion:*' format '%B%d%b'
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*' ignore-parents parent pwd ..
-zstyle ':completion:*' list-colors $LS_COLORS
-zstyle ':completion:*' menu select
-zstyle ':completion:*' recent-dirs-insert both
-zstyle ':completion:*' use-cache yes
-zstyle ':completion:*' verbose yes
-zstyle ':completion:*:cd:*' ignore-parents parent pwd
-zstyle ':completion:*:descriptions' format '%BCompleting%b %U%d%u'
-zstyle ':completion:*:processes' command 'ps x -o pid,s,args'
-zstyle ':completion:*:warnings' format 'No matches for: %d'
-
-# disable C-q C-s
-stty stop undef
-stty start undef
-
-DIRSTACKSIZE=100
-HISTSIZE=100000
-SAVEHIST=100000
-
-# setopt ignoreeof # disable C-d
-setopt always_last_prompt
-setopt append_history
-setopt auto_cd
-setopt auto_list
-setopt auto_menu
-setopt auto_pushd
-setopt autoremoveslash
-setopt complete_in_word
-setopt extended_glob
-setopt extended_history
-setopt glob
-setopt glob_complete
-setopt hist_ignore_all_dups
-setopt hist_ignore_dups
-setopt hist_ignore_space
-setopt hist_no_store
-setopt hist_reduce_blanks
-setopt hist_verify
-setopt list_packed
-setopt list_types
-setopt magic_equal_subst
-setopt mark_dirs
-setopt no_flow_control
-setopt numeric_glob_sort
-setopt print_eight_bit
-setopt pushd_ignore_dups
-setopt rec_exact
-setopt share_history
-unsetopt list_beep
-
-
-alias sudo='sudo -E '
-
+###* Alias
 
 if which trash-put &> /dev/null; then
   alias l='exa -lb'
@@ -134,6 +69,7 @@ else
   alias l='ls -hlF'
   alias ll='ls -ahlF --color=auto'
 fi
+alias sudo='sudo -E '
 alias mv='mv -v'
 alias cp='cp -v'
 alias rename='rename -v'
@@ -178,6 +114,8 @@ if which trash-put &> /dev/null; then
   alias rm='trash-put'
 fi
 
+
+###* Widget
 
 function __git_files () {
     _wanted files expl 'local files' _files
@@ -263,7 +201,8 @@ bindkey '^[[4~' end-of-line
 bindkey '^[[3~' delete-char
 
 
-# envs
+###* Environment
+
 export HISTFILE=${HOME}/.zsh_history
 export HISTSIZE=1000
 export SAVEHIST=100000
@@ -287,15 +226,20 @@ export FZF_DEFAULT_OPTS='--height 40% --reverse --border --bind "tab:down,btab:u
 export PATH=~/bin:$PATH
 export PATH=~/dotfiles/bin:$PATH
 
+
+###* *env
+
 if [ -d ~/.nodebrew ]; then
   export PATH=~/.nodebrew/current/bin:$PATH
   nodebrew use 8 1>/dev/null
+  fpath=(~/.nodebrew/completions/zsh $fpath)
 fi
 
 if [ -d ~/.rbenv ]; then
   export PATH=~/.rbenv/bin:$PATH
   eval "$(rbenv init -)"
 fi
+
 
 if [ -d ~/.pyenv ]; then
   export PYENV_VIRTUALENV_DISABLE_PROMPT=1
@@ -321,6 +265,78 @@ fi
 
 export OCAMLPARAM="_,bin-annot=1"
 export OPAMKEEPBUILDDIR=1
+
+
+###* Option
+
+# setopt ignoreeof # disable C-d
+setopt always_last_prompt
+setopt append_history
+setopt auto_cd
+setopt auto_list
+setopt auto_menu
+setopt auto_pushd
+setopt autoremoveslash
+setopt complete_in_word
+setopt extended_glob
+setopt extended_history
+setopt glob
+setopt glob_complete
+setopt hist_ignore_all_dups
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_no_store
+setopt hist_reduce_blanks
+setopt hist_verify
+setopt list_packed
+setopt list_types
+setopt magic_equal_subst
+setopt mark_dirs
+setopt no_flow_control
+setopt numeric_glob_sort
+setopt print_eight_bit
+setopt pushd_ignore_dups
+setopt rec_exact
+setopt share_history
+unsetopt list_beep
+
+mkdir -p $HOME/.cache/shell/
+zstyle ':chpwd:*' recent-dirs-default true
+zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/shell/chpwd-recent-dirs"
+zstyle ':chpwd:*' recent-dirs-max 500
+zstyle ':chpwd:*' recent-dirs-pushd true
+zstyle ':completion:*' format '%B%d%b'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' ignore-parents parent pwd ..
+zstyle ':completion:*' list-colors $LS_COLORS
+zstyle ':completion:*' menu select
+zstyle ':completion:*' recent-dirs-insert both
+zstyle ':completion:*' use-cache yes
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*:cd:*' ignore-parents parent pwd
+zstyle ':completion:*:descriptions' format '%BCompleting%b %U%d%u'
+zstyle ':completion:*:processes' command 'ps x -o pid,s,args'
+zstyle ':completion:*:warnings' format 'No matches for: %d'
+
+# disable C-q C-s
+stty stop undef
+stty start undef
+
+DIRSTACKSIZE=100
+HISTSIZE=100000
+SAVEHIST=100000
+
+
+###* autoload
+
+autoload -Uz add-zsh-hock
+autoload -Uz cdr
+autoload -Uz chpwd_recent_dirs
+autoload -Uz colors; colors
+autoload -Uz compinit; compinit -u
+autoload -Uz promptinit; promptinit
+
+eval `dircolors -b`
 
 if [ -f ~/.zshrc.local ]; then
   source ~/.zshrc.local
