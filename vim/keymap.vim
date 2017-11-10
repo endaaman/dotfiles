@@ -93,9 +93,11 @@ nnoremap <C-o> gf
 nnoremap <C-h> <C-w>h
 nnoremap <BS> <C-w>h
 nnoremap <C-l> <C-w>l
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
 nnoremap *  viw"zy:<C-u>let @/=@z\|set hlsearch<CR>
-nnoremap <C-j> "zdd"zp
-nnoremap <expr> <C-k> SwapWithAboveLine()
+nnoremap <Down> "zdd"zp
+nnoremap <expr> <Up> SwapWithAboveLine()
 nnoremap <C-m> yy
 nnoremap <CR> yy
 nnoremap = <C-w>=

@@ -267,4 +267,6 @@ hook_add = '''
   let g:syntastic_cpp_check_header = 1
   let g:syntastic_c_auto_refresh_includes = 1
   let g:syntastic_cpp_auto_refresh_includes = 1
+
+  let g:syntastic_go_checkers = ['golint']
 '''
