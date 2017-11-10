@@ -56,7 +56,7 @@ set ignorecase
 set laststatus=2
 set lazyredraw
 set list
-set listchars=tab:\¦\ ,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
+set listchars=tab:\\ ,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
 set matchpairs& mps+=<:>
 set matchtime=1
 set modifiable
@@ -83,3 +83,6 @@ set undofile
 set updatetime=1000
 set wildmenu
 set write
+
+" MEMO:
+" useful symbols:  ¦

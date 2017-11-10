@@ -86,7 +86,7 @@ hook_add = '''
   nnoremap <Space>p :<C-u>Denite register<CR>
   nnoremap <Space>c :<C-u>Denite colorscheme<CR>
   nnoremap <Space>d :<C-u>Denite file_rec/diff<CR>
-  nnoremap <Space>d :<C-u>Denite unite:outline<CR>
+  nnoremap <Space>l :<C-u>Denite unite:outline<CR>
   nnoremap <Space>f :<C-u>Denite `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
 
   call denite#custom#alias('source', 'file_rec/git', 'file_rec')
