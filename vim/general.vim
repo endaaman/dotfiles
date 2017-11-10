@@ -36,7 +36,7 @@ if has('nvim')
 else
 endif
 
-
+set background=dark " always use dark colors
 if has('termguicolors')
   set termguicolors
 endif

@@ -33,9 +33,21 @@ repo = 'rking/ag.vim'
 [[plugins]]
 repo = 'chriskempson/base16-vim'
 hook_add = '''
-  autocmd VimEnter * set background=dark
-  autocmd VimEnter * nested colorscheme base16-default-dark
+  " autocmd VimEnter * nested colorscheme base16-default-dark
 '''
+
+[[plugins]]
+repo = 'jacoborus/tender.vim'
+hook_add = '''
+  autocmd VimEnter * nested colorscheme tender
+'''
+
+[[plugins]]
+repo = 'w0ng/vim-hybrid'
+hook_add = '''
+  autocmd VimEnter * nested colorscheme hybrid
+'''
+
 
 [[plugins]]
 repo = 'itchyny/lightline.vim'

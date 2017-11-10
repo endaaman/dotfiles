@@ -56,7 +56,7 @@ nnoremap <expr> <Space>y YankName()
 nnoremap <expr> <Space><C-y> YankPath()
 nnoremap <expr> <Space>Y YankFull()
 nnoremap <Space>e :<C-u>e!<CR>
-nnoremap <Space>d g0"_D
+" nnoremap <Space>d g0"_D
 nnoremap <expr> <Space>/ SearchByRegister()
 
 nnoremap <expr> <Space><Space><Space><Space> ReloadConfigAndReopen()

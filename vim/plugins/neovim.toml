@@ -21,15 +21,6 @@ hook_add = '''
 [[plugins]]
 repo = 'Shougo/denite.nvim'
 hook_add = '''
-  nnoremap <Space>b :<C-u>Denite buffer<CR>
-  nnoremap <Space>a :<C-u>Denite directory_rec<CR>
-  nnoremap <Space>f :<C-u>Denite file_rec<CR>
-  nnoremap <Space>m :<C-u>Denite file_mru<CR>
-  nnoremap <Space>g :<C-u>Denite grep<CR>
-  nnoremap <Space>p :<C-u>Denite register<CR>
-  nnoremap <Space>s :<C-u>Denite source<CR>
-  nnoremap <Space>c :<C-u>Denite colorscheme<CR>
-
   call denite#custom#map(
   \ '_',
   \ '<Tab>',
@@ -87,6 +78,19 @@ hook_add = '''
   \ 'node_modules/', '*.ttf', 'vendor/'
   \ ])
 
+  nnoremap <Space>b :<C-u>Denite buffer<CR>
+  nnoremap <Space>a :<C-u>Denite directory_rec<CR>
+  nnoremap <Space>m :<C-u>Denite file_mru<CR>
+  nnoremap <Space>g :<C-u>Denite grep<CR>
+  nnoremap <Space>p :<C-u>Denite register<CR>
+  nnoremap <Space>s :<C-u>Denite source<CR>
+  nnoremap <Space>c :<C-u>Denite colorscheme<CR>
+  nnoremap <Space>d :<C-u>Denite file_rec/diff<CR>
+  nnoremap <Space>f :<C-u>Denite `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
+
+  call denite#custom#alias('source', 'file_rec/git', 'file_rec')
+  call denite#custom#var('file_rec/git', 'command', ['git', 'ls-files', '-co', '--exclude-standard'])
+
   if executable('ag')
     call denite#custom#var('file_rec', 'command',  ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
   endif
@@ -107,8 +111,15 @@ hook_add = '''
   call denite#custom#var('file_rec/git', 'command',
   \ ['git', 'ls-files', '-co', '--exclude-standard'])
 
+  call denite#custom#alias('source', 'file_rec/diff', 'file_rec')
+  call denite#custom#var('file_rec/diff', 'command', ['git', 'diff-files', '--name-only'])
+
   call denite#custom#source(
   \ 'file_mru', 'converters', ['converter_relative_word'])
+
+  call denite#custom#source(
+  \ 'file_rec', 'matchers', ['matcher_project_files'])
+
 '''
 
 # [[plugins]]
