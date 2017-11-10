@@ -9,7 +9,7 @@ let g:lightline.active.left = [
 let g:lightline.active.right = [
 \   [ 'syntastic', 'lineinfo' ],
 \   [ 'percent' ],
-\   [ 'fugitive', 'fileformat', 'fileencoding', 'filetype' ],
+\   [ 'fileformat', 'fileencoding', 'filetype' ],
 \ ]
 
 let g:lightline.component_function = {

@@ -78,17 +78,19 @@ hook_add = '''
   \ 'node_modules/', '*.ttf', 'vendor/'
   \ ])
 
+  call denite#custom#source('_', 'matchers', ['matcher_substring'])
+
   nnoremap <Space>b :<C-u>Denite buf<CR>
-  nnoremap <Space>a :<C-u>Denite directory_rec<CR>
   nnoremap <Space>m :<C-u>Denite file_mru<CR>
   nnoremap <Space>o :<C-u>Denite file_old<CR>
   nnoremap <Space>g :<C-u>Denite grep<CR>
   nnoremap <Space>p :<C-u>Denite register<CR>
   nnoremap <Space>c :<C-u>Denite colorscheme<CR>
-  nnoremap <Space>d :<C-u>Denite file_rec/diff<CR>
   nnoremap <Space>l :<C-u>Denite unite:outline<CR>
   nnoremap <Space>z :<C-u>Denite -resume<CR>
-  nnoremap <Space>f :<C-u>Denite `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
+  nnoremap <Space>a :<C-u>Denite file_rec<CR>
+  nnoremap <Space>d :<C-u>Denite file_rec/untracked file_rec/diff<CR>
+  nnoremap <Space>f :<C-u>Denite file_rec/untracked file_rec/git<CR>
 
   call denite#custom#var('grep', 'exclude_unlisted', 0)
 
@@ -108,10 +110,7 @@ hook_add = '''
     call denite#custom#var('grep', 'separator', ['--'])
   endif
 
-  " call denite#custom#source(
-  " \ 'file_rec', 'converters', ['converter_relative_word'])
-  call denite#custom#source(
-  \ 'file_rec', 'matchers', ['matcher_cpsm'])
+
 
   call denite#custom#alias('source', 'file_rec/git', 'file_rec')
   call denite#custom#var('file_rec/git', 'command',
@@ -119,6 +118,9 @@ hook_add = '''
 
   call denite#custom#alias('source', 'file_rec/diff', 'file_rec')
   call denite#custom#var('file_rec/diff', 'command', ['git', 'diff-files', '--name-only'])
+
+  call denite#custom#alias('source', 'file_rec/untracked', 'file_rec')
+  call denite#custom#var('file_rec/untracked', 'command', ['git', 'ls-files', '--others', '--exclude-standard'])
 
   call denite#custom#source(
   \ 'file_mru', 'converters', ['converter_relative_word'])
