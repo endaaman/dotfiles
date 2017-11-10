@@ -59,6 +59,7 @@ vnoremap <C-m> y
 vnoremap <CR> y
 
 inoremap <C-d> <Del>
+inoremap <C-h> <Backspace>
 
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
