@@ -24,9 +24,16 @@ let g:lightline.component_function = {
 
 " let g:lightline.separator = { 'left': '', 'right': '' }
 " let g:lightline.subseparator = { 'left': '|', 'right': '|' }
-
-let g:lightline.separator = { 'left': '', 'right': '' }
-let g:lightline.subseparator = { 'left': '', 'right': '' }
+" let g:lightline.separator = { 'left': '', 'right': '' }
+" let g:lightline.subseparator = { 'left': '', 'right': '' }
+" let g:lightline.separator = { 'left': '', 'right': '' }
+" let g:lightline.subseparator = { 'left': '', 'right': '' }
+" let g:lightline.separator = { 'left': '', 'right': '' }
+" let g:lightline.separator = { 'left': '', 'right': '' }
+" let g:lightline.separator = { 'left': '', 'right': '' }
+" let g:lightline.subseparator = { 'left': '', 'right': '' }
+let g:lightline.separator = { 'left': '', 'right': '' }
+let g:lightline.subseparator = { 'left': '', 'right': '' }
 
 function! LightLineFugitive()
   let fname = expand('%:t')

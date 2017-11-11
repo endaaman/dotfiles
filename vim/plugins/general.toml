@@ -62,6 +62,24 @@ hook_add = '''
 repo = 'ryanoasis/vim-devicons'
 hook_add = '''
   let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
+  let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+  let g:DevIconsEnableFoldersOpenClose = 1
+  let g:WebDevIconsUnicodeDecorateFileNodes = 1
+
+  let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol = ''
+
+  let g:NERDTreeDirArrowExpandable = nr2char(8200)
+  let g:NERDTreeDirArrowCollapsible = nr2char(8200)
+  " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+  " let g:DevIconsDefaultFolderOpenSymbol = ''
+  " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+  " let g:DevIconsDefaultFolderOpenSymbol = ''
+  " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+  " let g:DevIconsDefaultFolderOpenSymbol = ''
+  let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+  let g:DevIconsDefaultFolderOpenSymbol = ''
+  " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = '▸'
+  " let g:DevIconsDefaultFolderOpenSymbol = '▾'
 '''
 
 [[plugins]]
@@ -78,19 +96,36 @@ hook_add = '''
   endfunction
   command! -nargs=* -bar -bang -count=0 -complete=dir NERDTreeCustom <args>
   nnoremap <C-g> :<C-u>call NERDTreeCustom()<CR>
+
   let g:NERDTreeShowHidden = 1
   let g:NERDTreeHijackNetrw = 1
+  let g:NERDTreeMinimalUI = 1
+  " let g:NERDTreeQuitOnOpen = 1
+
+  autocmd FileType nerdtree setlocal nolist  "if you show hidden characters, this hides them in NERDTree
 '''
 
-# [[plugins]]
-# repo = 'tiagofumo/vim-nerdtree-syntax-highlight'
-# hook_add = '''
-#   let g:NERDTreeFileExtensionHighlightFullName = 1
-# '''
-# depends = ['nerdtree']
+[[plugins]]
+repo = 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 [[plugins]]
 repo = 'Xuyuanp/nerdtree-git-plugin'
+hook_add = '''
+  let g:NERDTreeShowIgnoredStatus = 1
+  let g:NERDTreeIndicatorMapCustom = {
+  " \ "Staged"    : "",
+  \ "Staged"  : "",
+  \ "Modified"     : "",
+  \ "Untracked" : "",
+  \ "Renamed"   : "➜",
+  \ "Unmerged"  : "═",
+  \ "Deleted"   : "✖",
+  \ "Clean"     : "✔︎",
+  \ "Dirty"     : "",
+  \ 'Ignored'   : '',
+  \ "Unknown"   : "?"
+  \ }
+'''
 
 [[plugins]]
 repo = 'aufgang001/vim-nerdtree_plugin_open'
@@ -178,7 +213,10 @@ hook_add = '''
   let g:syntastic_check_on_wq = 0
 
   let g:syntastic_enable_signs = 1
-  let g:syntastic_error_symbol = '✗'
+  let g:syntastic_error_symbol = ''
+  " let g:syntastic_error_symbol = ''
+  " let g:syntastic_warning_symbol = ''
+  let g:syntastic_warning_symbol = ''
   " let g:syntastic_warning_symbol = '⚠'
 
   let g:syntastic_c_check_header = 1
