@@ -89,10 +89,11 @@ hook_add = '''
   nnoremap <Space>c :<C-u>Denite colorscheme<CR>
   nnoremap <Space>l :<C-u>Denite unite:outline<CR>
   nnoremap <Space>z :<C-u>Denite -resume<CR>
+  nnoremap <Space>h :<C-u>Denite help<CR>
   nnoremap <Space>a :<C-u>Denite file_rec<CR>
   nnoremap <Space>d :<C-u>Denite file_rec/untracked file_rec/diff<CR>
   nnoremap <Space>f :<C-u>Denite file_rec/untracked file_rec/git<CR>
-  nnoremap <Space>, :<C-u>Denite file_rec/comma<CR>
+  nnoremap <Space>, :<C-u>Denite file_rec -path=,<CR>
 
   if executable('ag')
     call denite#custom#var('file_rec', 'command',
@@ -117,10 +118,6 @@ hook_add = '''
   call denite#custom#alias('source', 'file_rec/untracked', 'file_rec')
   call denite#custom#var('file_rec/untracked', 'command',
   \ ['git', 'ls-files', '--others', '--exclude-standard'])
-
-  call denite#custom#alias('source', 'file_rec/comma', 'file_rec')
-  call denite#custom#var('file_rec/comma', 'command',
-  \ ['ls', ',', '-1', '-v', '--ignore'])
 
   " call denite#custom#source('file_mru', 'converters', ['converter_relative_word'])
 '''
