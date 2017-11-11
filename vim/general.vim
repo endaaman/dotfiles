@@ -41,6 +41,8 @@ if has('termguicolors')
   set termguicolors
 endif
 
+let g:vim_indent_cont = &sw * 0
+
 set autoindent
 " set ambiwidth=double
 set backspace=2
