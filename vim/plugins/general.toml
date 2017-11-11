@@ -39,7 +39,7 @@ hook_add = '''
 [[plugins]]
 repo = 'jacoborus/tender.vim'
 hook_add = '''
-  autocmd VimEnter * nested colorscheme tender
+  " autocmd VimEnter * nested colorscheme tender
 '''
 
 [[plugins]]
@@ -53,7 +53,7 @@ repo = 'endaaman/lightline-hybrid.vim'
 
 [[plugins]]
 repo = 'itchyny/lightline.vim'
-depends = ['lightline-hybrid.vim']
+depends = ['lightline-hybrid.vim', 'syntastic']
 hook_add = '''
   source ~/.vim/plugins/sub/lightline.vim
 '''
