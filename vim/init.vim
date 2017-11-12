@@ -1,4 +1,4 @@
-augroup MyAutoCmd
+augroup Endaaman
   autocmd!
 augroup END
 set all&

@@ -14,7 +14,7 @@ autocmd VimEnter * :call LoadLocalVimConfig()
 
 if (v:version == 704 && has("patch338")) || v:version >= 705
   set breakindent
-  autocmd MyAutoCmd BufEnter * set breakindentopt=min:20,shift:0
+  autocmd Endaaman BufEnter * set breakindentopt=min:20,shift:0
 endif
 
 if has('gui_running') || exists('g:nyaovim_version')

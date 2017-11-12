@@ -7,8 +7,6 @@ let s:toml_dir = expand('<sfile>:p:h') . '/plugins'
 let s:dein_dir = expand('~/.cache/dein')
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
-" source ~/.vim/misc/lightline-hybrid.vim
-
 if isdirectory(s:dein_repo_dir)
   execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
 
@@ -30,4 +28,5 @@ if isdirectory(s:dein_repo_dir)
   filetype plugin indent on
 
   command! DeinUpdate :call dein#update()
+  command! DeinRecache :call dein#recache_runtimepath())
 endif

@@ -2,7 +2,7 @@
 repo = 'Shougo/vimshell.vim'
 
 [[plugins]]
-repo = 'Shougo/context_filetype.vim'
+repo = 'endaaman/context_filetype.vim'
 
 [[plugins]]
 repo = 'Shougo/echodoc.vim'
@@ -39,13 +39,13 @@ hook_add = '''
 [[plugins]]
 repo = 'jacoborus/tender.vim'
 hook_add = '''
-  " autocmd VimEnter * nested colorscheme tender
+  " autocmd MyAutoCmd VimEnter * nested colorscheme tender
 '''
 
 [[plugins]]
 repo = 'w0ng/vim-hybrid'
 hook_add = '''
-  autocmd VimEnter * nested colorscheme hybrid
+  autocmd Endaaman VimEnter * nested colorscheme hybrid
 '''
 
 [[plugins]]
@@ -133,7 +133,6 @@ hook_add = '''
   let g:nerdtree_plugin_open_cmd = 'xdg-open'
 '''
 
-
 [[plugins]]
 repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim', 'vim-textobj-user']
@@ -204,7 +203,7 @@ build = 'env PY3=ON ./install.sh'
 repo = 'vim-syntastic/syntastic'
 hook_add = '''
   set statusline+=%#warningmsg#
-  set statusline+=%{SyntasticStatuslineFlag()}
+  " set statusline+=%{SyntasticStatuslineFlag()}
   set statusline+=%*
 
   let g:syntastic_always_populate_loc_list = 1

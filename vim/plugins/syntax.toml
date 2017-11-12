@@ -14,30 +14,34 @@ hook_add = '''
 
 [[plugins]]
 repo = 'dhruvasagar/vim-table-mode'
+on_ft = ['markdown']
 hook_add = '''
   let g:table_mode_always_active = 1
 '''
-on_ft = ['markdown']
-
-# [[plugins]]
-# repo = 'mxw/vim-jsx'
-# on_ft = ['javascript']
-#
-# [[plugins]]
-# repo = 'myhere/vim-nodejs-complete'
-# on_ft = ['javascript']
-#
-# [[plugins]]
-# repo = 'mattn/jscomplete-vim'
-# on_ft = ['javascript']
 
 [[plugins]]
-repo = 'pangloss/vim-javascript'
-on_ft = ['javascript', 'ejs', 'jst']
+repo = 'othree/yajs.vim'
+on_ft = ['javascript', 'vue']
+
+[[plugins]]
+repo = 'othree/javascript-libraries-syntax.vim'
+on_ft = ['javascript', 'vue']
+
+[[plugins]]
+repo = 'othree/es.next.syntax.vim'
+on_ft = ['javascript', 'vue']
+
+[[plugins]]
+repo = 'maxmellon/vim-jsx-pretty'
+on_ft = ['javascript', 'vue']
 
 [[plugins]]
 repo = 'digitaltoad/vim-pug'
-on_ft = ['jade', 'pug']
+on_ft = ['pug', 'vue']
+
+[[plugins]]
+repo = 'posva/vim-vue' # remeber `npm i -g eslint eslint-plugin-vue`
+on_ft = ['vue']
 
 [[plugins]]
 repo = 'elzr/vim-json'
@@ -79,9 +83,6 @@ hook_add = '''
   let g:go_highlight_structs = 3
   let g:go_doc_keywordprg_enabled = 0
 '''
-
-[[plugins]]
-repo = 'posva/vim-vue'
 
 [[plugins]]
 repo = 'jwalton512/vim-blade'
