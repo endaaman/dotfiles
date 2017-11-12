@@ -1,14 +1,5 @@
 config.width = 120
 config.height = 32
-
-function safe_dofile(path)
-  local f = io.open(path, "r")
-  if f ~= nil then
-    io.close(f)
-    dofile(path)
-  end
-end
-
 config.shell = os.getenv('HOME') .. '/dotfiles/bin/tmux-attach-or-new'
 config.title = 'た〜みなる'
 config.cursor_blink_mode = 'off'
@@ -22,7 +13,15 @@ keymap['<Ctrl><Shift>r'] = function()
 end
 
 dofile(os.getenv('HOME') .. '/.config/tym/colors/hybrid.lua')
-safe_dofile(os.getenv('HOME') .. '/.tym.lua')
+
+function safe_dofile(path)
+  local f = io.open(path, "r")
+  if f ~= nil then
+    io.close(f)
+    dofile(path)
+  end
+end
+safe_dofile(os.getenv('HOME') .. '/.local/share/tym/config.lua')
 
 -- color_0  : black (background)
 -- color_1  : red

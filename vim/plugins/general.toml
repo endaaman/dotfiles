@@ -136,6 +136,16 @@ hook_add = '''
 [[plugins]]
 repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim', 'vim-textobj-user']
+hook_add = '''
+	" let g:precious_enable_switchers = {
+	" \	"*" : {
+	" \		"setfiletype" : 1
+	" \	},
+	" \	"vue" : {
+	" \		"setfiletype" : 0
+	" \	},
+	" \}
+'''
 
 [[plugins]]
 repo = 'jiangmiao/auto-pairs'
