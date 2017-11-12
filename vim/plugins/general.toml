@@ -45,8 +45,15 @@ hook_add = '''
 [[plugins]]
 repo = 'w0ng/vim-hybrid'
 hook_add = '''
-  autocmd Endaaman VimEnter * nested colorscheme hybrid
+  " autocmd Endaaman VimEnter * nested colorscheme hybrid
 '''
+
+[[plugins]]
+repo = 'kristijanhusak/vim-hybrid-material'
+hook_add = '''
+  autocmd Endaaman VimEnter * nested colorscheme hybrid_reverse
+'''
+
 
 [[plugins]]
 repo = 'endaaman/lightline-hybrid.vim'
