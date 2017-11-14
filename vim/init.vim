@@ -23,3 +23,4 @@ runtime! general.vim
 runtime! command.vim
 runtime! keymap.vim
 runtime! dein.vim
+runtime! local.vim

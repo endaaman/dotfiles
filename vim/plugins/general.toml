@@ -118,7 +118,7 @@ repo = 'tiagofumo/vim-nerdtree-syntax-highlight'
 [[plugins]]
 repo = 'Xuyuanp/nerdtree-git-plugin'
 hook_add = '''
-  let g:NERDTreeShowIgnoredStatus = 1
+  " let g:NERDTreeShowIgnoredStatus = 1
   let g:NERDTreeIndicatorMapCustom = {
   " \ "Staged"    : "",
   \ "Staged"  : "",

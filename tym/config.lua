@@ -21,7 +21,7 @@ function safe_dofile(path)
     dofile(path)
   end
 end
-safe_dofile(os.getenv('HOME') .. '/.local/share/tym/config.lua')
+safe_dofile(os.getenv('HOME') .. '/.config/tym/local.lua')
 
 -- color_0  : black (background)
 -- color_1  : red
