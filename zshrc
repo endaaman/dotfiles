@@ -231,7 +231,7 @@ export PATH=~/dotfiles/bin:$PATH
 
 if [ -d ~/.nodebrew ]; then
   export PATH=~/.nodebrew/current/bin:$PATH
-  nodebrew use 8 1>/dev/null
+  nodebrew use 9 1>/dev/null
   fpath=(~/.nodebrew/completions/zsh $fpath)
 fi
 
