@@ -20,15 +20,7 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'othree/yajs.vim'
-on_ft = ['javascript', 'vue']
-
-[[plugins]]
-repo = 'othree/javascript-libraries-syntax.vim'
-on_ft = ['javascript', 'vue']
-
-[[plugins]]
-repo = 'othree/es.next.syntax.vim'
+repo = 'pangloss/vim-javascript'
 on_ft = ['javascript', 'vue']
 
 [[plugins]]

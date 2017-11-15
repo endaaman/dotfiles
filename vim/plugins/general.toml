@@ -60,7 +60,7 @@ repo = 'endaaman/lightline-hybrid.vim'
 
 [[plugins]]
 repo = 'itchyny/lightline.vim'
-depends = ['lightline-hybrid.vim', 'syntastic']
+depends = ['lightline-hybrid.vim']
 hook_add = '''
   source ~/.vim/plugins/sub/lightline.vim
 '''
@@ -218,6 +218,7 @@ build = 'env PY3=ON ./install.sh'
 
 [[plugins]]
 repo = 'vim-syntastic/syntastic'
+if = ''' 0 '''
 hook_add = '''
   set statusline+=%#warningmsg#
   " set statusline+=%{SyntasticStatuslineFlag()}
@@ -241,4 +242,10 @@ hook_add = '''
   let g:syntastic_cpp_auto_refresh_includes = 1
 
   let g:syntastic_go_checkers = ['golint']
+'''
+
+[[plugins]]
+repo = 'w0rp/ale'
+hook_add = '''
+  let g:ale_fix_on_save = 1
 '''

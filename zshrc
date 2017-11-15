@@ -226,6 +226,7 @@ export FZF_DEFAULT_OPTS='--height 40% --reverse --border --bind "tab:down,btab:u
 export PATH=~/bin:$PATH
 export PATH=~/dotfiles/bin:$PATH
 
+eval "$(direnv hook zsh)"
 
 ###* *env
 
