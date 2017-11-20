@@ -1,5 +1,5 @@
 [[plugins]]
-repo = 'Shougo/vimshell.vim'
+repo = 'szw/vim-tags'
 
 [[plugins]]
 repo = 'endaaman/context_filetype.vim'
@@ -245,7 +245,9 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'w0rp/ale'
+repo = 'endaaman/ale'
+if = ''' 1 '''
+rev = 'wip'
 hook_add = '''
   let g:ale_fix_on_save = 1
 '''
