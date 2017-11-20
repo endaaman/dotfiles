@@ -1,6 +1,7 @@
 let g:lightline = {}
 let g:lightline.colorscheme = 'hybrid'
 
+
 let g:lightline.active = {}
 let g:lightline.active.left = [
 \   [ 'mode', 'paste' ],
@@ -28,12 +29,12 @@ let g:lightline.component_function = {
 " let g:lightline.subseparator = { 'left': '', 'right': '' }
 " let g:lightline.separator = { 'left': '', 'right': '' }
 " let g:lightline.subseparator = { 'left': '', 'right': '' }
-" let g:lightline.separator = { 'left': '', 'right': '' }
-" let g:lightline.separator = { 'left': '', 'right': '' }
+let g:lightline.separator = { 'left': '', 'right': '' }
+let g:lightline.subseparator = { 'left': '', 'right': '' }
 " let g:lightline.separator = { 'left': '', 'right': '' }
 " let g:lightline.subseparator = { 'left': '', 'right': '' }
-let g:lightline.separator = { 'left': '', 'right': '' }
-let g:lightline.subseparator = { 'left': '', 'right': '' }
+" let g:lightline.separator = { 'left': '', 'right': '' }
+" let g:lightline.subseparator = { 'left': '', 'right': '' }
 
 function! LightLineFugitive()
   let fname = expand('%:t')
