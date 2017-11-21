@@ -247,7 +247,7 @@ hook_add = '''
 [[plugins]]
 repo = 'endaaman/ale'
 if = ''' 1 '''
-rev = 'wip'
+rev = 'android'
 hook_add = '''
   let g:ale_fix_on_save = 1
 '''
