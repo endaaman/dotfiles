@@ -113,7 +113,7 @@ alias F='fzf'
 if which trash-put &> /dev/null; then
   alias rm='trash-put'
 fi
-
+alias https='http --default-scheme=https'
 
 ###* Widget
 
