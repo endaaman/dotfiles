@@ -1,8 +1,4 @@
 [[plugins]]
-repo = 'Shougo/vimproc'
-build = 'make'
-
-[[plugins]]
 repo = 'Shougo/neocomplete.vim'
 on_i = 1
 hook_add = '''

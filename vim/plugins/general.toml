@@ -12,6 +12,10 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'Shougo/vimproc'
+build = 'make'
+
+[[plugins]]
 repo = 'Shougo/neomru.vim'
 
 [[plugins]]
@@ -218,7 +222,7 @@ build = 'env PY3=ON ./install.sh'
 
 [[plugins]]
 repo = 'vim-syntastic/syntastic'
-if = ''' 0 '''
+if = ''' 1 '''
 hook_add = '''
   set statusline+=%#warningmsg#
   " set statusline+=%{SyntasticStatuslineFlag()}
@@ -246,7 +250,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'endaaman/ale'
-if = ''' 1 '''
+if = ''' 0 '''
 rev = 'android'
 hook_add = '''
   let g:ale_fix_on_save = 1
