@@ -124,17 +124,17 @@ repo = 'Xuyuanp/nerdtree-git-plugin'
 hook_add = '''
   " let g:NERDTreeShowIgnoredStatus = 1
   let g:NERDTreeIndicatorMapCustom = {
-  " \ "Staged"    : "",
-  \ "Staged"  : "",
-  \ "Modified"     : "",
-  \ "Untracked" : "",
-  \ "Renamed"   : "➜",
-  \ "Unmerged"  : "═",
-  \ "Deleted"   : "✖",
-  \ "Clean"     : "✔︎",
-  \ "Dirty"     : "",
+  " \ 'Staged'    : '',
+  \ 'Staged'    : '',
+  \ 'Modified'  : '',
+  \ 'Untracked' : '',
+  \ 'Renamed'   : '➜',
+  \ 'Unmerged'  : '═',
+  \ 'Deleted'   : '✖',
+  \ 'Clean'     : '✔︎',
+  \ 'Dirty'     : '',
   \ 'Ignored'   : '',
-  \ "Unknown"   : "?"
+  \ 'Unknown'   : '?'
   \ }
 '''
 
@@ -149,11 +149,11 @@ repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim', 'vim-textobj-user']
 hook_add = '''
 	" let g:precious_enable_switchers = {
-	" \	"*" : {
-	" \		"setfiletype" : 1
+	" \	'*' : {
+	" \		'setfiletype' : 1
 	" \	},
-	" \	"vue" : {
-	" \		"setfiletype" : 0
+	" \	'vue' : {
+	" \		'setfiletype' : 0
 	" \	},
 	" \}
 '''
@@ -170,7 +170,8 @@ hook_add = '''
 [[plugins]]
 repo = 'Yggdroot/indentLine'
 hook_add = '''
-  let g:indentLine_char = '¦'
+  " let g:indentLine_char = '¦'
+  let g:indentLine_char = ''
   let g:indentLine_fileTypeExclude = ['nerdtree']
 '''
 
@@ -196,16 +197,10 @@ repo = 'tomtom/tcomment_vim'
 repo = 'tpope/vim-surround'
 
 [[plugins]]
-repo = 'vim-scripts/copypath.vim'
-
-[[plugins]]
 repo = 'vim-scripts/sudo.vim'
 
 [[plugins]]
 repo = 'kana/vim-textobj-user'
-
-[[plugins]]
-repo = 'thinca/vim-textobj-between'
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'
@@ -216,7 +211,7 @@ build = 'env PY3=ON ./install.sh'
 
 [[plugins]]
 repo = 'mattn/emmet-vim'
-if = ''' 0 '''
+if = ''' 1 '''
 hook_add = '''
   let g:user_emmet_leader_key='<C-e>'
 '''
@@ -272,6 +267,6 @@ hook_add = '''
   \ }
   let g:neomake_message_sign = {
   \ 'text': '',
-  \ 'texthl': 'NeomakeMessageSign',
+  \ 'texthl': 'Operator',
   \ }
 '''

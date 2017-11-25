@@ -10,7 +10,7 @@ let g:lightline.active.left = [
 let g:lightline.active.right = [
 \   [ 'syntastic', 'lineinfo' ],
 \   [ 'percent' ],
-\   [ 'fileformat', 'fileencoding', 'filetype' ],
+\   [ 'fugitive', 'filetype' ],
 \ ]
 
 let g:lightline.component_function = {
@@ -41,7 +41,7 @@ function! LightLineFugitive()
   if fname =~ 'NERD_tree'
     return ''
   endif
-  return exists('*fugitive#head') ? '' . fugitive#head() : ''
+  return exists('*fugitive#head') ?  fugitive#head() : ''
 endfunction
 
 function! LightlineDirname()

@@ -31,9 +31,10 @@ on_ft = ['javascript', 'vue']
 repo = 'digitaltoad/vim-pug'
 on_ft = ['pug', 'vue']
 
-# [[plugins]]
-# repo = 'posva/vim-vue' # remeber `npm i -g eslint eslint-plugin-vue`
-# on_ft = ['vue']
+[[plugins]]
+repo = 'posva/vim-vue' # remeber `npm i -g eslint eslint-plugin-vue`
+if = ''' 0 '''
+on_ft = ['vue']
 
 [[plugins]]
 repo = 'elzr/vim-json'
@@ -42,21 +43,22 @@ hook_add = '''
   let g:vim_json_syntax_conceal = 0
 '''
 
-# [[plugins]]
-# repo = 'briancollins/vim-jst'
-# on_ft = ['ejs', 'jst']
-# hook_add = '''
-#   autocmd BufNewFile,BufRead *.ejs set filetype=ejs
-#   autocmd BufNewFile,BufRead *._ejs set filetype=ejs
-#
-#   function! s:DetectEjs()
-#       if getline(1) =~ '^#!.*\<ejs\>'
-#           set filetype=ejs
-#       endif
-#   endfunction
-#
-#   autocmd BufNewFile,BufRead * call s:DetectEjs()
-# '''
+[[plugins]]
+repo = 'briancollins/vim-jst'
+on_ft = ['ejs', 'jst']
+if = ''' 0 '''
+hook_add = '''
+  autocmd BufNewFile,BufRead *.ejs set filetype=ejs
+  autocmd BufNewFile,BufRead *._ejs set filetype=ejs
+
+  function! s:DetectEjs()
+      if getline(1) =~ '^#!.*\<ejs\>'
+          set filetype=ejs
+      endif
+  endfunction
+
+  autocmd BufNewFile,BufRead * call s:DetectEjs()
+'''
 
 [[plugins]]
 repo = 'kchmck/vim-coffee-script'
@@ -120,6 +122,11 @@ hook_add = '''
   let g:rustfmt_command = $HOME . '/.cargo/bin/rustfmt'
 '''
 
-# [[plugins]]
-# repo = 'baabelfish/nvim-nim'
-# on_ft = ['nim']
+[[plugins]]
+repo = 'udalov/kotlin-vim'
+on_ft = ['kotlin']
+
+[[plugins]]
+repo = 'baabelfish/nvim-nim'
+if = ''' 0 '''
+on_ft = ['nim']
