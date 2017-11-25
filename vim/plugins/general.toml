@@ -214,15 +214,16 @@ repo = 'tpope/vim-fugitive'
 repo = 'nixprime/cpsm'
 build = 'env PY3=ON ./install.sh'
 
-# [[plugins]]
-# repo = 'mattn/emmet-vim'
-# hook_add = '''
-#   let g:user_emmet_leader_key='<C-e>'
-# '''
+[[plugins]]
+repo = 'mattn/emmet-vim'
+if = ''' 0 '''
+hook_add = '''
+  let g:user_emmet_leader_key='<C-e>'
+'''
 
 [[plugins]]
 repo = 'vim-syntastic/syntastic'
-if = ''' 1 '''
+if = ''' 0 '''
 hook_add = '''
   set statusline+=%#warningmsg#
   " set statusline+=%{SyntasticStatuslineFlag()}
@@ -235,10 +236,7 @@ hook_add = '''
 
   let g:syntastic_enable_signs = 1
   let g:syntastic_error_symbol = ''
-  " let g:syntastic_error_symbol = ''
-  " let g:syntastic_warning_symbol = ''
   let g:syntastic_warning_symbol = ''
-  " let g:syntastic_warning_symbol = '⚠'
 
   let g:syntastic_mode_map={
   \ 'mode': 'passive',
@@ -255,9 +253,25 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'endaaman/ale'
-if = ''' 0 '''
-rev = 'android'
+repo = 'neomake/neomake'
+if = ''' 1 '''
 hook_add = '''
-  let g:ale_fix_on_save = 1
+  let g:neomake_open_list = 0
+  autocmd! BufWritePost,BufEnter * Neomake
+  let g:neomake_error_sign = {
+  \ 'text': '',
+  \ 'texthl': 'Error',
+  \ }
+  let g:neomake_warning_sign = {
+  \ 'text': '',
+  \ 'texthl': 'Error',
+  \ }
+  let g:neomake_info_sign = {
+  \ 'text': '',
+  \ 'texthl': 'Title',
+  \ }
+  let g:neomake_message_sign = {
+  \ 'text': '',
+  \ 'texthl': 'NeomakeMessageSign',
+  \ }
 '''
