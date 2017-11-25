@@ -5,14 +5,11 @@ indent_style = space
 indent_size = 2
 tab_width = 2
 
-[*.md]
+[{*.md,*.jade}]
 trim_trailing_whitespace = false
 
-[*.jade]
-trim_trailing_whitespace = true
-
-[Makefile]
+[{Makefile,*.go}]
 indent_style = tab
 
-[*.go]
-indent_style = tab
+[{*.java,*.gradle}]
+indent_size = 4

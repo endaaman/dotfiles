@@ -3,13 +3,6 @@ autocmd InsertEnter * set nocursorline
 
 autocmd BufWritePre * if @% !~ '\.md$' | :%s/\s\+$//e | endif
 autocmd BufWritePre * :%s/\t\+$//e
-
-function! LoadLocalVimConfig()
-  let s:local_vim = getcwd() . '/.vim/init.vim'
-  if filereadable(s:local_vim) && getcwd() != expand('~')
-    execute 'source ' . s:local_vim
-  endif
-endfunction
 autocmd VimEnter * :call LoadLocalVimConfig()
 
 if (v:version == 704 && has("patch338")) || v:version >= 705
@@ -18,9 +11,9 @@ if (v:version == 704 && has("patch338")) || v:version >= 705
 endif
 
 if has('gui_running') || exists('g:nyaovim_version')
-  set guifont=Monospace\ 10
+  set guifont = Monospace\ 10
   autocmd VimEnter * set lines=40
-  autocmd VimEnter * set columns=120
+  autocmd VimEnter * set columna=120
   set ambiwidth=double
 else
   set t_Co=256
@@ -33,7 +26,6 @@ if has('nvim')
   let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
   " autocmd TermOpen * if &buftype == 'terminal' | :set nolist | endif
   " autocmd TermClose * set list
-else
 endif
 
 set background=dark " always be dark

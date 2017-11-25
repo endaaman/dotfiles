@@ -59,8 +59,6 @@ nnoremap <Space>e :<C-u>e!<CR>
 " nnoremap <Space>d g0"_D
 nnoremap <expr> <Space>/ SearchByRegister()
 
-nnoremap <expr> <Space><Space><Space><Space> ReloadConfigAndReopen()
-
 noremap j gj
 noremap k gk
 noremap J <C-d>zz

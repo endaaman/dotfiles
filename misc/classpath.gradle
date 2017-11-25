@@ -1,0 +1,44 @@
+class ClasspathPlugin implements Plugin<Project> {
+    void apply(Project project) {
+        project.task('cp') {
+            doLast {
+                def pair = project
+                    .rootProject
+                    .allprojects
+                    .findResult {
+                        def a = it.getExtensions().findByName('android')
+                        a ? [a, it] : null
+                    }
+                if (!pair) {
+                    println 'can not find android plugin'
+                    return
+                }
+                def (android, targetProject) = pair
+                def cp = [android.getBootClasspath()[0]]
+                def sp = []
+                android.applicationVariants.all { v ->
+                    if (v.metaClass.respondsTo(v, 'getApkLibraries')) {
+                        cp += v.getApkLibraries()
+                    } else {
+                        cp += v.getCompileClasspath().collect { it.getPath() }
+                    }
+                    def dir = new File("${targetProject.buildDir}/generated/source")
+                    if (dir.exists()) {
+                        dir.traverse([maxDepth: 0, type: groovy.io.FileType.DIRECTORIES]) {
+                            sp += "${it.getPath()}/${v.getName()}"
+                        }
+                    }
+                }
+                def cp_str = cp.collect({ ":${it}" }).join('')
+                def sp_str = sp.collect({ ":${it}" }).join('')
+                new File(".vim/").mkdir()
+                new File('.vim/classpath.vim').write("let g:classpath = '${cp_str}'")
+                new File('.vim/sourcepath.vim').write("let g:sourcepath = '${sp_str}'")
+            }
+        }
+    }
+}
+
+rootProject {
+    apply plugin: ClasspathPlugin
+}
