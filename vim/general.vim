@@ -1,7 +1,7 @@
 autocmd InsertLeave * set cursorline
 autocmd InsertEnter * set nocursorline
 
-autocmd BufWritePre * if @% !~ '\.md$' | :%s/\s\+$//e | endif
+autocmd BufWritePre * if matchstr(&ft, '\(markdown\|pug\)') == '' | :%s/\s\+$//e | endif
 autocmd BufWritePre * :%s/\t\+$//e
 autocmd VimEnter * :call LoadLocalVimConfig()
 
