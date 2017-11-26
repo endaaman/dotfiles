@@ -148,14 +148,14 @@ hook_add = '''
 repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim', 'vim-textobj-user']
 hook_add = '''
-	" let g:precious_enable_switchers = {
-	" \	'*' : {
-	" \		'setfiletype' : 1
-	" \	},
-	" \	'vue' : {
-	" \		'setfiletype' : 0
-	" \	},
-	" \}
+  let g:precious_enable_switchers = {
+  \ '*' : {
+  \  'setfiletype' : 1
+  \ },
+  \ 'vue' : {
+  \  'setfiletype' : 1
+  \ },
+  \}
 '''
 
 [[plugins]]
@@ -251,8 +251,9 @@ hook_add = '''
 repo = 'neomake/neomake'
 if = ''' 1 '''
 hook_add = '''
-  let g:neomake_open_list = 0
   autocmd! BufWritePost,BufEnter * Neomake
+  nnoremap <Space>n :Neomake
+  let g:neomake_open_list = 0
   let g:neomake_error_sign = {
   \ 'text': '',
   \ 'texthl': 'Error',

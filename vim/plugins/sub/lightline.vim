@@ -10,7 +10,7 @@ let g:lightline.active.left = [
 let g:lightline.active.right = [
 \   [ 'syntastic', 'lineinfo' ],
 \   [ 'percent' ],
-\   [ 'fugitive', 'filetype' ],
+\   [ 'indent', 'filetype' ],
 \ ]
 
 let g:lightline.component_function = {
@@ -21,6 +21,7 @@ let g:lightline.component_function = {
 \   'filetype': 'LightlineFiletype',
 \   'fileencoding': 'LightlineFileencoding',
 \   'mode': 'LightlineMode',
+\   'indent': 'LightLineIndent',
 \ }
 
 " let g:lightline.separator = { 'left': '', 'right': '' }
@@ -35,6 +36,15 @@ let g:lightline.subseparator = { 'left': '', 'right': '' }
 " let g:lightline.subseparator = { 'left': '', 'right': '' }
 " let g:lightline.separator = { 'left': '', 'right': '' }
 " let g:lightline.subseparator = { 'left': '', 'right': '' }
+
+
+function! LightLineIndent()
+  if &expandtab == 1
+    return 'sw:' . &shiftwidth
+  else
+    return 'tab'
+  endif
+endfunction
 
 function! LightLineFugitive()
   let fname = expand('%:t')

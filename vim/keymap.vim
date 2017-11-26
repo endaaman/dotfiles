@@ -42,7 +42,7 @@ function! YankFull()
   echo "yanked: " . p
 endfunction
 
-let g:mapleader = '\<Space>'
+let g:mapleader = ','
 
 noremap <Space>j J
 noremap <Space>k K
