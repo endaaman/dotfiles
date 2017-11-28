@@ -16,7 +16,7 @@
   cm = commit -m
   co = checkout
   cob = checkout -b
-  cop = !git checkout $(git branch -a | peco | tr -d ' ' | tr -d '*')
+  cof = !git checkout $(git branch -a | fzf | tr -d ' ' | tr -d '*')
   cp = cherry-pick
   d = diff
   f = fetch

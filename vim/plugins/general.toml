@@ -251,7 +251,14 @@ hook_add = '''
 repo = 'neomake/neomake'
 if = ''' 1 '''
 hook_add = '''
-  autocmd! BufWritePost,BufEnter * Neomake
+  autocmd! BufEnter * Neomake
+  autocmd! BufWritePre * :call NeomakeIfModified()
+  function! NeomakeIfModified()
+    if &modified
+      Neomake
+    endif
+  endfunction
+
   nnoremap <Space>n :Neomake
   let g:neomake_open_list = 0
   let g:neomake_error_sign = {

@@ -1,44 +1,117 @@
 class ClasspathPlugin implements Plugin<Project> {
-    void apply(Project project) {
-        project.task('cp') {
-            doLast {
-                def pair = project
-                    .rootProject
-                    .allprojects
-                    .findResult {
-                        def a = it.getExtensions().findByName('android')
-                        a ? [a, it] : null
-                    }
-                if (!pair) {
-                    println 'can not find android plugin'
-                    return
-                }
-                def (android, targetProject) = pair
-                def cp = [android.getBootClasspath()[0]]
-                def sp = []
-                android.applicationVariants.all { v ->
-                    if (v.metaClass.respondsTo(v, 'getApkLibraries')) {
-                        cp += v.getApkLibraries()
-                    } else {
-                        cp += v.getCompileClasspath().collect { it.getPath() }
-                    }
-                    def dir = new File("${targetProject.buildDir}/generated/source")
-                    if (dir.exists()) {
-                        dir.traverse([maxDepth: 0, type: groovy.io.FileType.DIRECTORIES]) {
-                            sp += "${it.getPath()}/${v.getName()}"
-                        }
-                    }
-                }
-                def cp_str = cp.collect({ ":${it}" }).join('')
-                def sp_str = sp.collect({ ":${it}" }).join('')
-                new File(".vim/").mkdir()
-                new File('.vim/classpath.vim').write("let g:classpath = '${cp_str}'")
-                new File('.vim/sourcepath.vim').write("let g:sourcepath = '${sp_str}'")
-            }
-        }
+  boolean isResolvable(Configuration conf) {
+    // isCanBeResolved was added in Gradle 3.3. Previously, all configurations were resolvable
+    if (Configuration.class.declaredMethods.any { it.name == 'isCanBeResolved' }) {
+      return conf.canBeResolved
     }
+    return true
+  }
+
+  Collection getBuildCacheForDependency(project, File dependency) {
+    String name = dependency.getName()
+    String home = System.getProperty("user.home")
+    String gradleCache = home + '/.gradle/caches'
+    if (new File(gradleCache).exists()) {
+      String include = '**/' + name +  '/**/classes.jar'
+      return project.fileTree(dir: gradleCache, include: include).files.findAll { it.isFile() }
+    } else {
+      return project.zipTree(dependency)
+    }
+  }
+
+  void apply(Project project) {
+    project.task('cp') {
+      doLast {
+        HashSet<String> classpathFiles = new HashSet<String>()
+        for (proj in project.rootProject.allprojects) {
+          for (conf in proj.configurations) {
+            if (isResolvable(conf)) {
+              for (dependency in conf) {
+                if (dependency.name.endsWith("jar")) {
+                  classpathFiles += dependency
+                } else {
+                  classpathFiles += getBuildCacheForDependency(project, dependency)
+                }
+              }
+            }
+          }
+
+          def rjava = proj.getBuildDir().absolutePath + File.separator + "intermediates" + File.separator + "classes" + File.separator + "debug"
+          def rFiles = new File(rjava)
+          if (rFiles.exists()) {
+            classpathFiles += rFiles
+          }
+
+          if (proj.hasProperty("android")) {
+            classpathFiles += proj.android.getBootClasspath()
+            if (proj.android.hasProperty("applicationVariants")) {
+              proj.android.applicationVariants.all { v ->
+                if (v.hasProperty("compileConfiguration")) {
+                  v.compileConfiguration.each { dependency ->
+                    if (dependency.name.endsWith("jar")) {
+                      classpathFiles += dependency
+                    } else {
+                      classpathFiles += getBuildCacheForDependency(project, dependency)
+                    }
+                  }
+                }
+                if (v.hasProperty("runtimeConfiguration")) {
+                  v.runtimeConfiguration.each { dependency ->
+                    if (dependency.name.endsWith("jar")) {
+                      classpathFiles += dependency
+                    } else {
+                      classpathFiles += getBuildCacheForDependency(project, dependency)
+                    }
+                  }
+                }
+                if (v.hasProperty("getApkLibraries")) {
+                  classpathFiles += v.getApkLibraries()
+                }
+                if (v.hasProperty("getCompileLibraries")) {
+                  classpathFiles += v.getCompileLibraries()
+                }
+                for (srcSet in v.getSourceSets()) {
+                  for (dir in srcSet.java.srcDirs) {
+                      classpathFiles += dir.absolutePath
+                  }
+                }
+              }
+            }
+
+            if (proj.android.hasProperty("libraryVariants")) {
+              proj.android.libraryVariants.all { v ->
+                classpathFiles += v.javaCompile.classpath.files
+                for (srcSet in v.getSourceSets()) {
+                  for (dir in srcSet.java.srcDirs) {
+                      classpathFiles += dir.absolutePath
+                  }
+                }
+              }
+            }
+          }
+
+          if (proj.hasProperty("sourceSets")) {
+            for (srcSet in proj.sourceSets) {
+                for (dir in srcSet.java.srcDirs) {
+                    classpathFiles += dir.absolutePath
+                }
+            }
+          }
+        }
+        def cp = classpathFiles 
+        def sp = []
+
+        def cp_str = cp.collect({ ":${it}" }).join('')
+        def sp_str = sp.collect({ ":${it}" }).join('')
+        new File('.vim/').mkdir()
+        new File('.vim/classpath.vim').write("let g:classpath = '${cp_str}'")
+        new File('.vim/sourcepath.vim').write("let g:sourcepath = '${sp_str}'")
+        println 'done'
+      }
+    }
+  }
 }
 
 rootProject {
-    apply plugin: ClasspathPlugin
+  apply plugin: ClasspathPlugin
 }
