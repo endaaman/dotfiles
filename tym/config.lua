@@ -1,7 +1,7 @@
 config.width = 120
 config.height = 32
 config.shell = os.getenv('HOME') .. '/dotfiles/bin/tmux-attach-or-new'
-config.title = 'た〜みなる'
+config.title = 'tym'
 config.cursor_blink_mode = 'off'
 config.cjk_width = 'narrow'
 config.use_default_keymap = true
@@ -15,7 +15,7 @@ end
 dofile(os.getenv('HOME') .. '/.config/tym/colors/hybrid.lua')
 
 function safe_dofile(path)
-  local f = io.open(path, "r")
+  local f = io.open(path, 'r')
   if f ~= nil then
     io.close(f)
     dofile(path)
