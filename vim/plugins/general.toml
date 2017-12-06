@@ -37,13 +37,13 @@ repo = 'rking/ag.vim'
 [[plugins]]
 repo = 'chriskempson/base16-vim'
 hook_add = '''
-  " autocmd VimEnter * nested colorscheme base16-default-dark
+  " autocmd Endaaman VimEnter * nested colorscheme base16-default-dark
 '''
 
 [[plugins]]
 repo = 'jacoborus/tender.vim'
 hook_add = '''
-  " autocmd MyAutoCmd VimEnter * nested colorscheme tender
+  " autocmd Endaaman VimEnter * nested colorscheme tender
 '''
 
 [[plugins]]

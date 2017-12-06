@@ -1,9 +1,9 @@
 autocmd InsertLeave * set cursorline
 autocmd InsertEnter * set nocursorline
 
-autocmd BufWritePre * if matchstr(&ft, '\(markdown\|pug\)') == '' | :%s/\s\+$//e | endif
-autocmd BufWritePre * :%s/\t\+$//e
-autocmd VimEnter * :call LoadLocalVimConfig()
+autocmd Endaaman BufWritePre * if matchstr(&ft, '\(markdown\|pug\)') == '' | :%s/\s\+$//e | endif
+autocmd Endaaman BufWritePre * :%s/\t\+$//e
+autocmd Endaaman VimEnter * :call LoadLocalVimConfig()
 
 if (v:version == 704 && has("patch338")) || v:version >= 705
   set breakindent
