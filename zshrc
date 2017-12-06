@@ -63,8 +63,8 @@ PROMPT="$pre_prompt$dirname $prompt_colored_symbol "
 ###* Alias
 
 if which trash-put &> /dev/null; then
-  alias l='exa -lb'
-  alias ll='exa -lb'
+  alias l='exa -bl'
+  alias ll='exa -abl'
 else
   alias l='ls -hlF'
   alias ll='ls -ahlF --color=auto'

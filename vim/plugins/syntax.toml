@@ -21,12 +21,12 @@ hook_add = '''
 
 [[plugins]]
 repo = 'othree/yajs.vim'
-if = ''' 1 '''
+if = ''' 0 '''
 on_ft = ['javascript', 'vue']
 
 [[plugins]]
 repo = 'pangloss/vim-javascript'
-depends = ['yajs.vim']
+if = ''' 1 '''
 on_ft = ['javascript', 'vue']
 
 [[plugins]]
