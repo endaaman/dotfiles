@@ -278,10 +278,3 @@ hook_add = '''
   \ 'texthl': 'Operator',
   \ }
 '''
-
-[[plugins]]
-repo = 'neomake/neomake'
-if = ''' 1 '''
-hook_add = '''
-  autocmd! BufWritePost,BufEnter * Neomake
-'''
