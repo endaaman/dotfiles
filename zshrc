@@ -176,7 +176,6 @@ function magic-return() {
 }
 zle -N magic-return
 
-
 function run-fglast {
   if [[ -z $(jobs) ]]; then
     return
@@ -186,6 +185,10 @@ function run-fglast {
   zle accept-line
 }
 zle -N run-fglast
+
+function dict() {
+  grep $1 ~/dotfiles/misc/gene-utf8.txt -A 1 -wi --color
+}
 
 # key bindings
 bindkey -e
