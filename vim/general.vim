@@ -4,6 +4,7 @@ autocmd InsertEnter * set nocursorline
 autocmd Endaaman BufWritePre * if matchstr(&ft, '\(markdown\|pug\)') == '' | :%s/\s\+$//e | endif
 autocmd Endaaman BufWritePre * :%s/\t\+$//e
 autocmd Endaaman VimEnter * :call LoadLocalVimConfig()
+autocmd Endaaman BufEnter *.md :set conceallevel=0
 
 if (v:version == 704 && has("patch338")) || v:version >= 705
   set breakindent
