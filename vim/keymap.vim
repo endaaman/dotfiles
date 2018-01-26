@@ -42,6 +42,17 @@ function! YankFull()
   echo "yanked: " . p
 endfunction
 
+" yank rotation
+command! CpR0toR1 if @0 =~ "\<NL>"|let @9=@8|let @8=@7|let @7=@6|let @6=@5|let @5=@4|let @4=@3|let @3=@2|let @2=@1|let @1=@0|endif
+nnoremap <silent>Y Y:CpR0toR1<CR>
+vnoremap <silent>Y Y:CpR0toR1<CR>
+vnoremap <silent>y y:CpR0toR1<CR>
+onoremap <silent>y y:CpR0toR1<CR>
+
+nnoremap <silent> <CR> yy:CpR0toR1<CR>
+vnoremap <silent> <CR> y:CpR0toR1<CR>
+onoremap <silent> <CR> y:CpR0toR1<CR>
+
 let g:mapleader = ','
 
 noremap <Space>j J
@@ -49,8 +60,8 @@ noremap <Space>k K
 noremap <Space>n *
 noremap <Space>l <C-l>
 noremap <Space>p <C-o>
-noremap <Space>i :<C-u>vs<CR>
-noremap <Space>- :<C-u>sp<CR>
+noremap <silent> <Space>i :<C-u>vs<CR>
+noremap <silent> <Space>- :<C-u>sp<CR>
 noremap <Space>s :s/
 nnoremap <expr> <Space>y YankName()
 nnoremap <expr> <Space><C-y> YankPath()
@@ -93,14 +104,13 @@ nnoremap <BS> <C-w>h
 nnoremap <C-l> <C-w>l
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
-nnoremap *  viw"zy:<C-u>let @/=@z\|set hlsearch<CR>
+nnoremap <silent> *  viw"zy:<C-u>let @/=@z\|set hlsearch<CR>
 nnoremap <Down> "zdd"zp
 nnoremap <expr> <Up> SwapWithAboveLine()
 nnoremap <C-m> yy
-nnoremap <CR> yy
 nnoremap = <C-w>=
-nnoremap <C-f> :<C-v>normal ]c<CR>
-nnoremap <C-b> :<C-v>normal [c<CR>
+nnoremap <silent> <C-f> :<C-v>normal ]c<CR>
+nnoremap <silent> <C-b> :<C-v>normal [c<CR>
 
 nnoremap <C-a> ggVG
 nnoremap <C-u> :<C-u>noh<CR>
@@ -122,7 +132,7 @@ nnoremap ZQ <Nop>
 nnoremap Q <Nop>
 
 vnoremap v $h
-vnoremap * "zy:<C-u>let @/=@z\|set hlsearch<CR>
+vnoremap <silent> * "zy:<C-u>let @/=@z\|set hlsearch<CR>
 vnoremap > >gv
 vnoremap < <gv
 vnoremap <Tab> >gv
@@ -131,7 +141,6 @@ vnoremap y y`]
 vnoremap p <C-[>:<C-u>let @y=@+<CR>gvp`]:let @+=@y<CR>
 vnoremap O :sort<CR>
 vnoremap <C-m> y
-vnoremap <CR> y
 vnoremap R c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
 
 inoremap <C-d> <Del>
