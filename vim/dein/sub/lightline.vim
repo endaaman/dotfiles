@@ -1,6 +1,6 @@
 let g:lightline = {}
 let g:lightline.colorscheme = 'hybrid'
-
+let g:lightline.tabline = {}
 
 let g:lightline.active = {}
 let g:lightline.active.left = [

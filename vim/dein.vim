@@ -3,20 +3,28 @@ let g:dein#install_progress_type = 'title'
 let g:dein#install_message_type = 'none'
 let g:dein#enable_notification = 1
 
-let s:toml_dir = expand('<sfile>:p:h') . '/plugins'
+let s:toml_dir = expand('<sfile>:p:h') . '/dein'
 let s:dein_dir = expand('~/.cache/dein')
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
 if isdirectory(s:dein_repo_dir)
   execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
 
+  function! s:load(path) abort
+    if filereadable(expand(a:path))
+      call dein#load_toml(a:path, {})
+    endif
+  endfunction
+
   call dein#begin(s:dein_dir)
-  call dein#load_toml(s:toml_dir . '/syntax.toml', {})
-  call dein#load_toml(s:toml_dir . '/general.toml', {})
+  call s:load(s:toml_dir . '/general.toml')
+  call s:load(s:toml_dir . '/nerdtree.toml')
+  call s:load(s:toml_dir . '/syntax.toml')
+  call s:load(s:toml_dir . '/color.toml')
   if has('nvim')
-    call dein#load_toml(s:toml_dir . '/neovim.toml', {})
+    call s:load(s:toml_dir . '/neovim.toml')
   else
-    call dein#load_toml(s:toml_dir . '/vim.toml', {})
+    call s:load(s:toml_dir . '/vim.toml')
   endif
   call dein#end()
   call dein#save_state()
@@ -25,8 +33,14 @@ if isdirectory(s:dein_repo_dir)
     call dein#install()
   endif
 
+  if !has('vim_starting')
+    call dein#call_hook('source')
+    call dein#call_hook('post_source')
+  endif
+
+  syntax enable
   filetype plugin indent on
 
   command! DeinUpdate :call dein#update()
-  command! DeinRecache :call dein#recache_runtimepath())
+  command! DeinRecache :call dein#recache_runtimepath()
 endif

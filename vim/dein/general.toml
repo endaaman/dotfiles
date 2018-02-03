@@ -1,0 +1,134 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'endaaman/context_filetype.vim'
+
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim', 'vim-textobj-user']
+hook_add = '''
+  let g:precious_enable_switchers = {
+  \ '*' : {
+  \  'setfiletype' : 1
+  \ },
+  \ 'vue' : {
+  \  'setfiletype' : 1
+  \ },
+  \}
+'''
+
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+hook_add = '''
+  " let g:indentLine_char = '¦'
+  let g:indentLine_char = ''
+  let g:indentLine_fileTypeExclude = ['nerdtree']
+'''
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_add = '''
+  source ~/.vim/dein/sub/lightline.vim
+'''
+
+[[plugins]]
+repo = 'rking/ag.vim'
+
+[[plugins]]
+repo = 'jiangmiao/auto-pairs'
+
+[[plugins]]
+repo = 'endaaman/lightline-hybrid.vim'
+depends = ['lightline.vim']
+hook_add = '''
+'''
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+
+[[plugins]]
+repo = 'rhysd/conflict-marker.vim'
+
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'
+
+[[plugins]]
+repo = 'simeji/winresizer'
+hook_add = '''
+  let g:winresizer_start_key = '<Space>r'
+'''
+
+[[plugins]]
+repo = 'tomtom/tcomment_vim'
+
+[[plugins]]
+repo = 'tpope/vim-surround'
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
+[[plugins]]
+repo = 'neomake/neomake'
+if = ''' 1 '''
+hook_add = '''
+  autocmd! BufEnter * Neomake
+  autocmd! BufWritePre * :call NeomakeIfModified()
+  function! NeomakeIfModified()
+    if &modified
+      Neomake
+    endif
+  endfunction
+
+  nnoremap <Space>n :<C-u>Neomake<CR>
+  let g:neomake_open_list = 0
+
+  if exists('g:has_custom_font')
+    let g:neomake_error_sign = {
+    \ 'text': '',
+    \ 'texthl': 'Error',
+    \ }
+    let g:neomake_warning_sign = {
+    \ 'text': '',
+    \ 'texthl': 'Error',
+    \ }
+    let g:neomake_info_sign = {
+    \ 'text': '',
+    \ 'texthl': 'Title',
+    \ }
+    let g:neomake_message_sign = {
+    \ 'text': '',
+    \ 'texthl': 'Operator',
+    \ }
+  endif
+'''
+
+[[plugins]]
+repo = 'ryanoasis/vim-devicons'
+if = "exists('g:has_custom_font')"
+# if = "0"
+hook_add = '''
+  let g:webdevicons_conceal_nerdtree_brackets = 1
+  let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
+  let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+  let g:WebDevIconsUnicodeDecorateFileNodes = 1
+  let g:DevIconsEnableFoldersOpenClose = 1
+  let g:NERDTreeDirArrowExpandable = nr2char(8200)
+  let g:NERDTreeDirArrowCollapsible = nr2char(8200)
+
+  let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol = ''
+  " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+  " let g:DevIconsDefaultFolderOpenSymbol = ''
+  " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+  " let g:DevIconsDefaultFolderOpenSymbol = ''
+  " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+  " let g:DevIconsDefaultFolderOpenSymbol = ''
+  let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+  let g:DevIconsDefaultFolderOpenSymbol = ''
+  " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = '▸'
+  " let g:DevIconsDefaultFolderOpenSymbol = '▾'
+'''
+

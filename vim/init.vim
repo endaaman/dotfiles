@@ -1,26 +1,38 @@
-augroup Endaaman
-  autocmd!
-augroup END
-set all&
-
-set shell=/bin/bash
-set history=10000
-
-set notimeout ttimeout ttimeoutlen=100
-
-if has('multi_byte')
-  if has('vim_starting')
-    set encoding=utf-8
-  endif
+if has('vim_starting')
   scriptencoding utf-8
-  set fileencodings=ucs-bom,utf-8,euc-jp,iso-2022-jp,cp932,utf-16,utf-16le
-  set fileformats=unix,dos,mac
 endif
+set encoding=utf-8
 
-syntax on
-
-runtime! command.vim
-runtime! general.vim
-runtime! keymap.vim
+runtime! functions.vim
+runtime! settings.vim
+runtime! commands.vim
+runtime! keymaps.vim
 runtime! dein.vim
 runtime! local.vim
+
+if !exists('*s:source_script')
+  function s:source_script() abort
+    let ft = &ft
+    let colorscheme = g:colors_name
+    let path = expand('~/.vim/init.vim')
+    if !filereadable(path)
+      echomsg printf('"%s" does not exist', simplify(fnamemodify(path, ':~:.')))
+      return
+    endif
+    execute 'source ' fnameescape(path)
+    e!
+    execute 'set ft=' . ft
+    execute 'colorscheme ' . colorscheme
+    echomsg printf(
+      \ '"%s" has sourced (%s)',
+      \ simplify(fnamemodify(path, ':~:.')),
+      \ strftime('%c'),
+      \)
+  endfunction
+endif
+nnoremap <silent> <F10> :<C-u>call <SID>source_script()<CR>
+
+syntax on
+filetype indent plugin on
+
+set secure

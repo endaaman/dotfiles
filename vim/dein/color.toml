@@ -1,0 +1,17 @@
+[[plugins]]
+repo = 'chriskempson/base16-vim'
+hook_add = '''
+  " autocmd E VimEnter * nested colorscheme base16-default-dark
+'''
+
+[[plugins]]
+repo = 'jacoborus/tender.vim'
+hook_add = '''
+  " autocmd E VimEnter * nested colorscheme tender
+'''
+
+[[plugins]]
+repo = 'kristijanhusak/vim-hybrid-material'
+hook_add = '''
+  autocmd E VimEnter * nested colorscheme hybrid_reverse
+'''

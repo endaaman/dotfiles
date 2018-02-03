@@ -1,0 +1,56 @@
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = ['toml']
+
+[[plugins]]
+repo = 'gabrielelana/vim-markdown'
+on_ft = ['markdown']
+hook_add = '''
+  let g:markdown_enable_spell_checking = 0
+'''
+[[plugins]]
+repo = 'pangloss/vim-javascript'
+on_ft = ['javascript', 'vue']
+
+[[plugins]]
+repo = 'maxmellon/vim-jsx-pretty'
+on_ft = ['javascript', 'vue']
+
+[[plugins]]
+repo = 'digitaltoad/vim-pug'
+on_ft = ['pug', 'vue']
+
+[[plugins]]
+repo = 'elzr/vim-json'
+on_ft = ['json']
+hook_add = '''
+  let g:vim_json_syntax_conceal = 0
+'''
+
+[[plugins]]
+repo = 'kchmck/vim-coffee-script'
+on_ft = ['coffee']
+
+[[plugins]]
+repo = 'jwalton512/vim-blade'
+on_ft = ['php']
+
+[[plugins]]
+repo = 'keith/tmux.vim'
+on_ft = ['tmux']
+
+[[plugins]]
+repo = 'tkztmk/vim-vala'
+on_ft = ['vala']
+
+[[plugins]]
+repo = 'vim-scripts/nginx.vim'
+on_ft = ['nginx']
+
+[[plugins]]
+repo = 'dag/vim-fish'
+on_ft = ['fish']
+
+[[plugins]]
+repo = 'def-lkb/ocp-indent-vim'
+on_ft = ['ocaml']
