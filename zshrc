@@ -219,7 +219,7 @@ fi
 export FCEDIT="$EDITOR"
 export VISUAL="$EDITOR"
 export SUDO_EDITOR="$EDITOR"
-export TERM=xterm-256color
+# export TERM=xterm-256color
 export XDG_CONFIG_HOME=~/.config
 export NO_AT_BRIDGE=1
 export WINEARCH=win32
@@ -348,3 +348,5 @@ eval `dircolors -b`
 if [ -f ~/.zshrc.local ]; then
   source ~/.zshrc.local
 fi
+
+compdef _docker nvidia-docker
