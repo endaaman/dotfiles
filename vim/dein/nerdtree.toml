@@ -28,21 +28,22 @@ depends = ['nerdtree']
 
 [[plugins]]
 repo = 'Xuyuanp/nerdtree-git-plugin'
-if = "exists('g:has_custom_font')"
 hook_add = '''
-  let g:NERDTreeIndicatorMapCustom = {
-  " \ 'Staged'    : '',
-  \ 'Staged'    : '',
-  \ 'Modified'  : '',
-  \ 'Untracked' : '',
-  \ 'Renamed'   : '➜',
-  \ 'Unmerged'  : '═',
-  \ 'Deleted'   : '✖',
-  \ 'Clean'     : '✔︎',
-  \ 'Dirty'     : '',
-  \ 'Ignored'   : '',
-  \ 'Unknown'   : '  '
-  \ }
+  if exists('g:has_custom_font')
+    let g:NERDTreeIndicatorMapCustom = {
+      " \ 'Staged'    : '',
+      \ 'Staged'    : '',
+      \ 'Modified'  : '',
+      \ 'Untracked' : '',
+      \ 'Renamed'   : '➜',
+      \ 'Unmerged'  : '═',
+      \ 'Deleted'   : '✖',
+      \ 'Clean'     : '✔︎',
+      \ 'Dirty'     : '',
+      \ 'Ignored'   : '',
+      \ 'Unknown'   : '  '
+      \ }
+  endif
 '''
 
 [[plugins]]
@@ -50,3 +51,31 @@ repo = 'aufgang001/vim-nerdtree_plugin_open'
 hook_add = '''
   let g:nerdtree_plugin_open_cmd = 'xdg-open'
 '''
+
+
+[[plugins]]
+repo = 'ryanoasis/vim-devicons'
+hook_add = '''
+  if exists('g:has_custom_font')
+    let g:webdevicons_conceal_nerdtree_brackets = 1
+    let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
+    let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+    let g:WebDevIconsUnicodeDecorateFileNodes = 1
+    let g:DevIconsEnableFoldersOpenClose = 1
+    let g:NERDTreeDirArrowExpandable = nr2char(8200)
+    let g:NERDTreeDirArrowCollapsible = nr2char(8200)
+
+    let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol = ''
+    " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+    " let g:DevIconsDefaultFolderOpenSymbol = ''
+    " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+    " let g:DevIconsDefaultFolderOpenSymbol = ''
+    " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+    " let g:DevIconsDefaultFolderOpenSymbol = ''
+    let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+    let g:DevIconsDefaultFolderOpenSymbol = ''
+    " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = '▸'
+    " let g:DevIconsDefaultFolderOpenSymbol = '▾'
+  endif
+'''
+
