@@ -12,6 +12,8 @@ noremap j gj
 noremap k gk
 noremap J <C-d>zz
 noremap K <C-u>zz
+noremap <silent> <C-j> :<C-u>normal ]c<CR>
+noremap <silent> <C-k> :<C-u>normal [c<CR>
 noremap H g^
 noremap L g$
 
@@ -39,8 +41,6 @@ nnoremap <S-Tab> <C-w>W
 nnoremap <C-h> <C-w>h
 nnoremap <BS> <C-w>h
 nnoremap <C-l> <C-w>l
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
 
 nnoremap <C-a> ggVG
 nnoremap <C-n> gt

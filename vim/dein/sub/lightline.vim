@@ -1,44 +1,77 @@
 let g:lightline = {}
+let g:lightline.enable = {
+  \ 'statusline': 1,
+  \ 'tabline': 1
+  \ }
 let g:lightline.colorscheme = 'hybrid'
-let g:lightline.tabline = {}
+
+let g:lightline.tabline = {
+  \ 'left': [ [ 'tabs' ] ],
+  \ 'right': [ [ ] ] }
 
 let g:lightline.active = {}
 let g:lightline.active.left = [
-\   [ 'mode', 'paste' ],
-\   [ 'dirname', 'filename' ],
-\ ]
+  \   [ 'mode', 'paste' ],
+  \   [ 'dirname', 'filename' ],
+  \ ]
 let g:lightline.active.right = [
-\   [ 'syntastic', 'lineinfo' ],
-\   [ 'percent' ],
-\   [ 'indent', 'filetype' ],
-\ ]
+  \   [ 'syntastic', 'lineinfo' ],
+  \   [ 'percent' ],
+  \   [ 'indent', 'filetype' ],
+  \ ]
 
 let g:lightline.component_function = {
-\   'fugitive': 'LightLineFugitive',
-\   'dirname': 'LightlineDirname',
-\   'filename': 'LightlineFilename',
-\   'fileformat': 'LightlineFileformat',
-\   'filetype': 'LightlineFiletype',
-\   'fileencoding': 'LightlineFileencoding',
-\   'mode': 'LightlineMode',
-\   'indent': 'LightLineIndent',
-\ }
+  \   'fugitive': 'LightLineFugitive',
+  \   'dirname': 'LightlineDirname',
+  \   'filename': 'LightlineFilename',
+  \   'fileformat': 'LightlineFileformat',
+  \   'filetype': 'LightlineFiletype',
+  \   'fileencoding': 'LightlineFileencoding',
+  \   'mode': 'LightlineMode',
+  \   'indent': 'LightLineIndent',
+  \ }
 
-" let g:lightline.separator = { 'left': '', 'right': '' }
-" let g:lightline.subseparator = { 'left': '|', 'right': '|' }
-" let g:lightline.separator = { 'left': '', 'right': '' }
-" let g:lightline.subseparator = { 'left': '', 'right': '' }
-" let g:lightline.separator = { 'left': '', 'right': '' }
-" let g:lightline.subseparator = { 'left': '', 'right': '' }
-let g:lightline.separator = { 'left': '', 'right': '' }
-let g:lightline.subseparator = { 'left': '', 'right': '' }
-" let g:lightline.separator = { 'left': '', 'right': '' }
-" let g:lightline.subseparator = { 'left': '', 'right': '' }
-" let g:lightline.separator = { 'left': '', 'right': '' }
-" let g:lightline.subseparator = { 'left': '', 'right': '' }
+let g:lightline.component_expand = {
+  \   'percent': 'LightLinePercent',
+  \   'lineinfo': 'LightLineLineinfo',
+  \ }
+
+if exists('g:has_custom_font')
+  " let g:lightline.separator = { 'left': '', 'right': '' }
+  " let g:lightline.subseparator = { 'left': '|', 'right': '|' }
+  " let g:lightline.separator = { 'left': '', 'right': '' }
+  " let g:lightline.subseparator = { 'left': '', 'right': '' }
+  " let g:lightline.separator = { 'left': '', 'right': '' }
+  " let g:lightline.subseparator = { 'left': '', 'right': '' }
+  let g:lightline.separator = { 'left': '', 'right': '' }
+  let g:lightline.subseparator = { 'left': '', 'right': '' }
+  " let g:lightline.separator = { 'left': '', 'right': '' }
+  " let g:lightline.subseparator = { 'left': '', 'right': '' }
+  " let g:lightline.separator = { 'left': '', 'right': '' }
+  " let g:lightline.subseparator = { 'left': '', 'right': '' }
+endif
+
+
+function! LightLinePercent()
+  " if &ft == 'nerdtree'
+  "   return ''
+  " endif
+  return '%3p%%'
+endfunction
+
+
+function! LightLineLineinfo()
+  if &ft == 'nerdtree'
+    return ''
+  endif
+  return '%3l:%-2v'
+endfunction
 
 
 function! LightLineIndent()
+  if &ft == 'nerdtree'
+    return ''
+  endif
   if &expandtab == 1
     return 'sw:' . &shiftwidth
   else
@@ -47,16 +80,14 @@ function! LightLineIndent()
 endfunction
 
 function! LightLineFugitive()
-  let fname = expand('%:t')
-  if fname =~ 'NERD_tree'
+  if &ft == 'nerdtree'
     return ''
   endif
   return exists('*fugitive#head') ?  fugitive#head() : ''
 endfunction
 
 function! LightlineDirname()
-  let fname = expand('%:t')
-  if fname =~ 'NERD_tree' || winwidth(0) <= 80
+  if &ft == 'nerdtree' || winwidth(0) <= 80
     return ''
   endif
 
@@ -71,10 +102,12 @@ function! LightlineDirname()
 endfunction
 
 function! LightlineFilename()
+  if &ft == 'nerdtree'
+    return ''
+  endif
+
   let fname = expand('%:t')
-  if fname =~ 'NERD_tree'
-    let fname = ''
-  elseif fname == ''
+  if fname == ''
     let fname = '[No Name]'
   endif
   return
@@ -96,8 +129,7 @@ function! LightlineFileencoding()
 endfunction
 
 function! LightlineMode()
-  let fname = expand('%:t')
-  if fname =~ 'NERD_tree'
+  if &ft == 'nerdtree'
     return 'NERD Tree'
   endif
   return lightline#mode()

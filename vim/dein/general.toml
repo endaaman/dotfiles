@@ -72,10 +72,9 @@ repo = 'tpope/vim-fugitive'
 
 [[plugins]]
 repo = 'neomake/neomake'
-if = ''' 1 '''
 hook_add = '''
-  autocmd! BufEnter * Neomake
-  autocmd! BufWritePre * :call NeomakeIfModified()
+  au! E BufEnter * Neomake
+  au! E BufWritePre * :call NeomakeIfModified()
   function! NeomakeIfModified()
     if &modified
       Neomake

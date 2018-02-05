@@ -56,7 +56,9 @@ au E InsertLeave * set cursorline
 au E InsertEnter * set nocursorline
 au E BufWritePre * if matchstr(&ft, '\(markdown\|pug\)') == '' | :%s/\s\+$//e | endif
 au E BufWritePre * :%s/\t\+$//e
+au E BufEnter * :set conceallevel=2
 au E VimEnter * :call LoadLocalVimConfig()
+
 
 let g:netrw_home=  '~/.cache/vim'
 
@@ -70,6 +72,7 @@ set expandtab
 set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 set history=10000
 set hlsearch
+set ignorecase
 set laststatus=2
 set lazyredraw
 set list

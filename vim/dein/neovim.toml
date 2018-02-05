@@ -1,4 +1,16 @@
 [[plugins]]
+repo = 'Shougo/vimproc'
+build = 'make'
+
+[[plugins]]
+repo = 'Shougo/unite.vim'
+depends = ['vimproc']
+
+[[plugins]]
+repo = 'Shougo/unite-outline'
+depends = ['vimproc', 'unite.vim']
+
+[[plugins]]
 repo = 'Shougo/deoplete.nvim'
 on_i = 1
 hook_add = '''
@@ -83,12 +95,11 @@ hook_add = '''
   call denite#custom#source('grep', 'matchers', ['matcher_cpsm'])
 
   nnoremap <Space>b :<C-u>Denite buffer<CR>
-  nnoremap <Space>m :<C-u>Denite file_mru<CR>
-  nnoremap <Space>o :<C-u>Denite file_old<CR>
+  nnoremap <Space>m :<C-u>Denite file_old<CR>
+  nnoremap <Space>o :<C-u>Denite unite:outline<CR>
   nnoremap <Space>g :<C-u>Denite grep<CR>
   nnoremap <Space>p :<C-u>Denite register<CR>
   nnoremap <Space>c :<C-u>Denite colorscheme<CR>
-  nnoremap <Space>l :<C-u>Denite unite:outline<CR>
   nnoremap <Space>z :<C-u>Denite -resume<CR>
   nnoremap <Space>h :<C-u>Denite help<CR>
   nnoremap <Space>a :<C-u>Denite file_rec<CR>
@@ -123,15 +134,3 @@ hook_add = '''
   " call denite#custom#source('file_mru', 'converters', ['converter_relative_word'])
 '''
 depends = ['vimproc', 'unite.vim', 'unite-outline']
-
-[[plugins]]
-repo = 'Shougo/vimproc'
-build = 'make'
-
-[[plugins]]
-repo = 'Shougo/unite-outline'
-depends = ['vimproc', 'unite.vim']
-
-[[plugins]]
-repo = 'Shougo/unite.vim'
-depends = ['vimproc']

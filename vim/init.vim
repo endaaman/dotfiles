@@ -7,6 +7,7 @@ runtime! functions.vim
 runtime! settings.vim
 runtime! commands.vim
 runtime! keymaps.vim
+" runtime! tabline.vim
 runtime! dein.vim
 runtime! local.vim
 
@@ -20,7 +21,10 @@ if !exists('*s:source_script')
       return
     endif
     execute 'source ' fnameescape(path)
-    e!
+
+    if strlen(expand('%')) > 0
+      e!
+    endif
     execute 'set ft=' . ft
     execute 'colorscheme ' . colorscheme
     echomsg printf(

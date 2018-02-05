@@ -1,6 +1,5 @@
 [[plugins]]
 repo = 'scrooloose/nerdtree'
-depends = ['vim-devicons', 'nerdtree-git-plugin']
 hook_add = '''
   " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
   autocmd FileType nerdtree setlocal nolist
@@ -24,7 +23,6 @@ hook_add = '''
 
 [[plugins]]
 repo = 'tiagofumo/vim-nerdtree-syntax-highlight'
-depends = ['nerdtree']
 
 [[plugins]]
 repo = 'Xuyuanp/nerdtree-git-plugin'
@@ -52,30 +50,32 @@ hook_add = '''
   let g:nerdtree_plugin_open_cmd = 'xdg-open'
 '''
 
-
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
 hook_add = '''
   if exists('g:has_custom_font')
-    let g:webdevicons_conceal_nerdtree_brackets = 1
-    let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
-    let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-    let g:WebDevIconsUnicodeDecorateFileNodes = 1
     let g:DevIconsEnableFoldersOpenClose = 1
-    let g:NERDTreeDirArrowExpandable = nr2char(8200)
-    let g:NERDTreeDirArrowCollapsible = nr2char(8200)
-
+    let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
+    let g:WebDevIconsUnicodeDecorateFileNodes = 1
     let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol = ''
-    " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
-    " let g:DevIconsDefaultFolderOpenSymbol = ''
-    " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
-    " let g:DevIconsDefaultFolderOpenSymbol = ''
-    " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
-    " let g:DevIconsDefaultFolderOpenSymbol = ''
-    let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
-    let g:DevIconsDefaultFolderOpenSymbol = ''
-    " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = '▸'
+    let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+    let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
+
+    let g:NERDTreeDirArrowCollapsible = nr2char(8200)
+    let g:NERDTreeDirArrowExpandable = nr2char(8200)
+
+    autocmd E VimEnter * let g:webdevicons_conceal_nerdtree_brackets = 1
+    let g:webdevicons_conceal_nerdtree_brackets = 1
+
     " let g:DevIconsDefaultFolderOpenSymbol = '▾'
+    " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = '▸'
+    " let g:DevIconsDefaultFolderOpenSymbol = ''
+    " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+    " let g:DevIconsDefaultFolderOpenSymbol = ''
+    " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+    " let g:DevIconsDefaultFolderOpenSymbol = ''
+    " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+    let g:DevIconsDefaultFolderOpenSymbol = ''
+    let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
   endif
 '''
-

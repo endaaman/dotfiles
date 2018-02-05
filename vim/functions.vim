@@ -35,3 +35,12 @@ function! PickExecutable(pathspecs) abort
   return ''
 endfunction
 
+let g:log_file_path = '/tmp/vimrc.log'
+function! Log(line)
+  execute ":redir! >> " . g:log_file_path
+  silent! echon a:line . "\n"
+  redir END
+endfun
+
+call Log('')
+call Log('[vim started]\n')
