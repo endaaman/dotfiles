@@ -32,7 +32,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
-rev = '0f124c636495dd230fad38f678a80211149b0c78'
+# rev = '0f124c636495dd230fad38f678a80211149b0c78'
 hook_add = '''
   call denite#custom#map(
   \ '_',

@@ -2,8 +2,7 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
-repo = 'endaaman/context_filetype.vim'
-rev = 'dynamic-detection-vue'
+repo = 'Shougo/context_filetype.vim'
 
 [[plugins]]
 repo = 'kana/vim-textobj-user'
