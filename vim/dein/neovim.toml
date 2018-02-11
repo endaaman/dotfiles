@@ -21,8 +21,8 @@ hook_add = '''
     let g:deoplete#omni#input_patterns = {}
   endif
 
-  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-  inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<TAB>"
+  inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+  inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
 
   let g:deoplete#omni#functions = {}
   let g:deoplete#omni#input_patterns = {}
@@ -32,7 +32,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
-# rev = '0f124c636495dd230fad38f678a80211149b0c78'
+depends = ['vimproc', 'unite.vim', 'unite-outline']
 hook_add = '''
   call denite#custom#map(
   \ '_',
@@ -133,4 +133,3 @@ hook_add = '''
 
   " call denite#custom#source('file_mru', 'converters', ['converter_relative_word'])
 '''
-depends = ['vimproc', 'unite.vim', 'unite-outline']
