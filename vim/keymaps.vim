@@ -16,6 +16,9 @@ noremap <silent> <C-j> :<C-u>normal ]c<CR>
 noremap <silent> <C-k> :<C-u>normal [c<CR>
 noremap H g^
 noremap L g$
+nnoremap <BS> g;
+nnoremap <C-h> g;
+nnoremap <C-l> g,
 
 noremap x "_x
 noremap X "_D
@@ -38,9 +41,6 @@ nnoremap <expr> <C-b> SwapWithAboveLine()
 
 nnoremap <Tab> <C-w>w
 nnoremap <S-Tab> <C-w>W
-nnoremap <C-h> <C-w>h
-nnoremap <BS> <C-w>h
-nnoremap <C-l> <C-w>l
 
 nnoremap <C-a> ggVG
 nnoremap <C-n> gt
