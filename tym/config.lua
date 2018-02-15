@@ -12,7 +12,7 @@ keymap['<Ctrl><Shift>r'] = function()
   tym.notify('reloaded')
 end
 
-dofile(os.getenv('HOME') .. '/.config/tym/colors/hybrid.lua')
+dofile(os.getenv('HOME') .. '/.config/tym/colors/iceberg.lua')
 
 function safe_dofile(path)
   local f = io.open(path, 'r')

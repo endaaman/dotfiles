@@ -3,7 +3,6 @@ let g:lightline.enable = {
   \ 'statusline': 1,
   \ 'tabline': 1
   \ }
-let g:lightline.colorscheme = 'hybrid'
 
 let g:lightline.tabline = {
   \ 'left': [ [ 'tabs' ] ],

@@ -20,7 +20,7 @@ if isdirectory(s:dein_repo_dir)
   call s:load(s:toml_dir . '/general.toml')
   call s:load(s:toml_dir . '/nerdtree.toml')
   call s:load(s:toml_dir . '/syntax.toml')
-  call s:load(s:toml_dir . '/color.toml')
+  call s:load(s:toml_dir . '/appearance.toml')
   if has('nvim')
     call s:load(s:toml_dir . '/neovim.toml')
   else

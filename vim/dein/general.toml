@@ -30,20 +30,10 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'itchyny/lightline.vim'
-hook_add = '''
-  source ~/.vim/dein/sub/lightline.vim
-'''
-
-[[plugins]]
 repo = 'rking/ag.vim'
 
 [[plugins]]
 repo = 'jiangmiao/auto-pairs'
-
-[[plugins]]
-repo = 'endaaman/lightline-hybrid.vim'
-depends = ['lightline.vim']
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
