@@ -16,6 +16,11 @@ if isdirectory(s:dein_repo_dir)
     endif
   endfunction
 
+  if !has('vim_starting')
+    call dein#call_hook('source')
+    call dein#call_hook('post_source')
+  endif
+
   call dein#begin(s:dein_dir)
   call s:load(s:toml_dir . '/general.toml')
   call s:load(s:toml_dir . '/nerdtree.toml')
@@ -31,11 +36,6 @@ if isdirectory(s:dein_repo_dir)
 
   if dein#check_install()
     call dein#install()
-  endif
-
-  if !has('vim_starting')
-    call dein#call_hook('source')
-    call dein#call_hook('post_source')
   endif
 
   syntax enable

@@ -6,6 +6,10 @@ noremap <Space>j J
 noremap <Space>k K
 noremap <Space>e :<C-u>e!<CR>
 noremap <Space>l <C-l>
+noremap <Space>s :s/
+nnoremap <expr> <Space>y YankName()
+nnoremap <expr> <Space><C-y> YankPath()
+nnoremap <expr> <Space>Y YankFull()
 nnoremap <expr> <Space>/ SearchByRegister()
 
 noremap j gj

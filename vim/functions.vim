@@ -35,6 +35,24 @@ function! PickExecutable(pathspecs) abort
   return ''
 endfunction
 
+function! YankName() abort
+  let p = expand('%:t')
+  let @+ = p
+  echo "yanked: " . p
+endfunction
+
+function! YankPath() abort
+  let p = expand('%')
+  let @+ = p
+  echo "yanked: " . p
+endfunction
+
+function! YankFull() abort
+  let p = expand('%:p')
+  let @+ = p
+  echo "yanked: " . p
+endfunction
+
 let g:log_file_path = '/tmp/vimrc.log'
 function! Log(line)
   execute ":redir! >> " . g:log_file_path
