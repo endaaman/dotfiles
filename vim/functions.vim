@@ -35,19 +35,19 @@ function! PickExecutable(pathspecs) abort
   return ''
 endfunction
 
-function! YankName() abort
+function! YankFileName() abort
   let p = expand('%:t')
   let @+ = p
   echo "yanked: " . p
 endfunction
 
-function! YankPath() abort
+function! YankRelativePath() abort
   let p = expand('%')
   let @+ = p
   echo "yanked: " . p
 endfunction
 
-function! YankFull() abort
+function! YankFullPath() abort
   let p = expand('%:p')
   let @+ = p
   echo "yanked: " . p

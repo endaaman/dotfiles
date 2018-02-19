@@ -4,12 +4,11 @@ let g:mapleader = ','
 
 noremap <Space>j J
 noremap <Space>k K
+noremap <Space>i :<C-u>vs<CR>
+noremap <Space>- :<C-u>sp<CR>
 noremap <Space>e :<C-u>e!<CR>
 noremap <Space>l <C-l>
 noremap <Space>s :s/
-nnoremap <expr> <Space>y YankName()
-nnoremap <expr> <Space><C-y> YankPath()
-nnoremap <expr> <Space>Y YankFull()
 nnoremap <expr> <Space>/ SearchByRegister()
 
 noremap j gj
@@ -58,6 +57,8 @@ nnoremap <C-q> :<C-u>qa<CR>
 nnoremap <C-d> :<C-u>q<CR>
 nnoremap <C-x> :<C-u>x<CR>
 nnoremap <C-s> :<C-u>w<CR>
+nnoremap - <C-x>
+nnoremap + <C-a>
 
 vnoremap v $h
 vnoremap <Tab> >gv
@@ -68,18 +69,14 @@ vnoremap p <C-[>:<C-u>let @y=@+<CR>gvp`]:let @+=@y<CR>
 vnoremap O :sort<CR>
 vnoremap R c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
 
-command! CpR0toR1 if @0 =~ "\<NL>"|let @9=@8|let @8=@7|let @7=@6|let @6=@5|let @5=@4|let @4=@3|let @3=@2|let @2=@1|let @1=@0|endif
-nnoremap <silent>Y Y:CpR0toR1<CR>
-vnoremap <silent>Y Y:CpR0toR1<CR>
-vnoremap <silent>y y:CpR0toR1<CR>
-onoremap <silent>y y:CpR0toR1<CR>
-nnoremap <silent> <C-m> yy:CpR0toR1<CR>
-vnoremap <silent> <C-m> y:CpR0toR1<CR>
-onoremap <silent> <C-m> y:CpR0toR1<CR>
-
-nnoremap - <C-x>
-nnoremap + <C-a>
-
+command! ShiftRegister if @0 =~ "\<NL>"|let @9=@8|let @8=@7|let @7=@6|let @6=@5|let @5=@4|let @4=@3|let @3=@2|let @2=@1|let @1=@0|endif
+nnoremap <silent>Y Y:<C-u>ShiftRegister<CR>
+vnoremap <silent>Y Y:<C-u>ShiftRegister<CR>
+vnoremap <silent>y y:<C-u>ShiftRegister<CR>
+onoremap <silent>y y:<C-u>ShiftRegister<CR>
+nnoremap <silent> <C-m> yy:<C-u>ShiftRegister<CR>
+vnoremap <silent> <C-m> y:<C-u>ShiftRegister<CR>
+onoremap <silent> <C-m> y:<C-u>ShiftRegister<CR>
 
 inoremap <C-d> <Del>
 

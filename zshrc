@@ -186,10 +186,6 @@ function run-fglast {
 }
 zle -N run-fglast
 
-function dict() {
-  grep $1 ~/dotfiles/misc/gene-utf8.txt -A 1 -wi --color
-}
-
 # key bindings
 bindkey -e
 bindkey "^m" magic-return

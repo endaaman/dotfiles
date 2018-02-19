@@ -4,7 +4,7 @@ endif
 set encoding=utf-8
 
 runtime! functions.vim
-runtime! settings.vim
+runtime! basic.vim
 runtime! commands.vim
 runtime! keymaps.vim
 " runtime! tabline.vim

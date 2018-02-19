@@ -4,6 +4,48 @@ augroup E
 augroup END
 colorscheme desert
 
+set autoindent
+set background=dark
+set backspace=indent,eol,start
+set backupdir=~/.cache/vim
+set cursorline
+set directory=~/.cache/vim
+set expandtab
+set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
+set history=10000
+set hlsearch
+set ignorecase
+set laststatus=2
+set lazyredraw
+set list
+set matchpairs& mps+=<:>
+set matchtime=1
+set modifiable
+set mouse=a
+set nobackup
+set noswapfile
+set number
+set ruler
+set scrolloff=10
+set shell=bash
+set shiftwidth=2
+set showcmd
+set showmatch
+set smartcase
+set smarttab
+set softtabstop=2
+set tabstop=2
+set timeout timeoutlen=1000 ttimeoutlen=50
+set undodir=~/.cache/vim
+set undofile
+set updatetime=1000
+set wildmenu
+set wrap
+set write
+
+let g:netrw_home=  '~/.cache/vim'
+let g:vim_indent_cont = &sw
+
 if $TERM !=# 'linux'
   let g:has_custom_font = 1
 endif
@@ -59,44 +101,3 @@ au E BufWritePre * :%s/\t\+$//e
 au E BufEnter * :set conceallevel=2
 au E VimEnter * :call LoadLocalVimConfig()
 
-
-let g:netrw_home=  '~/.cache/vim'
-
-set autoindent
-set background=dark
-set backspace=indent,eol,start
-set backupdir=~/.cache/vim
-set cursorline
-set directory=~/.cache/vim
-set expandtab
-set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
-set history=10000
-set hlsearch
-set ignorecase
-set laststatus=2
-set lazyredraw
-set list
-set matchpairs& mps+=<:>
-set matchtime=1
-set modifiable
-set mouse=a
-set nobackup
-set noswapfile
-set number
-set ruler
-set scrolloff=10
-set shell=bash
-set shiftwidth=2
-set showcmd
-set showmatch
-set smartcase
-set smarttab
-set softtabstop=2
-set tabstop=2
-set timeout timeoutlen=1000 ttimeoutlen=50
-set undodir=~/.cache/vim
-set undofile
-set updatetime=1000
-set wildmenu
-set wrap
-set write
