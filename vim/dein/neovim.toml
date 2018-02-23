@@ -99,13 +99,14 @@ hook_add = '''
   nnoremap <Space>g :<C-u>Denite grep<CR>
   nnoremap <Space>p :<C-u>Denite register<CR>
   nnoremap <Space>c :<C-u>Denite colorscheme<CR>
-  nnoremap <Space>z :<C-u>Denite -resume<CR>
   nnoremap <Space>h :<C-u>Denite help<CR>
   nnoremap <Space>d :<C-u>Denite git/untracked git/staged git/modified<CR>
   nnoremap <Space>f :<C-u>Denite git/all<CR>
   nnoremap <Space>y :<C-u>Denite menu:yank<CR>
   nnoremap <Space>, :<C-u>Denite file_rec -path=,<CR>
   nnoremap <Space>a :<C-u>DeniteBufferDir file_rec<CR>
+  nnoremap <Space>z :<C-u>Denite -resume<CR>
+  nnoremap <Space><Space> :<C-u>Denite -resume<CR>
 
   let s:menus = {}
   " let s:menus.files = { 'description': 'Bookmarked files' }
