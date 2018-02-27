@@ -20,6 +20,6 @@ pyfile <sfile>:h:h/src/case_master.py
 " snake_camelCase -> none or convert all
 " snake_kebab-case -> convert all
 
-function! case_master#hello() abort
-  python case_master_hello()
+function! case_master#rotate() abort
+  python case_master_rotate()
 endfunction

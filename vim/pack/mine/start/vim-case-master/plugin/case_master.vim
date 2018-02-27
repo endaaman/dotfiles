@@ -5,4 +5,4 @@ if exists('g:loaded_case_master')
 endif
 let g:loaded_case_master = 1
 
-noremap <silent> <C-e> :call case_master#hello()<CR>
+noremap <silent> <C-e> :call case_master#rotate()<CR>
