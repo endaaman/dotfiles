@@ -52,9 +52,9 @@ endif
 
 if has('nvim')
   let g:python_host_prog = PickExecutable([
-    \ '/usr/local/bin/python',
-    \ '/usr/bin/python',
-    \ '/bin/python',
+    \ '/usr/local/bin/python3',
+    \ '/usr/bin/python3',
+    \ '/bin/python3',
     \])
   let g:python3_host_prog = PickExecutable([
     \ '/usr/local/bin/python3',
