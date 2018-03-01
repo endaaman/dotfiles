@@ -42,26 +42,26 @@ def split_and_get_type(chunk: str) -> list:
         (CaseType.SNAKE, lambda w: w.split('_')),
         (CaseType.CAMEL, lambda w: split_by_camel(w)),
     ]
-    caseType = CaseType.OTHER
+    case_type = CaseType.OTHER
     words = [chunk]
-    lastSize = len(words)
+    last_size = len(words)
     for (ctype, recipe) in recipes:
         words = list(flatten(map(recipe, words)))
-        curSize = len(words)
-        if curSize is not lastSize:
-            caseType = ctype
-        lastSize = curSize
+        cur_size = len(words)
+        if cur_size is not last_size:
+            case_type = ctype
+        last_size =cur_size 
 
-    if caseType is CaseType.CAMEL and words[0][0].isupper():
-        caseType = CaseType.PASCAL
+    if case_type is CaseType.CAMEL and words[0][0].isupper():
+        case_type = CaseType.PASCAL
 
     words = map(str.lower, words)
-    return list(words), caseType
+    return list(words), case_type 
 
-def join_by_camel(words, isPascal = False):
+def join_by_camel(words, is_pascal = False):
     chunk = ''
     for i, word in enumerate(words):
-        if i is 0 and not isPascal:
+        if i is 0 and not is_pascal:
             chunk = chunk + word
             continue
         chunk = chunk + word[0].upper() + word[1:]
@@ -70,38 +70,50 @@ def join_by_camel(words, isPascal = False):
 def join_by_pascal(words):
     return join_by_camel(words, True)
 
-def join_by_case(words: list, caseType: CaseType) -> str:
+def join_by_case(words: list, case_type: CaseType) -> str:
     joiners = {
         CaseType.SNAKE: (lambda w: '_'.join(w)),
         CaseType.KEBAB: (lambda w: '-'.join(w)),
         CaseType.CAMEL: join_by_camel,
         CaseType.PASCAL: join_by_pascal,
     }
-    if caseType not in joiners:
+    if case_type not in joiners:
         return ''
-    return (joiners[caseType])(words)
+    return (joiners[case_type])(words)
 
 def rotate_chunk(chunk: str) -> str:
-    words, caseType = split_and_get_type(chunk)
-    if len(words) < 2 or caseType is CaseType.OTHER:
+    words, case_type = split_and_get_type(chunk)
+    if len(words) < 2 or case_type is CaseType.OTHER:
         return chunk
-    nextCaseType = caseType.next()
-    if (nextCaseType is CaseType.KEBAB) and not is_kebab_active():
-        nextCaseType = nextCaseType.next()
-    return join_by_case(words, nextCaseType)
+    next_case_type = case_type.next()
+    if (next_case_type is CaseType.KEBAB) and not is_kebab_active():
+        next_case_type = next_case_type.next()
+    return join_by_case(words, next_case_type)
 
 def rotate_normal():
-    vim.command("let l:pos = getpos('.')")
+    vim.command("let l:pos = getcurpos()")
     chunk = rotate_chunk(vim.eval("expand('<cword>')"))
     vim.command('normal "_diw')
     vim.command('normal i' + chunk)
     vim.command('call setpos(".", l:pos)')
 
 def rotate_visual():
-    # vim.command('let l:a_save = @a')
-    # vim.command('normal! gv"ay')
-    # selection = vim.eval('@a')
-    # vim.command('let @a = a_save')
-    # print(1)
-    # print(selection.split('\n'))
-    print(2)
+    vim.command("let l:pos = getcurpos()")
+    cur_l = int(vim.eval('getpos(".")[1]'))
+    vim.command('let l:start = getpos("\'<")')
+    vim.command('let l:end = getpos("\'>")')
+    v_start_l = int(vim.eval('l:start[1]'))
+    v_start_c = int(vim.eval('l:start[2]'))
+    v_end_l = int(vim.eval('l:end[1]'))
+    v_end_c = int(vim.eval('l:end[2]'))
+
+    cur_start_c = 1
+    if cur_l is v_start_l:
+        cur_start_c = v_start_c
+    cur_end_c = int(vim.eval('col("$")')) - 1
+    if cur_l is v_end_l:
+        cur_end_c = v_end_c
+
+    line = vim.eval('getline(".")')
+    selection = line[cur_start_c - 1:cur_end_c]
+    print(selection)

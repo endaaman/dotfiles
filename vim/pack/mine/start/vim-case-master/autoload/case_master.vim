@@ -11,6 +11,6 @@ function! case_master#rotate_normal() abort
   python rotate_normal()
 endfunction
 
-function! case_master#rotate_visual(...) abort
+function! case_master#rotate_visual() abort
   python rotate_visual()
 endfunction
