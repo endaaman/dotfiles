@@ -32,7 +32,7 @@ def is_kebab_active() -> bool:
 def flatten(l: list) -> list:
     return reduce(add, l)
 
-def split_by_case(word: str) -> list:
+def split_by_camel(word: str) -> list:
     matches = re.finditer('.+?(?:(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])|$)', word)
     return [m.group(0) for m in matches]
 
@@ -40,7 +40,7 @@ def split_and_get_type(chunk: str) -> list:
     recipes = [
         (CaseType.KEBAB, lambda w: w.split('-')),
         (CaseType.SNAKE, lambda w: w.split('_')),
-        (CaseType.CAMEL, lambda w: split_by_case(w)),
+        (CaseType.CAMEL, lambda w: split_by_camel(w)),
     ]
     caseType = CaseType.OTHER
     words = [chunk]
@@ -73,7 +73,7 @@ def join_by_pascal(words):
 def join_by_case(words: list, caseType: CaseType) -> str:
     joiners = {
         CaseType.SNAKE: (lambda w: '_'.join(w)),
-        # CaseType.KABAB: (lambda w: '-'.join(w)),
+        CaseType.KEBAB: (lambda w: '-'.join(w)),
         CaseType.CAMEL: join_by_camel,
         CaseType.PASCAL: join_by_pascal,
     }
@@ -81,16 +81,27 @@ def join_by_case(words: list, caseType: CaseType) -> str:
         return ''
     return (joiners[caseType])(words)
 
-def case_master_rotate():
-    vim.command("let l:pos = getpos('.')")
-    chunk = vim.eval("expand('<cword>')")
+def rotate_chunk(chunk: str) -> str:
     words, caseType = split_and_get_type(chunk)
     if len(words) < 2 or caseType is CaseType.OTHER:
-        return
+        return chunk
     nextCaseType = caseType.next()
     if (nextCaseType is CaseType.KEBAB) and not is_kebab_active():
         nextCaseType = nextCaseType.next()
-    chunk = join_by_case(words, nextCaseType)
+    return join_by_case(words, nextCaseType)
+
+def rotate_normal():
+    vim.command("let l:pos = getpos('.')")
+    chunk = rotate_chunk(vim.eval("expand('<cword>')"))
     vim.command('normal "_diw')
     vim.command('normal i' + chunk)
     vim.command('call setpos(".", l:pos)')
+
+def rotate_visual():
+    # vim.command('let l:a_save = @a')
+    # vim.command('normal! gv"ay')
+    # selection = vim.eval('@a')
+    # vim.command('let @a = a_save')
+    # print(1)
+    # print(selection.split('\n'))
+    print(2)

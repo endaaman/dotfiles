@@ -71,6 +71,7 @@ hook_add = '''
   endfunction
 
   let g:neomake_python_python_exe = 'python3'
+  let g:neomake_python_enabled_makers = ['python']
 
   nnoremap <Space>n :<C-u>Neomake<CR>
   let g:neomake_open_list = 0
