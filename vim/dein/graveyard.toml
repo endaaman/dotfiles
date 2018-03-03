@@ -81,20 +81,6 @@ hook_add = '''
 ############################################
 
 [[plugins]]
-repo = 'davidhalter/jedi-vim'
-on_ft = ['python']
-hook_add = '''
-  let g:jedi#goto_command = '<leader>kg'
-  let g:jedi#goto_assignments_command = '<leader>ka'
-  let g:jedi#goto_definitions_command = '<leader>kk'
-  let g:jedi#documentation_command = '<Leader>kd'
-  let g:jedi#usages_command = '<leader>ku'
-  let g:jedi#completions_command = '<Leader>kc'
-  let g:jedi#rename_command = '<leader>kr'
-  let g:jedi#completions_enabled = 0
-'''
-
-[[plugins]]
 repo = 'dhruvasagar/vim-table-mode'
 on_ft = ['markdown']
 hook_add = '''
