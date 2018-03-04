@@ -60,5 +60,5 @@ function! Log(line)
   redir END
 endfun
 
-call Log('')
-call Log('[vim started]\n')
+" call Log('')
+" call Log('[vim started]\n')
