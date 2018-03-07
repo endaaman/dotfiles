@@ -1,1 +1,1 @@
-autocmd BufNewFile,BufRead *.ejs setf html
+" autocmd BufNewFile,BufRead *.ejs setf html

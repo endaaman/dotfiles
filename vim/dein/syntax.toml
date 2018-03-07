@@ -39,6 +39,22 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'briancollins/vim-jst'
+on_ft = ['ejs', 'jst']
+hook_add = '''
+  " autocmd BufNewFile,BufRead *.ejs set filetype=ejs
+  " autocmd BufNewFile,BufRead *._ejs set filetype=ejs
+  "
+  " function! s:DetectEjs()
+  "     if getline(1) =~ '^#!.*\<ejs\>'
+  "         set filetype=ejs
+  "     endif
+  " endfunction
+  "
+  " autocmd BufNewFile,BufRead * call s:DetectEjs()
+'''
+
+[[plugins]]
 repo = 'kchmck/vim-coffee-script'
 on_ft = ['coffee']
 
