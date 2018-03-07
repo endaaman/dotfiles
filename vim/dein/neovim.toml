@@ -92,6 +92,9 @@ hook_add = '''
     \ ])
 
   call denite#custom#source('_', 'matchers', ['matcher_substring'])
+  call denite#custom#option('default', {
+    \ 'highlight_matched_char': 'Title',
+    \ })
 
   nnoremap <Space>b :<C-u>Denite buffer<CR>
   nnoremap <Space>m :<C-u>Denite menu<CR>
