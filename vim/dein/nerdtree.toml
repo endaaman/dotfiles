@@ -17,6 +17,7 @@ hook_add = '''
   let g:NERDTreeHijackNetrw = 1
   let g:NERDTreeMinimalUI = 1
   let g:NERDTreeQuitOnOpen = 1
+  let g:NERDTreeWinSize = 60
 
   autocmd FileType nerdtree setlocal nolist  "if you show hidden characters, this hides them in NERDTree
 '''
