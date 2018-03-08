@@ -54,7 +54,7 @@ hook_add = '''
     \)
   call denite#custom#map(
     \ '_',
-    \ '<C-f>',
+    \ '<C-j>',
     \ '<denite:choose_action>',
     \ 'noremap'
     \)
