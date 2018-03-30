@@ -3,6 +3,9 @@ repo = 'Shougo/dein.vim'
 
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
+hook_add = '''
+  let g:context_filetype#search_offset = 2000
+'''
 
 [[plugins]]
 repo = 'kana/vim-textobj-user'

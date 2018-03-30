@@ -126,7 +126,7 @@ on_ft = ['javascript', 'vue']
 repo = 'posva/vim-vue' # remeber `npm i -g eslint eslint-plugin-vue`
 on_ft = ['vue']
 hook_add = '''
-  let g:vue_disable_pre_processors = 1
+  " let g:vue_disable_pre_processors = 1
 '''
 
 [[plugins]]
