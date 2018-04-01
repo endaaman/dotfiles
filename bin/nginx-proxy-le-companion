@@ -1,0 +1,8 @@
+#!/bin/bash
+
+docker run -d \
+  --name nginx-proxy-le-companion \
+  -v /var/certs:/etc/nginx/certs:rw \
+  -v /var/run/docker.sock:/var/run/docker.sock:ro \
+  --volumes-from nginx-proxy \
+  jrcs/letsencrypt-nginx-proxy-companion
