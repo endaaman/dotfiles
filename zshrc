@@ -1,3 +1,6 @@
+# Define reload alias at least
+alias rr='exec zsh -l'
+
 if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
   zcompile ~/.zshrc
 fi
@@ -6,7 +9,6 @@ is_root=false
 if [ ${EUID:-${UID}} = 0 ]; then
   is_root=true
 fi
-
 
 ###* zplug
 
@@ -63,10 +65,10 @@ PROMPT="$pre_prompt$dirname $prompt_colored_symbol "
 ###* Alias
 
 if which exa &> /dev/null; then
-  alias l='exa -bl'
-  alias ll='exa -abl'
+  alias l='exa -agbl'
+  alias ll='exa -agbl'
 else
-  alias l='ls -hlF'
+  alias l='ls -ahlF --color=auto'
   alias ll='ls -ahlF --color=auto'
 fi
 alias sudo='sudo -E '
@@ -91,7 +93,6 @@ alias cb='xsel --clipboard --input'
 alias cbp='xsel --clipboard --output'
 alias psp='ps aux | fzf'
 
-alias rr='exec zsh -l'
 alias xm='setxkbmap -rules evdev -model us -layout us && xmodmap ~/dotfiles/Xmodmap_us'
 alias xmj='setxkbmap -rules evdev -model jp106 -layout jp && xmodmap ~/dotfiles/Xmodmap_jis'
 
