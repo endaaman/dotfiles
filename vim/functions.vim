@@ -1,4 +1,11 @@
-function! SwapWithAboveLine()
+function TrimTrailingSpaces() abort
+  if matchstr(&ft, '\(markdown\|pug\)') != ''
+    return
+  endif
+  %s/\s\+$//e
+endfunction
+
+function! SwapWithAboveLine() abort
   if line('.') == 1
     return ''
   else
@@ -6,7 +13,7 @@ function! SwapWithAboveLine()
   endif
 endfunction
 
-function! IndentWithI()
+function! IndentWithI() abort
   if len(getline('.')) == 0
     return 'cc'
   else
@@ -14,7 +21,7 @@ function! IndentWithI()
   endif
 endfunction
 
-function! SearchByRegister()
+function! SearchByRegister() abort
   let splitted = split(@+, '\n')
   if 0 < len(splitted)
     let @/ = splitted[0]

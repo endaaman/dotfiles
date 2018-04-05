@@ -2,6 +2,11 @@ set all&
 augroup E
   autocmd!
 augroup END
+
+augroup EN
+  autocmd!
+augroup END
+
 colorscheme desert
 
 set autoindent
@@ -9,6 +14,7 @@ set background=dark
 set backspace=indent,eol,start
 set backupdir=~/.cache/vim
 set cursorline
+set cursorcolumn
 set directory=~/.cache/vim
 set expandtab
 set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
@@ -94,10 +100,10 @@ if exists('g:has_custom_font')
   set showbreak=↳
 endif
 
-au E InsertLeave * set cursorline
-au E InsertEnter * set nocursorline
-au E BufWritePre * if matchstr(&ft, '\(markdown\|pug\)') == '' | :%s/\s\+$//e | endif
-au E BufWritePre * :%s/\t\+$//e
-au E BufEnter * :set conceallevel=2
-au E VimEnter * :call LoadLocalVimConfig()
+autocmd EN InsertLeave * set cursorline | set cursorcolumn
+autocmd EN InsertEnter * set nocursorline | set nocursorcolumn
+autocmd EN BufWritePre * call TrimTrailingSpaces()
+autocmd EN BufWritePre * %s/\t\+$//e
+autocmd EN BufEnter * set conceallevel=2
+autocmd EN VimEnter * call LoadLocalVimConfig()
 
