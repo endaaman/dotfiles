@@ -114,6 +114,9 @@ alias F='fzf'
 if which trash-put &> /dev/null; then
   alias rm='trash-put'
 fi
+if which colordiff &> /dev/null; then
+  alias diff='colordiff'
+fi
 alias https='http --default-scheme=https'
 
 ###* Widget
@@ -281,6 +284,7 @@ setopt auto_list
 setopt auto_menu
 setopt auto_pushd
 setopt autoremoveslash
+# setopt complete_aliases
 setopt complete_in_word
 setopt extended_glob
 setopt extended_history
@@ -303,6 +307,7 @@ setopt pushd_ignore_dups
 setopt rec_exact
 setopt share_history
 unsetopt list_beep
+
 
 mkdir -p $HOME/.cache/shell/
 zstyle ':chpwd:*' recent-dirs-default true
