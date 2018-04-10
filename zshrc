@@ -16,7 +16,7 @@ if [ -d ~/.zplug -a $is_root = false ]; then
   source ~/.zplug/init.zsh
   zplug 'zsh-users/zsh-completions'
   zplug 'zsh-users/zsh-syntax-highlighting', defer:2
-  zplug 'olivierverdier/zsh-git-prompt', use:'zshrc.sh'
+  zplug 'endaaman/zsh-git-prompt', use:'zshrc.sh'
   zplug 'endaaman/lxd-completion-zsh'
   zplug 'peco/peco', as:command, from:gh-r, frozen:1
   zplug 'motemen/ghq', as:command, from:gh-r, rename-to:ghq
