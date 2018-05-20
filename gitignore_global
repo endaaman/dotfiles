@@ -10,6 +10,7 @@
 .vagrant
 npm-debug.log
 .syntastic_*_config
+tags
 
 node_modules/
 __pycache__/

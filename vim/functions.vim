@@ -1,4 +1,4 @@
-function TrimTrailingSpaces() abort
+function! TrimTrailingSpaces() abort
   if matchstr(&ft, '\(markdown\|pug\)') != ''
     return
   endif
@@ -58,6 +58,21 @@ function! YankFullPath() abort
   let p = expand('%:p')
   let @+ = p
   echo "yanked: " . p
+endfunction
+
+
+let s:hooks = []
+
+function! PushHook(hook) abort
+  echom 'push hook'
+  call add(s:hooks, a:hook)
+endfunction
+
+function! CallHooks() abort
+  echom 'call hooks'
+  for Hook in s:hooks
+    call Hook()
+  endfor
 endfunction
 
 let g:log_file_path = '/tmp/vimrc.log'

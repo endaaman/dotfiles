@@ -8,6 +8,24 @@ on_ft = ['markdown']
 hook_add = '''
   let g:markdown_enable_spell_checking = 0
 '''
+
+[[plugins]]
+repo = 'artur-shaik/vim-javacomplete2'
+on_ft = ['java']
+if = ''' 1 '''
+hook_add = '''
+  " autocmd FileType java setlocal omnifunc=javacomplete#Complete
+'''
+hook_post_source = '''
+  " let g:neomake_java_javac_enabled_makers = ['javac']
+  " let g:neomake_java_javac_classpath = g:JavaComplete_SourcesPath
+  " let g:neomake_java_javac_options = [
+  "   \ '-Xlint',
+  "   \ '-sourcepath',
+  "   \ getcwd() . '/app/src/main/java' . g:JavaComplete_SourcesPath,
+  "   \]
+'''
+
 [[plugins]]
 repo = 'pangloss/vim-javascript'
 on_ft = ['javascript', 'vue']
@@ -50,6 +68,10 @@ on_ft = ['coffee']
 [[plugins]]
 repo = 'jwalton512/vim-blade'
 on_ft = ['php']
+
+[[plugins]]
+repo = 'leafgarland/typescript-vim'
+on_ft = ['typescript']
 
 [[plugins]]
 repo = 'keith/tmux.vim'

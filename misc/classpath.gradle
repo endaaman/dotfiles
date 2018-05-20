@@ -98,7 +98,7 @@ class ClasspathPlugin implements Plugin<Project> {
             }
           }
         }
-        def cp = classpathFiles 
+        def cp = classpathFiles
         def sp = []
 
         def cp_str = cp.collect({ ":${it}" }).join('')

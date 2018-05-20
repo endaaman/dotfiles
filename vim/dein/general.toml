@@ -8,6 +8,14 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'Shougo/echodoc.vim'
+hook_add = '''
+  set noshowmode
+  let g:echodoc#enable_at_startup = 1
+  " let g:echodoc#enable_force_overwrite = 1
+'''
+
+[[plugins]]
 repo = 'kana/vim-textobj-user'
 
 [[plugins]]
@@ -103,6 +111,7 @@ repo = 'tpope/vim-fugitive'
 
 [[plugins]]
 repo = 'neomake/neomake'
+# depends = ['vim-javacomplete2']
 hook_add = '''
   au! E BufEnter * Neomake
   au! E BufWritePre * :call NeomakeIfModified()

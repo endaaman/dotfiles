@@ -7,20 +7,20 @@ let s:toml_dir = expand('<sfile>:p:h') . '/dein'
 let s:dein_dir = expand('~/.cache/dein')
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
-if isdirectory(s:dein_repo_dir)
-  execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
+execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
 
+if isdirectory(s:dein_repo_dir) && dein#load_state(s:dein_repo_dir)
   function! s:load(path) abort
     if filereadable(expand(a:path))
       call dein#load_toml(a:path, {})
     endif
   endfunction
 
-  if !has('vim_starting')
-    call dein#call_hook('source')
-  endif
-
   call dein#begin(s:dein_dir)
+
+  " if !has('vim_starting')
+  "   call dein#call_hook('source')
+  " endif
   call s:load(s:toml_dir . '/general.toml')
   call s:load(s:toml_dir . '/nerdtree.toml')
   call s:load(s:toml_dir . '/syntax.toml')
@@ -37,9 +37,9 @@ if isdirectory(s:dein_repo_dir)
     call dein#install()
   endif
 
-  if !has('vim_starting')
-    call dein#call_hook('post_source')
-  endif
+  " if !has('vim_starting')
+  "   call dein#call_hook('post_source')
+  " endif
 
   syntax enable
   filetype plugin indent on

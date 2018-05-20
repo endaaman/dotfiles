@@ -1,8 +1,17 @@
 [[plugins]]
-repo = 'Shougo/echodoc.vim'
+repo = 'Shougo/neoinclude.vim'
+on_i = 1
 hook_add = '''
-  set noshowmode
-  let g:echodoc_enable_at_startup = 1
+  let g:neoinclude#_paths = '/usr/lib/glib-2.0/include'
+'''
+
+[[plugins]]
+repo = 'zchee/deoplete-clang'
+on_i = 1
+depends = ['deoplete.nvim']
+hook_add = '''
+  let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
+  let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 '''
 
 [[plugins]]
@@ -224,14 +233,6 @@ on_ft = ['kotlin']
 repo = 'baabelfish/nvim-nim'
 if = ''' 0 '''
 on_ft = ['nim']
-
-[[plugins]]
-repo = 'artur-shaik/vim-javacomplete2'
-if = ''' 0 '''
-on_ft = ['java']
-hook_add = '''
-  autocmd FileType java setlocal omnifunc=javacomplete#Complete
-'''
 
 
 ############################################

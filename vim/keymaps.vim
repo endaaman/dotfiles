@@ -19,6 +19,8 @@ noremap <silent> <C-j> :<C-u>normal ]c<CR>
 noremap <silent> <C-k> :<C-u>normal [c<CR>
 noremap H g^
 noremap L g$
+noremap gH ^
+noremap gL $
 nnoremap <BS> g;
 nnoremap <C-h> g;
 nnoremap <C-l> g,
