@@ -9,6 +9,10 @@ let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
 execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
 
+function! s:h() abort
+  echom 'post_source'
+endfunction
+
 if isdirectory(s:dein_repo_dir) && dein#load_state(s:dein_repo_dir)
   function! s:load(path) abort
     if filereadable(expand(a:path))
@@ -17,6 +21,7 @@ if isdirectory(s:dein_repo_dir) && dein#load_state(s:dein_repo_dir)
   endfunction
 
   call dein#begin(s:dein_dir)
+  " call dein#set_hook('', 'post_source', function('s:h'))
 
   " if !has('vim_starting')
   "   call dein#call_hook('source')

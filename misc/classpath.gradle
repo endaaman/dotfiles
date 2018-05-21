@@ -23,6 +23,8 @@ class ClasspathPlugin implements Plugin<Project> {
     project.task('cp') {
       doLast {
         HashSet<String> classpathFiles = new HashSet<String>()
+        HashSet<String> sourcepathFiles = new HashSet<String>()
+
         for (proj in project.rootProject.allprojects) {
           for (conf in proj.configurations) {
             if (isResolvable(conf)) {
@@ -75,6 +77,21 @@ class ClasspathPlugin implements Plugin<Project> {
                       classpathFiles += dir.absolutePath
                   }
                 }
+                if (v.metaClass.respondsTo(v, 'getApkLibraries')) {
+                  classpathFiles += v.getApkLibraries()
+                }
+                if (v.hasProperty("getCompileClasspath")) {
+                  classpathFiles += v.getCompileClasspath().collect { it.getPath() }
+                }
+                // collect jar in build/*
+                if (proj.hasProperty("buildDir")) {
+                  def dir = new File("${proj.buildDir}/generated/source")
+                  if (dir.exists()) {
+                    dir.traverse([maxDepth: 0, type: groovy.io.FileType.DIRECTORIES]) {
+                      sourcepathFiles += "${it.getPath()}/${v.getName()}"
+                    }
+                  }
+                }
               }
             }
 
@@ -99,8 +116,7 @@ class ClasspathPlugin implements Plugin<Project> {
           }
         }
         def cp = classpathFiles
-        def sp = []
-
+        def sp = sourcepathFiles
         def cp_str = cp.collect({ ":${it}" }).join('')
         def sp_str = sp.collect({ ":${it}" }).join('')
         new File('.vim/').mkdir()
