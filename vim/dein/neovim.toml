@@ -99,7 +99,9 @@ hook_add = '''
   nnoremap <Space>b :<C-u>Denite buf<CR>
   nnoremap <Space>m :<C-u>Denite menu<CR>
   nnoremap <Space>o :<C-u>Denite unite:outline<CR>
-  nnoremap <Space>g :<C-u>Denite grep<CR>
+  nnoremap <Space>g :<C-u>Denite grep -no-empty<CR>
+  nnoremap <Space>G :<C-u>Denite grep -no-empty -input=`@0`<CR>
+  nnoremap <Space>W :<C-u>Denite grep -no-empty -input=`expand("<cword>")`<CR>
   nnoremap <Space>p :<C-u>Denite register<CR>
   nnoremap <Space>c :<C-u>Denite colorscheme<CR>
   nnoremap <Space>h :<C-u>Denite help<CR>

@@ -22,8 +22,10 @@ noremap L g$
 noremap gH ^
 noremap gL $
 nnoremap <BS> g;
-nnoremap <C-h> g;
-nnoremap <C-l> g,
+" nnoremap <C-h> g;
+" nnoremap <C-l> g,
+noremap <silent> <C-l> :<C-u>lnext<CR>
+noremap <silent> <C-h> :<C-u>lprev<CR>
 
 noremap x "_x
 noremap X "_D
