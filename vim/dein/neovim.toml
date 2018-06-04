@@ -20,14 +20,19 @@ hook_add = '''
   if !exists('g:deoplete#omni#input_patterns')
     let g:deoplete#omni#input_patterns = {}
   endif
-
-  inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-  inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
-
   let g:deoplete#omni#functions = {}
-  let g:deoplete#omni#input_patterns = {}
   " let g:deoplete#omni#input_patterns.python = '\h\w*\|[^. \t]\.\w*'
   " let g:deoplete#omni#functions.python = 'jedi#completions'
+  inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+  inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+'''
+hook_source = '''
+  call deoplete#custom#option({
+    \ 'auto_complete_delay': 200,
+    \ 'camel_case': v:true,
+    \ 'ignore_case': v:false,
+    \ 'smart_case': v:true,
+    \ })
 '''
 
 [[plugins]]
