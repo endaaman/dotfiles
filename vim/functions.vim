@@ -5,6 +5,11 @@ function! TrimTrailingSpaces() abort
   %s/\s\+$//e
 endfunction
 
+" function! SearchByCurrentWord() abort
+"   let @/ = expand("<cword>")
+"   set hlsearch
+" endfunction
+
 function! SwapWithAboveLine() abort
   if line('.') == 1
     return ''

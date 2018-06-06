@@ -13,6 +13,9 @@ depends = ['vimproc', 'unite.vim']
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
 on_i = 1
+hook_post_source = '''
+  execute 'UpdateRemotePlugin'
+'''
 hook_add = '''
   let g:deoplete#enable_at_startup = 1
   let g:deoplete#enable_smart_case = 1
@@ -38,6 +41,9 @@ hook_source = '''
 [[plugins]]
 repo = 'Shougo/denite.nvim'
 depends = ['vimproc', 'unite.vim', 'unite-outline']
+hook_post_source = '''
+  execute 'UpdateRemotePlugin'
+'''
 hook_add = '''
   call denite#custom#map(
     \ '_',
@@ -161,4 +167,13 @@ hook_add = '''
   endif
 
   " call denite#custom#source('file_mru', 'converters', ['converter_relative_word'])
+'''
+
+[[plugins]]
+repo = 'autozimu/LanguageClient-neovim'
+build = './install.sh'
+hook_add = '''
+  let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ }
 '''

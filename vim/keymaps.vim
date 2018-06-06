@@ -38,7 +38,8 @@ noremap N Nzz
 noremap G Gzz
 
 nnoremap <expr> i IndentWithI()
-nnoremap * *zz
+" nnoremap * *zz
+nnoremap * :<C-u>let @/=expand("<cword>")\|set hlsearch<CR>
 nnoremap # #zz
 nnoremap o o<Esc>
 nnoremap O O<Esc>
@@ -72,6 +73,7 @@ vnoremap y y`]
 vnoremap p <C-[>:<C-u>let @y=@+<CR>gvp`]:let @+=@y<CR>
 vnoremap O :sort<CR>
 vnoremap R c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
+vnoremap * "zy:<C-u>let @/=@z\|set hlsearch<CR>
 
 command! ShiftRegister if @0 =~ "\<NL>"|let @9=@8|let @8=@7|let @7=@6|let @6=@5|let @5=@4|let @4=@3|let @3=@2|let @2=@1|let @1=@0|endif
 nnoremap <silent>Y Y:<C-u>ShiftRegister<CR>
