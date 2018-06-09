@@ -1,3 +1,6 @@
+// This code is under **Vim LICENSE**
+// modified from https://github.com/artur-shaik/vim-javacomplete2/blob/master/classpath.gradle
+
 class ClasspathPlugin implements Plugin<Project> {
   boolean isResolvable(Configuration conf) {
     // isCanBeResolved was added in Gradle 3.3. Previously, all configurations were resolvable
@@ -22,17 +25,17 @@ class ClasspathPlugin implements Plugin<Project> {
   void apply(Project project) {
     project.task('cp') {
       doLast {
-        HashSet<String> classpathFiles = new HashSet<String>()
-        HashSet<String> sourcepathFiles = new HashSet<String>()
+        HashSet<String> cp = new HashSet<String>()
+        HashSet<String> sp = new HashSet<String>()
 
         for (proj in project.rootProject.allprojects) {
           for (conf in proj.configurations) {
             if (isResolvable(conf)) {
               for (dependency in conf) {
                 if (dependency.name.endsWith("jar")) {
-                  classpathFiles += dependency
+                  cp += dependency
                 } else {
-                  classpathFiles += getBuildCacheForDependency(project, dependency)
+                  cp += getBuildCacheForDependency(project, dependency)
                 }
               }
             }
@@ -41,54 +44,51 @@ class ClasspathPlugin implements Plugin<Project> {
           def rjava = proj.getBuildDir().absolutePath + File.separator + "intermediates" + File.separator + "classes" + File.separator + "debug"
           def rFiles = new File(rjava)
           if (rFiles.exists()) {
-            classpathFiles += rFiles
+            cp += rFiles
           }
 
           if (proj.hasProperty("android")) {
-            classpathFiles += proj.android.getBootClasspath()
+            cp += proj.android.getBootClasspath()
             if (proj.android.hasProperty("applicationVariants")) {
               proj.android.applicationVariants.all { v ->
                 if (v.hasProperty("compileConfiguration")) {
                   v.compileConfiguration.each { dependency ->
                     if (dependency.name.endsWith("jar")) {
-                      classpathFiles += dependency
+                      cp += dependency
                     } else {
-                      classpathFiles += getBuildCacheForDependency(project, dependency)
+                      cp += getBuildCacheForDependency(project, dependency)
                     }
                   }
                 }
                 if (v.hasProperty("runtimeConfiguration")) {
                   v.runtimeConfiguration.each { dependency ->
                     if (dependency.name.endsWith("jar")) {
-                      classpathFiles += dependency
+                      cp += dependency
                     } else {
-                      classpathFiles += getBuildCacheForDependency(project, dependency)
+                      cp += getBuildCacheForDependency(project, dependency)
                     }
                   }
                 }
                 if (v.hasProperty("getApkLibraries")) {
-                  classpathFiles += v.getApkLibraries()
+                  cp += v.getApkLibraries()
                 }
-                if (v.hasProperty("getCompileLibraries")) {
-                  classpathFiles += v.getCompileLibraries()
+                if (v.hasProperty("compileLibraries")) {
+                  cp += v.getCompileLibraries()
                 }
                 for (srcSet in v.getSourceSets()) {
                   for (dir in srcSet.java.srcDirs) {
-                      classpathFiles += dir.absolutePath
+                    cp += dir.absolutePath
                   }
                 }
-                if (v.metaClass.respondsTo(v, 'getApkLibraries')) {
-                  classpathFiles += v.getApkLibraries()
-                }
-                if (v.hasProperty("getCompileClasspath")) {
-                  classpathFiles += v.getCompileClasspath().collect { it.getPath() }
+                if (v.hasProperty("compileClasspath")) {
+                  cp += v.compileClasspath().collect { it.getPath() }
                 }
                 // collect jar in build/*
                 if (proj.hasProperty("buildDir")) {
                   def dir = new File("${proj.buildDir}/generated/source")
                   if (dir.exists()) {
                     dir.traverse([maxDepth: 0, type: groovy.io.FileType.DIRECTORIES]) {
-                      sourcepathFiles += "${it.getPath()}/${v.getName()}"
+                      sp += "${it.getPath()}/${v.getName()}"
                     }
                   }
                 }
@@ -97,10 +97,10 @@ class ClasspathPlugin implements Plugin<Project> {
 
             if (proj.android.hasProperty("libraryVariants")) {
               proj.android.libraryVariants.all { v ->
-                classpathFiles += v.javaCompile.classpath.files
+                cp += v.javaCompile.classpath.files
                 for (srcSet in v.getSourceSets()) {
                   for (dir in srcSet.java.srcDirs) {
-                      classpathFiles += dir.absolutePath
+                    cp += dir.absolutePath
                   }
                 }
               }
@@ -109,14 +109,12 @@ class ClasspathPlugin implements Plugin<Project> {
 
           if (proj.hasProperty("sourceSets")) {
             for (srcSet in proj.sourceSets) {
-                for (dir in srcSet.java.srcDirs) {
-                    classpathFiles += dir.absolutePath
-                }
+              for (dir in srcSet.java.srcDirs) {
+                cp += dir.absolutePath
+              }
             }
           }
         }
-        def cp = classpathFiles
-        def sp = sourcepathFiles
         def cp_str = cp.collect({ ":${it}" }).join('')
         def sp_str = sp.collect({ ":${it}" }).join('')
         new File('.vim/').mkdir()
