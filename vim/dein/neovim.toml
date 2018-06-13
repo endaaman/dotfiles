@@ -134,7 +134,7 @@ hook_add = '''
   let s:menus.yank = { 'description': 'Yank' }
   let s:menus.yank.command_candidates = [
     \ ['File name', 'call YankFileName()'],
-    \ ['Relative path', 'call YankRelativeName()'],
+    \ ['Relative path', 'call YankRelativePath()'],
     \ ['Full path', 'call YankFullPath()'],
     \ ]
   call denite#custom#var('menu', 'menus', s:menus)
@@ -171,7 +171,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'autozimu/LanguageClient-neovim'
-build = './install.sh'
+build = 'bash install.sh'
 hook_add = '''
   let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
