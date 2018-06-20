@@ -64,7 +64,7 @@ hook_add = '''
     \ 'noremap'
     \)
   call denite#custom#map(
-    \ '_',
+    \ 'insert',
     \ '<C-j>',
     \ '<denite:choose_action>',
     \ 'noremap'
@@ -93,6 +93,18 @@ hook_add = '''
     \ '<denite:do_action:yank>',
     \ 'noremap'
     \)
+  call denite#custom#map(
+    \ 'insert',
+    \ '<C-o>',
+    \ '<denite:do_action:xdg-open>',
+    \ 'noremap'
+    \)
+  call denite#custom#map('insert', '<C-a>', '<Home>')
+  call denite#custom#map('insert', '<C-e>', '<End>')
+  call denite#custom#map('insert', '<C-f>', '<Right>')
+  call denite#custom#map('insert', '<C-b>', '<Left>')
+
+  call denite#custom#action('file', 'xdg-open', 'DeniteActionXdgOpen')
 
   call denite#custom#filter('matcher_ignore_globs', 'ignore_globs', [
     \ '*~', '*.o', '*.exe', '*.bak',

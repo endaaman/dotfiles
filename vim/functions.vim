@@ -65,6 +65,11 @@ function! YankFullPath() abort
   echo "yanked: " . p
 endfunction
 
+function! DeniteActionXdgOpen(context)
+  execute '!xdg-open ' . a:context.targets[0].action__path
+endfunction
+
+
 
 let s:hooks = []
 
