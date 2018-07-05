@@ -35,8 +35,8 @@ Conversion	Ctrl Left	SegmentFocusFirst
 Composition	Ctrl m	Commit
 Composition	Ctrl m	Commit
 Conversion	Ctrl m	Commit
-Conversion	Ctrl n	ConvertNext
 Suggestion	Ctrl n	PredictAndConvert
+Conversion	Ctrl n	ConvertNext
 Conversion	Ctrl o	SegmentWidthExpand
 Conversion	Ctrl p	ConvertPrev
 Conversion	Ctrl q	SegmentWidthShrink
@@ -48,8 +48,8 @@ Precomposition	Ctrl Shift r	Reconvert
 Conversion	Ctrl w	SegmentWidthExpand
 Conversion	Ctrl x	ConvertNext
 Composition	Delete	Delete
-Conversion	Down	ConvertNext
 Suggestion	Down	PredictAndConvert
+Conversion	Down	ConvertNext
 Precomposition	Eisu	ToggleAlphanumericMode
 Composition	End	MoveCursorToEnd
 Conversion	End	SegmentFocusLast
@@ -72,14 +72,16 @@ Composition	F8	DisplayAsHalfWidth
 Conversion	F8	DisplayAsHalfWidth
 Composition	F9	DisplayAsFullAlphanumeric
 Conversion	F9	DisplayAsFullAlphanumeric
-DirectInput	Hiragana	IMEOn
-Precomposition	Hiragana	IMEOn
+DirectInput	Henkan	InputModeHiragana
+Precomposition	Henkan	InputModeHiragana
+DirectInput	Hiragana	InputModeHiragana
+Precomposition	Hiragana	InputModeHiragana
 Composition	Home	MoveCursorToBeginning
 Conversion	Home	SegmentFocusFirst
 Composition	Left	MoveCursorLeft
 Conversion	Left	SegmentFocusLeft
-Precomposition	Muhenkan	IMEOff
 Composition	Muhenkan	ConvertToHalfAlphanumeric
+Precomposition	Muhenkan	IMEOff
 Composition	Option a	DisplayAsHalfWidth
 Conversion	Option a	DisplayAsHalfWidth
 Composition	Option c	DisplayAsFullAlphanumeric
@@ -113,13 +115,13 @@ Conversion	Shift Down	ConvertNextPage
 Suggestion	Shift Enter	CommitFirstSuggestion
 Conversion	Shift Left	SegmentWidthShrink
 Conversion	Shift Right	SegmentWidthExpand
-Conversion	Shift Space	ConvertPrev
 Precomposition	Shift Space	InsertAlternateSpace
+Conversion	Shift Space	ConvertPrev
 Conversion	Shift Tab	ConvertPrev
 Conversion	Shift Up	ConvertPrevPage
 Composition	Space	Convert
-Conversion	Space	ConvertNext
 Precomposition	Space	InsertSpace
+Conversion	Space	ConvertNext
 Composition	Tab	PredictAndConvert
 Conversion	Tab	PredictAndConvert
 Conversion	Up	ConvertPrev

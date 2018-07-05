@@ -44,8 +44,10 @@ nnoremap # #zz
 nnoremap o o<Esc>
 nnoremap O O<Esc>
 nnoremap p p`]
-nnoremap <C-f> "zdd"zp
-nnoremap <expr> <C-b> SwapWithAboveLine()
+nnoremap <C-f> <C-i>
+nnoremap <C-b> <C-o>
+" nnoremap <C-f> "zdd"zp
+" nnoremap <expr> <C-b> SwapWithAboveLine()
 
 nnoremap <Tab> <C-w>w
 nnoremap <S-Tab> <C-w>W
@@ -68,7 +70,6 @@ nnoremap + <C-a>
 vnoremap v $h
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
-vnoremap <C-m> y
 vnoremap y y`]
 vnoremap p <C-[>:<C-u>let @y=@+<CR>gvp`]:let @+=@y<CR>
 vnoremap O :sort<CR>

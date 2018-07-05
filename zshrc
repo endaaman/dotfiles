@@ -224,7 +224,7 @@ export XDG_CONFIG_HOME=~/.config
 export NO_AT_BRIDGE=1
 export WINEARCH=win32
 export WINEPREFIX=~/.wine
-export FZF_DEFAULT_OPTS='--height 40% --reverse --border --bind "tab:down,btab:up"'
+export FZF_DEFAULT_OPTS='--height 40% --reverse --border --bind "tab:down,btab:up" --exact'
 
 export PATH=~/bin:$PATH
 export PATH=~/dotfiles/bin:$PATH
