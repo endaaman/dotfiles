@@ -24,8 +24,6 @@ noremap gL $
 nnoremap <BS> g;
 " nnoremap <C-h> g;
 " nnoremap <C-l> g,
-noremap <silent> <C-l> :<C-u>lnext<CR>
-noremap <silent> <C-h> :<C-u>lprev<CR>
 
 noremap x "_x
 noremap X "_D
@@ -39,13 +37,15 @@ noremap G Gzz
 
 nnoremap <expr> i IndentWithI()
 " nnoremap * *zz
-nnoremap * :<C-u>let @/=expand("<cword>")\|set hlsearch<CR>
+nnoremap <Space>w :<C-u>let @/=expand("<cword>")\|set hlsearch<CR>
 nnoremap # #zz
 nnoremap o o<Esc>
 nnoremap O O<Esc>
 nnoremap p p`]
-nnoremap <C-f> <C-i>
-nnoremap <C-b> <C-o>
+nnoremap <C-l> <C-i>
+nnoremap <C-h> <C-o>
+nnoremap <C-f> :<C-u>lnext<CR>
+nnoremap <C-b> :<C-u>lprev<CR>
 " nnoremap <C-f> "zdd"zp
 " nnoremap <expr> <C-b> SwapWithAboveLine()
 

@@ -112,10 +112,10 @@ hook_add = '''
   let g:syntastic_warning_symbol = ''
 
   let g:syntastic_mode_map={
-  \ 'mode': 'passive',
-  \ 'active_filetypes': [],
-  \ 'passive_filetypes': []
-  \}
+    \ 'mode': 'passive',
+    \ 'active_filetypes': [],
+    \ 'passive_filetypes': []
+    \}
 
   let g:syntastic_c_check_header = 1
   let g:syntastic_cpp_check_header = 1

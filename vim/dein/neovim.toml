@@ -119,15 +119,14 @@ hook_add = '''
     \ 'highlight_matched_char': 'Title',
     \ })
 
-  nnoremap <Space>u <Nop>
-  nnoremap <Space>uo :<C-u>Denite unite:outline<CR>
+  nnoremap <Space>o :<C-u>Denite unite:outline<CR>
+  nnoremap <Space>J :<C-u>Denite jump<CR>
   nnoremap <Space>b :<C-u>Denite buf<CR>
   nnoremap <Space>m :<C-u>Denite menu<CR>
-  nnoremap <Space>o :<C-u>Denite jump<CR>
   nnoremap <Space>g :<C-u>Denite grep -no-empty<CR>
-  nnoremap <Space>G :<C-u>Denite grep -no-empty -input=`@0`<CR>
+  nnoremap <Space>G :<C-u>Denite grep -input=`@0`<CR>
   nnoremap <Space>W :<C-u>Denite grep -no-empty -input=`expand("<cword>")`<CR>
-  nnoremap <Space>p :<C-u>Denite register<CR>
+  nnoremap <Space>r :<C-u>Denite register<CR>
   nnoremap <Space>c :<C-u>Denite colorscheme<CR>
   nnoremap <Space>h :<C-u>Denite help<CR>
   nnoremap <Space>d :<C-u>Denite git/untracked git/staged git/modified<CR>
@@ -137,7 +136,6 @@ hook_add = '''
   nnoremap <Space>y :<C-u>Denite menu:yank<CR>
   nnoremap <Space>, :<C-u>Denite file_rec -path=,<CR>
   nnoremap <Space>a :<C-u>DeniteBufferDir file_rec<CR>
-  nnoremap <Space>z :<C-u>Denite -resume<CR>
   nnoremap <Space><Space> :<C-u>Denite -resume<CR>
 
   let s:menus = {}
@@ -171,7 +169,6 @@ hook_add = '''
 
   if executable('ag')
     call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-
     call denite#custom#var('grep', 'command', ['ag'])
     call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
     call denite#custom#var('grep', 'recursive_opts', [])
