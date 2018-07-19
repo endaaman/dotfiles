@@ -121,7 +121,7 @@ hook_add = '''
 
   nnoremap <Space>o :<C-u>Denite unite:outline<CR>
   nnoremap <Space>J :<C-u>Denite jump<CR>
-  nnoremap <Space>b :<C-u>Denite buf<CR>
+  nnoremap <Space>b :<C-u>Denite buffer<CR>
   nnoremap <Space>m :<C-u>Denite menu<CR>
   nnoremap <Space>g :<C-u>Denite grep -no-empty<CR>
   nnoremap <Space>G :<C-u>Denite grep -input=`@0`<CR>
