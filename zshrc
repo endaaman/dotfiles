@@ -18,7 +18,6 @@ if [ -d ~/.zplug -a $is_root = false ]; then
   zplug 'zsh-users/zsh-syntax-highlighting', defer:2
   zplug 'endaaman/zsh-git-prompt', use:'zshrc.sh'
   zplug 'endaaman/lxd-completion-zsh'
-  zplug 'peco/peco', as:command, from:gh-r, frozen:1
   zplug 'motemen/ghq', as:command, from:gh-r, rename-to:ghq
   zplug 'stedolan/jq', as:command, from:gh-r, rename-to:jq
   zplug 'junegunn/fzf-bin', as:command, from:gh-r, rename-to:fzf
@@ -109,7 +108,6 @@ alias L='less'
 alias S='sed'
 alias T='tail'
 alias W='wc'
-alias P='peco'
 alias F='fzf'
 
 if which trash-put &> /dev/null; then
@@ -195,7 +193,6 @@ zle -N run-fglast
 bindkey -e
 bindkey "^m" magic-return
 bindkey '^s' copy-buffer
-bindkey '^g' cdr-peco
 bindkey '^@' clear-screen
 bindkey '^z' run-fglast
 bindkey '^[[Z' reverse-menu-complete
