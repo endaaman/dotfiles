@@ -5,6 +5,7 @@ on_ft = ['toml']
 [[plugins]]
 repo = 'gabrielelana/vim-markdown'
 on_ft = ['markdown']
+if = '0'
 hook_add = '''
   let g:markdown_enable_spell_checking = 0
 '''

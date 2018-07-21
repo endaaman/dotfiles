@@ -101,6 +101,9 @@ ln -fs ~/.config/compton.conf ~/.config/marco-compton.conf
 # wine
 ln -fs ~/.wine ~/wineprefixes/current
 
+# xkb
+ln -fsn ~/dotfiles/xkb ~/.xkb
+
 
 changed=false
 
