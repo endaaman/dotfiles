@@ -109,6 +109,9 @@ python=false
 ruby=false
 zplug=false
 dein=false
+xm_us=false
+xm_jis=false
+xm_va86=false
 
 for i in "$@" ; do
   case "$i" in
@@ -124,14 +127,27 @@ for i in "$@" ; do
       zplug=true
       dein=true
       ;;
-    'us' )
-      ln -fs ~/dotfiles/Xmodmap_us ~/.Xmodmap
+    'xm_us' )
+      xm_us=true
       ;;
-    'jis' )
-      ln -fs ~/dotfiles/Xmodmap_jis ~/.Xmodmap
+    'xm_jis' )
+      xm_jis=true
+      ;;
+    'xm_va86' )
+      xm_va86=true
       ;;
   esac
 done
+
+if $xm_us; then
+  ln -fs ~/dotfiles/Xmodmaps/Xmodmap_us ~/.Xmodmap
+fi
+if $xm_jis; then
+  ln -fs ~/dotfiles/Xmodmaps/Xmodmap_jis ~/.Xmodmap
+fi
+if $xm_va86; then
+  ln -fs ~/dotfiles/Xmodmaps/Xmodmap_va86 ~/.Xmodmap
+fi
 
 if [ `which setxkbmap` ] && [[ -e ~/.Xmodmap ]]; then
   setxkbmap && xmodmap ~/.Xmodmap
