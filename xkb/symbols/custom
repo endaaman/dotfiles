@@ -15,4 +15,5 @@ xkb_symbols "us_base" {
 
 xkb_symbols "va86" {
   key <INS> {[ Home ]};
+  key <DELE> {[ End ]};
 };
