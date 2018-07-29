@@ -232,6 +232,9 @@ if which direnv &> /dev/null; then
   eval "$(direnv hook zsh)"
 fi
 
+if which luarocks &> /dev/null; then
+  eval $(luarocks path --bin)
+fi
 
 ###* *env
 
