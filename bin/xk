@@ -1,0 +1,3 @@
+#!/bin/bash
+
+setxkbmap && xkbcomp -I$HOME/.xkb ~/.xkb/keymap/current $DISPLAY
