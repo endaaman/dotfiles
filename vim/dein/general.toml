@@ -149,21 +149,9 @@ hook_add = '''
   endif
 '''
 
-# [[plugins]]
-# repo = 'prabirshrestha/vim-lsp'
-#
-# [[plugins]]
-# repo = 'prabirshrestha/async.vim'
-# depends = ['async.vim']
-# hook_add = '''
-#   let g:lsp_signs_enabled = 1
-#   let g:lsp_diagnostics_echo_cursor = 1
-#
-#   if executable('rls')
-#     au User lsp_setup call lsp#register_server({
-#       \ 'name': 'rls',
-#       \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
-#       \ 'whitelist': ['rust'],
-#     \ })
-#   endif
-# '''
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+hook_add = '''
+  " nnoremap ga :<C-u>EasyAlign<CR>
+  " vnoremap ga :<C-u>EasyAlign<CR>
+'''
