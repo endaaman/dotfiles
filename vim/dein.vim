@@ -13,6 +13,16 @@ function! s:h() abort
   echom 'post_source'
 endfunction
 
+function! s:update() abort
+  call dein#clear_state()
+  call dein#update()
+endfunction
+
+function! s:recache() abort
+  call dein#clear_state()
+  call dein#recache_runtimepath()
+endfunction
+
 if isdirectory(s:dein_repo_dir) && dein#load_state(s:dein_repo_dir)
   function! s:load(path) abort
     if filereadable(expand(a:path))
@@ -49,6 +59,6 @@ if isdirectory(s:dein_repo_dir) && dein#load_state(s:dein_repo_dir)
   syntax enable
   filetype plugin indent on
 
-  command! DeinUpdate :call dein#update()
-  command! DeinRecache :call dein#recache_runtimepath()
+  command! DeinUpdate :call s:update()
+  command! DeinRecache :call s:recache()
 endif
