@@ -1,7 +1,4 @@
 set all&
-augroup E
-  autocmd!
-augroup END
 
 augroup EN
   autocmd!
@@ -91,8 +88,8 @@ endif
 if has('gui_running')
   set ambiwidth=double
   set guifont = Monospace\ 10
-  au E VimEnter * set lines=40
-  au E VimEnter * set columna=120
+  autocmd! EN VimEnter * set lines=40
+  autocmd! EN VimEnter * set columna=120
 endif
 
 if exists('g:has_custom_font')

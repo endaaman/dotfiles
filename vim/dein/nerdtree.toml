@@ -65,7 +65,7 @@ hook_add = '''
     let g:NERDTreeDirArrowCollapsible = nr2char(8200)
     let g:NERDTreeDirArrowExpandable = nr2char(8200)
 
-    autocmd E VimEnter * let g:webdevicons_conceal_nerdtree_brackets = 1
+    autocmd EN VimEnter * let g:webdevicons_conceal_nerdtree_brackets = 1
     let g:webdevicons_conceal_nerdtree_brackets = 1
 
     " let g:DevIconsDefaultFolderOpenSymbol = '▾'

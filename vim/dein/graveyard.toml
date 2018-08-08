@@ -1,4 +1,23 @@
 [[plugins]]
+repo = 'artur-shaik/vim-javacomplete2'
+on_ft = ['java']
+if = ''' 0 '''
+hook_add = '''
+  let g:JaveComplete_AutoStartServer = 0
+  " autocmd FileType java setlocal omnifunc=javacomplete#Complete
+'''
+hook_post_source = '''
+  " let g:neomake_java_javac_classpath = g:JavaComplete_LibsPath
+  " let g:neomake_java_javac_enabled_makers = ['javac']
+  " let g:neomake_java_javac_classpath = g:JavaComplete_SourcesPath
+  " let g:neomake_java_javac_options = [
+  "   \ '-Xlint',
+  "   \ '-sourcepath',
+  "   \ getcwd() . '/app/src/main/java' . g:JavaComplete_SourcesPath,
+  "   \]
+'''
+
+[[plugins]]
 repo = 'Shougo/neoinclude.vim'
 on_i = 1
 hook_add = '''
