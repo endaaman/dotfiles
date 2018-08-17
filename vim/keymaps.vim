@@ -36,7 +36,7 @@ noremap N Nzz
 noremap G Gzz
 
 nnoremap <expr> i IndentWithI()
-" nnoremap * *zz
+nnoremap * :<C-u>let @/=expand("<cword>")\|set hlsearch<CR>
 nnoremap <Space>w :<C-u>let @/=expand("<cword>")\|set hlsearch<CR>
 nnoremap # #zz
 nnoremap o o<Esc>
