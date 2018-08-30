@@ -7,9 +7,10 @@ xkb_symbols "mod4" {
 
 xkb_symbols "us_base" {
   key <CAPS> {[ Escape ]};
-  key <RALT> {[ Henkan_Mode ]};
+  key <RALT> {[ Henkan_Mode, Henkan_Mode ]};
   key <RTSH> {[ Muhenkan ]};
   key <AC10> {[ colon, semicolon ]};
+  modifier_map Mod1 { Alt_L };
 };
 
 xkb_symbols "escape_as_grave" {

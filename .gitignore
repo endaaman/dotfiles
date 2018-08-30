@@ -2,3 +2,4 @@ vim/local.vim
 tym/local.lua
 fonts/.uuid
 xkb/keymap/current
+Xmodmap

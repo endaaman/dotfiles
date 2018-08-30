@@ -18,4 +18,4 @@ keycode 47 = colon semicolon
 ! 47: Insert
 keycode 118 = Home
 ! 119: Delete
-! keycode 119 = End
+keycode 119 = End

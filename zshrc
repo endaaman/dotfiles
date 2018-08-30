@@ -92,7 +92,7 @@ alias cb='xsel --clipboard --input'
 alias cbp='xsel --clipboard --output'
 alias psp='ps aux | fzf'
 
-# alias xm='setxkbmap -rules evdev -model us -layout us && xmodmap ~/dotfiles/Xmodmap_us'
+alias xm='setxkbmap && xmodmap ~/.Xmodmap'
 # alias xmj='setxkbmap -rules evdev -model jp106 -layout jp && xmodmap ~/dotfiles/Xmodmap_jis'
 alias path="echo \$PATH | sed 's/:/\\n/g'"
 

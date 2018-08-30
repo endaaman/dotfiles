@@ -112,9 +112,7 @@ python=false
 ruby=false
 zplug=false
 dein=false
-xm_us=false
-xm_jis=false
-xm_va86=false
+xm=false
 
 for i in "$@" ; do
   case "$i" in
@@ -123,6 +121,7 @@ for i in "$@" ; do
     'ruby'   | 'rb'   ) ruby=true ;;
     'zplug'  | 'zp'   ) zplug=true ;;
     'dein'   | 'dn'   ) dein=true ;;
+    'xm'              ) xm=true ;;
     'all' )
       nodejs=true
       python=true
@@ -132,6 +131,10 @@ for i in "$@" ; do
       ;;
   esac
 done
+
+if $xm; then
+  ln -sf Xmodmap ~/.Xmodmap
+fi
 
 if [ `which setxkbmap` ] && [[ -e ~/.Xmodmap ]]; then
   setxkbmap && xmodmap ~/.Xmodmap
