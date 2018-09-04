@@ -87,14 +87,18 @@ endif
 
 if has('gui_running')
   set ambiwidth=double
-  set guifont = Monospace\ 10
+  set guifont=Monospace\ 10
   autocmd! EN VimEnter * set lines=40
-  autocmd! EN VimEnter * set columna=120
+  autocmd! EN VimEnter * set columns=120
 endif
 
 if exists('g:has_custom_font')
-  set listchars=tab:\\ ,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
   set showbreak=↳
+  if has('gui_running')
+    set listchars=tab:>-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
+  else
+    set listchars=tab:\\ ,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
+  endif
 endif
 
 autocmd EN InsertLeave * set cursorline | set cursorcolumn
