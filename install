@@ -112,16 +112,16 @@ python=false
 ruby=false
 zplug=false
 dein=false
-xm=false
+firefox=false
 
 for i in "$@" ; do
   case "$i" in
-    'nodejs' | 'node' ) nodejs=true ;;
-    'python' | 'py'   ) python=true ;;
-    'ruby'   | 'rb'   ) ruby=true ;;
-    'zplug'  | 'zp'   ) zplug=true ;;
-    'dein'   | 'dn'   ) dein=true ;;
-    'xm'              ) xm=true ;;
+    'nodejs'  | 'node' ) nodejs=true ;;
+    'python'  | 'py'   ) python=true ;;
+    'ruby'    | 'rb'   ) ruby=true ;;
+    'zplug'   | 'zp'   ) zplug=true ;;
+    'dein'    | 'dn'   ) dein=true ;;
+    'firefox' | 'ff'   ) firefox=true ;;
     'all' )
       nodejs=true
       python=true
@@ -132,11 +132,24 @@ for i in "$@" ; do
   esac
 done
 
-if $xm; then
-  ln -sf Xmodmap ~/.Xmodmap
+if $firefox; then
+  echo -e "${CYAN}nstalling Firefox config${NC}"
+  dir=`find ~/.mozilla/firefox/ -maxdepth 1 | grep default`
+  if [[ -d $dir ]]; then
+    dir2=`echo $dir/chrome`
+    if [[ -e $dir2 ]]; then
+      echo -e "${CYAN}'$dir2' already exists${NC}"
+    else
+      echo -e "${CYAN}Linked '~/dotfiles/misc/firefox' to '$dir2'${NC}"
+      ln -sn ~/dotfiles/misc/firefox $dir2
+    fi
+  else
+    echo -e "${CYAN}Firefox config directory does not exist.${NC}"
+  fi
 fi
 
-if [ `which setxkbmap` ] && [[ -e ~/.Xmodmap ]]; then
+if [ `which setxkbmap` ] && [[ -e ~/dotfiles/Xmodmap ]]; then
+  ln -sf ~/dotfiles/Xmodmap ~/.Xmodmap
   setxkbmap && xmodmap ~/.Xmodmap
   echo -e "${CYAN}Loaded Xmodmap${NC}"
 fi
