@@ -1,6 +1,8 @@
+local home = os.getenv('HOME')
+
 config.width = 120
 config.height = 32
-config.shell = os.getenv('HOME') .. '/dotfiles/bin/tmux-attach-or-new'
+config.shell = home .. '/dotfiles/bin/tmux-attach-or-new'
 config.title = 'tym'
 config.cursor_blink_mode = 'off'
 config.cjk_width = 'narrow'
@@ -12,7 +14,7 @@ keymap['<Ctrl><Shift>r'] = function()
   tym.notify('reloaded')
 end
 
-dofile(os.getenv('HOME') .. '/.config/tym/colors/iceberg.lua')
+dofile(home .. '/.config/tym/colors/iceberg.lua')
 
 function safe_dofile(path)
   local f = io.open(path, 'r')
@@ -21,7 +23,7 @@ function safe_dofile(path)
     dofile(path)
   end
 end
-safe_dofile(os.getenv('HOME') .. '/.config/tym/local.lua')
+safe_dofile(home .. '/.config/tym/local.lua')
 
 -- color_0  : black (background)
 -- color_1  : red
