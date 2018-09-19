@@ -69,6 +69,9 @@ function! DeniteActionXdgOpen(context)
   execute '!xdg-open ' . a:context.targets[0].action__path
 endfunction
 
+function! DeniteActionPrepend(context)
+  execute ":normal i" . a:context.targets[0].action__text
+endfunction
 
 
 let s:hooks = []

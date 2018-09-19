@@ -13,9 +13,6 @@ depends = ['vimproc', 'unite.vim']
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
 on_i = 1
-hook_post_source = '''
-  execute 'UpdateRemotePlugin'
-'''
 hook_add = '''
   let g:deoplete#enable_at_startup = 1
   let g:deoplete#enable_smart_case = 1
@@ -41,9 +38,6 @@ hook_source = '''
 [[plugins]]
 repo = 'Shougo/denite.nvim'
 depends = ['vimproc', 'unite.vim', 'unite-outline']
-hook_post_source = '''
-  execute 'UpdateRemotePlugin'
-'''
 hook_add = '''
   call denite#custom#map(
     \ '_',
@@ -106,6 +100,8 @@ hook_add = '''
 
   call denite#custom#action('file', 'xdg-open', 'DeniteActionXdgOpen')
 
+  call denite#custom#action('word', 'prepend', 'DeniteActionPrepend')
+
   call denite#custom#filter('matcher_ignore_globs', 'ignore_globs', [
     \ '*~', '*.o', '*.exe', '*.bak',
     \ '.DS_Store', '*.pyc', '*.sw[po]', '*.class',
@@ -127,8 +123,11 @@ hook_add = '''
   nnoremap <Space>G :<C-u>Denite grep -input=`@0`<CR>
   nnoremap <Space>W :<C-u>Denite grep -no-empty -input=`expand("<cword>")`<CR>
   nnoremap <Space>r :<C-u>Denite register<CR>
+  nnoremap <Space>R :<C-u>Denite register -default-action=prepend<CR>
   nnoremap <Space>c :<C-u>Denite colorscheme<CR>
   nnoremap <Space>h :<C-u>Denite help<CR>
+  nnoremap <Space>p :<C-u>Denite neoyank<CR>
+  nnoremap <Space>P :<C-u>Denite neoyank -default-action=prepend<CR>
   nnoremap <Space>d :<C-u>Denite git/untracked git/staged git/modified<CR>
   " nnoremap <Space>f :<C-u>Denite git/all<CR>
   nnoremap <Space>f :<C-u>Denite `finddir('.git', ';') != '' ? 'git/all' : 'file_rec'`<CR>

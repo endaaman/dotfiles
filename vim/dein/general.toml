@@ -16,6 +16,9 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'Shougo/neoyank.vim'
+
+[[plugins]]
 repo = 'kana/vim-textobj-user'
 
 [[plugins]]
