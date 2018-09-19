@@ -18,6 +18,7 @@ mkdir -p ~/.config/peco
 mkdir -p ~/.config/byobu
 mkdir -p ~/.config/nyaovim
 mkdir -p ~/.config/termite
+mkdir -p ~/.mpv
 mkdir -p ~/.local/share/fonts
 mkdir -p ~/src
 mkdir -p ~/wineprefixes
@@ -58,6 +59,9 @@ ln -fsn ~/dotfiles/tym ~/.config/tym
 
 # termite
 ln -fs ~/dotfiles/termite/config ~/.config/termite/config
+
+# mpv
+ln -fs ~/dotfiles/mpv.conf ~/.mpv/input.conf
 
 # fonts
 ln -fs ~/dotfiles/fonts.conf ~/.config/fontconfig/fonts.conf
