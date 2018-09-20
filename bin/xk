@@ -3,5 +3,4 @@
 set -eux
 
 setxkbmap
-setxkbmap -option caps:none
 xkbcomp -I$HOME/.xkb ~/.xkb/keymap/current $DISPLAY
