@@ -33,7 +33,6 @@ if [ -d ~/.zplug -a $is_root = false ]; then
   RPROMPT='$(git_super_status)'
 fi
 
-
 ###* Prompt
 
 if [ -n "$container" ] || [ -n "$SSH_CLIENT" ]; then
@@ -48,7 +47,6 @@ fi
 if [ -n "$pre_prompt_content" ]; then
   pre_prompt="($pre_prompt_content)"
 fi
-
 dirname="%F{cyan}%~%f"
 
 if $is_root; then
@@ -235,17 +233,21 @@ fi
 
 ###* *env
 
+if [ -d ~/.cargo ]; then
+  export PATH=~/.cargo/bin:$PATH
+  export RUST_BACKTRACE=1
+fi
+
 if [ -d ~/.nodebrew ]; then
   export PATH=~/.nodebrew/current/bin:$PATH
   nodebrew use 10 1>/dev/null
-  fpath=(~/.nodebrew/completions/zsh $fpath)
+  fpath+=~/.nodebrew/completions/zsh
 fi
 
 if [ -d ~/.rbenv ]; then
   export PATH=~/.rbenv/bin:$PATH
   eval "$(rbenv init -)"
 fi
-
 
 if [ -d ~/.pyenv ]; then
   export PYENV_VIRTUALENV_DISABLE_PROMPT=1
@@ -274,6 +276,8 @@ export OPAMKEEPBUILDDIR=1
 
 
 ###* Option
+
+fpath+=~/.zsh/completions
 
 # setopt ignoreeof # disable C-d
 setopt always_last_prompt

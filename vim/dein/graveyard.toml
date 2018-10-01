@@ -231,14 +231,6 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'rust-lang/rust.vim'
-on_ft = ['rust']
-hook_add = '''
-  let g:rustfmt_autosave = 1
-  let g:rustfmt_command = $HOME . '/.cargo/bin/rustfmt'
-'''
-
-[[plugins]]
 repo = 'udalov/kotlin-vim'
 on_ft = ['kotlin']
 

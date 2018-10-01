@@ -114,6 +114,7 @@ changed=false
 nodejs=false
 python=false
 ruby=false
+rust=false
 zplug=false
 dein=false
 firefox=false
@@ -123,6 +124,7 @@ for i in "$@" ; do
     'nodejs'  | 'node' ) nodejs=true ;;
     'python'  | 'py'   ) python=true ;;
     'ruby'    | 'rb'   ) ruby=true ;;
+    'rust'    | 'rs'   ) rust=true ;;
     'zplug'   | 'zp'   ) zplug=true ;;
     'dein'    | 'dn'   ) dein=true ;;
     'firefox' | 'ff'   ) firefox=true ;;
@@ -224,6 +226,18 @@ if $ruby; then
     git pull
     cd
     echo
+  fi
+fi
+
+
+if $rust; then
+  changed=true
+  echo -e "${CYAN}Installing rust components${NC}"
+  if [ -d ~/.rustup ]; then
+    p=~/.zsh/completions/_rustup
+    if [ ! -f "$p" ]; then
+      rustup completions zsh > $p
+    fi
   fi
 fi
 

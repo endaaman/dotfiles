@@ -36,6 +36,24 @@ hook_source = '''
 '''
 
 [[plugins]]
+repo = 'sebastianmarkow/deoplete-rust'
+depends = ['deoplete']
+on_ft = ['rust']
+hook_add = '''
+  " TODO: use
+  "   system('which racer')
+  " and
+  "   system('rustc --print sysroot')
+  let g:deoplete#sources#rust#racer_binary=$HOME . '/.cargo/bin/racer'
+  let g:deoplete#sources#rust#rust_source_path=$HOME . '/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
+
+  let g:deoplete#sources#rust#show_duplicates = 1
+  let g:deoplete#sources#rust#disable_keymap = 1
+  nnoremap <buffer> gd <plug>DeopleteRustGoToDefinitionDefault
+  nnoremap <buffer> K  <plug>DeopleteRustShowDocumentation
+'''
+
+[[plugins]]
 repo = 'Shougo/denite.nvim'
 depends = ['vimproc', 'unite.vim', 'unite-outline']
 hook_add = '''
