@@ -29,7 +29,7 @@ set nobackup
 set noswapfile
 set number
 set ruler
-set scrolloff=10
+set scrolloff=15
 set shell=bash
 set shiftwidth=2
 set showcmd
