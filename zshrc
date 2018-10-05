@@ -107,6 +107,8 @@ alias T='tail'
 alias W='wc'
 alias F='fzf'
 
+alias make_today_dir='mkdir $(date "+%Y%m%d")'
+
 if which trash-put &> /dev/null; then
   alias rm='trash-put'
 fi
@@ -188,15 +190,21 @@ zle -N run-fglast
 
 
 function exec-history {
-  a=$(history -n -r 1 | fzf --no-sort +m --query "$LBUFFER")
-  exec $a
+  local a=$(history -n -r 1 | fzf --no-sort +m --query "$BUFFER")
+  if [[ -n $a ]]; then
+    LBUFFER=$a
+    RBUFFER=""
+    zle accept-line
+  fi
+  zle reset-prompt
 }
 zle -N exec-history
 
 function feed-history {
-  a=$(history -n -r 1 | fzf --no-sort +m --query "$LBUFFER")
-  if [[ ! -z $a ]]; then
+  a=$(history -n -r 1 | fzf --no-sort +m --query "$BUFFER")
+  if [[ -n $a ]]; then
     LBUFFER=$a
+    RBUFFER=""
   fi
   zle reset-prompt
 }
