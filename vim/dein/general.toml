@@ -90,6 +90,13 @@ repo = 'jiangmiao/auto-pairs'
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
+hook_add = '''
+  " do sync
+  " let g:gitgutter_async = 0
+  " noremap <silent> <C-j> :<C-u>GitGutterNextHunk
+  " noremap <silent> <C-k> :<C-u>GitGutterPrevHunk
+  autocmd! EN BufWritePost * :GitGutter
+'''
 
 [[plugins]]
 repo = 'rhysd/conflict-marker.vim'
