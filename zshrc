@@ -186,20 +186,22 @@ function run-fglast {
 zle -N run-fglast
 
 function select-history {
-  zle push-input
-  BUFFER=$(history -n -r 1 | fzf --no-sort +m --query "$LBUFFER" --prompt="History > ")
-  zle accept-line
-  # CURSOR=$#BUFFER
+  a=$(history -n -r 1 | fzf --no-sort --query "$LBUFFER")
+  if [[ ! -z $a ]]; then
+    LBUFFER=$a
+  fi
+  zle reset-prompt
 }
 zle -N select-history
+
 
 # key bindings
 bindkey -e
 bindkey "^m" magic-return
 bindkey '^s' copy-buffer
-bindkey '^@' clear-screen
 bindkey '^z' run-fglast
-bindkey '^g' select-history
+bindkey '^o' eee
+bindkey '^j' select-history
 bindkey '^[[Z' reverse-menu-complete
 
 bindkey '^[[1~' beginning-of-line
@@ -302,12 +304,15 @@ setopt extended_glob
 setopt extended_history
 setopt glob
 setopt glob_complete
+setopt hist_expand
 setopt hist_ignore_all_dups
 setopt hist_ignore_dups
 setopt hist_ignore_space
 setopt hist_no_store
 setopt hist_reduce_blanks
+setopt hist_save_no_dups
 setopt hist_verify
+setopt inc_append_history
 setopt list_packed
 setopt list_types
 setopt magic_equal_subst
