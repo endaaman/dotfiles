@@ -49,8 +49,8 @@ hook_add = '''
 
   let g:deoplete#sources#rust#show_duplicates = 1
   let g:deoplete#sources#rust#disable_keymap = 1
-  nnoremap <buffer> gd <plug>DeopleteRustGoToDefinitionDefault
-  nnoremap <buffer> K  <plug>DeopleteRustShowDocumentation
+  nnoremap <buffer> <Space>gd <plug>DeopleteRustGoToDefinitionDefault
+  nnoremap <buffer> <Space>K  <plug>DeopleteRustShowDocumentation
 '''
 
 [[plugins]]

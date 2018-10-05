@@ -1,5 +1,6 @@
 # Define reload alias at least
-alias rr='exec zsh -l'
+
+alias r='exec zsh -l'
 
 if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
   zcompile ~/.zshrc
@@ -185,14 +186,21 @@ function run-fglast {
 }
 zle -N run-fglast
 
-function select-history {
-  a=$(history -n -r 1 | fzf --no-sort --query "$LBUFFER")
+
+function exec-history {
+  a=$(history -n -r 1 | fzf --no-sort +m --query "$LBUFFER")
+  exec $a
+}
+zle -N exec-history
+
+function feed-history {
+  a=$(history -n -r 1 | fzf --no-sort +m --query "$LBUFFER")
   if [[ ! -z $a ]]; then
     LBUFFER=$a
   fi
   zle reset-prompt
 }
-zle -N select-history
+zle -N feed-history
 
 
 # key bindings
@@ -201,7 +209,9 @@ bindkey "^m" magic-return
 bindkey '^s' copy-buffer
 bindkey '^z' run-fglast
 bindkey '^o' eee
-bindkey '^j' select-history
+bindkey '^j' exec-history
+bindkey '^r' feed-history
+bindkey '^t' rr
 bindkey '^[[Z' reverse-menu-complete
 
 bindkey '^[[1~' beginning-of-line
