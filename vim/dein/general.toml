@@ -124,11 +124,12 @@ repo = 'neomake/neomake'
 # depends = ['vim-javacomplete2']
 hook_add = '''
   autocmd! EN BufEnter * Neomake
-  autocmd! EN BufWritePre * :call NeomakeIfModified()
-  function! NeomakeIfModified()
-    if &modified
-      Neomake
-    endif
+  autocmd! EN BufWritePre * :call NeomakeLocal()
+  function! NeomakeLocal()
+    Neomake
+    " if &modified
+    "   Neomake
+    " endif
   endfunction
 
   let g:neomake_python_python_exe = 'python3'
