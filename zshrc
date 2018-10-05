@@ -185,12 +185,21 @@ function run-fglast {
 }
 zle -N run-fglast
 
+function select-history {
+  zle push-input
+  BUFFER=$(history -n -r 1 | fzf --no-sort +m --query "$LBUFFER" --prompt="History > ")
+  zle accept-line
+  # CURSOR=$#BUFFER
+}
+zle -N select-history
+
 # key bindings
 bindkey -e
 bindkey "^m" magic-return
 bindkey '^s' copy-buffer
 bindkey '^@' clear-screen
 bindkey '^z' run-fglast
+bindkey '^g' select-history
 bindkey '^[[Z' reverse-menu-complete
 
 bindkey '^[[1~' beginning-of-line
