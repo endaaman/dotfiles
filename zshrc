@@ -190,7 +190,7 @@ zle -N run-fglast
 
 
 function exec-history {
-  local a=$(history -n -r 1 | fzf --no-sort +m --query "$BUFFER")
+  local a=$(history -r 1 | fzf --no-sort +m --query "$BUFFER" | sed 's/ *[0-9]* *//')
   if [[ -n $a ]]; then
     LBUFFER=$a
     RBUFFER=""
@@ -201,7 +201,7 @@ function exec-history {
 zle -N exec-history
 
 function feed-history {
-  a=$(history -n -r 1 | fzf --no-sort +m --query "$BUFFER")
+  a=$(history -r 1 | fzf --no-sort +m --query "$BUFFER" | sed 's/ *[0-9]* *//')
   if [[ -n $a ]]; then
     LBUFFER=$a
     RBUFFER=""
