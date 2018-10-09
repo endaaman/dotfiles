@@ -1,3 +1,4 @@
+# vi: set ft=toml :
 [include]
   path = ~/.gitconfig_local
 [core]
@@ -32,6 +33,7 @@
   rb = rebase
   rr = !git rm -r --cached . > /dev/null && git add .
   rs = reset
+  ri = "!f() { p=$1; shift; git reset @~$p $*; }; f"
   rsf = checkout HEAD --
   s = status -u
   st = stash
