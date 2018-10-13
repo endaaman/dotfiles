@@ -1,20 +1,30 @@
+local tym = require('tym')
 local home = os.getenv('HOME')
 
-config.width = 120
-config.height = 32
-config.shell = home .. '/dotfiles/bin/tmux-attach-or-new'
-config.title = 'tym'
-config.cursor_blink_mode = 'off'
-config.cjk_width = 'narrow'
-config.use_default_keymap = true
+tym.set_config({
+  width = 120,
+  height = 32,
+  shell = home .. '/dotfiles/bin/tmux-attach-or-new',
+  title = 'tym',
+  cursor_blink_mode = 'off',
+  autohide = true,
+})
 
-keymap = {}
-keymap['<Ctrl><Shift>r'] = function()
-  tym.reload()
-  tym.notify('reloaded')
+tym.set_keymaps({
+  ['<Ctrl><Shift>r'] = function()
+    tym.reload()
+    tym.notify('reloaded')
+  end
+})
+local overwrite = function (a, b)
+  tym.set_keymap(a, function()
+    tym.send_key(b)
+  end)
 end
-
-dofile(home .. '/.config/tym/colors/iceberg.lua')
+overwrite('<Alt>h', '<Alt>Left')
+overwrite('<Alt>l', '<Alt>Right')
+overwrite('<Alt>k', '<Alt>Up')
+overwrite('<Alt>j', '<Alt>Down')
 
 function safe_dofile(path)
   local f = io.open(path, 'r')
