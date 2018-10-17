@@ -5,7 +5,6 @@ tym.set_config({
   width = 120,
   height = 32,
   shell = home .. '/dotfiles/bin/tmux-attach-or-new',
-  title = 'tym',
   cursor_blink_mode = 'off',
   autohide = true,
 })
@@ -23,8 +22,8 @@ local overwrite = function (a, b)
 end
 overwrite('<Alt>h', '<Alt>Left')
 overwrite('<Alt>l', '<Alt>Right')
-overwrite('<Alt>k', '<Alt>Up')
-overwrite('<Alt>j', '<Alt>Down')
+overwrite('<Alt><Shift>h', '<Alt><Shift>Left')
+overwrite('<Alt><Shift>l', '<Alt><Shift>Right')
 
 function safe_dofile(path)
   local f = io.open(path, 'r')

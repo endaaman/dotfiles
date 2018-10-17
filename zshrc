@@ -188,6 +188,16 @@ function run-fglast {
 }
 zle -N run-fglast
 
+function cd-ghq {
+  local a=$(ghq list -p | fzf --no-sort +m --query "$BUFFER")
+  if [[ -n $a ]]; then
+    LBUFFER="cd $a"
+    RBUFFER=""
+    zle accept-line
+  fi
+  zle reset-prompt
+}
+zle -N cd-ghq
 
 function exec-history {
   local a=$(history -r 1 | fzf --no-sort +m --query "$BUFFER" | sed 's/ *[0-9]* *//')
@@ -220,6 +230,7 @@ bindkey '^o' eee
 bindkey '^j' exec-history
 bindkey '^r' feed-history
 bindkey '^t' rr
+bindkey '^g' cd-ghq
 bindkey '^[[Z' reverse-menu-complete
 
 bindkey '^[[1~' beginning-of-line
