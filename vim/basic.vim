@@ -105,6 +105,5 @@ autocmd EN InsertLeave * set cursorline | set cursorcolumn
 autocmd EN InsertEnter * set nocursorline | set nocursorcolumn
 autocmd EN BufWritePre * call TrimTrailingSpaces()
 autocmd EN BufWritePre * %s/\t\+$//e
-autocmd EN BufEnter * set conceallevel=2
+autocmd EN BufEnter * set conceallevel=0
 autocmd EN VimEnter * call LoadLocalVimConfig()
-
