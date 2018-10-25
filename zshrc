@@ -1,6 +1,8 @@
 # Define reload alias at least
-
 alias r='exec zsh -l'
+
+# Performance profiling
+# zmodload zsh/zprof && zprof
 
 if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
   zcompile ~/.zshrc
@@ -398,3 +400,9 @@ if [ -f ~/.zshrc.local ]; then
 fi
 
 compdef _docker nvidia-docker
+
+
+# Performance profiling
+# if (which zprof > /dev/null) ;then
+#   zprof | less
+# fi
