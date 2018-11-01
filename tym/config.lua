@@ -33,20 +33,3 @@ function safe_dofile(path)
   end
 end
 safe_dofile(home .. '/.config/tym/local.lua')
-
--- color_0  : black (background)
--- color_1  : red
--- color_2  : green
--- color_3  : brown
--- color_4  : blue
--- color_5  : purple
--- color_6  : cyan
--- color_7  : light gray (foreground)
--- color_8  : gray
--- color_9  : light red
--- color_10 : light green
--- color_11 : yellow
--- color_12 : light blue
--- color_13 : pink
--- color_14 : light cyan
--- color_15 : white

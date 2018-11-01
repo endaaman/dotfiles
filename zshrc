@@ -50,14 +50,14 @@ fi
 if [ -n "$pre_prompt_content" ]; then
   pre_prompt="($pre_prompt_content)"
 fi
-dirname="%F{cyan}%~%f"
+dirname="%F{006}%~%f"
 
 if $is_root; then
   prompt_symbol='#'
 else
   prompt_symbol='$'
 fi
-prompt_colored_symbol="%(?.%F{yellow}.%F{red})$prompt_symbol%f"
+prompt_colored_symbol="%(?.%F{011}.%F{001})$prompt_symbol%f"
 
 PROMPT="$pre_prompt$dirname $prompt_colored_symbol "
 
@@ -228,7 +228,6 @@ bindkey -e
 bindkey "^m" magic-return
 bindkey '^s' copy-buffer
 bindkey '^z' run-fglast
-bindkey '^o' eee
 bindkey '^j' exec-history
 bindkey '^r' feed-history
 bindkey '^t' rr

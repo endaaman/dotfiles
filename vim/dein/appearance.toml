@@ -1,7 +1,7 @@
 [[plugins]]
 repo = 'chriskempson/base16-vim'
 hook_add = '''
-  " autocmd EN VimEnter * nested colorscheme base16-default-dark
+  " autocmd EN VimEnter * nested colorscheme base16-classic-dark
 '''
 
 [[plugins]]
@@ -24,10 +24,26 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'arcticicestudio/nord-vim'
+hook_add = '''
+  " autocmd EN VimEnter * nested colorscheme nord
+'''
+
+[[plugins]]
+repo = 'ayu-theme/ayu-vim'
+hook_add = '''
+  " let ayucolor="light"
+  let ayucolor="mirage"
+  " let ayucolor="dark"
+  " autocmd EN VimEnter * nested colorscheme ayu
+'''
+
+[[plugins]]
 repo = 'itchyny/lightline.vim'
 hook_add = '''
   source ~/.vim/dein/sub/lightline.vim
   let g:lightline.colorscheme = 'iceberg'
+  " let g:lightline.colorscheme = 'nord'
   " let g:lightline.colorscheme = 'hybrid'
 '''
 

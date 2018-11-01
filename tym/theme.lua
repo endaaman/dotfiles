@@ -1,1 +1,1 @@
-/home/ken/dotfiles/tym/themes/iceberg.lua
+themes/iceberg.lua
