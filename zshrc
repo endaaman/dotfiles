@@ -109,7 +109,7 @@ alias T='tail'
 alias W='wc'
 alias F='fzf'
 
-alias make_today_dir='mkdir $(date "+%Y%m%d")'
+alias makedir_today='mkdir $(date "+%Y%m%d")'
 
 if which trash-put &> /dev/null; then
   alias rm='trash-put'
