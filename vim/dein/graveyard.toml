@@ -344,3 +344,13 @@ hook_add = '''
     \ })
   endif
 '''
+
+
+[[plugins]]
+repo = 'autozimu/LanguageClient-neovim'
+build = 'bash ./install.sh'
+hook_add = '''
+  let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ }
+'''

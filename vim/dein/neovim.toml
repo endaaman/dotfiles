@@ -15,8 +15,6 @@ repo = 'Shougo/deoplete.nvim'
 on_i = 1
 hook_add = '''
   let g:deoplete#enable_at_startup = 1
-  let g:deoplete#enable_smart_case = 1
-  let g:deoplete#enable_ignore_case = 0
   if !exists('g:deoplete#omni#input_patterns')
     let g:deoplete#omni#input_patterns = {}
   endif
@@ -28,7 +26,7 @@ hook_add = '''
 '''
 hook_source = '''
   call deoplete#custom#option({
-    \ 'auto_complete_delay': 200,
+    \ 'auto_complete_delay': 100,
     \ 'camel_case': v:true,
     \ 'ignore_case': v:false,
     \ 'smart_case': v:true,
@@ -195,13 +193,4 @@ hook_add = '''
   endif
 
   " call denite#custom#source('file_mru', 'converters', ['converter_relative_word'])
-'''
-
-[[plugins]]
-repo = 'autozimu/LanguageClient-neovim'
-build = 'bash ./install.sh'
-hook_add = '''
-  let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-    \ }
 '''
