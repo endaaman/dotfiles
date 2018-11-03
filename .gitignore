@@ -1,5 +1,6 @@
 vim/local.vim
 tym/local.lua
+tym/theme.lua
 fonts/.uuid
 xkb/keymap/current
 Xmodmap

@@ -51,4 +51,5 @@ hook_add = '''
 repo = 'endaaman/lightline-hybrid.vim'
 depends = ['lightline.vim']
 hook_add = '''
+ " let g:hybrid_reduced_contrast = 1
 '''
