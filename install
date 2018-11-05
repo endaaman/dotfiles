@@ -260,6 +260,7 @@ fi
 
 if $dein; then
   changed=true
+  dein_base_dir=~/.cache/dein/repos/github.com/Shougo
   dein_dir=$dein_base_dir/dein.vim
   mkdir -p "$dein_base_dir"
   if [ ! -d $dein_dir ]; then

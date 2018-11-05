@@ -2,5 +2,5 @@
 
 set -eux
 
-setxkbmap -option caps:none
+setxkbmap -option
 xmodmap /home/ken/.Xmodmap
