@@ -70,8 +70,9 @@ Composition	End	MoveCursorToEnd
 Conversion	End	SegmentFocusLast
 Composition	Enter	Commit
 Conversion	Enter	Commit
-Composition	ESC	Cancel
-Conversion	ESC	Cancel
+Composition	Escape	Cancel
+Conversion	Escape	Cancel
+DirectInput	Escape	IMEOff
 Composition	F10	ConvertToHalfAlphanumeric
 Conversion	F10	ConvertToHalfAlphanumeric
 DirectInput	F13	IMEOn
