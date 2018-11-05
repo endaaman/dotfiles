@@ -134,8 +134,8 @@ hook_add = '''
 
   let g:neomake_python_python_exe = 'python3'
   let g:neomake_python_enabled_makers = ['python']
-
   let g:neomake_php_enabled_makers = ['']
+  let g:neomake_markdown_enabled_makers = ['']
 
   nnoremap <Space>n :<C-u>Neomake<CR>
   let g:neomake_open_list = 0

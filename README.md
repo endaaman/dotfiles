@@ -6,7 +6,7 @@
 
 - Neovim
 - Vim
-- Zsh 
+- Zsh
 - tmux
 - Xmodmap
 - fonts.conf

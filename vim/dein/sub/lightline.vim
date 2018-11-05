@@ -12,6 +12,7 @@ let g:lightline.active = {}
 let g:lightline.active.left = [
   \   [ 'mode', 'paste' ],
   \   [ 'dirname', 'filename' ],
+  \   [ 'neomake', ],
   \ ]
 let g:lightline.active.right = [
   \   [ 'syntastic', 'lineinfo' ],
@@ -23,6 +24,7 @@ let g:lightline.component_function = {
   \   'fugitive': 'LightLineFugitive',
   \   'dirname': 'LightlineDirname',
   \   'filename': 'LightlineFilename',
+  \   'neomake': 'LightlineNeomake',
   \   'fileformat': 'LightlineFileformat',
   \   'filetype': 'LightlineFiletype',
   \   'fileencoding': 'LightlineFileencoding',
@@ -113,6 +115,31 @@ function! LightlineFilename()
     \ (&readonly ? ' ' : '') .
     \ fname .
     \ (&modified ? ' +' : '')
+endfunction
+
+function! LightlineNeomake()
+  let running = neomake#statusline#get(bufnr('%'), {
+    \ 'format_running': '… ({{running_job_names}})',
+    \ })
+  if running
+    return running
+  endif
+  let mm = []
+  let stats = neomake#statusline#LoclistCounts()
+  if has_key(stats, 'E')
+    call add(mm, ':' . stats['E'])
+  endif
+  if has_key(stats, 'W')
+    call add(mm, ':' . stats['W'])
+  endif
+  if has_key(stats, 'x')
+    call add(mm, 'x:' . stats['x'])
+  endif
+  if len(mm)
+    return join(mm, ' ')
+  else
+    return '✓'
+  endif
 endfunction
 
 function! LightlineFileformat()
