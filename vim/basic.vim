@@ -10,8 +10,8 @@ set autoindent
 set background=dark
 set backspace=indent,eol,start
 set backupdir=~/.cache/vim
-set cursorline
 set cursorcolumn
+set cursorline
 set directory=~/.cache/vim
 set expandtab
 set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
@@ -37,6 +37,7 @@ set showmatch
 set smartcase
 set smarttab
 set softtabstop=2
+set switchbuf=usetab
 set tabstop=2
 set timeout timeoutlen=1000 ttimeoutlen=50
 set undodir=~/.cache/vim
