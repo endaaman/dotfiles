@@ -306,8 +306,8 @@ if [ -d ~/.config/composer/vendor/bin ]; then
   export PATH=$PATH:$HOME/.config/composer/vendor/bin
 fi
 
-if [ -d ~/go ]; then
-  export GOPATH=~/go
+if [ -d ~/.go ]; then
+  export GOPATH=~/.go
   export PATH=$PATH:$GOPATH/bin
   export GO15VENDOREXPERIMENT=1
 fi

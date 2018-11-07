@@ -22,6 +22,7 @@ mkdir -p ~/.mpv
 mkdir -p ~/.local/share/fonts
 mkdir -p ~/src
 mkdir -p ~/wineprefixes
+mkdir -p ~/.go
 
 touch ~/.gitconfig_local
 
@@ -128,12 +129,19 @@ for i in "$@" ; do
     'zplug'   | 'zp'   ) zplug=true ;;
     'dein'    | 'dn'   ) dein=true ;;
     'firefox' | 'ff'   ) firefox=true ;;
-    'all' )
+    'std' )
+      nodejs=true
+      zplug=true
+      dein=true
+      ;;
+    'full' )
       nodejs=true
       python=true
       ruby=true
+      rust=true
       zplug=true
       dein=true
+      firefox=true
       ;;
   esac
 done
@@ -167,7 +175,7 @@ if $nodejs; then
     echo -e "${CYAN}Installing nodebrew${NC}"
     curl -L git.io/nodebrew | perl - setup
     echo -e "${CYAN}Installing node.js v7${NC}"
-    ~/.nodebrew/nodebrew install-binary v9
+    ~/.nodebrew/nodebrew install-binary 10
   else
     echo -e "${CYAN}Updating nodebrew${NC}"
     ~/.nodebrew/nodebrew selfupdate
