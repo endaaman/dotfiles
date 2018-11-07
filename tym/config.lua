@@ -24,6 +24,7 @@ overwrite('<Alt>h', '<Alt>Left')
 overwrite('<Alt>l', '<Alt>Right')
 overwrite('<Alt><Shift>h', '<Alt><Shift>Left')
 overwrite('<Alt><Shift>l', '<Alt><Shift>Right')
+overwrite('<Alt>t', '<Ctrl><Alt>t')
 
 function safe_dofile(path)
   local f = io.open(path, 'r')
