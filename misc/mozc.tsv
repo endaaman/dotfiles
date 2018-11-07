@@ -56,11 +56,11 @@ Conversion	End	SegmentFocusLast
 Composition	Enter	Commit
 Conversion	Enter	Commit
 Composition	Escape	IMEOff
-Conversion	Escape	IMEOff
+Conversion	Escape	ConvertToHiragana
 DirectInput	Escape	IMEOff
 Precomposition	Escape	IMEOff
-Prediction	Escape	IMEOff
-Suggestion	Escape	IMEOff
+Prediction	Escape	Cancel
+Suggestion	Escape	Cancel
 Composition	F10	DisplayAsHalfAlphanumeric
 Conversion	F10	DisplayAsHalfAlphanumeric
 Composition	F2	ConvertWithoutHistory
@@ -73,7 +73,7 @@ Conversion	F8	DisplayAsHalfWidth
 Composition	F9	DisplayAsFullAlphanumeric
 Conversion	F9	DisplayAsFullAlphanumeric
 DirectInput	Henkan	InputModeHiragana
-Precomposition	Henkan	InputModeHiragana
+Precomposition	Henkan	Undo
 DirectInput	Hiragana	InputModeHiragana
 Precomposition	Hiragana	InputModeHiragana
 Composition	Home	MoveCursorToBeginning

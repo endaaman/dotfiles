@@ -23,7 +23,7 @@ function! s:recache() abort
   call dein#recache_runtimepath()
 endfunction
 
-if isdirectory(s:dein_repo_dir) && dein#load_state(s:dein_repo_dir)
+if $USER != 'root' && isdirectory(s:dein_repo_dir) && dein#load_state(s:dein_repo_dir)
   function! s:load(path) abort
     if filereadable(expand(a:path))
       call dein#load_toml(a:path, {})

@@ -64,6 +64,14 @@ PROMPT="$pre_prompt$dirname $prompt_colored_symbol "
 
 ###* Alias
 
+alias A='awk'
+alias G='grep'
+alias H='head'
+alias L='less'
+alias S='sed'
+alias T='tail'
+alias W='wc'
+alias F='fzf'
 if which exa &> /dev/null; then
   alias l='exa -agbl'
   alias ll='exa -agbl'
@@ -84,32 +92,20 @@ alias xo='xdg-open $@ &> /dev/null'
 alias s='systemctl'
 alias en='export LANG=en_US.utf8'
 alias ja='export LANG=ja_JP.utf-8'
-
 alias nr='npm run'
 alias pm='python manage.py'
 alias be='bundle exec'
-
 alias cb='xsel --clipboard --input'
 alias cbp='xsel --clipboard --output'
 alias psp='ps aux | fzf'
 
-# alias xm='setxkbmap -option && xmodmap ~/.Xmodmap'
+alias xm='setxkbmap -option && xmodmap ~/.Xmodmap'
 # alias xmj='setxkbmap -rules evdev -model jp106 -layout jp && xmodmap ~/dotfiles/Xmodmap_jis'
 alias path="echo \$PATH | sed 's/:/\\n/g'"
-
 alias tap_production='export NODE_ENV=production; export RAILS_ENV=production'
 alias untap_production='unset NODE_ENV; unset RAILS_ENV'
-
-alias A='awk'
-alias G='grep'
-alias H='head'
-alias L='less'
-alias S='sed'
-alias T='tail'
-alias W='wc'
-alias F='fzf'
-
-alias makedir_today='mkdir $(date "+%Y%m%d")'
+alias makedir-today='mkdir $(date "+%Y%m%d")'
+alias mozc-config='env LANG=ja_JP.UTF-8 /usr/lib/mozc/mozc_tool --mode=config_dialog'
 
 if which trash-put &> /dev/null; then
   alias rm='trash-put'
@@ -201,6 +197,17 @@ function cd-ghq {
 }
 zle -N cd-ghq
 
+function exec-commands {
+  local a=$(whence -pmv '*' | fzf --no-sort +m --query "$BUFFER" | awk '{print $1}')
+  if [[ -n $a ]]; then
+    LBUFFER=$a
+    RBUFFER=""
+    zle accept-line
+  fi
+  zle reset-prompt
+}
+zle -N exec-commands
+
 function exec-history {
   local a=$(history -r 1 | fzf --no-sort +m --query "$BUFFER" | sed 's/ *[0-9]* *//')
   if [[ -n $a ]]; then
@@ -228,7 +235,8 @@ bindkey -e
 bindkey "^m" magic-return
 bindkey '^s' copy-buffer
 bindkey '^z' run-fglast
-bindkey '^j' exec-history
+# bindkey '^j' exec-history
+bindkey '^j' exec-commands
 bindkey '^r' feed-history
 bindkey '^t' rr
 bindkey '^g' cd-ghq

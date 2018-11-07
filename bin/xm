@@ -1,6 +1,0 @@
-#!/bin/bash
-
-set -eux
-
-setxkbmap -option
-xmodmap /home/ken/.Xmodmap
