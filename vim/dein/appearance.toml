@@ -20,7 +20,7 @@ hook_add = '''
 [[plugins]]
 repo = 'cocopon/iceberg.vim'
 hook_add = '''
-  autocmd EN VimEnter * nested colorscheme iceberg
+  autocmd! EN VimEnter * nested colorscheme iceberg
 '''
 
 [[plugins]]
