@@ -95,7 +95,7 @@ hook_add = '''
   " let g:gitgutter_async = 0
   " noremap <silent> <C-j> :<C-u>GitGutterNextHunk
   " noremap <silent> <C-k> :<C-u>GitGutterPrevHunk
-  autocmd! EN BufWritePost * :GitGutter
+  autocmd EN BufWritePost * :GitGutter
 '''
 
 [[plugins]]
@@ -123,8 +123,8 @@ repo = 'tpope/vim-fugitive'
 repo = 'neomake/neomake'
 # depends = ['vim-javacomplete2']
 hook_add = '''
-  autocmd! EN BufEnter * Neomake
-  autocmd! EN BufWritePre * :call NeomakeLocal()
+  autocmd EN BufEnter * Neomake
+  autocmd EN BufWritePre * :call NeomakeLocal()
   function! NeomakeLocal()
     Neomake
     " if &modified

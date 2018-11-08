@@ -89,8 +89,8 @@ endif
 if has('gui_running')
   set ambiwidth=double
   set guifont=Monospace\ 10
-  autocmd! EN VimEnter * set lines=40
-  autocmd! EN VimEnter * set columns=120
+  autocmd EN VimEnter * set lines=40
+  autocmd EN VimEnter * set columns=120
 endif
 
 if exists('g:has_custom_font')
@@ -102,9 +102,9 @@ if exists('g:has_custom_font')
   endif
 endif
 
-autocmd! EN InsertLeave * set cursorline | set cursorcolumn
-autocmd! EN InsertEnter * set nocursorline | set nocursorcolumn
-autocmd! EN BufWritePre * call TrimTrailingSpaces()
-autocmd! EN BufWritePre * %s/\t\+$//e
-autocmd! EN BufEnter * set conceallevel=0
-autocmd! EN VimEnter * call LoadLocalVimConfig()
+autocmd EN InsertLeave * set cursorline | set cursorcolumn
+autocmd EN InsertEnter * set nocursorline | set nocursorcolumn
+autocmd EN BufWritePre * call TrimTrailingSpaces()
+autocmd EN BufWritePre * %s/\t\+$//e
+autocmd EN BufEnter * set conceallevel=0
+autocmd EN VimEnter * call LoadLocalVimConfig()

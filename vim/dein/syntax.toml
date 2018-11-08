@@ -14,8 +14,8 @@ hook_add = '''
 repo = 'akhaku/vim-java-unused-imports'
 on_ft = ['java']
 hook_add = '''
-  autocmd! EN BufWritePost *.java UnusedImports
-  autocmd! EN BufEnter *.java UnusedImports
+  autocmd EN BufWritePost *.java UnusedImports
+  autocmd EN BufEnter *.java UnusedImports
 '''
 
 [[plugins]]

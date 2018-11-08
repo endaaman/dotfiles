@@ -56,10 +56,7 @@ hook_add = '''
     \ ]
   let g:rbpt_max = 16
   let g:rbpt_loadcmd_toggle = 0
-  augroup E
-    autocmd! E
-    autocmd Filetype scheme :RainbowParenthesesToggle
-  augroup END
+  autocmd EN Filetype scheme :RainbowParenthesesToggle
 '''
 
 [[plugins]]
