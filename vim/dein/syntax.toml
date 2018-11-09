@@ -98,5 +98,8 @@ repo = 'rhysd/rust-doc.vim'
 on_ft = 'rust'
 hook_source = '''
   let g:rust_doc#downloaded_rust_doc_dir = $HOME . '/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/share/doc/rust'
-"
+  let g:rust_doc#define_map_K = 0
+  " nnoremap <buffer><silent> <Space>K :<C-u>RustDocFuzzy `expand("<cword>")`<CR>
+  " nnoremap <buffer><silent>K :<C-u>call <SID>search_under_cursor(expand('<cword>'))<CR>
+  " vnoremap <buffer><silent>K "gy:call <SID>search_under_cursor(getreg('g'))<CR>
 '''
