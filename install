@@ -15,6 +15,7 @@ mkdir -p ~/.mlterm
 mkdir -p ~/.config/fish/functions
 mkdir -p ~/.config/fontconfig
 mkdir -p ~/.config/peco
+mkdir -p ~/.config/tym
 mkdir -p ~/.config/byobu
 mkdir -p ~/.config/nyaovim
 mkdir -p ~/.config/termite
@@ -56,7 +57,8 @@ ln -fs ~/dotfiles/Xdefaults ~/.Xdefaults
 ln -fs ~/dotfiles/Xresources ~/.Xresources
 
 # tym
-ln -fsn ~/dotfiles/tym ~/.config/tym
+ln -fs ~/dotfiles/tym/config.lua ~/.config/tym/config.lua
+ln -fs ~/dotfiles/tym/local.lua ~/.config/tym/local.lua
 
 # termite
 ln -fs ~/dotfiles/termite/config ~/.config/termite/config

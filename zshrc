@@ -104,7 +104,7 @@ alias xm='setxkbmap -option && xmodmap ~/.Xmodmap'
 alias path="echo \$PATH | sed 's/:/\\n/g'"
 alias tap_production='export NODE_ENV=production; export RAILS_ENV=production'
 alias untap_production='unset NODE_ENV; unset RAILS_ENV'
-alias makedir-today='mkdir $(date "+%Y%m%d")'
+alias mkdir_today='mkdir $(date "+%Y%m%d")'
 alias mozc-config='env LANG=ja_JP.UTF-8 /usr/lib/mozc/mozc_tool --mode=config_dialog'
 
 if which trash-put &> /dev/null; then
