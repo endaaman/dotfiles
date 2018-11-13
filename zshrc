@@ -236,8 +236,8 @@ bindkey "^m" magic-return
 bindkey '^s' copy-buffer
 bindkey '^z' run-fglast
 # bindkey '^j' exec-history
-bindkey '^j' exec-commands
-bindkey '^r' feed-history
+bindkey '^r' exec-commands
+bindkey '^j' feed-history
 bindkey '^t' rr
 bindkey '^g' cd-ghq
 bindkey '^[[Z' reverse-menu-complete
