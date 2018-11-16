@@ -12,7 +12,12 @@ tym.set_config({
 tym.set_keymaps({
   ['<Ctrl><Shift>r'] = function()
     tym.reload()
-    tym.notify('reloaded')
+    tym.notify('Reloaded')
+  end,
+  ['<Ctrl><Shift>u'] = function()
+    tym.reset_config()
+    tym.reload()
+    tym.notify('Reset and Reloaded')
   end
 })
 local overwrite = function (a, b)
