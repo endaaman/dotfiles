@@ -220,7 +220,7 @@ function exec-history {
 zle -N exec-history
 
 function feed-history {
-  a=$(history -r 1 | fzf --no-sort +m --query "$BUFFER" | sed 's/ *[0-9]* *//')
+  a=$(history -r 1 | fzf --no-sort +m --query "$BUFFER" | sed 's/ *[\*0-9]* *//')
   if [[ -n $a ]]; then
     LBUFFER=$a
     RBUFFER=""
