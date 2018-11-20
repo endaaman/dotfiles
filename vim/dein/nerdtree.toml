@@ -20,6 +20,12 @@ hook_add = '''
   let g:NERDTreeWinSize = 60
 
   autocmd FileType nerdtree setlocal nolist  "if you show hidden characters, this hides them in NERDTree
+
+  let g:NERDTreeDirArrows = 1
+  if !exists('g:rich')
+    let g:NERDTreeDirArrowExpandable = '|'
+    let g:NERDTreeDirArrowCollapsible = ''
+  endif
 '''
 
 [[plugins]]
@@ -27,22 +33,21 @@ repo = 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 [[plugins]]
 repo = 'Xuyuanp/nerdtree-git-plugin'
+if = ''' exists('g:rich') '''
 hook_add = '''
-  if exists('g:has_custom_font')
-    let g:NERDTreeIndicatorMapCustom = {
-      " \ 'Staged'    : '',
-      \ 'Staged'    : '',
-      \ 'Modified'  : '',
-      \ 'Untracked' : '',
-      \ 'Renamed'   : '➜',
-      \ 'Unmerged'  : '═',
-      \ 'Deleted'   : '✖',
-      \ 'Clean'     : '✔︎',
-      \ 'Dirty'     : '',
-      \ 'Ignored'   : '',
-      \ 'Unknown'   : '  '
-      \ }
-  endif
+  let g:NERDTreeIndicatorMapCustom = {
+    " \ 'Staged'    : '',
+    \ 'Staged'    : '',
+    \ 'Modified'  : '',
+    \ 'Untracked' : '',
+    \ 'Renamed'   : '➜',
+    \ 'Unmerged'  : '═',
+    \ 'Deleted'   : '✖',
+    \ 'Clean'     : '✔︎',
+    \ 'Dirty'     : '',
+    \ 'Ignored'   : '',
+    \ 'Unknown'   : '  '
+    \ }
 '''
 
 [[plugins]]
@@ -53,30 +58,29 @@ hook_add = '''
 
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
+if = ''' exists('g:rich') '''
 hook_add = '''
-  if exists('g:has_custom_font')
-    let g:DevIconsEnableFoldersOpenClose = 1
-    let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
-    let g:WebDevIconsUnicodeDecorateFileNodes = 1
-    let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol = ''
-    let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-    let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
+  let g:DevIconsEnableFoldersOpenClose = 1
+  let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
+  let g:WebDevIconsUnicodeDecorateFileNodes = 1
+  let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol = ''
+  let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+  let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
 
-    let g:NERDTreeDirArrowCollapsible = nr2char(8200)
-    let g:NERDTreeDirArrowExpandable = nr2char(8200)
+  let g:NERDTreeDirArrowCollapsible = nr2char(8200)
+  let g:NERDTreeDirArrowExpandable = nr2char(8200)
 
-    autocmd EN VimEnter * let g:webdevicons_conceal_nerdtree_brackets = 1
-    let g:webdevicons_conceal_nerdtree_brackets = 1
+  autocmd EN VimEnter * let g:webdevicons_conceal_nerdtree_brackets = 1
+  let g:webdevicons_conceal_nerdtree_brackets = 1
 
-    " let g:DevIconsDefaultFolderOpenSymbol = '▾'
-    " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = '▸'
-    " let g:DevIconsDefaultFolderOpenSymbol = ''
-    " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
-    " let g:DevIconsDefaultFolderOpenSymbol = ''
-    " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
-    " let g:DevIconsDefaultFolderOpenSymbol = ''
-    " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
-    let g:DevIconsDefaultFolderOpenSymbol = ''
-    let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
-  endif
+  " let g:DevIconsDefaultFolderOpenSymbol = '▾'
+  " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = '▸'
+  " let g:DevIconsDefaultFolderOpenSymbol = ''
+  " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+  " let g:DevIconsDefaultFolderOpenSymbol = ''
+  " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+  " let g:DevIconsDefaultFolderOpenSymbol = ''
+  " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+  let g:DevIconsDefaultFolderOpenSymbol = ''
+  let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
 '''

@@ -37,20 +37,19 @@ let g:lightline.component_expand = {
   \   'lineinfo': 'LightLineLineinfo',
   \ }
 
-if exists('g:has_custom_font')
-  " let g:lightline.separator = { 'left': '', 'right': '' }
-  " let g:lightline.subseparator = { 'left': '|', 'right': '|' }
-  " let g:lightline.separator = { 'left': '', 'right': '' }
-  " let g:lightline.subseparator = { 'left': '', 'right': '' }
-  " let g:lightline.separator = { 'left': '', 'right': '' }
-  " let g:lightline.subseparator = { 'left': '', 'right': '' }
-  let g:lightline.separator = { 'left': '', 'right': '' }
-  let g:lightline.subseparator = { 'left': '', 'right': '' }
-  " let g:lightline.separator = { 'left': '', 'right': '' }
-  " let g:lightline.subseparator = { 'left': '', 'right': '' }
-  " let g:lightline.separator = { 'left': '', 'right': '' }
-  " let g:lightline.subseparator = { 'left': '', 'right': '' }
-endif
+" let g:lightline.separator = { 'left': '', 'right': '' }
+" let g:lightline.subseparator = { 'left': '|', 'right': '|' }
+" let g:lightline.separator = { 'left': '', 'right': '' }
+" let g:lightline.subseparator = { 'left': '', 'right': '' }
+" let g:lightline.separator = { 'left': '', 'right': '' }
+" let g:lightline.subseparator = { 'left': '', 'right': '' }
+let g:lightline.separator = { 'left': '', 'right': '' }
+let g:lightline.subseparator = { 'left': '', 'right': '' }
+" let g:lightline.separator = { 'left': '', 'right': '' }
+" let g:lightline.subseparator = { 'left': '', 'right': '' }
+" let g:lightline.separator = { 'left': '', 'right': '' }
+" let g:lightline.subseparator = { 'left': '', 'right': '' }
+
 
 
 function! LightLinePercent()

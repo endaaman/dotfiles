@@ -40,6 +40,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'itchyny/lightline.vim'
+if = ''' exists('g:rich') '''
 hook_add = '''
   source ~/.vim/dein/sub/lightline.vim
   let g:lightline.colorscheme = 'iceberg'
@@ -49,6 +50,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'endaaman/lightline-hybrid.vim'
+if = ''' exists('g:rich') '''
 depends = ['lightline.vim']
 hook_add = '''
  " let g:hybrid_reduced_contrast = 1

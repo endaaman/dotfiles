@@ -69,6 +69,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'Yggdroot/indentLine'
+if = ''' exists('g:rich') '''
 hook_add = '''
   " let g:indentLine_char = '¦'
   let g:indentLine_char = ''
@@ -140,7 +141,7 @@ hook_add = '''
   nnoremap <Space>n :<C-u>Neomake<CR>
   let g:neomake_open_list = 0
 
-  if exists('g:has_custom_font')
+  if exists('g:rich')
     let g:neomake_error_sign = {
     \ 'text': '',
     \ 'texthl': 'Error',

@@ -12,3 +12,8 @@
 - fonts.conf
 
 etc
+
+## TODOs
+
+- vim config for vconsole
+- shift register only if uniq

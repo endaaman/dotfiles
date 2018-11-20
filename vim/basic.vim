@@ -4,7 +4,7 @@ augroup EN
   autocmd!
 augroup END
 
-colorscheme desert
+colorscheme evening
 
 set autoindent
 set background=dark
@@ -50,10 +50,6 @@ set write
 let g:netrw_home=  '~/.cache/vim'
 let g:vim_indent_cont = &sw
 
-if $TERM !=# 'linux'
-  let g:has_custom_font = 1
-endif
-
 if has('nvim')
   let g:python_host_prog = PickExecutable([
     \ '/usr/local/bin/python3',
@@ -93,7 +89,11 @@ if has('gui_running')
   autocmd EN VimEnter * set columns=120
 endif
 
-if exists('g:has_custom_font')
+if $TERM =~# '256color'
+  let g:rich = 1
+endif
+
+if exists('g:rich')
   set showbreak=↳
   if has('gui_running')
     set listchars=tab:>-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
@@ -101,6 +101,7 @@ if exists('g:has_custom_font')
     set listchars=tab:\\ ,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
   endif
 endif
+
 
 autocmd EN InsertLeave * set cursorline | set cursorcolumn
 autocmd EN InsertEnter * set nocursorline | set nocursorcolumn
