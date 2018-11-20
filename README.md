@@ -17,3 +17,4 @@ etc
 
 - vim config for vconsole
 - shift register only if uniq
+- nerdtree for vconsole
