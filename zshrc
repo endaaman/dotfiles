@@ -1,5 +1,13 @@
 # Define reload alias at least
 alias r='exec zsh -l'
+function reload-zsh() {
+  BUFFER="exec zsh -l"
+  zle accept-line
+  zle reset-prompt
+}
+zle -N reload-zsh
+bindkey -e
+bindkey '^r' reload-zsh
 
 # Performance profiling
 # zmodload zsh/zprof && zprof
@@ -98,7 +106,8 @@ alias be='bundle exec'
 alias cb='xsel --clipboard --input'
 alias cbp='xsel --clipboard --output'
 alias psp='ps aux | fzf'
-
+alias lp='ls -AlF $@ | fzf'
+alias catc='cat $@ | xsel --clipboard --input'
 alias xm='setxkbmap -option && xmodmap ~/.Xmodmap'
 # alias xmj='setxkbmap -rules evdev -model jp106 -layout jp && xmodmap ~/dotfiles/Xmodmap_jis'
 alias path="echo \$PATH | sed 's/:/\\n/g'"
@@ -115,29 +124,13 @@ if which colordiff &> /dev/null; then
 fi
 alias https='http --default-scheme=https'
 
-###* Widget
+###* Functions
 
-function __git_files () {
-    _wanted files expl 'local files' _files
+function today() {
+  local t=$(date "+%Y%m%d")
+  mkdir -p $t
+  cd $t
 }
-
-function cl() {
-  local file=$(find . -maxdepth 1 -type d ! -path "*/.*"| fzf)
-  if [ ! -z "$file" ] ; then
-    cd "$file"
-  fi
-}
-
-function cdr() {
-  local dir=$(cdr -l | awk '{ print $2 }' | fzf)
-  if [ -n $dir ]; then
-    BUFFER="cd $dir"
-    zle accept-line
-  fi
-  zle clear-screen
-}
-zle -N cdr
-
 
 function gh() {
   local dir=$(ghq list -p | fzf)
@@ -146,33 +139,45 @@ function gh() {
   fi
 }
 
-function vl() {
-  local file=$(find . -maxdepth 1 -type f ! -path "*/.*"| fzf)
-  if [ -r "$file" ] ; then
-    nvim "$file"
-  fi
-}
+###* Widget
 
-function lp() {
-  ls -AlF $@ | fzf
+function goto-today() {
+  local t=$(date "+%Y%m%d")
+  local dir="$HOME/tmp/$t"
+  mkdir -p dir
+  cd $dir
+  zle accept-line
 }
+zle -N goto-today
 
-function catc() {
-  cat $1 | xsel --clipboard --input
-}
-
-function copy-buffer(){
+function copy-buffer() {
   print -rn $BUFFER | xsel --clipboard --input
 }
 zle -N copy-buffer
 
 function magic-return() {
-  if [[ -z $BUFFER ]]; then
-    # behavior when buffer is emptry
+  if [[ -n $BUFFER ]]; then
     zle accept-line
-  else
-    zle accept-line
+    return
   fi
+
+  local l=$(ls -alhF $dir | tail -n+2 | grep -v ' \./' | fzf --no-sort)
+  local a=$(echo $l | awk '{$1=$2=$3=$4=$5=$6=$7=$8="" }1' | sed 's/^ *//g' )
+  if [[ -z "$a" ]]; then
+    zle reset-prompt
+    # zle accept-line
+    return
+  fi
+  if [ -d $a ]; then
+    BUFFER="cd '$a'"
+    LBUFFER=""
+    zle accept-line
+    zle reset-prompt
+    return
+  fi
+  LBUFFER=""
+  RBUFFER=" '$a'"
+  zle reset-prompt
 }
 zle -N magic-return
 
@@ -196,6 +201,25 @@ function cd-ghq {
   zle reset-prompt
 }
 zle -N cd-ghq
+
+function cd-upper() {
+  BUFFER="cd .."
+  zle accept-line
+  # zle reset-prompt
+}
+zle -N cd-upper
+
+function cd-forward() {
+  BUFFER="for"
+  zle reset-prompt
+}
+zle -N cd-forward
+
+function cd-backward() {
+  BUFFER="back"
+  zle reset-prompt
+}
+zle -N cd-backward
 
 function exec-commands {
   local a=$(whence -pmv '*' | fzf --no-sort +m --query "$BUFFER" | awk '{print $1}')
@@ -231,17 +255,18 @@ zle -N feed-history
 
 
 # key bindings
-bindkey -e
 bindkey "^m" magic-return
 bindkey '^s' copy-buffer
 bindkey '^z' run-fglast
 # bindkey '^j' exec-history
-bindkey '^r' exec-commands
+# bindkey '^r' exec-commands
 bindkey '^j' feed-history
-bindkey '^t' rr
+bindkey '^t' goto-today
 bindkey '^g' cd-ghq
+# bindkey '^,' cd-upper
+# bindkey '^,' cd-forward
+# bindkey '^.' cd-backward
 bindkey '^[[Z' reverse-menu-complete
-
 bindkey '^[[1~' beginning-of-line
 bindkey '^[[4~' end-of-line
 bindkey '^[[3~' delete-char
@@ -328,15 +353,15 @@ export OPAMKEEPBUILDDIR=1
 
 fpath+=~/.zsh/completions
 
+# setopt auto_cd
+# setopt complete_aliases
 # setopt ignoreeof # disable C-d
 setopt always_last_prompt
 setopt append_history
-setopt auto_cd
 setopt auto_list
 setopt auto_menu
 setopt auto_pushd
 setopt autoremoveslash
-# setopt complete_aliases
 setopt complete_in_word
 setopt extended_glob
 setopt extended_history
@@ -356,6 +381,7 @@ setopt list_types
 setopt magic_equal_subst
 setopt mark_dirs
 setopt no_flow_control
+setopt nolistbeep
 setopt numeric_glob_sort
 setopt print_eight_bit
 setopt pushd_ignore_dups
@@ -394,7 +420,6 @@ SAVEHIST=100000
 ###* autoload
 
 autoload -Uz add-zsh-hock
-autoload -Uz cdr
 autoload -Uz chpwd_recent_dirs
 autoload -Uz colors; colors
 autoload -Uz compinit; compinit -u
