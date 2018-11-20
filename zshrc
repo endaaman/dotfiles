@@ -1,13 +1,14 @@
 # Define reload alias at least
-alias r='exec zsh -l'
-function reload-zsh() {
-  BUFFER="exec zsh -l"
+alias reload-zsh='exec zsh -l'
+alias r=reload-zsh
+function _reload-zsh() {
+  BUFFER='reload-zsh'
   zle accept-line
   zle reset-prompt
 }
-zle -N reload-zsh
+zle -N _reload-zsh
 bindkey -e
-bindkey '^r' reload-zsh
+bindkey '^r' _reload-zsh
 
 # Performance profiling
 # zmodload zsh/zprof && zprof
@@ -80,13 +81,13 @@ alias S='sed'
 alias T='tail'
 alias W='wc'
 alias F='fzf'
+alias C='xsel --clipboard --input'
 if which exa &> /dev/null; then
-  alias l='exa -agbl'
-  alias ll='exa -agbl'
+  alias ll='exa -agbl --group-directories-first'
 else
-  alias l='ls -ahlF --color=auto'
-  alias ll='ls -ahlF --color=auto'
+  alias ll='ls -ahlF --color=auto --group-directories-first'
 fi
+alias l=ll
 alias sudo='sudo -E '
 alias mv='mv -v'
 alias cp='cp -v'
@@ -103,13 +104,8 @@ alias ja='export LANG=ja_JP.utf-8'
 alias nr='npm run'
 alias pm='python manage.py'
 alias be='bundle exec'
-alias cb='xsel --clipboard --input'
-alias cbp='xsel --clipboard --output'
 alias psp='ps aux | fzf'
-alias lp='ls -AlF $@ | fzf'
-alias catc='cat $@ | xsel --clipboard --input'
 alias xm='setxkbmap -option && xmodmap ~/.Xmodmap'
-# alias xmj='setxkbmap -rules evdev -model jp106 -layout jp && xmodmap ~/dotfiles/Xmodmap_jis'
 alias path="echo \$PATH | sed 's/:/\\n/g'"
 alias tap_production='export NODE_ENV=production; export RAILS_ENV=production'
 alias untap_production='unset NODE_ENV; unset RAILS_ENV'
@@ -124,7 +120,7 @@ if which colordiff &> /dev/null; then
 fi
 alias https='http --default-scheme=https'
 
-###* Functions
+###* Function
 
 function today() {
   local t=$(date "+%Y%m%d")
@@ -138,6 +134,14 @@ function gh() {
     cd $dir
   fi
 }
+
+function cop() {
+  if [[ -z $1 ]]; then
+    return
+  fi
+  cat $1 | xsel --clipboard --input
+}
+
 
 ###* Widget
 
@@ -161,16 +165,21 @@ function magic-return() {
     return
   fi
   local l=$(ls -alhF --group-directories-first | tail -n+2 | grep -v ' \./' | fzf --no-sort)
-  local a=$(echo $l | awk '{$1=$2=$3=$4=$5=$6=$7=$8="" }1' | sed 's/^ *//g')
+  local a=$(echo $l | awk '{$1=$2=$3=$4=$5=$6=$7=$8="" }1' | sed 's/^ *//g' | sed 's/\*$//')
   a=$(echo "${a% ->*}" | xargs -I{} printf %q "{}")
   if [[ -z "$a" ]]; then
     zle reset-prompt
-    # zle accept-line
+    return
+  fi
+  if [[ "$a" = '../' ]]; then
+    BUFFER="cd ../"
+    zle accept-line
+    zle reset-prompt
     return
   fi
   if [ -d $a ]; then
-    LBUFFER=""
-    RBUFFER="$a"
+    LBUFFER="$a"
+    RBUFFER=""
   else
     LBUFFER=""
     RBUFFER=" $a"
@@ -251,8 +260,8 @@ function feed-history {
 }
 zle -N feed-history
 
+###* Key binding
 
-# key bindings
 bindkey "^m" magic-return
 bindkey '^s' copy-buffer
 bindkey '^z' run-fglast
@@ -294,7 +303,10 @@ export FZF_DEFAULT_OPTS='--height 50% --reverse --border --bind "tab:down,btab:u
 
 export PATH=~/bin:$PATH
 export PATH=~/dotfiles/bin:$PATH
+export T=$(date "+%Y%m%d")
+export TD=~/tmp/$T
 
+###* XXXenv
 if which direnv &> /dev/null; then
   eval "$(direnv hook zsh)"
 fi
@@ -302,8 +314,6 @@ fi
 if which luarocks &> /dev/null; then
   eval $(luarocks path --bin)
 fi
-
-###* *env
 
 if [ -d ~/.cargo ]; then
   export PATH=~/.cargo/bin:$PATH
@@ -316,22 +326,22 @@ if [ -d ~/.nodebrew ]; then
   fpath+=~/.nodebrew/completions/zsh
 fi
 
-if [ -d ~/.rbenv ]; then
-  export PATH=~/.rbenv/bin:$PATH
-  eval "$(rbenv init -)"
-fi
+# if [ -d ~/.rbenv ]; then
+#   export PATH=~/.rbenv/bin:$PATH
+#   eval "$(rbenv init -)"
+# fi
 
-if [ -d ~/.pyenv ]; then
-  export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-  export PYENV_ROOT=$HOME/.pyenv
-  export PATH=$PYENV_ROOT/bin:$PATH
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
-fi
+# if [ -d ~/.pyenv ]; then
+#   export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+#   export PYENV_ROOT=$HOME/.pyenv
+#   export PATH=$PYENV_ROOT/bin:$PATH
+#   eval "$(pyenv init -)"
+#   eval "$(pyenv virtualenv-init -)"
+# fi
 
-if [ -d ~/.phpbrew ]; then
-  source ~/.phpbrew/bashrc
-fi
+# if [ -d ~/.phpbrew ]; then
+#   source ~/.phpbrew/bashrc
+# fi
 
 if [ -d ~/.config/composer/vendor/bin ]; then
   export PATH=$PATH:$HOME/.config/composer/vendor/bin
