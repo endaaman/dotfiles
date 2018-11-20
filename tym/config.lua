@@ -4,7 +4,7 @@ local home = os.getenv('HOME')
 tym.set_config({
   width = 120,
   height = 32,
-  shell = home .. '/dotfiles/bin/tmux-attach-or-new',
+  shell = 'tmux-attach-or-new',
   cursor_blink_mode = 'off',
   autohide = true,
 })
@@ -20,15 +20,15 @@ tym.set_keymaps({
     tym.notify('Reset and Reloaded')
   end
 })
-local overwrite = function (a, b)
+local remap = function (a, b)
   tym.set_keymap(a, function()
     tym.send_key(b)
   end)
 end
-overwrite('<Alt>h', '<Alt>Left')
-overwrite('<Alt>l', '<Alt>Right')
-overwrite('<Alt><Shift>h', '<Alt><Shift>Left')
-overwrite('<Alt><Shift>l', '<Alt><Shift>Right')
+remap('<Alt>h', '<Alt>Left')
+remap('<Alt>l', '<Alt>Right')
+remap('<Alt><Shift>h', '<Alt><Shift>Left')
+remap('<Alt><Shift>l', '<Alt><Shift>Right')
 
 function safe_dofile(path)
   local f = io.open(path, 'r')
