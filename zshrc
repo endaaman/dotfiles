@@ -144,7 +144,7 @@ function gh() {
 function goto-today() {
   local t=$(date "+%Y%m%d")
   local dir="$HOME/tmp/$t"
-  mkdir -p dir
+  mkdir -p $dir
   cd $dir
   zle accept-line
 }
@@ -160,23 +160,21 @@ function magic-return() {
     zle accept-line
     return
   fi
-
-  local l=$(ls -alhF $dir | tail -n+2 | grep -v ' \./' | fzf --no-sort)
-  local a=$(echo $l | awk '{$1=$2=$3=$4=$5=$6=$7=$8="" }1' | sed 's/^ *//g' )
+  local l=$(ls -alhF --group-directories-first | tail -n+2 | grep -v ' \./' | fzf --no-sort)
+  local a=$(echo $l | awk '{$1=$2=$3=$4=$5=$6=$7=$8="" }1' | sed 's/^ *//g')
+  a=$(echo "${a% ->*}" | xargs -I{} printf %q "{}")
   if [[ -z "$a" ]]; then
     zle reset-prompt
     # zle accept-line
     return
   fi
   if [ -d $a ]; then
-    BUFFER="cd '$a'"
     LBUFFER=""
-    zle accept-line
-    zle reset-prompt
-    return
+    RBUFFER="$a"
+  else
+    LBUFFER=""
+    RBUFFER=" $a"
   fi
-  LBUFFER=""
-  RBUFFER=" '$a'"
   zle reset-prompt
 }
 zle -N magic-return
@@ -233,7 +231,7 @@ function exec-commands {
 zle -N exec-commands
 
 function exec-history {
-  local a=$(history -r 1 | fzf --no-sort +m --query "$BUFFER" | sed 's/ *[0-9]* *//')
+  local a=$(history -r 1 | fzf --no-sort +m --query "$BUFFER" | sed 's/ *[\*0-9]* *//')
   if [[ -n $a ]]; then
     LBUFFER=$a
     RBUFFER=""
@@ -278,7 +276,7 @@ export HISTFILE=${HOME}/.zsh_history
 export HISTSIZE=1000
 export SAVEHIST=100000
 
-export VTE_CJK_WIDTH=1
+export VTE_CJK_WIDTH=0
 if which nvim &> /dev/null; then
   export EDITOR=nvim
 else
@@ -292,7 +290,7 @@ export XDG_CONFIG_HOME=~/.config
 export NO_AT_BRIDGE=1
 export WINEARCH=win32
 export WINEPREFIX=~/.wine
-export FZF_DEFAULT_OPTS='--height 40% --reverse --border --bind "tab:down,btab:up" --exact'
+export FZF_DEFAULT_OPTS='--height 50% --reverse --border --bind "tab:down,btab:up" --exact'
 
 export PATH=~/bin:$PATH
 export PATH=~/dotfiles/bin:$PATH
@@ -353,11 +351,11 @@ export OPAMKEEPBUILDDIR=1
 
 fpath+=~/.zsh/completions
 
-# setopt auto_cd
 # setopt complete_aliases
 # setopt ignoreeof # disable C-d
 setopt always_last_prompt
 setopt append_history
+setopt auto_cd
 setopt auto_list
 setopt auto_menu
 setopt auto_pushd
