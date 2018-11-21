@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ ${EUID:-${UID}} = 0 ]; then
+  echo 'Do not run this script as a ROOT USER!'
+  exit 1
+fi
+
 if ! which git >/dev/null 2>&1; then
   echo 'Please install git'
   exit 1
@@ -7,8 +12,6 @@ fi
 
 CYAN='\033[0;34m'
 NC='\033[0m'
-
-cd
 
 mkdir -p ~/.cache/vim
 mkdir -p ~/.mlterm

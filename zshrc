@@ -59,7 +59,11 @@ fi
 if [ -n "$pre_prompt_content" ]; then
   pre_prompt="($pre_prompt_content)"
 fi
-dirname="%F{006}%~%f"
+if $is_root; then
+  dirname="%F{006}%d%f"
+else
+  dirname="%F{006}%~%f"
+fi
 
 if $is_root; then
   prompt_symbol='#'
@@ -88,7 +92,6 @@ else
   alias ll='ls -ahlF --color=auto --group-directories-first'
 fi
 alias l=ll
-alias sudo='sudo -E '
 alias mv='mv -v'
 alias cp='cp -v'
 alias rename='rename -v'
@@ -146,8 +149,7 @@ function cop() {
 ###* Widget
 
 function goto-today() {
-  local t=$(date "+%Y%m%d")
-  local dir="$HOME/tmp/$t"
+  local dir="$HOME/tmp/$(date "+%Y%m%d")"
   mkdir -p $dir
   cd $dir
   zle accept-line
@@ -164,7 +166,7 @@ function magic-return() {
     zle accept-line
     return
   fi
-  local l=$(ls -alhF --group-directories-first | tail -n+2 | grep -v ' \./' | fzf --no-sort)
+  local l=$(ls -alhF --group-directories-first | tail -n+2 | grep -v ' \./' | fzf)
   local a=$(echo $l | awk '{$1=$2=$3=$4=$5=$6=$7=$8="" }1' | sed 's/^ *//g' | sed 's/\*$//')
   a=$(echo "${a% ->*}" | xargs -I{} printf %q "{}")
   if [[ -z "$a" ]]; then
@@ -199,7 +201,7 @@ function run-fglast {
 zle -N run-fglast
 
 function cd-ghq {
-  local a=$(ghq list -p | fzf --no-sort +m --query "$BUFFER")
+  local a=$(ghq list -p | fzf --query "$BUFFER")
   if [[ -n $a ]]; then
     LBUFFER="cd $a"
     RBUFFER=""
@@ -212,24 +214,21 @@ zle -N cd-ghq
 function cd-upper() {
   BUFFER="cd .."
   zle accept-line
-  # zle reset-prompt
 }
 zle -N cd-upper
 
-function cd-forward() {
-  BUFFER="for"
+function cd-list() {
+  d=$(dirs -p -v | fzf | awk '{ print $2 }')
+  if [[ -n $d ]]; then
+    BUFFER="cd $d"
+    zle accept-line
+  fi
   zle reset-prompt
 }
-zle -N cd-forward
-
-function cd-backward() {
-  BUFFER="back"
-  zle reset-prompt
-}
-zle -N cd-backward
+zle -N cd-list
 
 function exec-commands {
-  local a=$(whence -pmv '*' | fzf --no-sort +m --query "$BUFFER" | awk '{print $1}')
+  local a=$(whence -pmv '*' | fzf --query "$BUFFER" | awk '{print $1}')
   if [[ -n $a ]]; then
     LBUFFER=$a
     RBUFFER=""
@@ -240,7 +239,7 @@ function exec-commands {
 zle -N exec-commands
 
 function exec-history {
-  local a=$(history -r 1 | fzf --no-sort +m --query "$BUFFER" | sed 's/ *[\*0-9]* *//')
+  local a=$(history -r 1 | fzf --query "$BUFFER" | sed 's/ *[\*0-9]* *//')
   if [[ -n $a ]]; then
     LBUFFER=$a
     RBUFFER=""
@@ -251,7 +250,7 @@ function exec-history {
 zle -N exec-history
 
 function feed-history {
-  a=$(history -r 1 | fzf --no-sort +m --query "$BUFFER" | sed 's/ *[\*0-9]* *//')
+  a=$(history -r 1 | fzf --query "$BUFFER" | sed 's/ *[\*0-9]* *//')
   if [[ -n $a ]]; then
     LBUFFER=$a
     RBUFFER=""
@@ -265,14 +264,11 @@ zle -N feed-history
 bindkey "^m" magic-return
 bindkey '^s' copy-buffer
 bindkey '^z' run-fglast
-# bindkey '^j' exec-history
-# bindkey '^r' exec-commands
 bindkey '^j' feed-history
 bindkey '^t' goto-today
 bindkey '^g' cd-ghq
-# bindkey '^,' cd-upper
-# bindkey '^,' cd-forward
-# bindkey '^.' cd-backward
+bindkey '^v' cd-upper
+bindkey '^o' cd-list
 bindkey '^[[Z' reverse-menu-complete
 bindkey '^[[1~' beginning-of-line
 bindkey '^[[4~' end-of-line
@@ -299,7 +295,7 @@ export XDG_CONFIG_HOME=~/.config
 export NO_AT_BRIDGE=1
 export WINEARCH=win32
 export WINEPREFIX=~/.wine
-export FZF_DEFAULT_OPTS='--height 50% --reverse --border --bind "tab:down,btab:up" --exact'
+export FZF_DEFAULT_OPTS='--height 50% --reverse --border --bind "tab:down,btab:up" --exact --cycle  --no-sort'
 
 export PATH=~/bin:$PATH
 export PATH=~/dotfiles/bin:$PATH
@@ -311,7 +307,7 @@ if which direnv &> /dev/null; then
   eval "$(direnv hook zsh)"
 fi
 
-if which luarocks &> /dev/null; then
+if [ $is_root = false ] && which luarocks &> /dev/null; then
   eval $(luarocks path --bin)
 fi
 
