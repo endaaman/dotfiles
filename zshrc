@@ -145,6 +145,15 @@ function cop() {
   cat $1 | xsel --clipboard --input
 }
 
+function remove-empty-dirs() {
+  local dirs=$(find . -maxdepth 1 -mindepth 1 -empty -type d)
+  if [[ -z $dirs ]]; then
+    echo 'No empty dir'
+    return
+  fi
+  echo $dirs | xargs -L 1 rmdir
+  echo removed $(echo $dirs | xargs echo)
+}
 
 ###* Widget
 
