@@ -1,0 +1,11 @@
+[Unit]
+Description=Today direcotry creationism
+
+[Service]
+ExecStart=bash -c '~/dotfiles/bin/create-today-direcotry'
+Restart=always
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target
