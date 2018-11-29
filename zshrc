@@ -220,6 +220,13 @@ function cd-ghq {
 }
 zle -N cd-ghq
 
+
+function cd-dotfiles() {
+  BUFFER="cd ~/dotfiles"
+  zle accept-line
+}
+zle -N cd-dotfiles
+
 function cd-upper() {
   BUFFER="cd .."
   zle accept-line
@@ -276,17 +283,25 @@ bindkey '^z' run-fglast
 bindkey '^j' feed-history
 bindkey '^t' goto-today
 bindkey '^g' cd-ghq
-bindkey '^v' cd-upper
-bindkey '^o' cd-list
 bindkey '^[[Z' reverse-menu-complete
 bindkey '^[[1~' beginning-of-line
 bindkey '^[[4~' end-of-line
 bindkey '^[[3~' delete-char
+# with prefix
+prefix='^v'
+org_widget=$(bindkey $prefix | awk '{ print $2 }')
+bindkey -r $prefix
+bindkey $prefix$prefix $org_widget
+bindkey $prefix'^j' cd-dotfiles
+bindkey $prefix'^l' cd-list
+bindkey $prefix'^u' cd-upper
+bindkey $prefix'^p' cd-backward
+bindkey $prefix'^n' cd-forward
 
 
 ###* Environment
 
-export HISTFILE=${HOME}/.zsh_history
+export HISTFILE=$HOME/.zsh_history
 export HISTSIZE=1000
 export SAVEHIST=100000
 
@@ -299,17 +314,19 @@ fi
 export FCEDIT="$EDITOR"
 export VISUAL="$EDITOR"
 export SUDO_EDITOR="$EDITOR"
-# export TERM=xterm-256color
-export XDG_CONFIG_HOME=~/.config
+# export XDG_CONFIG_HOME=~/.config
 export NO_AT_BRIDGE=1
 export WINEARCH=win32
-export WINEPREFIX=~/.wine
+# export WINEPREFIX=~/.wine
 export FZF_DEFAULT_OPTS='--height 50% --reverse --border --bind "tab:down,btab:up" --exact --cycle  --no-sort'
 
 export PATH=~/bin:$PATH
 export PATH=~/dotfiles/bin:$PATH
 export T=$(date "+%Y%m%d")
 export TD=~/tmp/$T
+export OCAMLPARAM="_,bin-annot=1"
+export OPAMKEEPBUILDDIR=1
+
 
 ###* XXXenv
 if which direnv &> /dev/null; then
@@ -331,23 +348,6 @@ if [ -d ~/.nodebrew ]; then
   fpath+=~/.nodebrew/completions/zsh
 fi
 
-# if [ -d ~/.rbenv ]; then
-#   export PATH=~/.rbenv/bin:$PATH
-#   eval "$(rbenv init -)"
-# fi
-
-# if [ -d ~/.pyenv ]; then
-#   export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-#   export PYENV_ROOT=$HOME/.pyenv
-#   export PATH=$PYENV_ROOT/bin:$PATH
-#   eval "$(pyenv init -)"
-#   eval "$(pyenv virtualenv-init -)"
-# fi
-
-# if [ -d ~/.phpbrew ]; then
-#   source ~/.phpbrew/bashrc
-# fi
-
 if [ -d ~/.config/composer/vendor/bin ]; then
   export PATH=$PATH:$HOME/.config/composer/vendor/bin
 fi
@@ -357,9 +357,6 @@ if [ -d ~/.go ]; then
   export PATH=$PATH:$GOPATH/bin
   export GO15VENDOREXPERIMENT=1
 fi
-
-export OCAMLPARAM="_,bin-annot=1"
-export OPAMKEEPBUILDDIR=1
 
 
 ###* Option

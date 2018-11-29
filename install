@@ -14,109 +14,25 @@ CYAN='\033[0;34m'
 NC='\033[0m'
 
 mkdir -p ~/.cache/vim
-mkdir -p ~/.mlterm
+mkdir -p ~/.config/byobu
 mkdir -p ~/.config/fish/functions
 mkdir -p ~/.config/fontconfig
-mkdir -p ~/.config/peco
-mkdir -p ~/.config/tym
-mkdir -p ~/.config/byobu
 mkdir -p ~/.config/nyaovim
+mkdir -p ~/.config/peco
+mkdir -p ~/.config/systemd/user
+mkdir -p ~/.local/share/systemd/user/
 mkdir -p ~/.config/termite
-mkdir -p ~/.mpv
-mkdir -p ~/.local/share/fonts
-mkdir -p ~/src
-mkdir -p ~/wineprefixes
+mkdir -p ~/.config/tym
 mkdir -p ~/.go
+mkdir -p ~/.local/share/fonts
+mkdir -p ~/.mlterm
+mkdir -p ~/.mpv
+mkdir -p ~/src
+mkdir -p ~/wineprefixes/current
 
 touch ~/.gitconfig_local
 
-# git
-ln -fs ~/dotfiles/gitconfig ~/.gitconfig
-ln -fs ~/dotfiles/gitignore_global ~/.gitignore_global
-ln -fs ~/dotfiles/gitscripts ~/.gitscripts
-
-# zsh
-ln -fs ~/dotfiles/zshrc ~/.zshrc
-
-# bash
-ln -fs ~/dotfiles/bashrc ~/.bashrc
-
-# tmux
-ln -fs ~/dotfiles/tmux.conf ~/.tmux.conf
-ln -fs ~/dotfiles/byobu.conf ~/.config/byobu/.tmux.conf
-
-# fish
-ln -fs ~/dotfiles/config.fish ~/.config/fish/config.fish
-
-# vim
-ln -fs ~/dotfiles/vimrc ~/.vimrc
-ln -fsn ~/dotfiles/vim ~/.vim
-
-# neovim
-ln -fsn ~/dotfiles/vim ~/.config/nvim
-
-# X org
-ln -fs ~/dotfiles/Xdefaults ~/.Xdefaults
-ln -fs ~/dotfiles/Xresources ~/.Xresources
-
-# tym
-ln -fs ~/dotfiles/tym/config.lua ~/.config/tym/config.lua
-ln -fs ~/dotfiles/tym/local.lua ~/.config/tym/local.lua
-
-# termite
-ln -fs ~/dotfiles/termite/config ~/.config/termite/config
-
-# mpv
-ln -fs ~/dotfiles/mpv.conf ~/.mpv/input.conf
-
-# fonts
-ln -fs ~/dotfiles/fonts.conf ~/.config/fontconfig/fonts.conf
-ln -fsn ~/dotfiles/fonts ~/.local/share/fonts/dotfiles
-
-# editorconfig
-ln -fs ~/dotfiles/editorconfig ~/.editorconfig
-
-# editorconfig
-ln -fs ~/dotfiles/tigrc ~/.tigrc
-
-# peco
-ln -fs ~/dotfiles/peco.json ~/.config/peco/config.json
-
-# yaourt
-ln -fs ~/dotfiles/yaourtrc ~/.yaourtrc
-
-# mlterm
-ln -fs ~/dotfiles/mlterm/main ~/.mlterm/main
-ln -fs ~/dotfiles/mlterm/color ~/.mlterm/color
-ln -fs ~/dotfiles/mlterm/font ~/.mlterm/font
-ln -fs ~/dotfiles/mlterm/font ~/.mlterm/aafont
-ln -fs ~/dotfiles/mlterm/key ~/.mlterm/key
-
-# vimperator
-ln -fs ~/dotfiles/vimperatorrc ~/.vimperatorrc
-
-# vimfx
-ln -fsn ~/dotfiles/vimfx ~/.config/vimfx
-
-# ideavim
-ln -fs ~/dotfiles/ideavimrc ~/.ideavimrc
-
-# nyaovim
-ln -fs ~/dotfiles/nyaovimrc.html ~/.config/nyaovim/nyaovimrc.html
-
-# compton
-ln -fs ~/dotfiles/compton.conf ~/.config/compton.conf
-ln -fs ~/.config/compton.conf ~/.config/marco-compton.conf
-
-# wine
-ln -fs ~/.wine ~/wineprefixes/current
-
-# xkb
-ln -fsn ~/dotfiles/xkb ~/.xkb
-
-
-changed=false
-
+gui=false
 nodejs=false
 python=false
 ruby=false
@@ -127,6 +43,7 @@ firefox=false
 
 for i in "$@" ; do
   case "$i" in
+    'gui'     | 'g'    ) gui=true ;;
     'nodejs'  | 'node' ) nodejs=true ;;
     'python'  | 'py'   ) python=true ;;
     'ruby'    | 'rb'   ) ruby=true ;;
@@ -151,6 +68,79 @@ for i in "$@" ; do
   esac
 done
 
+# git
+ln -fs ~/dotfiles/gitconfig ~/.gitconfig
+ln -fs ~/dotfiles/gitignore_global ~/.gitignore_global
+ln -fs ~/dotfiles/gitscripts ~/.gitscripts
+
+# zsh
+ln -fs ~/dotfiles/zshrc ~/.zshrc
+# bash
+ln -fs ~/dotfiles/bashrc ~/.bashrc
+# tmux
+ln -fs ~/dotfiles/tmux.conf ~/.tmux.conf
+ln -fs ~/dotfiles/byobu.conf ~/.config/byobu/.tmux.conf
+# vim
+ln -fs ~/dotfiles/vimrc ~/.vimrc
+ln -fsn ~/dotfiles/vim ~/.vim
+# neovim
+ln -fsn ~/dotfiles/vim ~/.config/nvim
+# editorconfig
+ln -fs ~/dotfiles/editorconfig ~/.editorconfig
+# tig
+ln -fs ~/dotfiles/tigrc ~/.tigrc
+# peco
+ln -fs ~/dotfiles/peco.json ~/.config/peco/config.json
+# yaourt
+ln -fs ~/dotfiles/yaourtrc ~/.yaourtrc
+# ideavim
+ln -fs ~/dotfiles/ideavimrc ~/.ideavimrc
+# systemd units
+ln -fs ~/dotfiles/systemd/today.service ~/.local/share/systemd/user/
+
+# GUI
+if $gui; then
+  # fonts
+  ln -fs ~/dotfiles/fonts.conf ~/.config/fontconfig/fonts.conf
+  ln -fsn ~/dotfiles/fonts ~/.local/share/fonts/dotfiles
+  # wine
+  ln -fs ~/.wine ~/wineprefixes/current
+  # tym
+  ln -fs ~/dotfiles/tym/config.lua ~/.config/tym/config.lua
+  ln -fs ~/dotfiles/tym/local.lua ~/.config/tym/local.lua
+  # termite
+  ln -fs ~/dotfiles/termite/config ~/.config/termite/config
+  # mpv
+  ln -fs ~/dotfiles/mpv.conf ~/.mpv/input.conf
+fi
+
+# NOT USED
+if false; then
+  # fish
+  ln -fs ~/dotfiles/config.fish ~/.config/fish/config.fish
+  # X org
+  ln -fs ~/dotfiles/Xdefaults ~/.Xdefaults
+  ln -fs ~/dotfiles/Xresources ~/.Xresources
+  # mlterm
+  ln -fs ~/dotfiles/mlterm/main ~/.mlterm/main
+  ln -fs ~/dotfiles/mlterm/color ~/.mlterm/color
+  ln -fs ~/dotfiles/mlterm/font ~/.mlterm/font
+  ln -fs ~/dotfiles/mlterm/font ~/.mlterm/aafont
+  ln -fs ~/dotfiles/mlterm/key ~/.mlterm/key
+  # vimperator
+  ln -fs ~/dotfiles/vimperatorrc ~/.vimperatorrc
+  # vimfx
+  ln -fsn ~/dotfiles/vimfx ~/.config/vimfx
+  # nyaovim
+  ln -fs ~/dotfiles/nyaovimrc.html ~/.config/nyaovim/nyaovimrc.html
+  # compton
+  ln -fs ~/dotfiles/compton.conf ~/.config/compton.conf
+  ln -fs ~/.config/compton.conf ~/.config/marco-compton.conf
+  # xkb
+  ln -fsn ~/dotfiles/xkb ~/.xkb
+fi
+
+
 if $firefox; then
   echo -e "${CYAN}nstalling Firefox config${NC}"
   dir=`find ~/.mozilla/firefox/ -maxdepth 1 | grep default`
@@ -174,7 +164,6 @@ if [ `which setxkbmap` ] && [[ -e ~/dotfiles/Xmodmap ]]; then
 fi
 
 if $nodejs; then
-  changed=true
   if [ ! -d ~/.nodebrew ]; then
     echo
     echo -e "${CYAN}Installing nodebrew${NC}"
@@ -189,7 +178,6 @@ fi
 
 
 if $python; then
-  changed=true
   if [ ! -d ~/.pyenv ]; then
     echo
     echo -e "${CYAN}Installing pyenv${NC}"
@@ -217,7 +205,6 @@ fi
 
 
 if $ruby; then
-  changed=true
   if [ ! -d ~/.rbenv ]; then
     echo
     echo -e "${CYAN}Installing rbenv${NC}"
@@ -244,7 +231,6 @@ fi
 
 
 if $rust; then
-  changed=true
   echo -e "${CYAN}Installing rust components${NC}"
   if [ -d ~/.rustup ]; then
     p=~/.zsh/completions/_rustup
@@ -256,7 +242,6 @@ fi
 
 
 if $zplug; then
-  changed=true
   if [ ! -d ~/.zplug ]; then
     echo
     echo -e "${CYAN}Installing zplug${NC}"
@@ -272,7 +257,6 @@ fi
 
 
 if $dein; then
-  changed=true
   dein_base_dir=~/.cache/dein/repos/github.com/Shougo
   dein_dir=$dein_base_dir/dein.vim
   mkdir -p "$dein_base_dir"
@@ -290,8 +274,4 @@ if $dein; then
 fi
 
 
-if $changed; then
-  echo -e "${CYAN}Done.${NC}"
-else
-  echo -e "${CYAN}Done linking.${NC}"
-fi
+echo -e "${CYAN}Done.${NC}"
