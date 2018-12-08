@@ -1,1 +1,1 @@
-" autocmd BufNewFile,BufRead *.ejs setf html
+autocmd EN BufNewFile,BufRead *.ejs set ft=ejs

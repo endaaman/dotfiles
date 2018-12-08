@@ -1,9 +1,5 @@
 set all&
 
-augroup EN
-  autocmd!
-augroup END
-
 colorscheme evening
 
 set autoindent

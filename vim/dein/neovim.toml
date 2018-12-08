@@ -131,7 +131,8 @@ hook_add = '''
     \ 'highlight_matched_char': 'Title',
     \ })
 
-  nnoremap <Space>o :<C-u>Denite unite:outline<CR>
+  nnoremap <Space>o :<C-u>Denite outline<CR>
+  nnoremap <Space>O :<C-u>Denite file/old<CR>
   nnoremap <Space>J :<C-u>Denite jump<CR>
   nnoremap <Space>b :<C-u>Denite buffer<CR>
   nnoremap <Space>m :<C-u>Denite menu<CR>

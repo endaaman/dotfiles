@@ -3,7 +3,8 @@ mapclear
 let g:mapleader = ','
 
 noremap <Space>j J
-noremap <Space>k K
+noremap <Space>K K
+nmap <Space>k <Plug>(go-to-def)
 noremap <Space>i :<C-u>vs<CR>
 noremap <Space>- :<C-u>sp<CR>
 noremap <Space>e :<C-u>e!<CR>
@@ -15,8 +16,6 @@ noremap j gj
 noremap k gk
 noremap J <C-d>zz
 noremap K <C-u>zz
-noremap <silent> <C-j> :<C-u>normal ]c<CR>
-noremap <silent> <C-k> :<C-u>normal [c<CR>
 noremap H g^
 noremap L g$
 noremap gH ^
@@ -24,7 +23,6 @@ noremap gL $
 nnoremap <BS> g;
 " nnoremap <C-h> g;
 " nnoremap <C-l> g,
-
 noremap x "_x
 noremap X "_D
 noremap c "_c
@@ -42,15 +40,20 @@ nnoremap # #zz
 nnoremap o o<Esc>
 nnoremap O O<Esc>
 nnoremap p p`]
+nnoremap - <C-x>
+nnoremap + <C-a>
+nnoremap <Tab> <C-w>w
+nnoremap <S-Tab> <C-w>W
+
+nnoremap <C-y> <Nop>
+nnoremap <C-e> <Nop>
+
 nnoremap <C-l> <C-i>
 nnoremap <C-h> <C-o>
 nnoremap <C-f> :<C-u>lnext<CR>
 nnoremap <C-b> :<C-u>lprev<CR>
 " nnoremap <C-f> "zdd"zp
 " nnoremap <expr> <C-b> SwapWithAboveLine()
-
-nnoremap <Tab> <C-w>w
-nnoremap <S-Tab> <C-w>W
 
 nnoremap <C-a> ggVG
 nnoremap <C-n> gt
@@ -64,8 +67,6 @@ nnoremap <C-q> :<C-u>qa<CR>
 nnoremap <C-d> :<C-u>q<CR>
 nnoremap <C-x> :<C-u>x<CR>
 nnoremap <C-s> :<C-u>w<CR>
-nnoremap - <C-x>
-nnoremap + <C-a>
 
 vnoremap v $h
 vnoremap <Tab> >gv

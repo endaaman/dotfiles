@@ -17,3 +17,5 @@ function! LoadLocalVimConfig() abort
   endif
   call SafeExec(getcwd() . '/.vim/init.vim')
 endfunction
+
+command! -nargs=+ -complete=command TabMessage call TabMessage(<q-args>)

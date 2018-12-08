@@ -74,26 +74,16 @@ function! DeniteActionPrepend(context)
 endfunction
 
 
-let s:hooks = []
-
-function! PushHook(hook) abort
-  echom 'push hook'
-  call add(s:hooks, a:hook)
-endfunction
-
-function! CallHooks() abort
-  echom 'call hooks'
-  for Hook in s:hooks
-    call Hook()
-  endfor
-endfunction
-
-let g:log_file_path = '/tmp/vimrc.log'
-function! Log(line)
-  execute ":redir! >> " . g:log_file_path
-  silent! echon a:line . "\n"
+function! TabMessage(cmd)
+  redir => message
+  silent execute a:cmd
   redir END
-endfun
-
-" call Log('')
-" call Log('[vim started]\n')
+  if empty(message)
+    echoerr "no output"
+  else
+    " use "new" instead of "tabnew" below if you prefer split windows instead of tabs
+    tabnew
+    setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
+    silent put=message
+  endif
+endfunction

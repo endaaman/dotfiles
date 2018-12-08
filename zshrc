@@ -277,7 +277,7 @@ zle -N feed-history
 
 ###* Key binding
 
-bindkey "^m" magic-return
+# bindkey "^m" magic-return
 bindkey '^s' copy-buffer
 bindkey '^z' run-fglast
 bindkey '^j' feed-history
@@ -340,6 +340,7 @@ fi
 if [ -d ~/.cargo ]; then
   export PATH=~/.cargo/bin:$PATH
   export RUST_BACKTRACE=1
+  export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 fi
 
 if [ -d ~/.nodebrew ]; then

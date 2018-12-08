@@ -3,6 +3,10 @@ if has('vim_starting')
 endif
 set encoding=utf-8
 
+augroup EN
+  autocmd!
+augroup END
+
 runtime! functions.vim
 runtime! basic.vim
 runtime! commands.vim
@@ -10,6 +14,8 @@ runtime! keymaps.vim
 " runtime! tabline.vim
 runtime! dein.vim
 runtime! local.vim
+runtime! ftdetect/*.vim
+runtime! ftplugins/*.vim
 
 if !exists('*s:source_script')
   function s:source_script() abort
