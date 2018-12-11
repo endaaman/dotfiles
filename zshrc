@@ -170,7 +170,7 @@ function copy-buffer() {
 }
 zle -N copy-buffer
 
-function magic-return() {
+function list-items-current-dir() {
   if [[ -n $BUFFER ]]; then
     zle accept-line
     return
@@ -197,7 +197,7 @@ function magic-return() {
   fi
   zle reset-prompt
 }
-zle -N magic-return
+zle -N list-items-current-dir
 
 function run-fglast {
   if [[ -z $(jobs) ]]; then
@@ -277,7 +277,7 @@ zle -N feed-history
 
 ###* Key binding
 
-# bindkey "^m" magic-return
+bindkey "^o" list-items-current-dir
 bindkey '^s' copy-buffer
 bindkey '^z' run-fglast
 bindkey '^j' feed-history
@@ -359,18 +359,7 @@ if [ -d ~/.go ]; then
   export GO15VENDOREXPERIMENT=1
 fi
 
-__conda_setup="$(CONDA_REPORT_ERRORS=false "$HOME/anaconda3/bin/conda" shell.bash hook 2> /dev/null)"
-if [ $? -eq 0 ]; then
-  \eval "$__conda_setup"
-else
-  if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
-    . "$HOME/anaconda3/etc/profile.d/conda.sh"
-    CONDA_CHANGEPS1=false conda activate base
-  else
-    \export PATH="$HOME/anaconda3/bin:$PATH"
-  fi
-fi
-unset __conda_setup
+export PATH="$HOME/miniconda3/bin:$PATH"
 
 ###* Option
 
