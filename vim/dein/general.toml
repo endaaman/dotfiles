@@ -8,15 +8,16 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'Shougo/neoyank.vim'
+
+[[plugins]]
 repo = 'Shougo/echodoc.vim'
 hook_add = '''
   set noshowmode
+  " set cmdheight=2
   let g:echodoc#enable_at_startup = 1
   " let g:echodoc#enable_force_overwrite = 1
 '''
-
-[[plugins]]
-repo = 'Shougo/neoyank.vim'
 
 [[plugins]]
 repo = 'kana/vim-textobj-user'
