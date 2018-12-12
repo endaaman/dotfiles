@@ -91,7 +91,8 @@ on_ft = ['rust']
 hook_add = '''
   let g:rustfmt_autosave = 1
   let g:rustfmt_command = $HOME . '/.cargo/bin/rustfmt'
-  autocmd EN FileType rust nmap <Plug>(go-to-def) <Plug>(rust-def)
+  autocmd EN FileType rust nmap <Plug>(go-to-def) :<C-u>call racer#GoToDefinition()<CR>
+  autocmd EN FileType rust nmap <Plug>(go-to-def-tab) :<C-u>split<CR>:call racer#GoToDefinition()<CR><C-w>T
 '''
 
 [[plugins]]

@@ -3,6 +3,7 @@ function! FtPluginC() abort
   setlocal cinwords=if,else,switch,case,for,while,do |
   setlocal cindent
   nmap <Plug>(go-to-def) <C-]>
+  nmap <Plug>(go-to-def-tab) <C-w><C-]><C-w>T
 endfunction
 
 autocmd EN FileType c call FtPluginC()

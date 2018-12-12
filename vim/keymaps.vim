@@ -3,8 +3,9 @@ mapclear
 let g:mapleader = ','
 
 noremap <Space>j J
-noremap <Space>K K
+" noremap <Space>K K
 nmap <Space>k <Plug>(go-to-def)
+nmap <Space>K <Plug>(go-to-def-tab)
 noremap <Space>i :<C-u>vs<CR>
 noremap <Space>- :<C-u>sp<CR>
 noremap <Space>e :<C-u>e!<CR>
