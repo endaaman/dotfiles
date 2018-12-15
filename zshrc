@@ -199,6 +199,15 @@ function list-items-current-dir() {
 }
 zle -N list-items-current-dir
 
+function open-in-file-explorer() {
+  local target='.'
+  if [[ -n $BUFFER ]]; then
+    target=$BUFFER
+  fi
+  xdg-open $target > /dev/null 2>&1
+}
+zle -N open-in-file-explorer
+
 function run-fglast {
   if [[ -z $(jobs) ]]; then
     return
@@ -278,6 +287,7 @@ zle -N feed-history
 ###* Key binding
 
 bindkey "^o" list-items-current-dir
+bindkey "^x" open-in-file-explorer
 bindkey '^s' copy-buffer
 bindkey '^z' run-fglast
 bindkey '^j' feed-history

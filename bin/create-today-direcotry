@@ -1,7 +1,7 @@
 #!/bin/bash
 
-while :
-do
-  echo "hi"
-  sleep 1
-done
+
+find ~/tmp -type d -empty -regextype posix-egrep -regex '.*/[0-9]{8}$' -exec rm -r {} \;
+dir="$HOME/tmp/$(date "+%Y%m%d")"
+mkdir -p $dir
+ln -sf $dir "$HOME/tmp/today"

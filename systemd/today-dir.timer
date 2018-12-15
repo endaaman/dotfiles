@@ -1,0 +1,9 @@
+[Unit]
+Description=create today dir daily and on boot
+
+[Timer]
+Persistent=true
+OnUnitActiveSec=1d
+
+[Install]
+WantedBy=timers.target

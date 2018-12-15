@@ -96,7 +96,7 @@ ln -fs ~/dotfiles/yaourtrc ~/.yaourtrc
 # ideavim
 ln -fs ~/dotfiles/ideavimrc ~/.ideavimrc
 # systemd units
-ln -fs ~/dotfiles/systemd/today.service ~/.local/share/systemd/user/
+ln -fs ~/dotfiles/systemd/* ~/.local/share/systemd/user/
 
 # GUI
 if $gui; then
@@ -122,11 +122,7 @@ if false; then
   ln -fs ~/dotfiles/Xdefaults ~/.Xdefaults
   ln -fs ~/dotfiles/Xresources ~/.Xresources
   # mlterm
-  ln -fs ~/dotfiles/mlterm/main ~/.mlterm/main
-  ln -fs ~/dotfiles/mlterm/color ~/.mlterm/color
-  ln -fs ~/dotfiles/mlterm/font ~/.mlterm/font
-  ln -fs ~/dotfiles/mlterm/font ~/.mlterm/aafont
-  ln -fs ~/dotfiles/mlterm/key ~/.mlterm/key
+  ln -fs ~/dotfiles/mlterm/* ~/.mlterm/
   # vimperator
   ln -fs ~/dotfiles/vimperatorrc ~/.vimperatorrc
   # vimfx
