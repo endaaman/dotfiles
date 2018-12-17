@@ -369,8 +369,6 @@ if [ -d ~/.go ]; then
   export GO15VENDOREXPERIMENT=1
 fi
 
-export PATH="$HOME/miniconda3/bin:$PATH"
-
 ###* Option
 
 fpath+=~/.zsh/completions
