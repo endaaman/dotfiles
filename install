@@ -72,7 +72,6 @@ done
 ln -fs ~/dotfiles/gitconfig ~/.gitconfig
 ln -fs ~/dotfiles/gitignore_global ~/.gitignore_global
 ln -fs ~/dotfiles/gitscripts ~/.gitscripts
-
 # zsh
 ln -fs ~/dotfiles/zshrc ~/.zshrc
 # bash

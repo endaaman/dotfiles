@@ -4,4 +4,4 @@
 find ~/tmp -type d -empty -regextype posix-egrep -regex '.*/[0-9]{8}$' -exec rm -r {} \;
 dir="$HOME/tmp/$(date "+%Y%m%d")"
 mkdir -p $dir
-ln -sf $dir "$HOME/tmp/today"
+ln -sfn $dir "$HOME/tmp/today"

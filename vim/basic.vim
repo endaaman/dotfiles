@@ -43,14 +43,14 @@ set wildmenu
 set wrap
 set write
 
-let g:netrw_home=  '~/.cache/vim'
+let g:netrw_home = '~/.cache/vim'
 let g:vim_indent_cont = &sw
 
 if has('nvim')
   let g:python_host_prog = PickExecutable([
-    \ '/usr/local/bin/python3',
-    \ '/usr/bin/python3',
-    \ '/bin/python3',
+    \ '/usr/local/bin/python',
+    \ '/usr/bin/python',
+    \ '/bin/python',
     \])
   let g:python3_host_prog = PickExecutable([
     \ '/usr/local/bin/python3',
