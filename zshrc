@@ -285,6 +285,11 @@ function feed-history {
 }
 zle -N feed-history
 
+function paste-clipboard {
+  LBUFFER+="$(xsel --clipboard --output)"
+}
+zle -N paste-clipboard
+
 ###* Key binding
 
 bindkey "^o" list-items-current-dir
@@ -305,9 +310,9 @@ bindkey -r $prefix
 bindkey $prefix$prefix $org_widget
 bindkey $prefix'^j' cd-dotfiles
 bindkey $prefix'^l' cd-list
-bindkey $prefix'^u' cd-upper
-bindkey $prefix'^p' cd-backward
-bindkey $prefix'^n' cd-forward
+bindkey $prefix'^p' paste-clipboard
+# bindkey $prefix'^u' cd-upper
+# bindkey $prefix'^n' cd-forward
 
 
 ###* Environment
