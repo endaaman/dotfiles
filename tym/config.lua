@@ -18,6 +18,16 @@ tym.set_keymaps({
     tym.reset_config()
     tym.reload()
     tym.notify('Reset and Reloaded')
+  end,
+  ['<Alt>g'] = function()
+    tym.set_timeout(coroutine.wrap(function()
+      tym.send_key('<Alt>t')
+      coroutine.yield(true)
+      tym.put('gh')
+      coroutine.yield(true)
+      tym.send_key('<Ctrl>m')
+      coroutine.yield(false)
+    end), 100)
   end
 })
 local remap = function (a, b)
