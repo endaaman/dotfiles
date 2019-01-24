@@ -77,7 +77,7 @@ PROMPT="$pre_prompt$dirname $prompt_colored_symbol "
 
 ###* Alias
 
-alias sudo='sudo '
+alias sudo='sudo -E '
 alias A='awk'
 alias G='grep'
 alias H='head'
