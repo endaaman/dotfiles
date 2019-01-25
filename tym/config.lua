@@ -19,7 +19,7 @@ tym.set_keymaps({
     tym.reload()
     tym.notify('Reset and Reloaded')
   end,
-  ['<Alt>g'] = function()
+  ['<Ctrl><Shift>g'] = function()
     tym.set_timeout(coroutine.wrap(function()
       tym.send_key('<Alt>t')
       coroutine.yield(true)

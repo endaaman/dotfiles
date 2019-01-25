@@ -30,6 +30,9 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'ErichDonGubler/vim-sublime-monokai'
+
+[[plugins]]
 repo = 'ayu-theme/ayu-vim'
 hook_add = '''
   " let ayucolor="light"
