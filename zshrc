@@ -17,7 +17,7 @@ if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
   zcompile ~/.zshrc
 fi
 
-is_root=false
+local is_root=false
 if [ ${EUID:-${UID}} = 0 ]; then
   is_root=true
 fi
@@ -43,37 +43,53 @@ if [ -d ~/.zplug -a $is_root = false ]; then
     fi
   fi
   zplug load
-  RPROMPT='$(git_super_status)'
 fi
 
 ###* Prompt
 
-if [ -n "$container" ] || [ -n "$SSH_CLIENT" ]; then
-  if [ -n "$container" ]; then
-    con="$(echo "$container" | sed 's/./\U&/g')"
-  else
-    con=SSH
+function my_prompt() {
+  local pre=''
+  if [ -n "$container" ] || [ -n "$SSH_CLIENT" ]; then
+    if [ -n "$container" ]; then
+      con="$(echo "$container" | sed 's/./\U&/g')"
+    else
+      con=SSH
+    fi
+    pre="%F{green}${con}%f:%F{magenta}$(hostname)%f"
   fi
-  pre_prompt_content="%F{green}${con}%f:%F{magenta}$(hostname)%f"
-fi
 
-if [ -n "$pre_prompt_content" ]; then
-  pre_prompt="($pre_prompt_content)"
-fi
-if $is_root; then
-  dirname="%F{006}%d%f"
-else
-  dirname="%F{006}%~%f"
-fi
+  if $is_root; then
+    dirname="%F{006}%d%f"
+  else
+    dirname="%F{006}%~%f"
+  fi
 
-if $is_root; then
-  prompt_symbol='#'
-else
-  prompt_symbol='$'
-fi
-prompt_colored_symbol="%(?.%F{011}.%F{001})$prompt_symbol%f"
+  if $is_root; then
+    symbol_glyph='#'
+  else
+    symbol_glyph='$'
+  fi
+  symbol="%(?.%F{011}.%F{001})$symbol_glyph%f"
 
-PROMPT="$pre_prompt$dirname $prompt_colored_symbol "
+  local python_mod=''
+  if [ -n "$CONDA_DEFAULT_ENV" ]; then
+    python_mod="<%F{red}$CONDA_DEFAULT_ENV%f> "
+  fi
+
+  echo "$pre$dirname $python_mod$symbol "
+}
+PROMPT='$(my_prompt)'
+
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+function my_rprompt() {
+  local rprompt=''
+  if which git_super_status &> /dev/null; then
+    rprompt='$(git_super_status)'
+  fi
+  echo $rprompt
+}
+RPROMPT="$(my_rprompt)"
+
 
 
 ###* Alias
