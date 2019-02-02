@@ -1,14 +1,14 @@
-[[plugins]]
-repo = 'Shougo/vimproc'
-build = 'make'
-
-[[plugins]]
-repo = 'Shougo/unite.vim'
-depends = ['vimproc']
-
-[[plugins]]
-repo = 'Shougo/unite-outline'
-depends = ['vimproc', 'unite.vim']
+# [[plugins]]
+# repo = 'Shougo/vimproc'
+# build = 'make'
+#
+# [[plugins]]
+# repo = 'Shougo/unite.vim'
+# depends = ['vimproc']
+#
+# [[plugins]]
+# repo = 'Shougo/unite-outline'
+# depends = ['vimproc', 'unite.vim']
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
@@ -53,7 +53,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
-depends = ['vimproc', 'unite.vim', 'unite-outline']
+# depends = ['vimproc', 'unite.vim', 'unite-outline']
 hook_add = '''
   call denite#custom#map(
     \ '_',
