@@ -78,7 +78,7 @@ function my_prompt() {
 
   echo "$pre$dirname $python_mod$symbol "
 }
-PROMPT='$(my_prompt)'
+PROMPT="$(my_prompt)"
 
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 function my_rprompt() {
