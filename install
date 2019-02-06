@@ -152,10 +152,12 @@ if $firefox; then
   fi
 fi
 
-if [ `which setxkbmap` ] && [[ -e ~/dotfiles/Xmodmap ]]; then
-  ln -sf ~/dotfiles/Xmodmap ~/.Xmodmap
-  setxkbmap && xmodmap ~/.Xmodmap
-  echo -e "${CYAN}Loaded Xmodmap${NC}"
+if ! which setxkbmap >/dev/null 2>&1; then
+  if [ -e ~/dotfiles/Xmodmap ]; then
+    ln -sf ~/dotfiles/Xmodmap ~/.Xmodmap
+    setxkbmap && xmodmap ~/.Xmodmap
+    echo -e "${CYAN}Loaded Xmodmap${NC}"
+  fi
 fi
 
 if $nodejs; then
