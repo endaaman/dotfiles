@@ -1,1 +1,1 @@
-autocmd EN BufRead,BufNewFile /etc/nginx/* set ft=nginx
+autocmd BufRead,BufNewFile /etc/nginx/* set ft=nginx
