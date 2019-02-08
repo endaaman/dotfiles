@@ -41,6 +41,7 @@ nnoremap # #zz
 nnoremap o o<Esc>
 nnoremap O O<Esc>
 nnoremap p p`]
+nnoremap mm :<C-u>call AutoMarkrement()<CR>
 nnoremap - <C-x>
 nnoremap + <C-a>
 nnoremap <Tab> <C-w>w

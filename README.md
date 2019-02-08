@@ -12,3 +12,8 @@
 - fonts.conf
 
 etc
+
+## TODO
+
+- use defx instead of NERDTree
+- introdule python dev env

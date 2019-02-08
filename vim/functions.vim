@@ -73,7 +73,6 @@ function! DeniteActionPrepend(context)
   execute ":normal i" . a:context.targets[0].action__text
 endfunction
 
-
 function! TabMessage(cmd)
   redir => message
   silent execute a:cmd
@@ -81,9 +80,24 @@ function! TabMessage(cmd)
   if empty(message)
     echoerr "no output"
   else
-    " use "new" instead of "tabnew" below if you prefer split windows instead of tabs
     tabnew
     setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
     silent put=message
   endif
+endfunction
+
+if !exists('g:markrement_char')
+    let g:markrement_char = [
+    \     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+    \     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+    \ ]
+endif
+function! AutoMarkrement()
+  if !exists('b:markrement_pos')
+    let b:markrement_pos = 0
+  else
+    let b:markrement_pos = (b:markrement_pos + 1) % len(g:markrement_char)
+  endif
+  execute 'mark' g:markrement_char[b:markrement_pos]
+  echo 'marked' g:markrement_char[b:markrement_pos]
 endfunction
