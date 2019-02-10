@@ -1,18 +1,10 @@
-# [[plugins]]
-# repo = 'Shougo/vimproc'
-# build = 'make'
-#
-# [[plugins]]
-# repo = 'Shougo/unite.vim'
-# depends = ['vimproc']
-#
-# [[plugins]]
-# repo = 'Shougo/unite-outline'
-# depends = ['vimproc', 'unite.vim']
+[[plugins]]
+repo = 'Shougo/defx.nvim'
+hook_add = '''
+'''
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-on_i = 1
 hook_add = '''
   let g:deoplete#enable_at_startup = 1
   if !exists('g:deoplete#omni#input_patterns')
@@ -53,7 +45,6 @@ hook_add = '''
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
-# depends = ['vimproc', 'unite.vim', 'unite-outline']
 hook_add = '''
   call denite#custom#map(
     \ '_',
