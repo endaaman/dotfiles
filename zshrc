@@ -78,17 +78,17 @@ function my_prompt() {
 
   echo "$pre$dirname $python_mod$symbol "
 }
-PROMPT="$(my_prompt)"
+PROMPT='$(my_prompt)'
 
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 function my_rprompt() {
   local rprompt=''
   if which git_super_status &> /dev/null; then
-    rprompt='$(git_super_status)'
+    rprompt="$(git_super_status)"
   fi
   echo $rprompt
 }
-RPROMPT="$(my_rprompt)"
+RPROMPT='$(my_rprompt)'
 
 
 
