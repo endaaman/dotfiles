@@ -1,0 +1,6 @@
+channels:
+  - anaconda
+  - defaults
+  - conda-forge
+changeps1: false
+channel_priority: true
