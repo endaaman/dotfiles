@@ -1,7 +1,7 @@
 status	key	command
+Precomposition	Backspace	Revert
 Composition	Backspace	Backspace
 Conversion	Backspace	Cancel
-Precomposition	Backspace	Revert
 Composition	Ctrl ;	DisplayAsHalfWidth
 Conversion	Ctrl ;	DisplayAsHalfWidth
 Composition	Ctrl :	DisplayAsHalfAlphanumeric
@@ -55,12 +55,12 @@ Composition	End	MoveCursorToEnd
 Conversion	End	SegmentFocusLast
 Composition	Enter	Commit
 Conversion	Enter	Commit
-Composition	Escape	IMEOff
-Conversion	Escape	ConvertToHiragana
+Prediction	Escape	ConvertToHalfAlphanumeric
+Suggestion	Escape	ConvertToHalfAlphanumeric
 DirectInput	Escape	IMEOff
 Precomposition	Escape	IMEOff
-Prediction	Escape	Cancel
-Suggestion	Escape	Cancel
+Composition	Escape	Commit
+Conversion	Escape	Commit
 Composition	F10	DisplayAsHalfAlphanumeric
 Conversion	F10	DisplayAsHalfAlphanumeric
 Composition	F2	ConvertWithoutHistory
@@ -79,8 +79,11 @@ Composition	Home	MoveCursorToBeginning
 Conversion	Home	SegmentFocusFirst
 Composition	Left	MoveCursorLeft
 Conversion	Left	SegmentFocusLeft
+Prediction	Muhenkan	ConvertToHalfAlphanumeric
+Suggestion	Muhenkan	ConvertToHalfAlphanumeric
+Precomposition	Muhenkan	CancelAndIMEOff
 Composition	Muhenkan	ConvertToHalfAlphanumeric
-Precomposition	Muhenkan	IMEOff
+Conversion	Muhenkan	Commit
 Composition	Option a	DisplayAsHalfWidth
 Conversion	Option a	DisplayAsHalfWidth
 Composition	Option c	DisplayAsFullAlphanumeric
@@ -118,8 +121,8 @@ Precomposition	Shift Space	InsertAlternateSpace
 Conversion	Shift Space	ConvertPrev
 Conversion	Shift Tab	ConvertPrev
 Conversion	Shift Up	ConvertPrevPage
-Composition	Space	Convert
 Precomposition	Space	InsertSpace
+Composition	Space	Convert
 Conversion	Space	ConvertNext
 Composition	Tab	PredictAndConvert
 Conversion	Tab	PredictAndConvert
