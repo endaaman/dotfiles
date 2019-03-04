@@ -2,6 +2,7 @@
 .vim/
 
 *.pyc
+.ipynb_checkpoints
 *.swp
 .envrc
 .netrwhist
