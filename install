@@ -88,6 +88,8 @@ ln -fsn ~/dotfiles/vim ~/.config/nvim
 ln -fs ~/dotfiles/editorconfig ~/.editorconfig
 # tig
 ln -fs ~/dotfiles/tigrc ~/.tigrc
+# tig
+ln -fs ~/dotfiles/condarc ~/.condarc
 # peco
 ln -fs ~/dotfiles/peco.json ~/.config/peco/config.json
 # yaourt
