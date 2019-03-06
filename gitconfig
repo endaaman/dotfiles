@@ -37,7 +37,7 @@
   rsf = checkout HEAD --
   s = status -u
   st = stash
-  u = pull --rebase
+  u = pull --rebase --autostash
 
 [color]
   ui = true
