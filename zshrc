@@ -188,34 +188,38 @@ function copy-buffer() {
 }
 zle -N copy-buffer
 
-function list-items-current-dir() {
-  if [[ -n $BUFFER ]]; then
-    zle accept-line
-    return
-  fi
+function list-current-items() {
   local l=$(ls -alhF --group-directories-first | tail -n+2 | grep -v ' \./' | fzf)
   local a=$(echo $l | awk '{$1=$2=$3=$4=$5=$6=$7=$8="" }1' | sed 's/^ *//g' | sed 's/\*$//')
   a=$(echo "${a% ->*}" | xargs -I{} printf %q "{}")
-  if [[ -z "$a" ]]; then
-    zle reset-prompt
-    return
-  fi
-  if [[ "$a" = '../' ]]; then
-    BUFFER="cd ../"
-    zle accept-line
-    zle reset-prompt
-    return
-  fi
-  if [ -d $a ]; then
-    LBUFFER="$a"
-    RBUFFER=""
-  else
-    LBUFFER=""
-    RBUFFER=" $a"
-  fi
+  BUFFER="$LBUFFER${a}$RBUFFER"
   zle reset-prompt
 }
-zle -N list-items-current-dir
+zle -N list-current-items
+
+function list-current-items() {
+  local l=$(ls -alhF --group-directories-first | tail -n+2 | grep -v ' \./' | fzf)
+  local a=$(echo $l | awk '{$1=$2=$3=$4=$5=$6=$7=$8="" }1' | sed 's/^ *//g' | sed 's/\*$//')
+  a=$(echo "${a% ->*}" | xargs -I{} printf %q "{}")
+  BUFFER="$LBUFFER${a}$RBUFFER"
+  zle reset-prompt
+}
+zle -N list-current-items
+
+function list-current-items-2() {
+  local l=$(find -maxdepth 2 | sort | fzf)
+  BUFFER="$LBUFFER${l}$RBUFFER"
+  zle reset-prompt
+}
+zle -N list-current-items-2
+
+function list-excutables() {
+  local l=$(whence -pm '*' | F)
+  BUFFER="$LBUFFER${l}$RBUFFER"
+  zle reset-prompt
+}
+zle -N list-excutables
+
 
 function open-in-file-explorer() {
   local target='.'
@@ -309,7 +313,7 @@ zle -N paste-clipboard
 
 ###* Key binding
 
-bindkey "^o" list-items-current-dir
+bindkey "^o" list-current-items
 bindkey "^x" open-in-file-explorer
 bindkey '^s' copy-buffer
 bindkey '^z' run-fglast
@@ -325,8 +329,10 @@ prefix='^v'
 org_widget=$(bindkey $prefix | awk '{ print $2 }')
 bindkey -r $prefix
 bindkey $prefix$prefix $org_widget
-bindkey $prefix'^j' cd-dotfiles
+bindkey $prefix'^d' cd-dotfiles
 bindkey $prefix'^l' cd-list
+bindkey $prefix'^o' list-current-items-2
+bindkey $prefix'^j' list-excutables
 bindkey $prefix'^p' paste-clipboard
 # bindkey $prefix'^u' cd-upper
 # bindkey $prefix'^n' cd-forward
