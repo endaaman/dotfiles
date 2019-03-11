@@ -214,12 +214,15 @@ function list-current-items-2() {
 zle -N list-current-items-2
 
 function list-excutables() {
-  local l=$(whence -pm '*' | F)
+  local l=$(whence -pm '*' | fzf)
   BUFFER="$LBUFFER${l}$RBUFFER"
   zle reset-prompt
 }
 zle -N list-excutables
 
+function fzf-last-outputs() {
+}
+zle -N fzf-last-outputs
 
 function open-in-file-explorer() {
   local target='.'
@@ -318,7 +321,7 @@ bindkey "^x" open-in-file-explorer
 bindkey '^s' copy-buffer
 bindkey '^z' run-fglast
 bindkey '^j' feed-history
-bindkey '^t' goto-today
+bindkey '^t' list-excutables
 bindkey '^g' cd-ghq
 bindkey '^[[Z' reverse-menu-complete
 bindkey '^[[1~' beginning-of-line
@@ -329,11 +332,11 @@ prefix='^v'
 org_widget=$(bindkey $prefix | awk '{ print $2 }')
 bindkey -r $prefix
 bindkey $prefix$prefix $org_widget
-bindkey $prefix'^d' cd-dotfiles
-bindkey $prefix'^l' cd-list
+bindkey $prefix'^l' fzf-last-outputs
+bindkey $prefix'^t' goto-today
 bindkey $prefix'^o' list-current-items-2
-bindkey $prefix'^j' list-excutables
 bindkey $prefix'^p' paste-clipboard
+# bindkey $prefix'^d' cd-dotfiles
 # bindkey $prefix'^u' cd-upper
 # bindkey $prefix'^n' cd-forward
 
