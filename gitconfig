@@ -21,7 +21,7 @@
   cp = cherry-pick
   d = diff
   f = fetch
-  fe = fetch --prune --all
+  ff = fetch --prune --all
   gr = grep
   i = "!f() { git rebase -i @~$1; }; f"
   l = log
