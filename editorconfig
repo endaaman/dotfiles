@@ -18,3 +18,7 @@ tab_width = 4
 
 [{Makefile,*.go}]
 indent_style = tab
+
+[*.php]
+end_of_line = lf
+indent_style = tab
