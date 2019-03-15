@@ -9,7 +9,6 @@ set backupdir=~/.cache/vim
 set cursorcolumn
 set cursorline
 set directory=~/.cache/vim
-set expandtab
 set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 set history=10000
 set hlsearch
@@ -58,7 +57,6 @@ if has('nvim')
     \ '/bin/python3',
     \])
   set sh=zsh
-  let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 0
   let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
   " au TermOpen * if &buftype == 'terminal' | :set nolist | endif
   " au TermClose * set list

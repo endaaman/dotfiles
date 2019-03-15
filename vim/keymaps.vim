@@ -9,7 +9,7 @@ nmap <Space>K <Plug>(go-to-def-tab)
 noremap <Space>i :<C-u>vs<CR>
 noremap <Space>- :<C-u>sp<CR>
 noremap <Space>e :<C-u>e!<CR>
-noremap <Space>l <C-l>
+noremap <Space>L <C-l>
 noremap <Space>s :s/
 nnoremap <expr> <Space>/ SearchByRegister()
 

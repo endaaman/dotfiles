@@ -81,7 +81,7 @@ hook_add = '''
 [[plugins]]
 repo = 'bronson/vim-trailing-whitespace'
 hook_add = '''
-  let g:extra_whitespace_ignored_filetypes = ['defx']
+  let g:extra_whitespace_ignored_filetypes = ['defx', 'qf']
 '''
 
 [[plugins]]
