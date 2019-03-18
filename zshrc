@@ -10,8 +10,9 @@ zle -N _reload-zsh
 bindkey -e
 bindkey '^r' _reload-zsh
 
-# Performance profiling
-# zmodload zsh/zprof && zprof
+if [ -n "$PROFILING" ]; then
+  zmodload zsh/zprof && zprof
+fi
 
 if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
   zcompile ~/.zshrc
@@ -19,7 +20,7 @@ fi
 
 local is_root=false
 if [ ${EUID:-${UID}} = 0 ]; then
-  is_root=true
+  is_root='is_root'
 fi
 
 ###* zplug
@@ -157,7 +158,7 @@ function gh() {
 }
 
 function cop() {
-  if [[ -z $1 ]]; then
+  if [ -z $1 ]; then
     return
   fi
   cat $1 | xsel --clipboard --input
@@ -165,7 +166,7 @@ function cop() {
 
 function remove-empty-dirs() {
   local dirs=$(find . -maxdepth 1 -mindepth 1 -empty -type d)
-  if [[ -z $dirs ]]; then
+  if [ -z $dirs ]; then
     echo 'No empty dir'
     return
   fi
@@ -189,16 +190,7 @@ function copy-buffer() {
 zle -N copy-buffer
 
 function list-current-items() {
-  local l=$(ls -alhF --group-directories-first | tail -n+2 | grep -v ' \./' | fzf)
-  local a=$(echo $l | awk '{$1=$2=$3=$4=$5=$6=$7=$8="" }1' | sed 's/^ *//g' | sed 's/\*$//')
-  a=$(echo "${a% ->*}" | xargs -I{} printf %q "{}")
-  BUFFER="$LBUFFER${a}$RBUFFER"
-  zle reset-prompt
-}
-zle -N list-current-items
-
-function list-current-items() {
-  local l=$(ls -alhF --group-directories-first | tail -n+2 | grep -v ' \./' | fzf)
+  local l=$(ls -alhF --group-directories-first | tail -n+2 | grep -v ' \./' | fzf --query "$RBUFFER")
   local a=$(echo $l | awk '{$1=$2=$3=$4=$5=$6=$7=$8="" }1' | sed 's/^ *//g' | sed 's/\*$//')
   a=$(echo "${a% ->*}" | xargs -I{} printf %q "{}")
   BUFFER="$LBUFFER${a}$RBUFFER"
@@ -207,7 +199,7 @@ function list-current-items() {
 zle -N list-current-items
 
 function list-current-items-2() {
-  local l=$(find -maxdepth 2 | sort | fzf)
+  local l=$(find -maxdepth 2 | sort | fzf --query "$RBUFFER")
   BUFFER="$LBUFFER${l}$RBUFFER"
   zle reset-prompt
 }
@@ -226,7 +218,7 @@ zle -N fzf-last-outputs
 
 function open-in-file-explorer() {
   local target='.'
-  if [[ -n $BUFFER ]]; then
+  if [ -n $BUFFER ]; then
     target=$BUFFER
   fi
   xdg-open $target > /dev/null 2>&1
@@ -234,7 +226,7 @@ function open-in-file-explorer() {
 zle -N open-in-file-explorer
 
 function run-fglast {
-  if [[ -z $(jobs) ]]; then
+  if [ -z $(jobs) ]; then
     return
   fi
   zle push-input
@@ -244,8 +236,8 @@ function run-fglast {
 zle -N run-fglast
 
 function cd-ghq {
-  local a=$(ghq list -p | fzf --query "$BUFFER")
-  if [[ -n $a ]]; then
+  local a=$(ghq list -p | fzf --query "$RBUFFER")
+  if [ -n $a ]; then
     LBUFFER="cd $a"
     RBUFFER=""
     zle accept-line
@@ -269,7 +261,7 @@ zle -N cd-upper
 
 function cd-list() {
   d=$(dirs -p -v | fzf | awk '{ print $2 }')
-  if [[ -n $d ]]; then
+  if [ -n $d ]; then
     BUFFER="cd $d"
     zle accept-line
   fi
@@ -279,7 +271,7 @@ zle -N cd-list
 
 function exec-commands {
   local a=$(whence -pmv '*' | fzf --query "$BUFFER" | awk '{print $1}')
-  if [[ -n $a ]]; then
+  if [ -n $a ]; then
     LBUFFER=$a
     RBUFFER=""
     zle accept-line
@@ -290,7 +282,7 @@ zle -N exec-commands
 
 function exec-history {
   local a=$(history -r 1 | fzf --query "$BUFFER" | sed 's/ *[\*0-9]* *//')
-  if [[ -n $a ]]; then
+  if [ -n $a ]; then
     LBUFFER=$a
     RBUFFER=""
     zle accept-line
@@ -301,7 +293,7 @@ zle -N exec-history
 
 function feed-history {
   a=$(history -r 1 | fzf --query "$BUFFER" | sed 's/ *[\*0-9]* *//')
-  if [[ -n $a ]]; then
+  if [ -n $a ]; then
     LBUFFER=$a
     RBUFFER=""
   fi
@@ -485,8 +477,6 @@ fi
 
 compdef _docker nvidia-docker
 
-
-# Performance profiling
-# if (which zprof > /dev/null) ;then
-#   zprof | less
-# fi
+if [ -n "$PROFILING" ] && which zprof > /dev/null; then
+  zprof | less
+fi

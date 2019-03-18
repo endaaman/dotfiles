@@ -9,6 +9,7 @@ set backupdir=~/.cache/vim
 set cursorcolumn
 set cursorline
 set directory=~/.cache/vim
+set expandtab
 set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 set history=10000
 set hlsearch
