@@ -105,6 +105,7 @@ alias T='tail'
 alias W='wc'
 alias F='fzf'
 alias C='xsel --clipboard --input'
+alias Y='yay'
 if which exa &> /dev/null; then
   alias ll='exa -agbl --group-directories-first'
 else
