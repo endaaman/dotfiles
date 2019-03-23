@@ -314,7 +314,6 @@ bindkey "^x" open-in-file-explorer
 bindkey '^s' copy-buffer
 bindkey '^z' run-fglast
 bindkey '^j' feed-history
-bindkey '^t' list-excutables
 bindkey '^g' cd-ghq
 bindkey '^[[Z' reverse-menu-complete
 bindkey '^[[1~' beginning-of-line
@@ -325,6 +324,7 @@ prefix='^v'
 org_widget=$(bindkey $prefix | awk '{ print $2 }')
 bindkey -r $prefix
 bindkey $prefix$prefix $org_widget
+bindkey $prefix'^j' list-excutables
 bindkey $prefix'^l' fzf-last-outputs
 bindkey $prefix'^t' goto-today
 bindkey $prefix'^o' list-current-items-2

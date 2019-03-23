@@ -19,6 +19,10 @@ tab_width = 4
 [{Makefile,*.go}]
 indent_style = tab
 
+[*.py]
+indent_size = 4
+tab_width = 4
+
 [*.php]
 end_of_line = lf
 indent_style = tab

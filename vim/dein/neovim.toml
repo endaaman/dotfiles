@@ -144,6 +144,7 @@ hook_add = '''
   nnoremap <Space>y :<C-u>Denite menu:yank<CR>
   nnoremap <Space>, :<C-u>Denite file_rec -path=,<CR>
   nnoremap <Space>a :<C-u>DeniteBufferDir file_rec<CR>
+  nnoremap <Space>l :<C-u>Denite git_log<CR>
   nnoremap <Space><Space> :<C-u>Denite -resume<CR>
 
   let s:menus = {}
