@@ -107,7 +107,7 @@ alias F='fzf'
 alias C='xsel --clipboard --input'
 alias Y='yay'
 if which exa &> /dev/null; then
-  alias ll='exa -agbl --group-directories-first'
+  alias ll='exa -agbl --group-directories-first --time-style long-iso'
 else
   alias ll='ls -ahlF --color=auto --group-directories-first'
 fi
@@ -219,7 +219,7 @@ zle -N fzf-last-outputs
 
 function open-in-file-explorer() {
   local target='.'
-  if [ -n $BUFFER ]; then
+  if [[ -n $BUFFER ]]; then
     target=$BUFFER
   fi
   xdg-open $target > /dev/null 2>&1

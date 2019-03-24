@@ -17,9 +17,3 @@ class Kind(Base):
                     'args': action_source[1:],
                 })
         context['sources_queue'].append(sources)
-
-    def action_back(self, context):
-        for target in context['targets']:
-            context['sources_queue'].append([
-                str(v)
-            for k, v in target.items()])
