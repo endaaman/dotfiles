@@ -7,15 +7,14 @@ augroup EN
   autocmd!
 augroup END
 
+let g:base_path = expand('<sfile>:p:h')
+
 runtime! functions.vim
 runtime! basic.vim
-runtime! commands.vim
 runtime! keymaps.vim
-" runtime! tabline.vim
 runtime! dein.vim
 runtime! local.vim
 runtime! ftdetect/*.vim
-runtime! ftplugins/*.vim
 
 if !exists('*s:source_script')
   function s:source_script() abort

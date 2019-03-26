@@ -124,7 +124,6 @@ repo = 'tpope/vim-fugitive'
 repo = 'neomake/neomake'
 # depends = ['vim-javacomplete2']
 hook_add = '''
-  autocmd EN BufEnter * Neomake
   autocmd EN BufWritePre * :call NeomakeLocal()
   function! NeomakeLocal()
     Neomake

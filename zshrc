@@ -190,32 +190,42 @@ function copy-buffer() {
 }
 zle -N copy-buffer
 
-function list-current-items() {
+function select-cwd-items() {
   local l=$(ls -alhF --group-directories-first | tail -n+2 | grep -v ' \./' | fzf --query "$RBUFFER")
   local a=$(echo $l | awk '{$1=$2=$3=$4=$5=$6=$7=$8="" }1' | sed 's/^ *//g' | sed 's/\*$//')
   a=$(echo "${a% ->*}" | xargs -I{} printf %q "{}")
   BUFFER="$LBUFFER${a}$RBUFFER"
   zle reset-prompt
 }
-zle -N list-current-items
+zle -N select-cwd-items
 
-function list-current-items-2() {
+function select-excutables() {
+  local l=$(whence -pm '*' | sort | fzf --query "$RBUFFER")
+  BUFFER="$LBUFFER${l}$RBUFFER"
+  zle reset-prompt
+}
+zle -N select-excutables
+
+function select-cwd-items-2() {
   local l=$(find -maxdepth 2 | sort | fzf --query "$RBUFFER")
   BUFFER="$LBUFFER${l}$RBUFFER"
   zle reset-prompt
 }
-zle -N list-current-items-2
+zle -N select-cwd-items-2
 
-function list-excutables() {
-  local l=$(whence -pm '*' | fzf)
+function select-branches() {
+  local l=$(git branch -a | sort | fzf --query "$RBUFFER" | sed -e 's/^\*//' -e 's/^ //')
   BUFFER="$LBUFFER${l}$RBUFFER"
   zle reset-prompt
 }
-zle -N list-excutables
+zle -N select-branches
 
-function fzf-last-outputs() {
+function select-dein-plugin-dirs() {
+  local l=$(find ~/.cache/dein/repos/github.com -maxdepth 2 -mindepth 2 | sort | fzf --query "$RBUFFER")
+  BUFFER="$LBUFFER${l}$RBUFFER"
+  zle reset-prompt
 }
-zle -N fzf-last-outputs
+zle -N select-dein-plugin-dirs
 
 function open-in-file-explorer() {
   local target='.'
@@ -309,7 +319,7 @@ zle -N paste-clipboard
 
 ###* Key binding
 
-bindkey "^o" list-current-items
+bindkey "^o" select-cwd-items
 bindkey "^x" open-in-file-explorer
 bindkey '^s' copy-buffer
 bindkey '^z' run-fglast
@@ -324,10 +334,11 @@ prefix='^v'
 org_widget=$(bindkey $prefix | awk '{ print $2 }')
 bindkey -r $prefix
 bindkey $prefix$prefix $org_widget
-bindkey $prefix'^j' list-excutables
-bindkey $prefix'^l' fzf-last-outputs
+bindkey $prefix'^j' select-excutables
+bindkey $prefix'^o' select-cwd-items-2
+bindkey $prefix'^b' select-branches
+bindkey $prefix'^l' select-dein-plugin-dirs
 bindkey $prefix'^t' goto-today
-bindkey $prefix'^o' list-current-items-2
 bindkey $prefix'^p' paste-clipboard
 # bindkey $prefix'^d' cd-dotfiles
 # bindkey $prefix'^u' cd-upper

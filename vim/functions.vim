@@ -1,9 +1,23 @@
-function! TrimTrailingSpaces() abort
-  if matchstr(&ft, '\(markdown\|pug\)') != ''
-    return
+function! SafeExec(path) abort
+  if filereadable(expand(a:path))
+    execute 'source ' . a:path
   endif
+endfunction
+command! -nargs=+ SafeExec :call SafeExec(<f-args>)
+
+function! SaveAsRoot() abort
+  w !sudo tee % > /dev/null
+  e!
+endfunction
+command! SaveAsRoot :call SaveAsRoot()
+
+function! TrimTrailingSpaces() abort
+  " if matchstr(&ft, '\(markdown\|pug\)') != ''
+  "   return
+  " endif
   %s/\s\+$//e
 endfunction
+command! TrimTrailingSpaces :call SaveAsRoot()
 
 " function! SearchByCurrentWord() abort
 "   let @/ = expand("<cword>")
@@ -85,6 +99,7 @@ function! TabMessage(cmd)
     silent put=message
   endif
 endfunction
+command! -nargs=+ -complete=command TabMessage call TabMessage(<q-args>)
 
 if !exists('g:markrement_char')
     let g:markrement_char = [
@@ -100,4 +115,16 @@ function! AutoMarkrement()
   endif
   execute 'mark' g:markrement_char[b:markrement_pos]
   echo 'marked' g:markrement_char[b:markrement_pos]
+endfunction
+
+function! LoadLocalVimConfig() abort
+  if getcwd() == expand('~')
+    return
+  endif
+  call SafeExec(getcwd() . '/.vim/init.vim')
+endfunction
+
+function! LoadFtConig() abort
+  call SafeExec(g:base_path . '/ft/default.vim')
+  call SafeExec(g:base_path . '/ft/' . &ft . '.vim')
 endfunction

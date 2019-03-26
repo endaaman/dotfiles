@@ -112,7 +112,6 @@ hook_add = '''
   call denite#custom#map('insert', '<C-b>', '<Left>')
 
   call denite#custom#action('file', 'xdg-open', 'DeniteActionXdgOpen')
-
   call denite#custom#action('word', 'prepend', 'DeniteActionPrepend')
 
   call denite#custom#filter('matcher_ignore_globs', 'ignore_globs', [
@@ -125,8 +124,8 @@ hook_add = '''
 
   call denite#custom#source('_', 'matchers', ['matcher_substring'])
   call denite#custom#option('default', {
-    \ 'highlight_matched_char': 'Title',
-    \ })
+    \ 'highlight_matched_char': 'Title', })
+	call denite#custom#source('grep', 'converters', ['converter/abbr_word'])
 
   nnoremap <Space>o :<C-u>Denite outline<CR>
   nnoremap <Space>O :<C-u>Denite file/old<CR>
@@ -191,6 +190,4 @@ hook_add = '''
     call denite#custom#var('grep', 'separator', ['--'])
     call denite#custom#var('grep', 'final_opts', [])
   endif
-
-  " call denite#custom#source('file_mru', 'converters', ['converter_relative_word'])
 '''

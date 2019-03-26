@@ -28,7 +28,7 @@ mkdir -p ~/.local/share/fonts
 mkdir -p ~/.mlterm
 mkdir -p ~/.mpv
 mkdir -p ~/src
-mkdir -p ~/wineprefixes/current
+mkdir -p ~/wineprefixes
 
 touch ~/.gitconfig_local
 

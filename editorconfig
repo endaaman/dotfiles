@@ -12,17 +12,9 @@ trim_trailing_whitespace = true
 [*.{md,jade}]
 trim_trailing_whitespace = false
 
-[*.{java,xml}]
+[*.{java,xml,py}]
 indent_size = 4
 tab_width = 4
 
-[{Makefile,*.go}]
-indent_style = tab
-
-[*.py]
-indent_size = 4
-tab_width = 4
-
-[*.php]
-end_of_line = lf
+[{Makefile,*.go,*.php}]
 indent_style = tab

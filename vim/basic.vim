@@ -97,10 +97,15 @@ if exists('g:rich')
   endif
 endif
 
-
 autocmd EN InsertLeave * set cursorline | set cursorcolumn
 autocmd EN InsertEnter * set nocursorline | set nocursorcolumn
-autocmd EN BufWritePre * call TrimTrailingSpaces()
+" autocmd EN BufWritePre * call TrimTrailingSpaces()
 autocmd EN BufWritePre * %s/\t\+$//e
 " autocmd EN BufEnter * set conceallevel=0 " problem in NERDTree
 autocmd EN VimEnter * call LoadLocalVimConfig()
+autocmd EN BufRead,BufNewFile,FileType, * call LoadFtConig()
+autocmd EN BufRead,BufNewFile *.vue set ft=vue
+autocmd EN BufRead,BufNewFile *.json.jbuilder set ft=ruby
+autocmd EN BufRead,BufNewFile Schemafile set ft=ruby
+autocmd EN BufRead,BufNewFile /etc/nginx/* set ft=nginx
+autocmd EN BufRead,BufNewFile *.ejs set ft=ejs
