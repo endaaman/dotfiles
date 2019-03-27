@@ -227,6 +227,13 @@ function select-dein-plugin-dirs() {
 }
 zle -N select-dein-plugin-dirs
 
+function select-git-files() {
+  local l=$(git ls-files | sort | fzf --query "$RBUFFER")
+  BUFFER="$LBUFFER${l}$RBUFFER"
+  zle reset-prompt
+}
+zle -N select-git-files
+
 function open-in-file-explorer() {
   local target='.'
   if [[ -n $BUFFER ]]; then
@@ -338,6 +345,7 @@ bindkey $prefix'^j' select-excutables
 bindkey $prefix'^o' select-cwd-items-2
 bindkey $prefix'^b' select-branches
 bindkey $prefix'^l' select-dein-plugin-dirs
+bindkey $prefix'^g' select-git-files
 bindkey $prefix'^t' goto-today
 bindkey $prefix'^p' paste-clipboard
 # bindkey $prefix'^d' cd-dotfiles

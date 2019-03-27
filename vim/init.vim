@@ -7,14 +7,17 @@ augroup EN
   autocmd!
 augroup END
 
+" global flags
 let g:base_path = expand('<sfile>:p:h')
+if $TERM =~# '256color'
+  let g:rich = 1
+endif
 
 runtime! functions.vim
 runtime! basic.vim
 runtime! keymaps.vim
 runtime! dein.vim
 runtime! local.vim
-runtime! ftdetect/*.vim
 
 if !exists('*s:source_script')
   function s:source_script() abort

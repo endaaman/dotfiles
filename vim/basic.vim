@@ -1,5 +1,6 @@
 set all&
 
+
 colorscheme evening
 
 set autoindent
@@ -61,6 +62,8 @@ if has('nvim')
   let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
   " au TermOpen * if &buftype == 'terminal' | :set nolist | endif
   " au TermClose * set list
+else
+  set pyxversion=3
 endif
 
 if has('win32') || has('win64') || has('mac')
@@ -84,10 +87,6 @@ if has('gui_running')
   autocmd EN VimEnter * set columns=120
 endif
 
-if $TERM =~# '256color'
-  let g:rich = 1
-endif
-
 if exists('g:rich')
   set showbreak=↳
   if has('gui_running')
@@ -109,3 +108,12 @@ autocmd EN BufRead,BufNewFile *.json.jbuilder set ft=ruby
 autocmd EN BufRead,BufNewFile Schemafile set ft=ruby
 autocmd EN BufRead,BufNewFile /etc/nginx/* set ft=nginx
 autocmd EN BufRead,BufNewFile *.ejs set ft=ejs
+
+
+let s:match_trailing_spaces_ignores = ['defx', 'qf', 'nerdtree']
+highlight default ExtraWhitespace ctermbg=red guibg=red
+autocmd ColorScheme * highlight default ExtraWhitespace ctermbg=darkred guibg=darkred
+match ExtraWhitespace /\s\+$/
+autocmd EN BufWinEnter,InsertLeave,FileType * call MatchTrailingSpaces(0, s:match_trailing_spaces_ignores)
+autocmd EN InsertEnter * call MatchTrailingSpaces(1, s:match_trailing_spaces_ignores)
+autocmd EN BufWinLeave * call clearmatches()

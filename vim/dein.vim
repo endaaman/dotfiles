@@ -38,24 +38,28 @@ if $USER != 'root' && isdirectory(s:dein_repo_dir) && dein#load_state(s:dein_rep
   " endif
   call s:load(s:toml_dir . '/general.toml')
   call s:load(s:toml_dir . '/nerdtree.toml')
+
+  if exists('g:rich')
+    call s:load(s:toml_dir . '/rich.toml')
+  endif
   call s:load(s:toml_dir . '/syntax.toml')
   call s:load(s:toml_dir . '/appearance.toml')
-  if has('nvim')
-    call s:load(s:toml_dir . '/neovim.toml')
-  else
+  if !has('nvim')
     call s:load(s:toml_dir . '/vim.toml')
   endif
+  call s:load(s:toml_dir . '/dark.toml')
   call dein#end()
-  call dein#save_state()
 
+  call dein#save_state()
   if dein#check_install()
     call dein#install()
   endif
-
+  " if has('nvim')
+  "   call dein#remote_plugins()
+  " endif
   " if !has('vim_starting')
   "   call dein#call_hook('post_source')
   " endif
-
   syntax enable
   filetype plugin indent on
 

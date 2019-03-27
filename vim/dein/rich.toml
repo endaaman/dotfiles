@@ -1,41 +1,21 @@
 [[plugins]]
-repo = 'scrooloose/nerdtree'
-# if = ''' 1 '''
+repo = 'itchyny/lightline.vim'
 hook_add = '''
-  " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-  autocmd FileType nerdtree setlocal nolist
-  function! NERDTreeCustom()
-    if strlen(expand('%')) > 0
-      NERDTreeFind
-    else
-      NERDTree
-    endif
-  endfunction
-  command! -nargs=* -bar -bang -count=0 -complete=dir NERDTreeCustom <args>
-  nnoremap <C-g> :<C-u>call NERDTreeCustom()<CR>
-
-  let g:NERDTreeShowHidden = 1
-  let g:NERDTreeHijackNetrw = 1
-  let g:NERDTreeMinimalUI = 1
-  let g:NERDTreeQuitOnOpen = 1
-  let g:NERDTreeWinSize = 60
-
-  autocmd FileType nerdtree setlocal nolist  "if you show hidden characters, this hides them in NERDTree
-
-  let g:NERDTreeDirArrows = 1
-  if !exists('g:rich')
-    let g:NERDTreeDirArrowExpandable = '|'
-    let g:NERDTreeDirArrowCollapsible = '-'
-  endif
+  source ~/.vim/dein/sub/lightline.vim
+  let g:lightline.colorscheme = 'iceberg'
+  " let g:lightline.colorscheme = 'nord'
+  " let g:lightline.colorscheme = 'hybrid'
 '''
 
 [[plugins]]
-repo = 'tiagofumo/vim-nerdtree-syntax-highlight'
-# if = ''' exists('g:rich') '''
+repo = 'endaaman/lightline-hybrid.vim'
+depends = ['lightline.vim']
+hook_add = '''
+ " let g:hybrid_reduced_contrast = 1
+'''
 
 [[plugins]]
 repo = 'Xuyuanp/nerdtree-git-plugin'
-# if = ''' exists('g:rich') '''
 hook_add = '''
   let g:NERDTreeIndicatorMapCustom = {
     " \ 'Staged'    : '',
@@ -54,7 +34,6 @@ hook_add = '''
 
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
-# if = ''' exists('g:rich') '''
 hook_add = '''
   let g:DevIconsEnableFoldersOpenClose = 1
   let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
@@ -81,8 +60,3 @@ hook_add = '''
   let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
 '''
 
-[[plugins]]
-repo = 'aufgang001/vim-nerdtree_plugin_open'
-hook_add = '''
-  let g:nerdtree_plugin_open_cmd = 'xdg-open'
-'''

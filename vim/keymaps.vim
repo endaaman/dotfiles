@@ -52,8 +52,8 @@ nnoremap <C-e> <Nop>
 
 nnoremap <C-l> <C-i>
 nnoremap <C-h> <C-o>
-nnoremap <C-f> :<C-u>lnext<CR>
-nnoremap <C-b> :<C-u>lprev<CR>
+nnoremap <Space>N :<C-u>lnext<CR>
+nnoremap <Space>P :<C-u>lprev<CR>
 " nnoremap <C-f> "zdd"zp
 " nnoremap <expr> <C-b> SwapWithAboveLine()
 

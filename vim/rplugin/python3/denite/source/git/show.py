@@ -1,11 +1,22 @@
+import re
 from ..base import Base
 from denite import util, process
 
 
 GITSHOW_HIGHLIGHT_SYNTAX = [
-    {'name': 'Plus',  'link': 'Question',   're': r'\(\s\|(\)+\+'},
-    {'name': 'Minus', 'link': 'Error', 're': r'(\?\zs-\+\ze'},
+    {'name': 'Plus',  'link': 'Question', 're': r'\%(\s\|(\)+\+' },
+    # {'name': 'Minus', 'link': 'Error',     're': r'\%(+\| \|-\|(\)\zs-\+\ze' },
+    {'name': 'Minus', 'link': 'Error',    're': r'\(+\|(\| \)\@<=-\+' },
+    {'name': 'Arrow', 'link': 'Directory', 're': r'\(->\|<-\|=>\|{\|}\)' },
 ]
+
+def extract_filename(line):
+    x = line.split('|')[0].strip()
+    i = x.find('=>')
+    if i < 0:
+        return x
+    d = re.match(r'(?P<pre>.*){(?P<old>.+) => (?P<new>.+)}(?P<post>.*)', x).groupdict()
+    return d['pre'] + d['new'] + d['post']
 
 class Source(Base):
     def __init__(self, vim):
@@ -45,12 +56,10 @@ class Source(Base):
 
         candidates = []
         for out in outs[:-1]:
-            splitted = out.split(' ')
-            # i = next((i for i, x in enumerate(splitted) if x), None)
             candidates.append({
                 'word': out[1:],
                 'kind': 'file',
-                'action__path': util.abspath(self.vim, splitted[1]),
+                'action__path': util.abspath(self.vim, extract_filename(out)),
             })
         candidates.append({
             'word': outs[-1],

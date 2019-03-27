@@ -1,4 +1,9 @@
+let s:width_0 = 40
+let s:width_1 = 80
+let s:width_2 = 120
+
 let g:lightline = {}
+
 let g:lightline.enable = {
   \ 'statusline': 1,
   \ 'tabline': 1
@@ -12,7 +17,7 @@ let g:lightline.active = {}
 let g:lightline.active.left = [
   \   [ 'mode', 'paste' ],
   \   [ 'dirname', 'filename' ],
-  \   [ 'neomake', ],
+  \   [ 'branch', 'neomake' ],
   \ ]
 let g:lightline.active.right = [
   \   [ 'syntastic', 'lineinfo' ],
@@ -24,6 +29,7 @@ let g:lightline.component_function = {
   \   'fugitive': 'LightLineFugitive',
   \   'dirname': 'LightlineDirname',
   \   'filename': 'LightlineFilename',
+  \   'branch': 'LightlineBranch',
   \   'neomake': 'LightlineNeomake',
   \   'fileformat': 'LightlineFileformat',
   \   'filetype': 'LightlineFiletype',
@@ -43,13 +49,14 @@ let g:lightline.component_expand = {
 " let g:lightline.subseparator = { 'left': '', 'right': '' }
 " let g:lightline.separator = { 'left': '', 'right': '' }
 " let g:lightline.subseparator = { 'left': '', 'right': '' }
-let g:lightline.separator = { 'left': '', 'right': '' }
-let g:lightline.subseparator = { 'left': '', 'right': '' }
+" let g:lightline.separator = { 'left': '', 'right': '' }
+" let g:lightline.subseparator = { 'left': '', 'right': '' }
 " let g:lightline.separator = { 'left': '', 'right': '' }
 " let g:lightline.subseparator = { 'left': '', 'right': '' }
+let g:lightline.separator = { 'left': '', 'right': '' }
+let g:lightline.subseparator = { 'left': '', 'right': '' }
 " let g:lightline.separator = { 'left': '', 'right': '' }
 " let g:lightline.subseparator = { 'left': '', 'right': '' }
-
 
 
 function! LightLinePercent()
@@ -59,14 +66,12 @@ function! LightLinePercent()
   return '%3p%%'
 endfunction
 
-
 function! LightLineLineinfo()
   if &ft == 'nerdtree'
     return ''
   endif
   return '%3l:%-2v'
 endfunction
-
 
 function! LightLineIndent()
   if &ft == 'nerdtree'
@@ -87,7 +92,7 @@ function! LightLineFugitive()
 endfunction
 
 function! LightlineDirname()
-  if &ft == 'nerdtree' || winwidth(0) <= 80
+  if &ft == 'nerdtree' || winwidth(0) <= s:width_1
     return ''
   endif
 
@@ -116,6 +121,10 @@ function! LightlineFilename()
     \ (&modified ? ' +' : '')
 endfunction
 
+function! LightlineBranch()
+  return winwidth(0) > s:width_2 ? fugitive#head() : ''
+endfunction
+
 function! LightlineNeomake()
   let running = neomake#statusline#get(bufnr('%'), {
     \ 'format_running': '… ({{running_job_names}})',
@@ -142,20 +151,21 @@ function! LightlineNeomake()
 endfunction
 
 function! LightlineFileformat()
-  return winwidth(0) > 80 ? &fileformat : ''
+  return winwidth(0) > s:width_1 ? &fileformat : ''
 endfunction
 
 function! LightlineFiletype()
-  return winwidth(0) > 80 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+  return winwidth(0) > s:width_1 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
 endfunction
 
 function! LightlineFileencoding()
-  return winwidth(0) > 80 ? (&fenc !=# '' ? &fenc : &enc) : ''
+  return winwidth(0) > s:width_1 ? (&fenc !=# '' ? &fenc : &enc) : ''
 endfunction
 
 function! LightlineMode()
   if &ft == 'nerdtree'
-    return 'NERD Tree'
+    return winwidth(0) > s:width_0 ? 'NERD Tree' : 'NERD'
   endif
-  return lightline#mode()
+  let l:mode = lightline#mode()
+  return winwidth(0) > s:width_1 ? l:mode : l:mode[0]
 endfunction

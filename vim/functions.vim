@@ -17,12 +17,7 @@ function! TrimTrailingSpaces() abort
   " endif
   %s/\s\+$//e
 endfunction
-command! TrimTrailingSpaces :call SaveAsRoot()
-
-" function! SearchByCurrentWord() abort
-"   let @/ = expand("<cword>")
-"   set hlsearch
-" endfunction
+command! TrimTrailingSpaces :call TrimTrailingSpaces()
 
 function! SwapWithAboveLine() abort
   if line('.') == 1
@@ -61,30 +56,18 @@ function! PickExecutable(pathspecs) abort
   return ''
 endfunction
 
-function! YankFileName() abort
-  let p = expand('%:t')
-  let @+ = p
-  echo "yanked: " . p
-endfunction
-
-function! YankRelativePath() abort
-  let p = expand('%')
-  let @+ = p
-  echo "yanked: " . p
-endfunction
-
-function! YankFullPath() abort
-  let p = expand('%:p')
-  let @+ = p
-  echo "yanked: " . p
-endfunction
-
-function! DeniteActionXdgOpen(context)
-  execute '!xdg-open ' . a:context.targets[0].action__path
-endfunction
-
-function! DeniteActionPrepend(context)
-  execute ":normal i" . a:context.targets[0].action__text
+function! MatchTrailingSpaces(cursor, ignores) abort
+  for ft in a:ignores
+    if ft ==# &filetype
+      call clearmatches()
+      return
+    endif
+  endfor
+  if a:cursor
+    match ExtraWhitespace /\s\+\%#\@<!$/
+  else
+    match ExtraWhitespace /\s\+$/
+  endif
 endfunction
 
 function! TabMessage(cmd)

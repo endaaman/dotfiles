@@ -6,9 +6,9 @@ GITLOG_HIGHLIGHT_SYNTAX = [
     {'name': 'Name',      'link': 'Number',    're': r'\S\+\%(\s\+\d\{4\}-\)\@='},
     {'name': 'Date',      'link': 'Statement', 're': r'\d\{4\}-\d\{2\}-\d\{2\}'},
     {'name': 'Committer', 'link': 'Question',  're': r'\%(-\d\{2\}\s\)\@<=\S\+\s'},
-    {'name': 'Special1',  'link': 'Directory', 're': r'Staged '},
-    {'name': 'Special2',  'link': 'Directory', 're': r' Modified '},
-    {'name': 'Special3',  'link': 'Directory', 're': r' Untracked'},
+    # {'name': 'Special1',  'link': 'Directory', 're': r'Staged '},
+    # {'name': 'Special2',  'link': 'Directory', 're': r' Modified '},
+    # {'name': 'Special3',  'link': 'Directory', 're': r' Untracked'},
 ]
 
 
@@ -46,11 +46,12 @@ class Source(Base):
         if context['__proc'].eof():
             context['__proc'] = None
 
-        candidates = [{
-            'word': 'Staged + Modified + Untracked',
-            'kind': 'multi_source',
-            'action__sources': [['git/staged'], ['git/modified'], ['git/untracked'], ],
-        }]
+        candidates = []
+        # candidates.append({
+        #     'word': 'Staged + Modified + Untracked',
+        #     'kind': 'multi_source',
+        #     'action__sources': [['git/staged'], ['git/modified'], ['git/untracked'], ],
+        # })
         for out in outs:
             splitted = out.split(' ')
             candidates.append({

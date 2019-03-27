@@ -1,7 +1,5 @@
 [[plugins]]
 repo = 'Shougo/defx.nvim'
-hook_add = '''
-'''
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
@@ -46,73 +44,26 @@ hook_add = '''
 [[plugins]]
 repo = 'Shougo/denite.nvim'
 hook_add = '''
-  call denite#custom#map(
-    \ '_',
-    \ '<Esc>',
-    \ '<denite:leave_mode>',
-    \ 'noremap'
-    \)
-  call denite#custom#map(
-    \ '_',
-    \ '<Tab>',
-    \ '<denite:move_to_next_line>',
-    \ 'noremap'
-    \)
-  call denite#custom#map(
-    \ '_',
-    \ '<S-Tab>',
-    \ '<denite:move_to_previous_line>',
-    \ 'noremap'
-    \)
-  call denite#custom#map(
-    \ '_',
-    \ '<C-d>',
-    \ '<denite:quit>',
-    \ 'noremap'
-    \)
-  call denite#custom#map(
-    \ 'insert',
-    \ '<C-j>',
-    \ '<denite:choose_action>',
-    \ 'noremap'
-    \)
-  call denite#custom#map(
-    \ 'insert',
-    \ '<C-t>',
-    \ '<denite:do_action:tabopen>',
-    \ 'noremap'
-    \)
-  call denite#custom#map(
-    \ 'insert',
-    \ '<C-p>',
-    \ '<denite:do_action:split>',
-    \ 'noremap'
-    \)
-  call denite#custom#map(
-    \ 'insert',
-    \ '<C-s>',
-    \ '<denite:do_action:vsplit>',
-    \ 'noremap'
-    \)
-  call denite#custom#map(
-    \ 'insert',
-    \ '<C-y>',
-    \ '<denite:do_action:yank>',
-    \ 'noremap'
-    \)
-  call denite#custom#map(
-    \ 'insert',
-    \ '<C-o>',
-    \ '<denite:do_action:xdg-open>',
-    \ 'noremap'
-    \)
+  call denite#custom#map('_', '<Esc>', '<denite:leave_mode>', 'noremap')
+  call denite#custom#map('_', '<Tab>', '<denite:move_to_next_line>', 'noremap')
+  call denite#custom#map('_', '<S-Tab>', '<denite:move_to_previous_line>', 'noremap')
+  call denite#custom#map( '_', '<C-d>', '<denite:quit>', 'noremap')
+  call denite#custom#map('insert', '<C-j>', '<denite:choose_action>', 'noremap')
+  call denite#custom#map('insert', '<C-t>', '<denite:do_action:tabopen>', 'noremap')
+  call denite#custom#map('insert', '<C-p>', '<denite:do_action:split>', 'noremap')
+  call denite#custom#map('insert', '<C-s>', '<denite:do_action:vsplit>', 'noremap')
+  call denite#custom#map('insert', '<C-y>', '<denite:do_action:yank>', 'noremap')
+  call denite#custom#map('insert', '<C-o>', '<denite:do_action:xdg-open>', 'noremap')
   call denite#custom#map('insert', '<C-a>', '<Home>')
   call denite#custom#map('insert', '<C-e>', '<End>')
   call denite#custom#map('insert', '<C-f>', '<Right>')
   call denite#custom#map('insert', '<C-b>', '<Left>')
+  call denite#custom#map('insert', '<PageDown>', '<denite:scroll_page_forwards>')
+  call denite#custom#map('insert', '<PageUp>', '<denite:scroll_page_backwards>')
 
   call denite#custom#action('file', 'xdg-open', 'DeniteActionXdgOpen')
   call denite#custom#action('word', 'prepend', 'DeniteActionPrepend')
+  call denite#custom#action('command', 'tabopen', 'DeniteActionTabopen')
 
   call denite#custom#filter('matcher_ignore_globs', 'ignore_globs', [
     \ '*~', '*.o', '*.exe', '*.bak',
@@ -123,8 +74,13 @@ hook_add = '''
     \ ])
 
   call denite#custom#source('_', 'matchers', ['matcher_substring'])
-  call denite#custom#option('default', {
-    \ 'highlight_matched_char': 'Title', })
+  call denite#custom#option('_', { 'highlight_matched_char': 'Title' })
+  if exists('g:rich')
+    " call denite#custom#option('_', 'prompt', '﯐')
+    " call denite#custom#option('_', 'prompt', '')
+    " call denite#custom#option('_', 'prompt', '')
+    call denite#custom#option('_', 'prompt', '')
+  endif
 	call denite#custom#source('grep', 'converters', ['converter/abbr_word'])
 
   nnoremap <Space>o :<C-u>Denite outline<CR>
@@ -138,8 +94,9 @@ hook_add = '''
   nnoremap <Space>W :<C-u>Denite grep -no-empty -input=`expand("<cword>")`<CR>
   nnoremap <Space>r :<C-u>Denite register<CR>
   nnoremap <Space>R :<C-u>Denite register -default-action=prepend<CR>
-  nnoremap <Space>c :<C-u>Denite colorscheme<CR>
-  nnoremap <Space>h :<C-u>Denite help<CR>
+  nnoremap <Space>c :<C-u>Denite command<CR>
+  nnoremap <Space>C :<C-u>Denite colorscheme<CR>
+  nnoremap <Space>h :<C-u>Denite help -default-action=tabopen<CR>
   nnoremap <Space>p :<C-u>Denite neoyank<CR>
   nnoremap <Space>P :<C-u>Denite neoyank -default-action=prepend<CR>
   nnoremap <Space>d :<C-u>Denite git/untracked git/staged git/modified<CR>
@@ -150,18 +107,52 @@ hook_add = '''
   nnoremap <Space>, :<C-u>Denite file/rec -path=,<CR>
   nnoremap <Space>a :<C-u>DeniteBufferDir file/rec<CR>
   nnoremap <Space>l :<C-u>Denite git/log<CR>
+  nnoremap <C-f> :<C-u>Denite -resume -cursor-pos=+1 -immediately<CR>
+  nnoremap <C-b> :<C-u>Denite -resume -cursor-pos=-1 -immediately<CR>
   nnoremap <Space><Space> :<C-u>Denite -resume<CR>
 
+  function! YankFileName() abort
+    let p = expand('%:t')
+    let @+ = p
+    echo "yanked: " . p
+  endfunction
+
+  function! YankRelativePath() abort
+    let p = expand('%')
+    let @+ = p
+    echo "yanked: " . p
+  endfunction
+
+  function! YankFullPath() abort
+    let p = expand('%:p')
+    let @+ = p
+    echo "yanked: " . p
+  endfunction
+
+  function! DeniteActionXdgOpen(context)
+    execute '!xdg-open ' . a:context.targets[0].action__path
+  endfunction
+
+  function! DeniteActionPrepend(context)
+    execute ":normal i" . a:context.targets[0].action__text
+  endfunction
+
+  function! DeniteActionTabopen(context)
+    execute a:context.targets[0].action__command
+    execute "normal \<C-w>\T"
+  endfunction
+
   let s:menus = {}
-  " let s:menus.files = { 'description': 'Bookmarked files' }
-  " let s:menus.files.file_candidates = [
-  "   \ ['vimrc', '~/.vimrc'],
-  "   \ ]
   let s:menus.yank = { 'description': 'Yank' }
   let s:menus.yank.command_candidates = [
     \ ['File name', 'call YankFileName()'],
     \ ['Relative path', 'call YankRelativePath()'],
     \ ['Full path', 'call YankFullPath()'],
+    \ ]
+  let s:menus.highlight = { 'description': 'Highlight' }
+  let s:menus.highlight.command_candidates = [
+    \ ['Highlight test', 'so $VIMRUNTIME/syntax/hitest.vim | execute "normal \<C-w>\T"'],
+    \ ['Color test', 'so $VIMRUNTIME/syntax/colortest.vim | execute "normal \<C-w>\T"'],
     \ ]
   call denite#custom#var('menu', 'menus', s:menus)
 

@@ -40,21 +40,3 @@ hook_add = '''
   " let ayucolor="dark"
   " autocmd EN VimEnter * nested colorscheme ayu
 '''
-
-[[plugins]]
-repo = 'itchyny/lightline.vim'
-if = ''' exists('g:rich') '''
-hook_add = '''
-  source ~/.vim/dein/sub/lightline.vim
-  let g:lightline.colorscheme = 'iceberg'
-  " let g:lightline.colorscheme = 'nord'
-  " let g:lightline.colorscheme = 'hybrid'
-'''
-
-[[plugins]]
-repo = 'endaaman/lightline-hybrid.vim'
-if = ''' exists('g:rich') '''
-depends = ['lightline.vim']
-hook_add = '''
- " let g:hybrid_reduced_contrast = 1
-'''
