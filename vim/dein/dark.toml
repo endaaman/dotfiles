@@ -1,5 +1,8 @@
 [[plugins]]
 repo = 'Shougo/defx.nvim'
+hook_add = '''
+  nnoremap <Space>a :<C-u>Defx<CR>
+'''
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
@@ -34,11 +37,10 @@ hook_add = '''
   "   system('rustc --print sysroot')
   let g:deoplete#sources#rust#racer_binary=$HOME . '/.cargo/bin/racer'
   let g:deoplete#sources#rust#rust_source_path=$HOME . '/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
-
   let g:deoplete#sources#rust#show_duplicates = 1
   let g:deoplete#sources#rust#disable_keymap = 1
   nnoremap <buffer> <Space>gd <plug>DeopleteRustGoToDefinitionDefault
-  nnoremap <buffer> <Space>K  <plug>DeopleteRustShowDocumentation
+  nnoremap <buffer> <Space>K <plug>DeopleteRustShowDocumentation
 '''
 
 [[plugins]]
@@ -47,7 +49,7 @@ hook_add = '''
   call denite#custom#map('_', '<Esc>', '<denite:leave_mode>', 'noremap')
   call denite#custom#map('_', '<Tab>', '<denite:move_to_next_line>', 'noremap')
   call denite#custom#map('_', '<S-Tab>', '<denite:move_to_previous_line>', 'noremap')
-  call denite#custom#map( '_', '<C-d>', '<denite:quit>', 'noremap')
+  call denite#custom#map('_', '<C-d>', '<denite:quit>', 'noremap')
   call denite#custom#map('insert', '<C-j>', '<denite:choose_action>', 'noremap')
   call denite#custom#map('insert', '<C-t>', '<denite:do_action:tabopen>', 'noremap')
   call denite#custom#map('insert', '<C-p>', '<denite:do_action:split>', 'noremap')
@@ -100,47 +102,14 @@ hook_add = '''
   nnoremap <Space>p :<C-u>Denite neoyank<CR>
   nnoremap <Space>P :<C-u>Denite neoyank -default-action=prepend<CR>
   nnoremap <Space>d :<C-u>Denite git/untracked git/staged git/modified<CR>
-  " nnoremap <Space>f :<C-u>Denite git/all<CR>
   nnoremap <Space>f :<C-u>Denite `finddir('.git', ';') != '' ? 'git/all' : 'file/rec'`<CR>
   nnoremap <Space>F :<C-u>Denite `finddir('.git', ';') != '' ? 'git/all' : 'file/rec'` -input=`expand("<cword>")`<CR>
   nnoremap <Space>y :<C-u>Denite menu:yank<CR>
   nnoremap <Space>, :<C-u>Denite file/rec -path=,<CR>
-  nnoremap <Space>a :<C-u>DeniteBufferDir file/rec<CR>
   nnoremap <Space>l :<C-u>Denite git/log<CR>
   nnoremap <C-f> :<C-u>Denite -resume -cursor-pos=+1 -immediately<CR>
   nnoremap <C-b> :<C-u>Denite -resume -cursor-pos=-1 -immediately<CR>
   nnoremap <Space><Space> :<C-u>Denite -resume<CR>
-
-  function! YankFileName() abort
-    let p = expand('%:t')
-    let @+ = p
-    echo "yanked: " . p
-  endfunction
-
-  function! YankRelativePath() abort
-    let p = expand('%')
-    let @+ = p
-    echo "yanked: " . p
-  endfunction
-
-  function! YankFullPath() abort
-    let p = expand('%:p')
-    let @+ = p
-    echo "yanked: " . p
-  endfunction
-
-  function! DeniteActionXdgOpen(context)
-    execute '!xdg-open ' . a:context.targets[0].action__path
-  endfunction
-
-  function! DeniteActionPrepend(context)
-    execute ":normal i" . a:context.targets[0].action__text
-  endfunction
-
-  function! DeniteActionTabopen(context)
-    execute a:context.targets[0].action__command
-    execute "normal \<C-w>\T"
-  endfunction
 
   let s:menus = {}
   let s:menus.yank = { 'description': 'Yank' }

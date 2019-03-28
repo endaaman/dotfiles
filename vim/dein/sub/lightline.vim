@@ -50,7 +50,9 @@ let g:lightline.component_expand = {
 " let g:lightline.separator = { 'left': '', 'right': '' }
 " let g:lightline.subseparator = { 'left': '', 'right': '' }
 " let g:lightline.separator = { 'left': '', 'right': '' }
-" let g:lightline.subseparator = { 'left': '', 'right': '' }
+" let g:lightline.subseparator = { 'left': '', 'right': '' }
+" let g:lightline.separator = { 'left': '', 'right': '' }
+" let g:lightline.subseparator = { 'left': '', 'right': '' }
 " let g:lightline.separator = { 'left': '', 'right': '' }
 " let g:lightline.subseparator = { 'left': '', 'right': '' }
 let g:lightline.separator = { 'left': '', 'right': '' }
@@ -78,7 +80,7 @@ function! LightLineIndent()
     return ''
   endif
   if &expandtab == 1
-    return 'sw:' . &shiftwidth
+    return 'sw=' . &shiftwidth
   else
     return 'tab'
   endif

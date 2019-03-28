@@ -70,7 +70,7 @@ function! MatchTrailingSpaces(cursor, ignores) abort
   endif
 endfunction
 
-function! TabMessage(cmd)
+function! TabMessage(cmd) abort
   redir => message
   silent execute a:cmd
   redir END
@@ -85,12 +85,12 @@ endfunction
 command! -nargs=+ -complete=command TabMessage call TabMessage(<q-args>)
 
 if !exists('g:markrement_char')
-    let g:markrement_char = [
-    \     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-    \     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+  let g:markrement_char = [
+    \   'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+    \   'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
     \ ]
 endif
-function! AutoMarkrement()
+function! AutoMarkrement() abort
   if !exists('b:markrement_pos')
     let b:markrement_pos = 0
   else
@@ -98,6 +98,33 @@ function! AutoMarkrement()
   endif
   execute 'mark' g:markrement_char[b:markrement_pos]
   echo 'marked' g:markrement_char[b:markrement_pos]
+endfunction
+
+function! ShiftRegister() abort
+  if @0 =~ "\<NL>" && @1 != @*
+    let @9 = @8
+    let @8 = @7
+    let @7 = @6
+    let @6 = @5
+    let @5 = @4
+    let @4 = @3
+    let @3 = @2
+    let @2 = @1
+    let @1 = @*
+  endif
+endfunction
+command! ShiftRegister :call ShiftRegister()
+
+function! VagueHook() abort
+  if @0 != @*
+    call ShiftRegister()
+    let @0 = @*
+    let @p = @+
+  endif
+endfunction
+
+function! EscapeHook() abort
+  set nopaste
 endfunction
 
 function! LoadLocalVimConfig() abort
@@ -110,4 +137,35 @@ endfunction
 function! LoadFtConig() abort
   call SafeExec(g:base_path . '/ft/default.vim')
   call SafeExec(g:base_path . '/ft/' . &ft . '.vim')
+endfunction
+
+function! YankFileName() abort
+  let p = expand('%:t')
+  let @+ = p
+  echo "yanked: " . p
+endfunction
+
+function! YankRelativePath() abort
+  let p = expand('%')
+  let @+ = p
+  echo "yanked: " . p
+endfunction
+
+function! YankFullPath() abort
+  let p = expand('%:p')
+  let @+ = p
+  echo "yanked: " . p
+endfunction
+
+function! DeniteActionXdgOpen(context) abort
+  execute '!xdg-open ' . a:context.targets[0].action__path
+endfunction
+
+function! DeniteActionPrepend(context) abort
+  execute ":normal i" . a:context.targets[0].action__text
+endfunction
+
+function! DeniteActionTabopen(context) abort
+  execute a:context.targets[0].action__command
+  execute "normal \<C-w>\T"
 endfunction

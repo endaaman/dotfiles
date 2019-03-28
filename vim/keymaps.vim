@@ -2,6 +2,8 @@ mapclear
 
 let g:mapleader = ','
 
+nnoremap <silent> <Esc> <Esc>:<C-u>call EscapeHook()<CR>
+
 noremap <Space>j J
 " noremap <Space>K K
 nmap <Space>k <Plug>(go-to-def)
@@ -10,7 +12,6 @@ noremap <Space>i :<C-u>vs<CR>
 noremap <Space>- :<C-u>sp<CR>
 noremap <Space>e :<C-u>e!<CR>
 noremap <Space>L <C-l>
-noremap <Space>s :s/
 nnoremap <expr> <Space>/ SearchByRegister()
 
 noremap j gj
@@ -64,7 +65,7 @@ nnoremap <C-t> :<C-u>tabnew<CR>
 nnoremap <Left> :tabm -1<CR>
 nnoremap <Right> :tabm +1<CR>
 
-nnoremap <C-u> :<C-u>noh<CR>
+nnoremap <C-u> :<C-u>noh<CR><C-l>
 nnoremap <C-q> :<C-u>qa<CR>
 nnoremap <C-d> :<C-u>q<CR>
 nnoremap <C-x> :<C-u>x<CR>
@@ -79,14 +80,13 @@ vnoremap O :sort<CR>
 vnoremap R c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
 vnoremap / "zy:<C-u>let @/=@z\|set hlsearch<CR>
 
-command! ShiftRegister if @0 =~ "\<NL>"|let @9=@8|let @8=@7|let @7=@6|let @6=@5|let @5=@4|let @4=@3|let @3=@2|let @2=@1|let @1=@0|endif
-nnoremap <silent>Y Y:<C-u>ShiftRegister<CR>
-vnoremap <silent>Y Y:<C-u>ShiftRegister<CR>
-vnoremap <silent>y y:<C-u>ShiftRegister<CR>
-onoremap <silent>y y:<C-u>ShiftRegister<CR>
-nnoremap <silent> <C-m> yy:<C-u>ShiftRegister<CR>
-vnoremap <silent> <C-m> y:<C-u>ShiftRegister<CR>
-onoremap <silent> <C-m> y:<C-u>ShiftRegister<CR>
+nnoremap <silent>Y :<C-u>ShiftRegister<CR>Y
+vnoremap <silent>Y :<C-u>ShiftRegister<CR>y
+vnoremap <silent>y :<C-u>ShiftRegister<CR>y
+onoremap <silent>y :<C-u>ShiftRegister<CR>y
+nnoremap <silent> <C-m> :<C-u>ShiftRegister<CR>yy
+vnoremap <silent> <C-m> :<C-u>ShiftRegister<CR>gvy
+onoremap <silent> <C-m> :<C-u>ShiftRegister<CR>y
 
 inoremap <C-d> <Del>
 

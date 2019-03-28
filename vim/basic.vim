@@ -117,3 +117,5 @@ match ExtraWhitespace /\s\+$/
 autocmd EN BufWinEnter,InsertLeave,FileType * call MatchTrailingSpaces(0, s:match_trailing_spaces_ignores)
 autocmd EN InsertEnter * call MatchTrailingSpaces(1, s:match_trailing_spaces_ignores)
 autocmd EN BufWinLeave * call clearmatches()
+autocmd EN CursorHold * call VagueHook()
+autocmd EN InsertLeave * set nopaste

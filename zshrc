@@ -344,7 +344,7 @@ bindkey $prefix$prefix $org_widget
 bindkey $prefix'^j' select-excutables
 bindkey $prefix'^o' select-cwd-items-2
 bindkey $prefix'^b' select-branches
-bindkey $prefix'^l' select-dein-plugin-dirs
+bindkey $prefix'^q' select-dein-plugin-dirs
 bindkey $prefix'^g' select-git-files
 bindkey $prefix'^t' goto-today
 bindkey $prefix'^p' paste-clipboard
