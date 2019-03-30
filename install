@@ -13,25 +13,6 @@ fi
 CYAN='\033[0;34m'
 NC='\033[0m'
 
-mkdir -p ~/.cache/vim
-mkdir -p ~/.config/byobu
-mkdir -p ~/.config/fish/functions
-mkdir -p ~/.config/fontconfig
-mkdir -p ~/.config/nyaovim
-mkdir -p ~/.config/peco
-mkdir -p ~/.config/systemd/user
-mkdir -p ~/.local/share/systemd/user/
-mkdir -p ~/.config/termite
-mkdir -p ~/.config/tym
-mkdir -p ~/.go
-mkdir -p ~/.local/share/fonts
-mkdir -p ~/.mlterm
-mkdir -p ~/.mpv
-mkdir -p ~/src
-mkdir -p ~/wineprefixes
-
-touch ~/.gitconfig_local
-
 gui=false
 nodejs=false
 python=false
@@ -68,73 +49,79 @@ for i in "$@" ; do
   esac
 done
 
-# git
+mkdir -p ~/.cache/vim
+mkdir -p ~/.config/fontconfig
+mkdir -p ~/.config/systemd/user
+mkdir -p ~/.local/share/systemd/user/
+mkdir -p ~/.config/tym
+mkdir -p ~/.go
+mkdir -p ~/.local/share/fonts
+mkdir -p ~/src
+
+touch ~/.gitconfig_local
+touch ~/.zshrc_local
+
 ln -fs ~/dotfiles/gitconfig ~/.gitconfig
 ln -fs ~/dotfiles/gitignore_global ~/.gitignore_global
-ln -fs ~/dotfiles/gitscripts ~/.gitscripts
-# zsh
 ln -fs ~/dotfiles/zshrc ~/.zshrc
-# bash
 ln -fs ~/dotfiles/bashrc ~/.bashrc
-# tmux
 ln -fs ~/dotfiles/tmux.conf ~/.tmux.conf
-ln -fs ~/dotfiles/byobu.conf ~/.config/byobu/.tmux.conf
-# vim
 ln -fs ~/dotfiles/vimrc ~/.vimrc
 ln -fsn ~/dotfiles/vim ~/.vim
-# neovim
 ln -fsn ~/dotfiles/vim ~/.config/nvim
-# editorconfig
 ln -fs ~/dotfiles/editorconfig ~/.editorconfig
-# tig
 ln -fs ~/dotfiles/tigrc ~/.tigrc
-# tig
 ln -fs ~/dotfiles/condarc ~/.condarc
-# peco
-ln -fs ~/dotfiles/peco.json ~/.config/peco/config.json
-# yaourt
 ln -fs ~/dotfiles/yaourtrc ~/.yaourtrc
-# ideavim
 ln -fs ~/dotfiles/ideavimrc ~/.ideavimrc
-# systemd units
 ln -fs ~/dotfiles/systemd/* ~/.local/share/systemd/user/
 
 # GUI
 if $gui; then
-  # fonts
   ln -fs ~/dotfiles/fonts.conf ~/.config/fontconfig/fonts.conf
   ln -fsn ~/dotfiles/fonts ~/.local/share/fonts/dotfiles
-  # wine
+
+  mkdir -p ~/wineprefixes
   ln -fs ~/.wine ~/wineprefixes/current
-  # tym
+
   ln -fs ~/dotfiles/tym/config.lua ~/.config/tym/config.lua
   ln -fs ~/dotfiles/tym/local.lua ~/.config/tym/local.lua
-  # termite
+
+  mkdir -p ~/.config/termite
   ln -fs ~/dotfiles/termite/config ~/.config/termite/config
-  # mpv
+
+  mkdir -p ~/.mpv
   ln -fs ~/dotfiles/mpv.conf ~/.mpv/input.conf
 fi
 
 # NOT USED
 if false; then
-  # fish
+  mkdir -p ~/.config/fish/functions
   ln -fs ~/dotfiles/config.fish ~/.config/fish/config.fish
-  # X org
+
+  mkdir -p ~/.config/peco
+  ln -fs ~/dotfiles/peco.json ~/.config/peco/config.json
+
   ln -fs ~/dotfiles/Xdefaults ~/.Xdefaults
   ln -fs ~/dotfiles/Xresources ~/.Xresources
-  # mlterm
+
+  mkdir -p ~/.mlterm
   ln -fs ~/dotfiles/mlterm/* ~/.mlterm/
-  # vimperator
+
   ln -fs ~/dotfiles/vimperatorrc ~/.vimperatorrc
-  # vimfx
+
   ln -fsn ~/dotfiles/vimfx ~/.config/vimfx
-  # nyaovim
+
+  mkdir -p ~/.config/nyaovim
   ln -fs ~/dotfiles/nyaovimrc.html ~/.config/nyaovim/nyaovimrc.html
-  # compton
+
   ln -fs ~/dotfiles/compton.conf ~/.config/compton.conf
   ln -fs ~/.config/compton.conf ~/.config/marco-compton.conf
-  # xkb
+
   ln -fsn ~/dotfiles/xkb ~/.xkb
+
+  mkdir -p ~/.config/byobu
+  ln -fs ~/dotfiles/byobu.conf ~/.config/byobu/.tmux.conf
 fi
 
 

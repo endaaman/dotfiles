@@ -494,6 +494,9 @@ eval `dircolors -b`
 if [ -f ~/.zshrc.local ]; then
   source ~/.zshrc.local
 fi
+if [ -f ~/.zshrc_local ]; then
+  source ~/.zshrc_local
+fi
 
 compdef _docker nvidia-docker
 
