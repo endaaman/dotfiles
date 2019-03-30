@@ -101,6 +101,7 @@ function! AutoMarkrement() abort
 endfunction
 
 function! ShiftRegister() abort
+  echom 'shift'
   if &clipboard =~ 'unnamedplus'
     let l:clipboard = @+
   elseif &clipboard =~ 'unnamed'
@@ -113,16 +114,16 @@ function! ShiftRegister() abort
     return
   endif
 
-  if @1 != l:clipboard
-    let @9 = @8
-    let @8 = @7
-    let @7 = @6
-    let @6 = @5
-    let @5 = @4
-    let @4 = @3
-    let @3 = @2
-    let @2 = @1
-    let @1 = l:clipboard
+  if @a != l:clipboard
+    let @i = @h
+    let @h = @g
+    let @g = @f
+    let @f = @e
+    let @e = @d
+    let @d = @c
+    let @c = @b
+    let @b = @a
+    let @a = l:clipboard
   endif
 endfunction
 command! ShiftRegister :call ShiftRegister()
