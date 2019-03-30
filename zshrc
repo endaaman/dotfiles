@@ -91,7 +91,12 @@ function my_rprompt() {
   fi
   echo $rprompt
 }
-RPROMPT='$(my_rprompt)'
+
+if [ -n "$IS_ROOT" ]; then
+  RPROMPT="$(my_rprompt)"
+else
+  RPROMPT='$(my_rprompt)'
+fi
 
 
 ###* Alias

@@ -113,7 +113,7 @@ function! ShiftRegister() abort
     return
   endif
 
-  if @0 != l:clipboard
+  if @1 != l:clipboard
     let @9 = @8
     let @8 = @7
     let @7 = @6
@@ -122,8 +122,7 @@ function! ShiftRegister() abort
     let @4 = @3
     let @3 = @2
     let @2 = @1
-    let @1 = @0
-    let @0 = l:clipboard
+    let @1 = l:clipboard
   endif
 endfunction
 command! ShiftRegister :call ShiftRegister()
