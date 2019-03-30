@@ -93,7 +93,7 @@
 /* #PanelUI-developerItems
        > [key="key_responsiveDesignMode"],                /* Responsive Design Mode */
 /* #PanelUI-developerItems
-       > [key="key_responsiveDesignMode"] 
+       > [key="key_responsiveDesignMode"]
        + .subviewbutton:not([key]),                       /* Eyedropper */
 /* #PanelUI-developerItems > [key="key_scratchpad"],      /* Scratchpad */
 /* #PanelUI-developerItems > [key="key_scratchpad"]

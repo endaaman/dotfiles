@@ -14,7 +14,7 @@
 /* #context-paste,                              /* Paste                            */
 /* #context-delete,                             /* Delete                           */
 /* #context-sep-paste,                          /************ Separator *************/
-/* #context-selectall,                          /* Select All                       */
+#context-selectall,                          /* Select All                       */
 /* #context-keywordfield,                       /* Add a Keyword for this Search…   */
 /* #spell-separator,                            /************ Separator *************/
 /* #spell-check-enabled,                        /* Check Spelling                   */

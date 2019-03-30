@@ -17,13 +17,13 @@
 
 /* #page-menu-separator,                                   /********* Separator *********/
 /* #context-savepage,                                      /* Save Page As...           */
-/* #context-pocket,                                        /* Save Page to Pocket       */
-/* #context-sep-sendpagetodevice,                          /********* Separator *********/
-/* #context-sendpagetodevice,                              /* Send Page to Device       */
-/* #context-sep-viewbgimage,                               /********* Separator *********/
+#context-pocket,                                        /* Save Page to Pocket       */
+#context-sep-sendpagetodevice,                          /********* Separator *********/
+#context-sendpagetodevice,                              /* Send Page to Device       */
+#context-sep-viewbgimage,                               /********* Separator *********/
 /* #context-viewbgimage,                                   /* View Background Image     */
-/* #context-selectall,                                     /* Select All                */
-/* #context-context-sep-viewsource,                        /********* Separator *********/
+#context-selectall,                                     /* Select All                */
+#context-context-sep-viewsource,                        /********* Separator *********/
 /* #context-viewsource,                                    /* View Page Source          */
 /* #context-viewinfo,                                      /* View Page Info            */
 /* #inspect-separator,                                     /********* Separator *********/
