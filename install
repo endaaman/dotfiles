@@ -1,8 +1,8 @@
 #!/bin/bash
 
 if [ ${EUID:-${UID}} = 0 ]; then
-  echo 'Do not run this script as a ROOT USER!'
-  exit 1
+  read -p "You are now a ROOT USER. OK to install? (y/N): " yn
+  case "$yn" in [yY]*) ;; *) echo "abort." ; exit ;; esac
 fi
 
 if ! which git >/dev/null 2>&1; then
