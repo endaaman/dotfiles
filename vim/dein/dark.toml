@@ -99,6 +99,7 @@ hook_add = '''
   nnoremap <Space>h :<C-u>Denite help -default-action=tabopen<CR>
   nnoremap <Space>p :<C-u>Denite register<CR>
   nnoremap <Space>P :<C-u>Denite register -default-action=prepend<CR>
+  " nnoremap <Space>r :<C-u>Denite register -default-action=yank<CR>
   nnoremap <Space>d :<C-u>Denite git/untracked git/staged git/modified<CR>
   nnoremap <Space>f :<C-u>Denite `finddir('.git', ';') != '' ? 'git/all' : 'file/rec'`<CR>
   nnoremap <Space>F :<C-u>Denite `finddir('.git', ';') != '' ? 'git/all' : 'file/rec'` -input=`expand("<cword>")`<CR>

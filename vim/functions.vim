@@ -101,7 +101,6 @@ function! AutoMarkrement() abort
 endfunction
 
 function! ShiftRegister() abort
-  echom 'shift'
   if &clipboard =~ 'unnamedplus'
     let l:clipboard = @+
   elseif &clipboard =~ 'unnamed'
