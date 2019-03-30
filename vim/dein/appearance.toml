@@ -1,33 +1,17 @@
 [[plugins]]
 repo = 'chriskempson/base16-vim'
-hook_add = '''
-  " autocmd EN VimEnter * nested colorscheme base16-classic-dark
-'''
 
 [[plugins]]
 repo = 'jacoborus/tender.vim'
-hook_add = '''
-  " autocmd EN VimEnter * nested colorscheme tender
-'''
 
 [[plugins]]
 repo = 'kristijanhusak/vim-hybrid-material'
-hook_add = '''
-  " autocmd EN VimEnter * nested colorscheme hybrid_reverse
-'''
-
 
 [[plugins]]
 repo = 'cocopon/iceberg.vim'
-hook_add = '''
-  autocmd EN VimEnter * nested colorscheme iceberg
-'''
 
 [[plugins]]
 repo = 'arcticicestudio/nord-vim'
-hook_add = '''
-  " autocmd EN VimEnter * nested colorscheme nord
-'''
 
 [[plugins]]
 repo = 'ErichDonGubler/vim-sublime-monokai'

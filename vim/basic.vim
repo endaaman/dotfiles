@@ -1,8 +1,6 @@
 set all&
 
 
-colorscheme evening
-
 set autoindent
 set background=dark
 set backspace=indent,eol,start
@@ -27,7 +25,7 @@ set noswapfile
 set number
 set ruler
 set scrolloff=15
-set shell=bash
+set shell=$SHELL
 set shiftwidth=2
 set showcmd
 set showmatch
@@ -87,7 +85,7 @@ if has('gui_running')
   autocmd EN VimEnter * set columns=120
 endif
 
-if exists('g:rich')
+if get(g:, 'rich')
   set showbreak=↳
   if has('gui_running')
     set listchars=tab:>-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%

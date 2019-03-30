@@ -7,16 +7,25 @@ augroup EN
   autocmd!
 augroup END
 
-" global flags
 let g:base_path = expand('<sfile>:p:h')
-if $TERM =~# '256color'
+let g:dein_dir = expand('~/.cache/dein')
+
+if $TERM =~# '256color' && !exists('g:rich')
   let g:rich = 1
+endif
+
+if $USER != 'root' && isdirectory(g:dein_dir) && !exists('g:dein')
+  let g:dein = 1
 endif
 
 runtime! functions.vim
 runtime! basic.vim
 runtime! keymaps.vim
-runtime! dein.vim
+if get(g:, 'dein')
+  runtime! dein.vim
+else
+  runtime! vanilla.vim
+endif
 runtime! local.vim
 
 if !exists('*s:source_script')
@@ -44,7 +53,7 @@ if !exists('*s:source_script')
 endif
 nnoremap <silent> <F10> :<C-u>call <SID>source_script()<CR>
 
-syntax on
-filetype indent plugin on
+filetype plugin indent on
+syntax enable
 
 set secure

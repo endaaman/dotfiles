@@ -77,7 +77,7 @@ hook_add = '''
 
   call denite#custom#source('_', 'matchers', ['matcher_substring'])
   call denite#custom#option('_', { 'highlight_matched_char': 'Title' })
-  if exists('g:rich')
+  if get(g:, 'rich')
     " call denite#custom#option('_', 'prompt', '﯐')
     " call denite#custom#option('_', 'prompt', '')
     " call denite#custom#option('_', 'prompt', '')

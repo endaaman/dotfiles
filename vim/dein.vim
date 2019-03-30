@@ -4,50 +4,42 @@ let g:dein#install_message_type = 'none'
 let g:dein#enable_notification = 1
 
 let s:toml_dir = expand('<sfile>:p:h') . '/dein'
-let s:dein_dir = expand('~/.cache/dein')
-let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+let s:dein_repo_dir = g:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
 execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
-
-function! s:h() abort
-  echom 'post_source'
-endfunction
 
 function! s:update() abort
   call dein#clear_state()
   call dein#update()
 endfunction
+command! DeinUpdate :call s:update()
 
 function! s:recache() abort
   call dein#clear_state()
   call dein#recache_runtimepath()
 endfunction
+command! DeinRecache :call s:recache()
 
-if $USER != 'root' && isdirectory(s:dein_repo_dir) && dein#load_state(s:dein_repo_dir)
-  function! s:load(path) abort
-    if filereadable(expand(a:path))
-      call dein#load_toml(a:path, {})
-    endif
-  endfunction
+function! s:load(path) abort
+  if filereadable(expand(a:path))
+    call dein#load_toml(a:path, {})
+  else
+    echom 'Not found: ' . a:path
+  endif
+endfunction
 
-  call dein#begin(s:dein_dir)
-  " call dein#set_hook('', 'post_source', function('s:h'))
-
-  " if !has('vim_starting')
-  "   call dein#call_hook('source')
-  " endif
+if dein#load_state(s:dein_repo_dir)
+  call dein#begin(g:dein_dir)
   call s:load(s:toml_dir . '/general.toml')
-  call s:load(s:toml_dir . '/nerdtree.toml')
-
-  if exists('g:rich')
+  if get(g:, 'rich')
     call s:load(s:toml_dir . '/rich.toml')
   endif
   call s:load(s:toml_dir . '/syntax.toml')
   call s:load(s:toml_dir . '/appearance.toml')
+  call s:load(s:toml_dir . '/dark.toml')
   if !has('nvim')
     call s:load(s:toml_dir . '/vim.toml')
   endif
-  call s:load(s:toml_dir . '/dark.toml')
   call dein#end()
 
   call dein#save_state()
@@ -57,12 +49,6 @@ if $USER != 'root' && isdirectory(s:dein_repo_dir) && dein#load_state(s:dein_rep
   " if has('nvim')
   "   call dein#remote_plugins()
   " endif
-  " if !has('vim_starting')
-  "   call dein#call_hook('post_source')
-  " endif
-  syntax enable
-  filetype plugin indent on
 
-  command! DeinUpdate :call s:update()
-  command! DeinRecache :call s:recache()
+  autocmd EN VimEnter * nested colorscheme iceberg
 endif

@@ -12,6 +12,8 @@ noremap <Space>i :<C-u>vs<CR>
 noremap <Space>- :<C-u>sp<CR>
 noremap <Space>e :<C-u>e!<CR>
 noremap <Space>L <C-l>
+noremap <Space>t :<C-u>terminal<CR>
+noremap <Space>q :<C-u>:q!<CR>
 nnoremap <expr> <Space>/ SearchByRegister()
 
 noremap j gj

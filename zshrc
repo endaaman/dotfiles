@@ -91,7 +91,7 @@ function my_rprompt() {
   fi
   echo $rprompt
 }
-RPROMPT="$(my_rprompt)"
+RPROMPT='$(my_rprompt)'
 
 
 ###* Alias

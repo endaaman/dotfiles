@@ -68,7 +68,7 @@ hook_add = '''
 [[plugins]]
 repo = 'Yggdroot/indentLine'
 hook_add = '''
-  if exists('g:rich')
+  if get(g:, 'rich')
     let g:indentLine_char = ''
   else
     let g:indentLine_char = '¦'
@@ -139,7 +139,7 @@ hook_add = '''
   nnoremap <Space>n :<C-u>Neomake<CR>
   let g:neomake_open_list = 0
 
-  if exists('g:rich')
+  if get(g:, 'rich')
     let g:neomake_error_sign = {
     \ 'text': '',
     \ 'texthl': 'Error',
@@ -170,7 +170,8 @@ hook_add = '''
 repo = 'scrooloose/nerdtree'
 hook_add = '''
   " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-  autocmd FileType nerdtree setlocal nolist
+  autocmd EN FileType nerdtree setlocal nolist
+
   function! NERDTreeCustom()
     if strlen(expand('%')) > 0
       NERDTreeFind
@@ -187,10 +188,11 @@ hook_add = '''
   let g:NERDTreeQuitOnOpen = 1
   let g:NERDTreeWinSize = 60
 
-  autocmd FileType nerdtree setlocal nolist  "if you show hidden characters, this hides them in NERDTree
-
   let g:NERDTreeDirArrows = 1
-  if !exists('g:rich')
+  if get(g:, 'rich')
+    let g:NERDTreeDirArrowCollapsible = nr2char(8200)
+    let g:NERDTreeDirArrowExpandable = nr2char(8200)
+  else
     let g:NERDTreeDirArrowExpandable = '|'
     let g:NERDTreeDirArrowCollapsible = '-'
   endif
