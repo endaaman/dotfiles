@@ -94,18 +94,17 @@ hook_add = '''
   nnoremap <Space>g :<C-u>Denite grep -no-empty<CR>
   nnoremap <Space>G :<C-u>Denite grep -input=`@0`<CR>
   nnoremap <Space>W :<C-u>Denite grep -no-empty -input=`expand("<cword>")`<CR>
-  nnoremap <Space>r :<C-u>Denite register<CR>
-  nnoremap <Space>R :<C-u>Denite register -default-action=prepend<CR>
   nnoremap <Space>c :<C-u>Denite command<CR>
   nnoremap <Space>C :<C-u>Denite colorscheme<CR>
   nnoremap <Space>h :<C-u>Denite help -default-action=tabopen<CR>
-  nnoremap <Space>p :<C-u>Denite neoyank<CR>
-  nnoremap <Space>P :<C-u>Denite neoyank -default-action=prepend<CR>
+  nnoremap <Space>p :<C-u>Denite register<CR>
+  nnoremap <Space>P :<C-u>Denite register -default-action=prepend<CR>
   nnoremap <Space>d :<C-u>Denite git/untracked git/staged git/modified<CR>
   nnoremap <Space>f :<C-u>Denite `finddir('.git', ';') != '' ? 'git/all' : 'file/rec'`<CR>
   nnoremap <Space>F :<C-u>Denite `finddir('.git', ';') != '' ? 'git/all' : 'file/rec'` -input=`expand("<cword>")`<CR>
   nnoremap <Space>y :<C-u>Denite menu:yank<CR>
   nnoremap <Space>, :<C-u>Denite file/rec -path=,<CR>
+  nnoremap <Space>a :<C-u>Denite directory_rec<CR>
   nnoremap <Space>l :<C-u>Denite git/log<CR>
   nnoremap <C-f> :<C-u>Denite -resume -cursor-pos=+1 -immediately<CR>
   nnoremap <C-b> :<C-u>Denite -resume -cursor-pos=-1 -immediately<CR>

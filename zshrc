@@ -341,13 +341,13 @@ prefix='^v'
 org_widget=$(bindkey $prefix | awk '{ print $2 }')
 bindkey -r $prefix
 bindkey $prefix$prefix $org_widget
-bindkey $prefix'^j' select-excutables
-bindkey $prefix'^o' select-cwd-items-2
 bindkey $prefix'^b' select-branches
-bindkey $prefix'^q' select-dein-plugin-dirs
-bindkey $prefix'^g' select-git-files
-bindkey $prefix'^t' goto-today
+bindkey $prefix'^g' select-dein-plugin-dirs
+bindkey $prefix'^j' select-excutables
+bindkey $prefix'^l' select-git-files
+bindkey $prefix'^o' select-cwd-items-2
 bindkey $prefix'^p' paste-clipboard
+bindkey $prefix'^t' goto-today
 # bindkey $prefix'^d' cd-dotfiles
 # bindkey $prefix'^u' cd-upper
 # bindkey $prefix'^n' cd-forward

@@ -8,9 +8,6 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'Shougo/neoyank.vim'
-
-[[plugins]]
 repo = 'Shougo/echodoc.vim'
 hook_add = '''
   set noshowmode
@@ -76,7 +73,8 @@ hook_add = '''
   else
     let g:indentLine_char = '¦'
   endif
-  let g:indentLine_fileTypeExclude = ['nerdtree']
+  let g:vim_json_syntax_conceal = 0
+  let g:indentLine_fileTypeExclude = ['nerdtree', 'markdown']
 '''
 
 

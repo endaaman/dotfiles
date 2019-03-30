@@ -100,7 +100,6 @@ autocmd EN InsertLeave * set cursorline | set cursorcolumn
 autocmd EN InsertEnter * set nocursorline | set nocursorcolumn
 " autocmd EN BufWritePre * call TrimTrailingSpaces()
 autocmd EN BufWritePre * %s/\t\+$//e
-" autocmd EN BufEnter * set conceallevel=0 " problem in NERDTree
 autocmd EN VimEnter * call LoadLocalVimConfig()
 autocmd EN BufRead,BufNewFile,FileType, * call LoadFtConig()
 autocmd EN BufRead,BufNewFile *.vue set ft=vue
