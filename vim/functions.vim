@@ -101,7 +101,19 @@ function! AutoMarkrement() abort
 endfunction
 
 function! ShiftRegister() abort
-  if @0 =~ "\<NL>" && @1 != @*
+  if &clipboard =~ 'unnamedplus'
+    let l:clipboard = @+
+  elseif &clipboard =~ 'unnamed'
+    let l:clipboard = @*
+  else
+    let l:clipboard = @"
+  endif
+
+  if l:clipboard == ''
+    return
+  endif
+
+  if @0 != l:clipboard
     let @9 = @8
     let @8 = @7
     let @7 = @6
@@ -110,18 +122,11 @@ function! ShiftRegister() abort
     let @4 = @3
     let @3 = @2
     let @2 = @1
-    let @1 = @*
+    let @1 = @0
+    let @0 = l:clipboard
   endif
 endfunction
 command! ShiftRegister :call ShiftRegister()
-
-function! VagueHook() abort
-  if @0 != @*
-    call ShiftRegister()
-    let @0 = @*
-    let @p = @+
-  endif
-endfunction
 
 function! EscapeHook() abort
   set nopaste

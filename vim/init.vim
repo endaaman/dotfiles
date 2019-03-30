@@ -18,6 +18,7 @@ if $USER != 'root' && isdirectory(g:dein_dir) && !exists('g:dein')
   let g:dein = 1
 endif
 
+runtime! commaon.vim
 runtime! functions.vim
 runtime! basic.vim
 runtime! keymaps.vim
@@ -28,30 +29,34 @@ else
 endif
 runtime! local.vim
 
-if !exists('*s:source_script')
-  function s:source_script() abort
-    let ft = &ft
-    let colorscheme = g:colors_name
-    let path = expand('~/.vim/init.vim')
-    if !filereadable(path)
-      echomsg printf('"%s" does not exist', simplify(fnamemodify(path, ':~:.')))
+if !exists('*Reload')
+  function! Reload() abort
+    let l:ft = &ft
+    let l:colorscheme = g:colors_name
+    let l:path = expand('~/.vim/init.vim')
+    if !filereadable(l:path)
+      echomsg printf('"%s" does not exist', simplify(fnamemodify(l:path, ':~:.')))
       return
     endif
-    execute 'source ' fnameescape(path)
+    execute 'source ' fnameescape(l:path)
 
     if strlen(expand('%')) > 0
       e!
     endif
-    execute 'set ft=' . ft
-    execute 'colorscheme ' . colorscheme
-    echomsg printf(
+    execute 'setlocal ft=' . ft
+    execute 'colorscheme ' . l:colorscheme
+    echom printf(
       \ '"%s" has sourced (%s)',
-      \ simplify(fnamemodify(path, ':~:.')),
+      \ simplify(fnamemodify(l:path, ':~:.')),
       \ strftime('%c'),
       \)
+    if !exists('*ReloadHook')
+      call ReloadHook()
+    endif
   endfunction
+  command! Reload :call Reload()
 endif
-nnoremap <silent> <F10> :<C-u>call <SID>source_script()<CR>
+nnoremap <silent> <F10> :<C-u>call Reload()<CR>
 
 filetype plugin indent on
 syntax enable

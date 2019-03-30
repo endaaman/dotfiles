@@ -28,7 +28,7 @@ hook_source = '''
 
 [[plugins]]
 repo = 'sebastianmarkow/deoplete-rust'
-depends = ['deoplete']
+depends = ['deoplete.nvim']
 on_ft = ['rust']
 hook_add = '''
   " TODO: use

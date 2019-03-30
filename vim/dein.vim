@@ -50,5 +50,12 @@ if dein#load_state(s:dein_repo_dir)
   "   call dein#remote_plugins()
   " endif
 
-  autocmd EN VimEnter * nested colorscheme iceberg
+  colorscheme iceberg
+
+  function! ReloadHook() abort
+    if exists('*webdevicons#refresh')
+      call webdevicons#refresh()
+    endif
+    set tabline=%!lightline#tabline()
+  endfunction
 endif

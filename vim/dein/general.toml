@@ -92,10 +92,11 @@ repo = 'jiangmiao/auto-pairs'
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
-hook_add = '''
+hook_source = '''
+  echom 'gutter'
   " let g:gitgutter_async = 0
-  nmap <C-k> <Plug>GitGutterPrevHunk
-  nmap <C-j> <Plug>GitGutterNextHunk
+  nnoremap <C-k> :<C-u>GitGutterPrevHunk<CR>
+  nnoremap <C-j> :<C-u>GitGutterNextHunk<CR>
   autocmd EN BufWritePost * :GitGutter
 '''
 

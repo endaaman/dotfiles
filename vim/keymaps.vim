@@ -1,4 +1,6 @@
-mapclear
+if has('vim_starting')
+  mapclear
+endif
 
 let g:mapleader = ','
 

@@ -11,7 +11,8 @@ let g:lightline.enable = {
 
 let g:lightline.tabline = {
   \ 'left': [ [ 'tabs' ] ],
-  \ 'right': [ [ ] ] }
+  \ 'right': [ [ ] ]
+  \ }
 
 let g:lightline.active = {}
 let g:lightline.active.left = [
