@@ -1,9 +1,14 @@
 # vi: set ft=toml :
 [include]
   path = ~/.gitconfig_local
+
 [core]
   excludesfile = ~/.gitignore_global
   editor = $EDITOR -c \"set fenc=utf-8\"
+
+[user]
+  name = endaaman
+  email = buhibuhidog@gmail.com
 
 [alias]
   a = add
@@ -42,7 +47,9 @@
 [color]
   ui = true
   diff = true
+
 [ghq]
   root = ~/src
+
 [http "https://gopkg.in"]
 	followRedirects = true

@@ -18,14 +18,14 @@ if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
   zcompile ~/.zshrc
 fi
 
-local is_root=false
 if [ ${EUID:-${UID}} = 0 ]; then
-  is_root='is_root'
+  IS_ROOT='is_root'
 fi
+
 
 ###* zplug
 
-if [ -d ~/.zplug -a $is_root = false ]; then
+if [ -d ~/.zplug -a -z "$IS_ROOT" ]; then
   source ~/.zplug/init.zsh
   zplug 'zsh-users/zsh-completions'
   zplug 'zsh-users/zsh-syntax-highlighting', defer:2
@@ -46,6 +46,7 @@ if [ -d ~/.zplug -a $is_root = false ]; then
   zplug load
 fi
 
+
 ###* Prompt
 
 function my_prompt() {
@@ -59,17 +60,14 @@ function my_prompt() {
     pre="%F{green}${con}%f:%F{magenta}$(hostname)%f"
   fi
 
-  if $is_root; then
+  if [ -n "$IS_ROOT" ]; then
+    symbol_glyph='#'
     dirname="%F{006}%d%f"
   else
+    symbol_glyph='$'
     dirname="%F{006}%~%f"
   fi
 
-  if $is_root; then
-    symbol_glyph='#'
-  else
-    symbol_glyph='$'
-  fi
   symbol="%(?.%F{011}.%F{001})$symbol_glyph%f"
 
   local python_mod=''
@@ -79,9 +77,13 @@ function my_prompt() {
 
   echo "$pre$dirname $python_mod$symbol "
 }
-PROMPT='$(my_prompt)'
 
-export VIRTUAL_ENV_DISABLE_PROMPT=1
+if [ -n "$IS_ROOT" ]; then
+  PROMPT="$(my_prompt)"
+else
+  PROMPT='$(my_prompt)'
+fi
+
 function my_rprompt() {
   local rprompt=''
   if which git_super_status &> /dev/null; then
@@ -89,8 +91,7 @@ function my_rprompt() {
   fi
   echo $rprompt
 }
-RPROMPT='$(my_rprompt)'
-
+RPROMPT="$(my_rprompt)"
 
 
 ###* Alias
@@ -380,6 +381,7 @@ export T=$(date "+%Y%m%d")
 export TD=~/tmp/$T
 export OCAMLPARAM="_,bin-annot=1"
 export OPAMKEEPBUILDDIR=1
+export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 
 ###* XXXenv
@@ -387,7 +389,7 @@ if which direnv &> /dev/null; then
   eval "$(direnv hook zsh)"
 fi
 
-if [ $is_root = false ] && which luarocks &> /dev/null; then
+if [ -z "$IS_ROOT" ] && which luarocks &> /dev/null; then
   eval $(luarocks path --bin)
 fi
 
