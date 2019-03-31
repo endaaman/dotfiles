@@ -1,12 +1,3 @@
-/*AGENT_SHEET*/
-
-/*********************************************************************************************
-  simpleMenuWizard: Firefox 57+ userChrome.css tweaks to remove context menu items.
-  https://github.com/stonecrusher/simpleMenuWizard
-**********************************************************************************************
-
-/*** select-context.css ***/
-
 /* #context-copy,                         /* Copy                             */
 #context-selectall,                    /* Select All                       */
 /* #context-sep-selectall,                /************ Separator *************/

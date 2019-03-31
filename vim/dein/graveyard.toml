@@ -1,4 +1,17 @@
 [[plugins]]
+repo = 'endaaman/ale'
+hook_add = '''
+  if get(g:, 'rich')
+    let g:ale_sign_error = ''
+    let g:ale_sign_warning = ''
+  endif
+
+  let g:ale_linters = {
+    \   'c': ['gcc'],
+    \}
+'''
+
+[[plugins]]
 repo = 'artur-shaik/vim-javacomplete2'
 on_ft = ['java']
 if = ''' 0 '''

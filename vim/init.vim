@@ -1,7 +1,5 @@
-if has('vim_starting')
-  scriptencoding utf-8
-endif
 set encoding=utf-8
+scriptencoding utf-8
 
 augroup EN
   autocmd!
@@ -14,7 +12,7 @@ if $TERM =~# '256color' && !exists('g:rich')
   let g:rich = 1
 endif
 
-if $USER != 'root' && isdirectory(g:dein_dir) && !exists('g:dein')
+if $USER !=# 'root' && isdirectory(g:dein_dir) && !exists('g:dein')
   let g:dein = 1
 endif
 
@@ -31,7 +29,7 @@ runtime! local.vim
 
 if !exists('*Reload')
   function! Reload() abort
-    let l:ft = &ft
+    let l:ft = &filetype
     let l:colorscheme = g:colors_name
     let l:path = expand('~/.vim/init.vim')
     if !filereadable(l:path)
@@ -56,9 +54,12 @@ if !exists('*Reload')
   endfunction
   command! Reload :call Reload()
 endif
-nnoremap <silent> <F10> :<C-u>call Reload()<CR>
+nnoremap <F10> :<C-u>Reload<CR>
 
-filetype plugin indent on
-syntax enable
-
+if has('vim_starting')
+  filetype plugin indent on
+  syntax enable
+endif
 set secure
+
+doautocmd User MyVimrcLoaded

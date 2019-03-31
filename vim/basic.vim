@@ -1,5 +1,5 @@
+scriptencoding utf-8
 set all&
-
 
 set autoindent
 set background=dark
@@ -43,7 +43,7 @@ set wrap
 set write
 
 let g:netrw_home = '~/.cache/vim'
-let g:vim_indent_cont = &sw
+let g:vim_indent_cont = &shiftwidth
 
 if has('nvim')
   let g:python_host_prog = PickExecutable([
@@ -56,7 +56,6 @@ if has('nvim')
     \ '/usr/bin/python3',
     \ '/bin/python3',
     \])
-  set sh=zsh
   let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
   " au TermOpen * if &buftype == 'terminal' | :set nolist | endif
   " au TermClose * set list
@@ -96,23 +95,21 @@ endif
 
 autocmd EN InsertLeave * set cursorline | set cursorcolumn
 autocmd EN InsertEnter * set nocursorline | set nocursorcolumn
-" autocmd EN BufWritePre * call TrimTrailingSpaces()
-autocmd EN BufWritePre * %s/\t\+$//e
-autocmd EN VimEnter * call LoadLocalVimConfig()
-autocmd EN BufRead,BufNewFile,FileType, * call LoadFtConig()
-autocmd EN BufRead,BufNewFile *.vue set ft=vue
-autocmd EN BufRead,BufNewFile *.json.jbuilder set ft=ruby
-autocmd EN BufRead,BufNewFile Schemafile set ft=ruby
-autocmd EN BufRead,BufNewFile /etc/nginx/* set ft=nginx
-autocmd EN BufRead,BufNewFile *.ejs set ft=ejs
-
-
-let s:match_trailing_spaces_ignores = ['defx', 'qf', 'nerdtree']
-highlight default ExtraWhitespace ctermbg=red guibg=red
-autocmd ColorScheme * highlight default ExtraWhitespace ctermbg=darkred guibg=darkred
-match ExtraWhitespace /\s\+$/
-autocmd EN BufWinEnter,InsertLeave,FileType * call MatchTrailingSpaces(0, s:match_trailing_spaces_ignores)
-autocmd EN InsertEnter * call MatchTrailingSpaces(1, s:match_trailing_spaces_ignores)
-autocmd EN BufWinLeave * call clearmatches()
 autocmd EN CursorHold * call ShiftRegister()
 autocmd EN InsertLeave * set nopaste
+
+let s:match_trailing_spaces_ignores = ['defx', 'qf', 'nerdtree']
+autocmd EN ColorScheme * highlight default TrailingSpaces ctermbg=green guibg=green
+autocmd EN BufWinEnter,InsertLeave,FileType * call MatchTrailingSpaces(v:false, s:match_trailing_spaces_ignores)
+autocmd EN InsertEnter * call MatchTrailingSpaces(v:false, s:match_trailing_spaces_ignores)
+autocmd EN BufWinLeave * call clearmatches()
+" autocmd EN BufWritePre * call TrimTrailingSpaces()
+" autocmd EN BufWritePre * call TrimTrailingTabs()
+
+autocmd EN User MyVimrcLoaded call LoadLocalVimConfig()
+autocmd EN BufReadPost,BufNewFile,FileType, * call LoadFtConig()
+autocmd EN BufRead,BufNewFile *.json.jbuilder setlocal ft=ruby
+autocmd EN BufRead,BufNewFile Schemafile setlocal ft=ruby
+autocmd EN BufRead,BufNewFile /etc/nginx/* setlocal ft=nginx
+autocmd EN BufRead,BufNewFile *.ejs setlocal ft=ejs
+autocmd EN BufRead,BufNewFile *.vue setlocal ft=vue

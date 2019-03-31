@@ -45,7 +45,6 @@ hook_add = '''
     " \    'blade': {
     " \      'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
     " \    },
-    \    'css': 0,
     \    'nerdtree': 0,
     \  }
     \}
@@ -73,7 +72,6 @@ hook_add = '''
   else
     let g:indentLine_char = '¦'
   endif
-  let g:vim_json_syntax_conceal = 0
   let g:indentLine_fileTypeExclude = ['nerdtree', 'markdown']
 '''
 
@@ -123,40 +121,33 @@ repo = 'tpope/vim-fugitive'
 [[plugins]]
 repo = 'neomake/neomake'
 hook_add = '''
-  autocmd EN BufWritePre * :call NeomakeLocal()
-  function! NeomakeLocal()
-    Neomake
-    " if &modified
-    "   Neomake
-    " endif
+  function! NeomakeLocal() abort
+    if &modified
+      Neomake
+    endif
   endfunction
 
+  let g:neomake_logfile = '/tmp/neomake.log'
+  let g:neomake_open_list = 0
   let g:neomake_python_python_exe = 'python3'
   let g:neomake_python_enabled_makers = ['python']
   let g:neomake_php_enabled_makers = ['']
   let g:neomake_markdown_enabled_makers = ['']
+  if executable('vint')
+    let g:neomake_vim_enabled_makers = ['vint']
+  endif
+  if get(g:, 'rich')
+    let g:neomake_error_sign =   { 'text': '', 'texthl': 'Error' }
+    let g:neomake_warning_sign = { 'text': '', 'texthl': 'Title' }
+    let g:neomake_info_sign =    { 'text': '', 'texthl': 'Directory' }
+    let g:neomake_message_sign = { 'text': '', 'texthl': 'Question' }
+  endif
 
   nnoremap <Space>n :<C-u>Neomake<CR>
-  let g:neomake_open_list = 0
-
-  if get(g:, 'rich')
-    let g:neomake_error_sign = {
-    \ 'text': '',
-    \ 'texthl': 'Error',
-    \ }
-    let g:neomake_warning_sign = {
-    \ 'text': '',
-    \ 'texthl': 'Error',
-    \ }
-    let g:neomake_info_sign = {
-    \ 'text': '',
-    \ 'texthl': 'Title',
-    \ }
-    let g:neomake_message_sign = {
-    \ 'text': '',
-    \ 'texthl': 'Operator',
-    \ }
-  endif
+  nnoremap <C-f> :<C-u>NeomakeNextSign<CR>
+  nnoremap <C-b> :<C-u>NeomakePrevSign<CR>
+  autocmd EN BufEnter * :Neomake
+  autocmd EN BufWritePre * :call NeomakeLocal()
 '''
 
 [[plugins]]
@@ -172,7 +163,7 @@ hook_add = '''
   " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
   autocmd EN FileType nerdtree setlocal nolist
 
-  function! NERDTreeCustom()
+  function! NERDTreeCustom() abort
     if strlen(expand('%')) > 0
       NERDTreeFind
     else
@@ -206,3 +197,6 @@ repo = 'aufgang001/vim-nerdtree_plugin_open'
 hook_add = '''
   let g:nerdtree_plugin_open_cmd = 'xdg-open'
 '''
+
+[[plugins]]
+repo = 'kshenoy/vim-signature'

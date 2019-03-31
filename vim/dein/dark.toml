@@ -67,7 +67,6 @@ hook_add = '''
   call denite#custom#action('file', 'xdg-open', 'DeniteFileActionXdgOpen')
   call denite#custom#action('word', 'prepend', 'DeniteWordActionPrepend')
   call denite#custom#action('word', 'yank', 'DeniteWordActionYank')
-  call denite#custom#action('word', 'yank-content', 'DeniteWordActionYankContent')
   call denite#custom#action('command', 'tabopen', 'DeniteCommandActionTabopen')
 
   call denite#custom#filter('matcher_ignore_globs', 'ignore_globs', [
@@ -102,7 +101,7 @@ hook_add = '''
   nnoremap <Space>h :<C-u>Denite help -default-action=tabopen<CR>
   nnoremap <Space>p :<C-u>Denite my/register<CR>
   nnoremap <Space>P :<C-u>Denite my/register -default-action=prepend<CR>
-  nnoremap <Space>r :<C-u>Denite my/register -default-action=yank-action-text<CR>
+  nnoremap <Space>r :<C-u>Denite my/register -default-action=yank<CR>
   nnoremap <Space>d :<C-u>Denite git/untracked git/staged git/modified<CR>
   nnoremap <Space>f :<C-u>Denite `finddir('.git', ';') != '' ? 'git/all' : 'file/rec'`<CR>
   nnoremap <Space>F :<C-u>Denite `finddir('.git', ';') != '' ? 'git/all' : 'file/rec'` -input=`expand("<cword>")`<CR>
@@ -111,8 +110,8 @@ hook_add = '''
   nnoremap <Space>a :<C-u>DeniteBufferDir file/rec<CR>
   nnoremap <Space>A :<C-u>Denite directory_rec<CR>
   nnoremap <Space>l :<C-u>Denite git/log<CR>
-  nnoremap <C-f> :<C-u>Denite -resume -cursor-pos=+1 -immediately<CR>
-  nnoremap <C-b> :<C-u>Denite -resume -cursor-pos=-1 -immediately<CR>
+  nnoremap <Space><C-n> :<C-u>Denite -resume -cursor-pos=+1 -immediately<CR>
+  nnoremap <Space><C-p> :<C-u>Denite -resume -cursor-pos=-1 -immediately<CR>
   nnoremap <Space><Space> :<C-u>Denite -resume<CR>
 
   let s:menus = {}

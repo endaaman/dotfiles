@@ -1,3 +1,13 @@
+function! CD() abort
+  cd %:h
+endfunction
+command! CD :call CD()
+
+function! LCD() abort
+  lcd %:h
+endfunction
+command! LCD :call LCD()
+
 function! SafeExec(path) abort
   if filereadable(expand(a:path))
     execute 'source ' . a:path
@@ -10,14 +20,6 @@ function! SaveAsRoot() abort
   e!
 endfunction
 command! SaveAsRoot :call SaveAsRoot()
-
-function! TrimTrailingSpaces() abort
-  " if matchstr(&ft, '\(markdown\|pug\)') != ''
-  "   return
-  " endif
-  %s/\s\+$//e
-endfunction
-command! TrimTrailingSpaces :call TrimTrailingSpaces()
 
 function! SwapWithAboveLine() abort
   if line('.') == 1
@@ -56,6 +58,16 @@ function! PickExecutable(pathspecs) abort
   return ''
 endfunction
 
+function! TrimTrailingSpaces() abort
+  execute '%s/\s\+$//e'
+endfunction
+command! TrimTrailingSpaces :call TrimTrailingSpaces()
+
+function! TrimTrailingTabs() abort
+  execute '%s/\t\+$//e'
+endfunction
+command! TrimTrailingTabs :call TrimTrailingTabs()
+
 function! MatchTrailingSpaces(cursor, ignores) abort
   for ft in a:ignores
     if ft ==# &filetype
@@ -64,9 +76,9 @@ function! MatchTrailingSpaces(cursor, ignores) abort
     endif
   endfor
   if a:cursor
-    match ExtraWhitespace /\s\+\%#\@<!$/
+    match TrailingSpaces /\s\+\%#\@<!$/
   else
-    match ExtraWhitespace /\s\+$/
+    match TrailingSpaces /\s\+$/
   endif
 endfunction
 
@@ -75,7 +87,7 @@ function! TabMessage(cmd) abort
   silent execute a:cmd
   redir END
   if empty(message)
-    echoerr "no output"
+    echoerr 'no output'
   else
     tabnew
     setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
@@ -101,15 +113,15 @@ function! AutoMarkrement() abort
 endfunction
 
 function! ShiftRegister() abort
-  if &clipboard =~ 'unnamedplus'
+  if &clipboard =~? 'unnamedplus'
     let l:clipboard = @+
-  elseif &clipboard =~ 'unnamed'
+  elseif &clipboard =~? 'unnamed'
     let l:clipboard = @*
   else
     let l:clipboard = @"
   endif
 
-  if l:clipboard == ''
+  if l:clipboard ==# ''
     return
   endif
 
@@ -141,25 +153,26 @@ endfunction
 
 function! LoadFtConig() abort
   call SafeExec(g:base_path . '/ft/default.vim')
-  call SafeExec(g:base_path . '/ft/' . &ft . '.vim')
+  call SafeExec(g:base_path . '/ft/' . &filetype . '.vim')
+  call SafeExec(getcwd() . '/.vim/' . &filetype . '.vim')
 endfunction
 
 function! YankFileName() abort
   let p = expand('%:t')
   let @+ = p
-  echo "yanked: " . p
+  echo 'yanked: ' . p
 endfunction
 
 function! YankRelativePath() abort
   let p = expand('%')
   let @+ = p
-  echo "yanked: " . p
+  echo 'yanked: ' . p
 endfunction
 
 function! YankFullPath() abort
   let p = expand('%:p')
   let @+ = p
-  echo "yanked: " . p
+  echo 'yanked: ' . p
 endfunction
 
 function! DeniteFileActionXdgOpen(context) abort
@@ -167,7 +180,7 @@ function! DeniteFileActionXdgOpen(context) abort
 endfunction
 
 function! DeniteWordActionPrepend(context) abort
-  execute ":normal i" . a:context.targets[0].action__text
+  execute ':normal i' . a:context.targets[0].action__text
 endfunction
 
 function! DeniteWordActionYank(context) abort
@@ -179,16 +192,65 @@ function! DeniteWordActionYank(context) abort
   endif
 endfunction
 
-function! DeniteWordActionYankContent(context) abort
-  call ShiftRegister()
-  let l:text = a:context.targets[0]['action__text']
-  call setreg('"', l:text ,'v')
-  if has('clipboard')
-    call setreg(v:register, l:text ,'v')
-  endif
-endfunction
-
 function! DeniteCommandActionTabopen(context) abort
   execute a:context.targets[0].action__command
   execute "normal \<C-w>\T"
+endfunction
+
+function! s:compare_sign(a, b) abort
+    return a:a['line_number'] - a:b['line_number']
+endfunction
+
+function! GetSigns(needle, reversed) abort
+  redir => l:raw_signs
+    silent execute 'sign place buffer=' . bufnr('%')
+  redir END
+  let l:signs = []
+  for l:sign_line in filter(split(l:raw_signs, '\n')[2:], 'v:val =~# "="')
+    let l:components  = split(l:sign_line)
+    let l:name = split(l:components[2], '=')[1]
+    if l:name =~# a:needle
+      let l:line_number = str2nr(split(l:components[0], '=')[1])
+      let l:id = str2nr(split(l:components[1], '=')[1])
+      call add(l:signs, {
+        \   'name': l:name,
+        \   'id': l:id,
+        \   'line_number': l:line_number,
+        \ })
+    endif
+  endfor
+  call sort(l:signs, 's:compare_sign')
+  if a:reversed
+    call reverse(l:signs)
+  endif
+  return l:signs
+endfunction
+
+function! s:neomake_jump_sign(reversed) abort
+  let l:line_number = line('.')
+  for l:sign in GetSigns('neomake_file_', a:reversed)
+    let l:diff = l:sign['line_number'] - l:line_number
+    if a:reversed
+      let l:diff = l:diff * -1
+    endif
+    if l:diff > 0
+      execute 'normal! '. l:sign['line_number'] . 'Gzv'
+      return
+    endif
+  endfor
+  echohl WarningMsg
+  echo 'NeomakeSigns: No more mark'
+  echohl None
+endfunction
+
+command! NeomakeNextSign :call s:neomake_jump_sign(v:false)
+command! NeomakePrevSign :call s:neomake_jump_sign(v:true)
+
+function! NeomakeSignCounts() abort
+  let l:counts = { 'err': 0, 'warn': 0, 'info':0, 'msg': 0 }
+  for l:sign in GetSigns('neomake_file_', v:false)
+    let l:key = substitute(l:sign['name'], 'neomake_file_', '', '')
+    let l:counts[l:key] += 1
+  endfor
+  return l:counts
 endfunction

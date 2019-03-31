@@ -380,8 +380,7 @@ export WINEARCH=win32
 # export WINEPREFIX=~/.wine
 export FZF_DEFAULT_OPTS='--height 50% --reverse --border --bind "tab:down,btab:up" --exact --cycle  --no-sort'
 
-export PATH=~/bin:$PATH
-export PATH=~/dotfiles/bin:$PATH
+export PATH=~/bin:~/.local/bin:~/dotfiles/bin:$PATH
 export T=$(date "+%Y%m%d")
 export TD=~/tmp/$T
 export OCAMLPARAM="_,bin-annot=1"

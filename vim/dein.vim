@@ -53,6 +53,8 @@ if dein#load_state(s:dein_repo_dir)
   colorscheme iceberg
 
   function! ReloadHook() abort
+    echom 'reload hook'
+    call dein#source()
     if exists('*webdevicons#refresh')
       call webdevicons#refresh()
     endif
