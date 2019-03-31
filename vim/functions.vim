@@ -114,6 +114,7 @@ function! ShiftRegister() abort
   endif
 
   if @a != l:clipboard
+    let @j = @i
     let @i = @h
     let @h = @g
     let @g = @f
@@ -161,15 +162,33 @@ function! YankFullPath() abort
   echo "yanked: " . p
 endfunction
 
-function! DeniteActionXdgOpen(context) abort
+function! DeniteFileActionXdgOpen(context) abort
   execute '!xdg-open ' . a:context.targets[0].action__path
 endfunction
 
-function! DeniteActionPrepend(context) abort
+function! DeniteWordActionPrepend(context) abort
   execute ":normal i" . a:context.targets[0].action__text
 endfunction
 
-function! DeniteActionTabopen(context) abort
+function! DeniteWordActionYank(context) abort
+  call ShiftRegister()
+  let l:text = a:context.targets[0].word
+  call setreg('"', l:text ,'v')
+  if has('clipboard')
+    call setreg(v:register, l:text ,'v')
+  endif
+endfunction
+
+function! DeniteWordActionYankContent(context) abort
+  call ShiftRegister()
+  let l:text = a:context.targets[0]['action__text']
+  call setreg('"', l:text ,'v')
+  if has('clipboard')
+    call setreg(v:register, l:text ,'v')
+  endif
+endfunction
+
+function! DeniteCommandActionTabopen(context) abort
   execute a:context.targets[0].action__command
   execute "normal \<C-w>\T"
 endfunction
