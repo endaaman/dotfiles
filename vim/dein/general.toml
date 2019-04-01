@@ -143,6 +143,7 @@ hook_add = '''
   endif
 
   nnoremap <Space>n :<C-u>Neomake<CR>
+  nnoremap <Space>N :<C-u>NeomakeClean<CR>
   nnoremap <C-f> :<C-u>NeomakeNextSign<CR>
   nnoremap <C-b> :<C-u>NeomakePrevSign<CR>
   autocmd EN BufEnter * :Neomake

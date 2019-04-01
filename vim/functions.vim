@@ -132,7 +132,11 @@ function! ShiftRegister() abort
     endwhile
   endif
 endfunction
-command! ShiftRegister :call ShiftRegister()
+
+function! RegisterPrefix(key) abort
+  call ShiftRegister()
+  return '"' . v:register . a:key
+endfunction
 
 function! EscapeHook() abort
   set nopaste
@@ -174,12 +178,12 @@ function! DeniteFileActionXdgOpen(context) abort
 endfunction
 
 function! DeniteWordActionPrepend(context) abort
-  execute ':normal i' . a:context.targets[0].action__text
+  execute ':normal! i' . a:context.targets[0].action__text
 endfunction
 
 function! DeniteWordActionYank(context) abort
   call ShiftRegister()
-  let l:text = a:context.targets[0].word
+  let l:text = a:context.targets[0].action__text
   call setreg('"', l:text ,'v')
   if has('clipboard')
     call setreg(v:register, l:text ,'v')
@@ -188,7 +192,7 @@ endfunction
 
 function! DeniteCommandActionTabopen(context) abort
   execute a:context.targets[0].action__command
-  execute "normal \<C-w>\T"
+  execute "normal! \<C-w>\T"
 endfunction
 
 function! s:compare_sign(a, b) abort
@@ -233,7 +237,7 @@ function! s:neomake_jump_sign(reversed) abort
     endif
   endfor
   echohl WarningMsg
-  echo 'NeomakeSigns: No more mark'
+  echo 'NeomakeSigns: No more mwwa'
   echohl None
 endfunction
 

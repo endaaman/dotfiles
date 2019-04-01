@@ -66,7 +66,7 @@ endif
 if has('win32') || has('win64') || has('mac')
   set clipboard=unnamed
 else
-  set clipboard=unnamed,unnamedplus
+  set clipboard=unnamedplus
 endif
 
 if !has('gui_running') && exists('&termguicolors') && $COLORTERM ==# 'truecolor'

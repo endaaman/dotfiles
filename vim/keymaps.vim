@@ -77,32 +77,30 @@ vnoremap v $h
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 vnoremap y y`]
-vnoremap p <C-[>:<C-u>let @y=@+<CR>gvp`]:let @+=@y<CR>
+vnoremap p <C-[>:<C-u>let @z=@+<CR>gvp`]:let @+=@z<CR>
 vnoremap O :sort<CR>
 vnoremap R c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
 vnoremap / "zy:<C-u>let @/=@z\|set hlsearch<CR>
 
-nnoremap <silent> y :<C-u>ShiftRegister<CR>y
-nnoremap <silent> d :<C-u>ShiftRegister<CR>d
-nnoremap <silent> c :<C-u>ShiftRegister<CR>c
-nnoremap <silent> Y :<C-u>ShiftRegister<CR>Y
-nnoremap <silent> D :<C-u>ShiftRegister<CR>D
-nnoremap <silent> C :<C-u>ShiftRegister<CR>C
-nnoremap <silent> yy :<C-u>ShiftRegister<CR>yy
-nnoremap <silent> dd :<C-u>ShiftRegister<CR>dd
-vnoremap <silent> y :<C-u>ShiftRegister<CR>gvy
-vnoremap <silent> d :<C-u>ShiftRegister<CR>gvd
-vnoremap <silent> c :<C-u>ShiftRegister<CR>gvc
-vnoremap <silent> Y :<C-u>ShiftRegister<CR>gvY
-vnoremap <silent> D :<C-u>ShiftRegister<CR>gvD
-vnoremap <silent> C :<C-u>ShiftRegister<CR>gvC
-onoremap <silent> y :<C-u>ShiftRegister<CR>y
-onoremap <silent> d :<C-u>ShiftRegister<CR>d
-onoremap <silent> c :<C-u>ShiftRegister<CR>c
-
-nnoremap <silent> <C-m> :<C-u>ShiftRegister<CR>yy
-vnoremap <silent> <C-m> :<C-u>ShiftRegister<CR>gvy
-onoremap <silent> <C-m> :<C-u>ShiftRegister<CR>y
+nnoremap <silent> <expr> y RegisterPrefix('y')
+nnoremap <silent> <expr> d RegisterPrefix('d')
+nnoremap <silent> <expr> c RegisterPrefix('c')
+nnoremap <silent> <expr> Y RegisterPrefix('Y')
+nnoremap <silent> <expr> D RegisterPrefix('D')
+nnoremap <silent> <expr> C RegisterPrefix('C')
+vnoremap <silent> <expr> y RegisterPrefix('y')
+vnoremap <silent> <expr> d RegisterPrefix('d')
+vnoremap <silent> <expr> c RegisterPrefix('c')
+vnoremap <silent> <expr> Y RegisterPrefix('Y')
+vnoremap <silent> <expr> D RegisterPrefix('D')
+vnoremap <silent> <expr> C RegisterPrefix('C')
+onoremap <silent> <expr> y RegisterPrefix('y')
+onoremap <silent> <expr> c RegisterPrefix('c')
+nnoremap <silent> <expr> yy RegisterPrefix('yy')
+nnoremap <silent> <expr> dd RegisterPrefix('dd')
+nnoremap <silent> <expr> <C-m> RegisterPrefix('yy')
+vnoremap <silent> <expr> <C-m> RegisterPrefix('y')
+onoremap <silent> <expr> <C-m> RegisterPrefix('y')
 
 inoremap <C-d> <Del>
 
