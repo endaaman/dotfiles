@@ -114,28 +114,22 @@ endfunction
 
 function! ShiftRegister() abort
   if &clipboard =~? 'unnamedplus'
-    let l:clipboard = @+
+    silent let l:clipboard = getreg('+')
   elseif &clipboard =~? 'unnamed'
-    let l:clipboard = @*
+    let l:clipboard = getreg('*')
   else
-    let l:clipboard = @"
+    let l:clipboard = getreg('"')
   endif
-
-  if l:clipboard ==# ''
+  if l:clipboard ==# '' || l:clipboard ==# "\<NL>"
     return
   endif
-
+  let l:list= ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
   if @a != l:clipboard
-    let @j = @i
-    let @i = @h
-    let @h = @g
-    let @g = @f
-    let @f = @e
-    let @e = @d
-    let @d = @c
-    let @c = @b
-    let @b = @a
-    let @a = l:clipboard
+    let l:i = len(l:list) - 1
+    while l:i > -1
+      call setreg(l:list[l:i], (l:i == 0 ? l:clipboard : getreg(l:list[l:i - 1])), 'v')
+      let l:i -= 1
+    endwhile
   endif
 endfunction
 command! ShiftRegister :call ShiftRegister()

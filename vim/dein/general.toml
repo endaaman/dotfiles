@@ -132,7 +132,6 @@ hook_add = '''
   let g:neomake_python_python_exe = 'python3'
   let g:neomake_python_enabled_makers = ['python']
   let g:neomake_php_enabled_makers = ['']
-  let g:neomake_markdown_enabled_makers = ['']
   if executable('vint')
     let g:neomake_vim_enabled_makers = ['vint']
   endif
