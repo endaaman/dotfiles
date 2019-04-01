@@ -80,9 +80,6 @@ hook_add = '''
   call denite#custom#source('_', 'matchers', ['matcher_substring'])
   call denite#custom#option('_', { 'highlight_matched_char': 'Title' })
   if get(g:, 'rich')
-    " call denite#custom#option('_', 'prompt', '﯐')
-    " call denite#custom#option('_', 'prompt', '')
-    " call denite#custom#option('_', 'prompt', '')
     call denite#custom#option('_', 'prompt', '')
   endif
 	call denite#custom#source('grep', 'converters', ['converter/abbr_word'])
@@ -97,19 +94,19 @@ hook_add = '''
   nnoremap <Space>G :<C-u>Denite grep -input=`@0`<CR>
   nnoremap <Space>W :<C-u>Denite grep -no-empty -input=`expand("<cword>")`<CR>
   nnoremap <Space>c :<C-u>Denite command<CR>
-  nnoremap <Space>C :<C-u>Denite colorscheme<CR>
+  nnoremap <Space>C :<C-u>Denite command_history<CR>
   nnoremap <Space>h :<C-u>Denite help -default-action=tabopen<CR>
   nnoremap <Space>p :<C-u>Denite my/register<CR>
   nnoremap <Space>P :<C-u>Denite my/register -default-action=prepend<CR>
   nnoremap <Space>r :<C-u>Denite my/register -default-action=yank<CR>
-  nnoremap <Space>d :<C-u>Denite git/untracked git/staged git/modified<CR>
-  nnoremap <Space>f :<C-u>Denite `finddir('.git', ';') != '' ? 'git/all' : 'file/rec'`<CR>
-  nnoremap <Space>F :<C-u>Denite `finddir('.git', ';') != '' ? 'git/all' : 'file/rec'` -input=`expand("<cword>")`<CR>
+  nnoremap <Space>d :<C-u>Denite my/git/status<CR>
+  nnoremap <Space>f :<C-u>Denite `finddir('.git', ';') != '' ? 'my/git/all' : 'file/rec'`<CR>
+  nnoremap <Space>F :<C-u>Denite `finddir('.git', ';') != '' ? 'my/git/all' : 'file/rec'` -input=`expand("<cword>")`<CR>
   nnoremap <Space>y :<C-u>Denite menu:yank<CR>
   nnoremap <Space>, :<C-u>Denite file/rec -path=,<CR>
   nnoremap <Space>a :<C-u>DeniteBufferDir file/rec<CR>
   nnoremap <Space>A :<C-u>Denite directory_rec<CR>
-  nnoremap <Space>l :<C-u>Denite git/log<CR>
+  nnoremap <Space>l :<C-u>Denite my/git/log<CR>
   nnoremap <Space><C-n> :<C-u>Denite -resume -cursor-pos=+1 -immediately<CR>
   nnoremap <Space><C-p> :<C-u>Denite -resume -cursor-pos=-1 -immediately<CR>
   nnoremap <Space><Space> :<C-u>Denite -resume<CR>
@@ -128,21 +125,9 @@ hook_add = '''
     \ ]
   call denite#custom#var('menu', 'menus', s:menus)
 
-  call denite#custom#alias('source', 'git/all', 'file/rec')
-  call denite#custom#var('git/all', 'command',
+  call denite#custom#alias('source', 'my/git/all', 'file/rec')
+  call denite#custom#var('my/git/all', 'command',
     \ ['git', 'ls-files', '--cached', '--others', '--exclude-standard'])
-
-  call denite#custom#alias('source', 'git/modified', 'file/rec')
-  call denite#custom#var('git/modified', 'command',
-    \ ['git', 'diff', '--name-only'])
-
-  call denite#custom#alias('source', 'git/staged', 'file/rec')
-  call denite#custom#var('git/staged', 'command',
-    \ ['git', 'diff', '--name-only', '--staged'])
-
-  call denite#custom#alias('source', 'git/untracked', 'file/rec')
-  call denite#custom#var('git/untracked', 'command',
-    \ ['git', 'ls-files', '--others', '--exclude-standard'])
 
   if executable('ag')
     call denite#custom#var('file/rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])

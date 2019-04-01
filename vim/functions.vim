@@ -237,7 +237,7 @@ function! s:neomake_jump_sign(reversed) abort
     endif
   endfor
   echohl WarningMsg
-  echo 'NeomakeSigns: No more mwwa'
+  echo 'NeomakeSigns: No more signs'
   echohl None
 endfunction
 

@@ -21,7 +21,7 @@ def extract_filename(line):
 class Source(Base):
     def __init__(self, vim):
         super().__init__(vim)
-        self.name = 'git/show'
+        self.name = 'my/git/show'
         self.kind = 'file'
 
     def on_init(self, context):

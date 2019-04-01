@@ -15,7 +15,7 @@ GITLOG_HIGHLIGHT_SYNTAX = [
 class Source(Base):
     def __init__(self, vim):
         super().__init__(vim)
-        self.name = 'git/log'
+        self.name = 'my/git/log'
         self.kind = 'source'
 
     def on_init(self, context):
@@ -56,6 +56,6 @@ class Source(Base):
             splitted = out.split(' ')
             candidates.append({
                 'word': out,
-                'action__source': ['git/show', splitted[0]],
+                'action__source': ['my/git/show', splitted[0]],
             })
         return candidates

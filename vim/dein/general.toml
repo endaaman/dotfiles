@@ -146,7 +146,7 @@ hook_add = '''
   nnoremap <Space>N :<C-u>NeomakeClean<CR>
   nnoremap <C-f> :<C-u>NeomakeNextSign<CR>
   nnoremap <C-b> :<C-u>NeomakePrevSign<CR>
-  autocmd EN BufEnter * :Neomake
+  autocmd EN BufReadPost * :Neomake
   autocmd EN BufWritePre * :call NeomakeLocal()
 '''
 
