@@ -386,6 +386,7 @@ export TD=~/tmp/$T
 export OCAMLPARAM="_,bin-annot=1"
 export OPAMKEEPBUILDDIR=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
+export WINDOWID=$(xdotool getwindowfocus)
 
 
 ###* XXXenv
