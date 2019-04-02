@@ -1,0 +1,3 @@
+[submodule "vim/pack/my/start/vim-case-master"]
+	path = vim/pack/my/start/vim-case-master
+	url = git@github.com:endaaman/vim-case-master.git
