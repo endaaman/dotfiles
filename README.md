@@ -5,7 +5,6 @@
 [tym](https://github.com/endaaman/tym) is a terminal I made
 
 - Neovim
-- Vim
 - Zsh
 - tmux
 - Xmodmap
@@ -15,5 +14,6 @@ etc
 
 ## TODO
 
-- use defx instead of NERDTree
-- introdule python dev env
+- Vim swap
+- case master for visual
+- update SS
