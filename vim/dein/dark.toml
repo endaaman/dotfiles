@@ -112,14 +112,21 @@ hook_add = '''
   nnoremap <Space><Space> :<C-u>Denite -resume<CR>
 
   let s:menus = {}
-  let s:menus.yank = { 'description': 'Yank' }
+  let s:menus.yank = { 'description': 'Yank file name or path' }
   let s:menus.yank.command_candidates = [
     \ ['File name', 'call YankFileName()'],
     \ ['Relative path', 'call YankRelativePath()'],
     \ ['Full path', 'call YankFullPath()'],
     \ ]
-  let s:menus.highlight = { 'description': 'Highlight' }
-  let s:menus.highlight.command_candidates = [
+  let s:menus.CaseMaster = { 'description': 'Convert word case style' }
+  let s:menus.CaseMaster.command_candidates = [
+    \ ['To snake_case', 'CaseMasterConvertToSnake'],
+    \ ['To kebab-case', 'CaseMasterConvertToKebab'],
+    \ ['To camelCase', 'CaseMasterConvertToCamel'],
+    \ ['To PascalCase', 'CaseMasterConvertToPascal'],
+    \ ]
+  let s:menus.Highlight = { 'description': 'Check highlight' }
+  let s:menus.Highlight.command_candidates = [
     \ ['Highlight test', 'so $VIMRUNTIME/syntax/hitest.vim | execute "normal \<C-w>\T"'],
     \ ['Color test', 'so $VIMRUNTIME/syntax/colortest.vim | execute "normal \<C-w>\T"'],
     \ ]
