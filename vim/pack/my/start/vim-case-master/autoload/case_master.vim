@@ -5,6 +5,8 @@ if !exists('g:loaded_case_master')
 endif
 let g:loaded_case_master = 1
 
+let s:case_master_varbose = get(g:, 'case_master_varbose')
+
 let s:case_snake = 1
 let s:case_kebab = 2
 let s:case_camel = 3
@@ -49,10 +51,10 @@ endfunction
 function! case_master#get_current_chunk_pos() abort
   let l:y = col('.')
   let l:line = getline('.')
-  let splitted = split(l:line, ' ', v:true)
   if l:line[l:y - 1] ==# ' '
-    return [' ', l:y - 1, l:y]
+    return [l:y - 1, l:y]
   endif
+  let splitted = split(l:line, '[^a-zA-Z0-9-_]', v:true)
   let l:end = 1
   for l:w in splitted
     let l:start = l:end - 1
@@ -120,7 +122,7 @@ function! case_master#to_next_case(chunk) abort
   return case_master#to_case(a:chunk, l:case)
 endfunction
 
-function! case_master#rotate_case() abort
+function! case_master#convert(case) abort
   let l:pos = case_master#get_current_chunk_pos()
   let l:line = getline('.')
   let l:chunk = strpart(l:line, l:pos[0], l:pos[1] - l:pos[0])
@@ -128,8 +130,36 @@ function! case_master#rotate_case() abort
     call case_master#log('blank')
     return
   endif
-  let l:replacer = case_master#to_next_case(l:chunk)
+  if a:case == 0
+    let l:replacer = case_master#to_next_case(l:chunk)
+  else
+    let l:replacer = case_master#to_case(l:chunk, a:case)
+  endif
   let l:pre = strpart(l:line, 0, l:pos[0])
   let l:post = strpart(l:line, l:pos[1], len(l:line))
+  let l:end = l:pos[0] + len(l:replacer)
+  if l:end < col('.')
+    call cursor(line('.'), l:end)
+  endif
   call setline('.', l:pre . l:replacer . l:post)
+endfunction
+
+function! case_master#rotate_case() abort
+  call case_master#convert(0)
+endfunction
+
+function! case_master#convert_to_snake() abort
+  call case_master#convert(s:case_snake)
+endfunction
+
+function! case_master#convert_to_kebab() abort
+  call case_master#convert(s:case_kebab)
+endfunction
+
+function! case_master#convert_to_camel() abort
+  call case_master#convert(s:case_camel)
+endfunction
+
+function! case_master#convert_to_pascal() abort
+  call case_master#convert(s:case_pascal)
 endfunction

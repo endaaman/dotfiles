@@ -5,4 +5,10 @@ if exists('g:loaded_case_master')
 endif
 let g:loaded_case_master = 1
 
-nnoremap <silent> <C-e> :call case_master#rotate_case()<CR>
+command! CaseMasterRotateCase :call case_master#rotate_case()
+command! CaseMasterConvertToSnake :call case_master#convert_to_snake()
+command! CaseMasterConvertToKebab :call case_master#convert_to_kebab()
+command! CaseMasterConvertToCamel :call case_master#convert_to_camel()
+command! CaseMasterConvertToPascal :call case_master#convert_to_pascal()
+
+nnoremap <silent> <C-e> :CaseMasterRotateCase<CR>
