@@ -77,7 +77,7 @@ class Source(Base):
                         continue
                 else:
                     _type = i
-                if mark == 'R':
+                if content.find('->') > -1:
                     names = content.split(' -> ')
                     path = names[-1]
                     label = ' → '.join(names)
