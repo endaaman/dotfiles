@@ -1,14 +1,14 @@
 # vi: set ft=toml :
+[user]
+  name = endaaman
+  email = buhibuhidog@gmail.com
+
 [include]
   path = ~/.gitconfig_local
 
 [core]
   excludesfile = ~/.gitignore_global
   editor = $EDITOR -c \"set fenc=utf-8\"
-
-[user]
-  name = endaaman
-  email = buhibuhidog@gmail.com
 
 [alias]
   a = add
