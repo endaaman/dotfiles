@@ -60,7 +60,7 @@ if has('nvim')
   " au TermOpen * if &buftype == 'terminal' | :set nolist | endif
   " au TermClose * set list
 else
-  set pyxversion=3
+  " set pyxversion=3
 endif
 
 if has('win32') || has('win64') || has('mac')

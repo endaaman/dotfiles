@@ -241,12 +241,12 @@ function! s:neomake_jump_sign(reversed) abort
   echohl None
 endfunction
 
-command! NeomakeNextSign :call s:neomake_jump_sign(v:false)
-command! NeomakePrevSign :call s:neomake_jump_sign(v:true)
+command! NeomakeNextSign :call s:neomake_jump_sign(0)
+command! NeomakePrevSign :call s:neomake_jump_sign(1)
 
 function! NeomakeSignCounts() abort
   let l:counts = { 'err': 0, 'warn': 0, 'info':0, 'msg': 0 }
-  for l:sign in GetSigns('neomake_file_', v:false)
+  for l:sign in GetSigns('neomake_file_', 0)
     let l:key = substitute(l:sign['name'], 'neomake_file_', '', '')
     let l:counts[l:key] += 1
   endfor

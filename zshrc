@@ -47,6 +47,59 @@ if [ -d ~/.zplug -a -z "$IS_ROOT" ]; then
 fi
 
 
+###* Option
+
+fpath+=~/.zsh/completions
+
+# setopt complete_aliases
+# setopt ignoreeof # disable C-d
+setopt always_last_prompt
+setopt append_history
+setopt auto_cd
+setopt auto_list
+setopt auto_menu
+setopt auto_pushd
+setopt autoremoveslash
+setopt complete_in_word
+setopt extended_glob
+setopt extended_history
+setopt glob
+setopt glob_complete
+setopt hist_expand
+setopt hist_ignore_all_dups
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_no_store
+setopt hist_reduce_blanks
+setopt hist_save_no_dups
+setopt hist_verify
+setopt inc_append_history
+setopt list_packed
+setopt list_types
+setopt magic_equal_subst
+setopt mark_dirs
+setopt no_flow_control
+setopt nolistbeep
+setopt numeric_glob_sort
+setopt print_eight_bit
+setopt prompt_subst
+setopt pushd_ignore_dups
+setopt rec_exact
+setopt share_history
+unsetopt list_beep
+
+
+###* autoload
+
+autoload -Uz add-zsh-hock
+autoload -Uz chpwd_recent_dirs
+autoload -Uz colors; colors
+autoload -Uz compinit; compinit -u
+autoload -Uz promptinit; promptinit
+
+eval `dircolors -b`
+
+
 ###* Prompt
 
 function my_prompt() {
@@ -430,45 +483,6 @@ if [ -d ~/.go ]; then
   export GO15VENDOREXPERIMENT=1
 fi
 
-###* Option
-
-fpath+=~/.zsh/completions
-
-# setopt complete_aliases
-# setopt ignoreeof # disable C-d
-setopt always_last_prompt
-setopt append_history
-setopt auto_cd
-setopt auto_list
-setopt auto_menu
-setopt auto_pushd
-setopt autoremoveslash
-setopt complete_in_word
-setopt extended_glob
-setopt extended_history
-setopt glob
-setopt glob_complete
-setopt hist_expand
-setopt hist_ignore_all_dups
-setopt hist_ignore_dups
-setopt hist_ignore_space
-setopt hist_no_store
-setopt hist_reduce_blanks
-setopt hist_save_no_dups
-setopt hist_verify
-setopt inc_append_history
-setopt list_packed
-setopt list_types
-setopt magic_equal_subst
-setopt mark_dirs
-setopt no_flow_control
-setopt nolistbeep
-setopt numeric_glob_sort
-setopt print_eight_bit
-setopt pushd_ignore_dups
-setopt rec_exact
-setopt share_history
-unsetopt list_beep
 
 
 mkdir -p $HOME/.cache/shell/
@@ -496,17 +510,6 @@ stty start undef
 DIRSTACKSIZE=100
 HISTSIZE=100000
 SAVEHIST=100000
-
-
-###* autoload
-
-autoload -Uz add-zsh-hock
-autoload -Uz chpwd_recent_dirs
-autoload -Uz colors; colors
-autoload -Uz compinit; compinit -u
-autoload -Uz promptinit; promptinit
-
-eval `dircolors -b`
 
 if [ -f ~/.zshrc.local ]; then
   source ~/.zshrc.local

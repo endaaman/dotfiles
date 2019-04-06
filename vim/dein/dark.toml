@@ -20,9 +20,9 @@ hook_add = '''
 hook_source = '''
   call deoplete#custom#option({
     \ 'auto_complete_delay': 100,
-    \ 'camel_case': v:true,
-    \ 'ignore_case': v:false,
-    \ 'smart_case': v:true,
+    \ 'camel_case': 1,
+    \ 'ignore_case': 0,
+    \ 'smart_case': 1,
     \ })
 '''
 
