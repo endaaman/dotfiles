@@ -42,6 +42,7 @@
   rsf = checkout HEAD --
   s = status -u
   st = stash
+  sm = submodule
   u = pull --rebase --autostash
 
 [color]
