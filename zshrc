@@ -196,47 +196,56 @@ function copy-buffer() {
 }
 zle -N copy-buffer
 
-function select-cwd-items() {
-  local l=$(ls -alhF --group-directories-first | tail -n+2 | grep -v ' \./' | fzf --query "$RBUFFER")
-  local a=$(echo $l | awk '{$1=$2=$3=$4=$5=$6=$7=$8="" }1' | sed 's/^ *//g' | sed 's/\*$//')
-  a=$(echo "${a% ->*}" | xargs -I{} printf %q "{}")
-  BUFFER="$LBUFFER${a}$RBUFFER"
+function select-items() {
+  local last=$(echo $BUFFER | tr ' ' '\n' | tail -1)
+  local result=$(eval $1 | fzf --query "$last"| eval $2)
+  if [[ -n "${result}" ]]; then
+    local base=$(echo $BUFFER | tr ' ' '\n' | head -n-1 | tr '\n' ' ')
+    LBUFFER="${base}${result}"
+    RBUFFER=""
+  fi
   zle reset-prompt
 }
-zle -N select-cwd-items
+
+function select-cwd-files() {
+  select-items \
+    'ls -alhF --group-directories-first | tail -n+2 | grep -v " \./"' \
+    'awk '\''{print $9}'\'' | sed -e "s/^ *//g" -e "s/\*$//"'
+}
+zle -N select-cwd-files
 
 function select-excutables() {
-  local l=$(whence -pm '*' | sort | fzf --query "$RBUFFER")
-  BUFFER="$LBUFFER${l}$RBUFFER"
-  zle reset-prompt
+  select-items \
+    'whence -pm "*"' \
+    'cat'
 }
 zle -N select-excutables
 
-function select-cwd-items-2() {
-  local l=$(find -maxdepth 2 | sort | fzf --query "$RBUFFER")
-  BUFFER="$LBUFFER${l}$RBUFFER"
-  zle reset-prompt
+function select-cwd-files-2() {
+  select-items \
+    'find -maxdepth 2' \
+    'cat'
 }
-zle -N select-cwd-items-2
+zle -N select-cwd-files-2
 
 function select-branches() {
-  local l=$(git branch -a | sort | fzf --query "$RBUFFER" | sed -e 's/^\*//' -e 's/^ //')
-  BUFFER="$LBUFFER${l}$RBUFFER"
-  zle reset-prompt
+  select-items \
+    'git branch -a | sort' \
+    'sed -e "s/^\*//" | sed -e "s/^ \+//"'
 }
 zle -N select-branches
 
 function select-dein-plugin-dirs() {
-  local l=$(find ~/.cache/dein/repos/github.com -maxdepth 2 -mindepth 2 | sort | fzf --query "$RBUFFER")
-  BUFFER="$LBUFFER${l}$RBUFFER"
-  zle reset-prompt
+  select-items \
+    'find ~/.cache/dein/repos/github.com -maxdepth 2 -mindepth 2' \
+    'cat'
 }
 zle -N select-dein-plugin-dirs
 
 function select-git-files() {
-  local l=$(git ls-files | sort | fzf --query "$RBUFFER")
-  BUFFER="$LBUFFER${l}$RBUFFER"
-  zle reset-prompt
+  select-items \
+    'git ls-files | sort' \
+    'cat'
 }
 zle -N select-git-files
 
@@ -332,7 +341,7 @@ zle -N paste-clipboard
 
 ###* Key binding
 
-bindkey "^o" select-cwd-items
+bindkey "^o" select-cwd-files
 bindkey "^x" open-in-file-explorer
 bindkey '^s' copy-buffer
 bindkey '^z' run-fglast
@@ -351,7 +360,7 @@ bindkey $prefix'^b' select-branches
 bindkey $prefix'^g' select-dein-plugin-dirs
 bindkey $prefix'^j' select-excutables
 bindkey $prefix'^l' select-git-files
-bindkey $prefix'^o' select-cwd-items-2
+bindkey $prefix'^o' select-cwd-files-2
 bindkey $prefix'^p' paste-clipboard
 bindkey $prefix'^t' goto-today
 # bindkey $prefix'^d' cd-dotfiles
