@@ -217,13 +217,6 @@ function gh() {
   fi
 }
 
-function cop() {
-  if [ -z $1 ]; then
-    return
-  fi
-  cat $1 | xsel --clipboard --input
-}
-
 function remove-empty-dirs() {
   local dirs=$(find . -maxdepth 1 -mindepth 1 -empty -type d)
   if [ -z $dirs ]; then
@@ -259,6 +252,13 @@ function select-items() {
   fi
   zle reset-prompt
 }
+
+function select-history {
+  select-items \
+    'history -r 1' \
+    'sed "s/ *[\*0-9]* *//"'
+}
+zle -N select-history
 
 function select-cwd-files() {
   select-items \
@@ -377,16 +377,6 @@ function exec-history {
 }
 zle -N exec-history
 
-function feed-history {
-  a=$(history -r 1 | fzf --query "$BUFFER" | sed 's/ *[\*0-9]* *//')
-  if [ -n $a ]; then
-    LBUFFER=$a
-    RBUFFER=""
-  fi
-  zle reset-prompt
-}
-zle -N feed-history
-
 function paste-clipboard {
   LBUFFER+="$(xsel --clipboard --output)"
 }
@@ -395,10 +385,10 @@ zle -N paste-clipboard
 ###* Key binding
 
 bindkey "^o" select-cwd-files
+bindkey '^j' select-history
 bindkey "^x" open-in-file-explorer
 bindkey '^s' copy-buffer
 bindkey '^z' run-fglast
-bindkey '^j' feed-history
 bindkey '^g' cd-ghq
 bindkey '^[[Z' reverse-menu-complete
 bindkey '^[[1~' beginning-of-line
@@ -440,7 +430,7 @@ export SUDO_EDITOR="$EDITOR"
 export NO_AT_BRIDGE=1
 export WINEARCH=win32
 # export WINEPREFIX=~/.wine
-export FZF_DEFAULT_OPTS='--height 50% --reverse --border --bind "tab:down,btab:up" --exact --cycle  --no-sort'
+export FZF_DEFAULT_OPTS='--height 50% --reverse --border --bind "tab:down,btab:up" --exact --cycle --no-sort'
 
 export PATH=~/bin:~/.local/bin:~/dotfiles/bin:$PATH
 export T=$(date "+%Y%m%d")
