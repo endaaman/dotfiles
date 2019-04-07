@@ -312,7 +312,7 @@ function open-in-file-explorer() {
 zle -N open-in-file-explorer
 
 function run-fglast {
-  if [ -z $(jobs) ]; then
+  if [[ -z $(jobs) ]]; then
     return
   fi
   zle push-input
