@@ -209,13 +209,6 @@ function today() {
   cd $t
 }
 
-function gh() {
-  local dir=$(ghq list -p | fzf)
-  if [ ! -z "$dir" ] ; then
-    cd $dir
-  fi
-}
-
 function remove-empty-dirs() {
   local dirs=$(find . -maxdepth 1 -mindepth 1 -empty -type d)
   if [ -z $dirs ]; then
@@ -320,8 +313,8 @@ function run-fglast {
 }
 zle -N run-fglast
 
-function cd-ghq {
-  local a=$(ghq list -p | fzf --query "$RBUFFER")
+function cd-repos {
+  local a=$(ghr list | fzf --query "$RBUFFER")
   if [ -n $a ]; then
     LBUFFER="cd $a"
     RBUFFER=""
@@ -329,7 +322,7 @@ function cd-ghq {
   fi
   zle reset-prompt
 }
-zle -N cd-ghq
+zle -N cd-repos
 
 
 function cd-dotfiles() {
@@ -388,7 +381,7 @@ bindkey '^j' select-history
 bindkey "^x" open-in-file-explorer
 bindkey '^s' copy-buffer
 bindkey '^z' run-fglast
-bindkey '^g' cd-ghq
+bindkey '^g' cd-repos
 bindkey '^[[Z' reverse-menu-complete
 bindkey '^[[1~' beginning-of-line
 bindkey '^[[4~' end-of-line
