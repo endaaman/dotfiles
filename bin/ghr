@@ -1,3 +1,59 @@
 #!/usr/bin/env python3
+import os
+import argparse
+from itertools import filterfalse
+import subprocess as sp
 
-print('ghr')
+
+ROOT = os.getenv('GHR_ROOT') or os.getenv('HOME') + '/src'
+
+class SubCommand():
+    def register(self, p):
+        pass
+    def __call__(self, args):
+        pass
+
+
+class CommandList(SubCommand):
+    name = 'list'
+
+    def __call__(self, args):
+        cmd = 'find {} -maxdepth 4 -mindepth 4 -type d -name ".git"'.format(ROOT)
+        sp.Popen(cmd, shell=True)
+        # stdout_data, stderr_data = p.communicate()
+        # items = stdout_data.decode().split('\n')
+        # repos = filter(lambda x:x, [os.path.split(i)[0] for i in items])
+        # for repo in repos:
+        #     print(repo)
+
+class CommandGet(SubCommand):
+    name = 'get'
+
+    def register(self, p):
+        p.add_argument('arg1')
+        p.add_argument('-p', action='store_true')
+
+    def __call__(self, args):
+        is_ssh = args.p
+        repo = args.arg1
+        if is_ssh:
+            base = 'git@github.com:{}.git'
+        else:
+            base = 'https://github.com/{}.git'
+        uri = base.format(repo)
+        dest = '{}/github.com/{}'.format(ROOT, repo)
+        cmd = 'git clone {} {}'.format(uri, dest)
+        sp.Popen(cmd, shell=True)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand')
+    subparsers.required = True
+    commands = [CommandList(), CommandGet()]
+    for c in commands:
+        p = subparsers.add_parser(c.name)
+        c.register(p)
+        p.set_defaults(fn=c)
+    args = parser.parse_args()
+    args.fn(args)

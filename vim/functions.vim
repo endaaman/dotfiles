@@ -149,7 +149,7 @@ function! LoadLocalVimConfig() abort
   call SafeExec(getcwd() . '/.vim/init.vim')
 endfunction
 
-function! LoadFtConig() abort
+function! LoadFtConfig() abort
   call SafeExec(g:base_path . '/ft/default.vim')
   call SafeExec(g:base_path . '/ft/' . &filetype . '.vim')
   call SafeExec(getcwd() . '/.vim/' . &filetype . '.vim')
@@ -193,6 +193,9 @@ endfunction
 function! DeniteCommandActionTabopen(context) abort
   execute a:context.targets[0].action__command
   execute "normal! \<C-w>\T"
+endfunction
+
+function! DeniteCommonActionNop(context) abort
 endfunction
 
 function! s:compare_sign(a, b) abort

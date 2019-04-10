@@ -364,3 +364,6 @@ hook_add = '''
     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
     \ }
 '''
+
+[[plugins]]
+repo = 'kshenoy/vim-signature'

@@ -1,5 +1,8 @@
 set encoding=utf-8
 scriptencoding utf-8
+if has('vim_starting')
+  filetype off
+endif
 
 augroup EN
   autocmd!
@@ -16,7 +19,6 @@ if $USER !=# 'root' && isdirectory(g:dein_dir) && !exists('g:dein')
   let g:dein = 1
 endif
 
-runtime! commaon.vim
 runtime! functions.vim
 runtime! basic.vim
 runtime! keymaps.vim

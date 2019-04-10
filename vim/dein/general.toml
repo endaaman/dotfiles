@@ -199,4 +199,10 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'kshenoy/vim-signature'
+repo = 'KabbAmine/zeavim.vim'
+hook_add = '''
+  nmap <Space>z <Plug>Zeavim
+  vmap <Space>z <Plug>ZVVisSelection
+  " nmap gz <Plug>ZVOperator
+  " nmap <leader><leader>z <Plug>ZVKeyDocset
+'''

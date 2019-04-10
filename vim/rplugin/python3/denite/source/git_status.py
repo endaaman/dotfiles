@@ -8,6 +8,7 @@ ICON_ADDED = ''
 ICON_DELETED = '✖'
 ICON_RENAMED = '➜'
 ICON_UNTRACKED = ''
+ICON_UNKNOWN = ''
 
 NOT_STAGED_LABEL = '  Not staged  '
 UNTRACKED_LABEL =  '  Untracked   '
@@ -87,7 +88,7 @@ class Source(Base):
                 iii[_type].append({
                     'path': path,
                     'label': label,
-                    'icon': icons.get(mark) or '',
+                    'icon': icons.get(mark) or ICON_UNKNOWN,
                     })
         for ii in iii:
             ii.sort(key=lambda x:x['path'])
@@ -95,7 +96,11 @@ class Source(Base):
         candidates = []
         for _type, ii in enumerate(iii):
             if _type > 0:
-                candidates.append({ 'word': '', 'abbr': self._get_separator(_type), 'kind': 'word' })
+                candidates.append({
+                    'word': '',
+                    'abbr': self._get_separator(_type),
+                    'kind': 'my/separator',
+                    })
             for i in ii:
                 candidates.append({
                     'word': '{} {}'.format(i['icon'], i['label']),
@@ -111,4 +116,3 @@ class Source(Base):
         rpad = w - len(label) - lpad
         C = '-'
         return C * lpad + label + C * rpad
-

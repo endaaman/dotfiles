@@ -30,7 +30,6 @@ if [ -d ~/.zplug -a -z "$IS_ROOT" ]; then
   zplug 'zsh-users/zsh-completions'
   zplug 'zsh-users/zsh-syntax-highlighting', defer:2
   zplug 'endaaman/zsh-git-prompt', use:'zshrc.sh'
-  zplug 'motemen/ghq', as:command, from:gh-r, rename-to:ghq
   zplug 'stedolan/jq', as:command, from:gh-r, rename-to:jq
   zplug 'junegunn/fzf-bin', as:command, from:gh-r, rename-to:fzf
   zplug 'junegunn/fzf', as:command, use:bin/fzf-tmux

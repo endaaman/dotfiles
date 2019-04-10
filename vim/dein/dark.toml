@@ -39,7 +39,7 @@ hook_add = '''
   let g:deoplete#sources#rust#rust_source_path=$HOME . '/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
   let g:deoplete#sources#rust#show_duplicates = 1
   let g:deoplete#sources#rust#disable_keymap = 1
-  nnoremap <buffer> <Space>gd <plug>DeopleteRustGoToDefinitionDefault
+  " nnoremap <buffer> <Space>gd <plug>DeopleteRustGoToDefinitionDefault
   nnoremap <buffer> <Space>K <plug>DeopleteRustShowDocumentation
 '''
 
@@ -68,6 +68,7 @@ hook_add = '''
   call denite#custom#action('word', 'prepend', 'DeniteWordActionPrepend')
   call denite#custom#action('word', 'yank', 'DeniteWordActionYank')
   call denite#custom#action('command', 'tabopen', 'DeniteCommandActionTabopen')
+  call denite#custom#action('_', 'nop', 'DeniteCommonActionNop', {'is_quit': 0})
 
   call denite#custom#filter('matcher_ignore_globs', 'ignore_globs', [
     \ '*~', '*.o', '*.exe', '*.bak',
