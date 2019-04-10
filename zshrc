@@ -35,7 +35,6 @@ if [ -d ~/.zplug -a -z "$IS_ROOT" ]; then
   zplug 'junegunn/fzf', as:command, use:bin/fzf-tmux
   zplug 'endaaman/lxd-completion-zsh'
   zplug 'endaaman/conda-zsh-completion'
-
   if ! zplug check --verbose; then
     printf 'Install? [y/N]: '
     if read -q; then
@@ -95,7 +94,6 @@ autoload -Uz chpwd_recent_dirs
 autoload -Uz colors; colors
 autoload -Uz compinit; compinit -u
 autoload -Uz promptinit; promptinit
-
 eval `dircolors -b`
 
 
@@ -109,7 +107,7 @@ function my_prompt() {
     else
       con=SSH
     fi
-    pre="%F{green}${con}%f:%F{magenta}$(hostname)%f"
+    pre="%F{green}$con%f:%F{magenta}$(hostname)%f"
   fi
 
   if [ -n "$IS_ROOT" ]; then
@@ -151,6 +149,38 @@ else
 fi
 
 
+###* Environment
+
+export HISTFILE=$HOME/.zsh_history
+export HISTSIZE=1000
+export SAVEHIST=100000
+
+export VTE_CJK_WIDTH=0
+if which nvim &> /dev/null; then
+  export EDITOR=nvim
+else
+  export EDITOR=vim
+fi
+export FCEDIT="$EDITOR"
+export VISUAL="$EDITOR"
+export SUDO_EDITOR="$EDITOR"
+# export XDG_CONFIG_HOME=~/.config
+export NO_AT_BRIDGE=1
+export WINEARCH=win32
+# export WINEPREFIX=~/.wine
+export FZF_DEFAULT_OPTS='--height 50% --reverse --border --bind "tab:down,btab:up" --exact --cycle --no-sort'
+
+export PATH=~/bin:~/.local/bin:~/dotfiles/bin:$PATH
+export T=$(date "+%Y%m%d")
+export TD=~/tmp/$T
+export OCAMLPARAM="_,bin-annot=1"
+export OPAMKEEPBUILDDIR=1
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+if which xdotool &> /dev/null; then
+  export WINDOWID=$(xdotool getwindowfocus)
+fi
+
+
 ###* Alias
 
 alias sudo='sudo -E '
@@ -174,14 +204,13 @@ alias mv='mv -v'
 alias cp='cp -v'
 alias rename='rename -v'
 alias g='git'
-alias ta='tig --all'
 alias v='vim'
 alias vi='vim -u NONE'
 alias n='nvim'
 alias xo='xdg-open $@ &> /dev/null'
 alias s='systemctl'
-alias en='export LANG=en_US.utf8'
-alias ja='export LANG=ja_JP.utf-8'
+alias en='LANG=en_US.utf8'
+alias ja='LANG=ja_JP.utf-8'
 alias nr='npm run'
 alias pm='python manage.py'
 alias be='bundle exec'
@@ -190,7 +219,6 @@ alias xm='setxkbmap -option && xmodmap ~/.Xmodmap'
 alias path="echo \$PATH | sed 's/:/\\n/g'"
 alias tap_production='export NODE_ENV=production; export RAILS_ENV=production'
 alias untap_production='unset NODE_ENV; unset RAILS_ENV'
-alias mkdir_today='mkdir $(date "+%Y%m%d")'
 alias mozc-config='env LANG=ja_JP.UTF-8 /usr/lib/mozc/mozc_tool --mode=config_dialog'
 
 if which trash-put &> /dev/null; then
@@ -203,20 +231,12 @@ alias https='http --default-scheme=https'
 
 ###* Function
 
-function today() {
-  local t=$(date "+%Y%m%d")
-  mkdir -p $t
-  cd $t
-}
-
 function remove-empty-dirs() {
-  local dirs=$(find . -maxdepth 1 -mindepth 1 -empty -type d)
-  if [ -z $dirs ]; then
-    echo 'No empty dir'
+  local empty_dirs=$(find $1 -maxdepth 1 -mindepth 1 -empty -type d)
+  if [ -z "$empty_dirs" ]; then
     return
   fi
-  echo $dirs | xargs -L 1 rmdir
-  echo removed $(echo $dirs | xargs echo)
+  echo $empty_dirs | xargs -L 1 rmdir
 }
 
 ###* Widget
@@ -229,24 +249,76 @@ function goto-today() {
 }
 zle -N goto-today
 
+function toggle-fgbg {
+  if [[ -z $(jobs) ]]; then
+    return
+  fi
+  zle push-input
+  BUFFER="fg %"
+  zle accept-line
+}
+zle -N toggle-fgbg
+
 function copy-buffer() {
-  print -rn $BUFFER | xsel --clipboard --input
+  local data=$BUFFER
+  if [[ -z "$BUFFER" ]]; then
+    data=$(pwd)
+  fi
+  print -rn $data | xsel --clipboard --input
 }
 zle -N copy-buffer
+
+function paste-clipboard {
+  LBUFFER+="$(xsel --clipboard --output)"
+}
+zle -N paste-clipboard
+
+function open-in-file-explorer() {
+  local target='.'
+  if [[ -n $BUFFER ]]; then
+    target=$BUFFER
+  fi
+  xdg-open $target > /dev/null 2>&1
+}
+zle -N open-in-file-explorer
 
 function select-items() {
   local last=$(echo $BUFFER | tr ' ' '\n' | tail -1)
   local result=$(eval $1 | fzf --query "$last"| eval $2)
-  if [[ -n "${result}" ]]; then
-    local base=$(echo $BUFFER | tr ' ' '\n' | head -n-1 | tr '\n' ' ')
-    LBUFFER="${base}${result}"
-    RBUFFER=""
+  if [[ -z "$result" ]]; then
+    zle reset-prompt
+    return
   fi
+  local base=$(echo $BUFFER | tr ' ' '\n' | head -n-1 | tr '\n' ' ')
+  LBUFFER="$base$result"
+  RBUFFER=""
   zle reset-prompt
 }
 
+function select-items-full {
+  local result=$(eval $1 | fzf --query "$BUFFER"| eval $2)
+  if [[ -z "$result" ]]; then
+    zle reset-prompt
+    return
+  fi
+  LBUFFER="$result"
+  RBUFFER=""
+  zle reset-prompt
+  if [[ -n "$3" ]]; then
+    zle accept-line
+  fi
+}
+zle -N select-items-full
+
+function select-repos {
+  select-items-full \
+    'ghr list |sort' \
+    'cat'
+}
+zle -N select-repos
+
 function select-history {
-  select-items \
+  select-items-full \
     'history -r 1' \
     'sed "s/ *[\*0-9]* *//"'
 }
@@ -294,85 +366,13 @@ function select-git-files() {
 }
 zle -N select-git-files
 
-function open-in-file-explorer() {
-  local target='.'
-  if [[ -n $BUFFER ]]; then
-    target=$BUFFER
-  fi
-  xdg-open $target > /dev/null 2>&1
+function select-directry-history() {
+  select-items-full \
+    'dirs -l -v -p | tail -n+2' \
+    'awk '\''{print $2}'\' \
+    1
 }
-zle -N open-in-file-explorer
-
-function run-fglast {
-  if [[ -z $(jobs) ]]; then
-    return
-  fi
-  zle push-input
-  BUFFER="fg %"
-  zle accept-line
-}
-zle -N run-fglast
-
-function cd-repos {
-  local a=$(ghr list | fzf --query "$RBUFFER")
-  if [ -n $a ]; then
-    LBUFFER="cd $a"
-    RBUFFER=""
-    zle accept-line
-  fi
-  zle reset-prompt
-}
-zle -N cd-repos
-
-
-function cd-dotfiles() {
-  BUFFER="cd ~/dotfiles"
-  zle accept-line
-}
-zle -N cd-dotfiles
-
-function cd-upper() {
-  BUFFER="cd .."
-  zle accept-line
-}
-zle -N cd-upper
-
-function cd-list() {
-  d=$(dirs -p -v | fzf | awk '{ print $2 }')
-  if [ -n $d ]; then
-    BUFFER="cd $d"
-    zle accept-line
-  fi
-  zle reset-prompt
-}
-zle -N cd-list
-
-function exec-commands {
-  local a=$(whence -pmv '*' | fzf --query "$BUFFER" | awk '{print $1}')
-  if [ -n $a ]; then
-    LBUFFER=$a
-    RBUFFER=""
-    zle accept-line
-  fi
-  zle reset-prompt
-}
-zle -N exec-commands
-
-function exec-history {
-  local a=$(history -r 1 | fzf --query "$BUFFER" | sed 's/ *[\*0-9]* *//')
-  if [ -n $a ]; then
-    LBUFFER=$a
-    RBUFFER=""
-    zle accept-line
-  fi
-  zle reset-prompt
-}
-zle -N exec-history
-
-function paste-clipboard {
-  LBUFFER+="$(xsel --clipboard --output)"
-}
-zle -N paste-clipboard
+zle -N select-directry-history
 
 ###* Key binding
 
@@ -380,8 +380,9 @@ bindkey "^o" select-cwd-files
 bindkey '^j' select-history
 bindkey "^x" open-in-file-explorer
 bindkey '^s' copy-buffer
-bindkey '^z' run-fglast
-bindkey '^g' cd-repos
+bindkey '^g' select-repos
+bindkey '^t' goto-today
+bindkey '^z' toggle-fgbg
 bindkey '^[[Z' reverse-menu-complete
 bindkey '^[[1~' beginning-of-line
 bindkey '^[[4~' end-of-line
@@ -396,43 +397,10 @@ bindkey $prefix'^g' select-dein-plugin-dirs
 bindkey $prefix'^j' select-excutables
 bindkey $prefix'^l' select-git-files
 bindkey $prefix'^o' select-cwd-files-2
-bindkey $prefix'^p' paste-clipboard
-bindkey $prefix'^t' goto-today
-# bindkey $prefix'^d' cd-dotfiles
-# bindkey $prefix'^u' cd-upper
-# bindkey $prefix'^n' cd-forward
+bindkey $prefix'^k' select-directry-history
+bindkey $prefix'^y' paste-clipboard
+bindkey $prefix'^d' nop
 
-
-###* Environment
-
-export HISTFILE=$HOME/.zsh_history
-export HISTSIZE=1000
-export SAVEHIST=100000
-
-export VTE_CJK_WIDTH=0
-if which nvim &> /dev/null; then
-  export EDITOR=nvim
-else
-  export EDITOR=vim
-fi
-export FCEDIT="$EDITOR"
-export VISUAL="$EDITOR"
-export SUDO_EDITOR="$EDITOR"
-# export XDG_CONFIG_HOME=~/.config
-export NO_AT_BRIDGE=1
-export WINEARCH=win32
-# export WINEPREFIX=~/.wine
-export FZF_DEFAULT_OPTS='--height 50% --reverse --border --bind "tab:down,btab:up" --exact --cycle --no-sort'
-
-export PATH=~/bin:~/.local/bin:~/dotfiles/bin:$PATH
-export T=$(date "+%Y%m%d")
-export TD=~/tmp/$T
-export OCAMLPARAM="_,bin-annot=1"
-export OPAMKEEPBUILDDIR=1
-export VIRTUAL_ENV_DISABLE_PROMPT=1
-if which xdotool &> /dev/null; then
-  export WINDOWID=$(xdotool getwindowfocus)
-fi
 
 ###* XXXenv
 if which direnv &> /dev/null; then
@@ -465,6 +433,10 @@ if [ -d ~/.go ]; then
   export GO15VENDOREXPERIMENT=1
 fi
 
+if [ -d ~/tmp ]; then
+  remove-empty-dirs ~/tmp
+  mkdir -p $TD
+fi
 
 
 mkdir -p $HOME/.cache/shell/
