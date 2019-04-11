@@ -5,6 +5,7 @@ set autoindent
 set background=dark
 set backspace=indent,eol,start
 set backupdir=~/.cache/vim
+set completeopt-=preview
 set cursorcolumn
 set cursorline
 set directory=~/.cache/vim

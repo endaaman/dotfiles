@@ -184,16 +184,9 @@ fi
 ###* Alias
 
 alias sudo='sudo -E '
-alias A='awk'
 alias G='grep'
-alias H='head'
-alias L='less'
-alias S='sed'
-alias T='tail'
-alias W='wc'
 alias F='fzf'
 alias C='xsel --clipboard --input'
-alias Y='yay'
 if which exa &> /dev/null; then
   alias ll='exa -agbl --group-directories-first --time-style long-iso'
 else
@@ -239,12 +232,17 @@ function remove-empty-dirs() {
   echo $empty_dirs | xargs -L 1 rmdir
 }
 
+function mkdir-today() {
+  remove-empty-dirs ~/tmp
+  mkdir -p $TD
+  ln -fsn $TD ~/tmp/today
+}
+
 ###* Widget
 
 function goto-today() {
-  local dir="$HOME/tmp/$(date "+%Y%m%d")"
-  mkdir -p $dir
-  cd $dir
+  mkdir-today
+  cd $TD
   zle accept-line
 }
 zle -N goto-today
@@ -433,13 +431,9 @@ if [ -d ~/.go ]; then
   export GO15VENDOREXPERIMENT=1
 fi
 
-if [ -d ~/tmp ]; then
-  remove-empty-dirs ~/tmp
-  mkdir -p $TD
-fi
-
-
+mkdir-today
 mkdir -p $HOME/.cache/shell/
+
 zstyle ':chpwd:*' recent-dirs-default true
 zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/shell/chpwd-recent-dirs"
 zstyle ':chpwd:*' recent-dirs-max 500

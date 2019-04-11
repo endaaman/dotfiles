@@ -27,6 +27,13 @@ hook_source = '''
 '''
 
 [[plugins]]
+repo = 'deoplete-plugins/deoplete-jedi'
+on_ft = ['python']
+hook_add = '''
+  let g:deoplete#sources#jedi#show_docstring = 0
+'''
+
+[[plugins]]
 repo = 'sebastianmarkow/deoplete-rust'
 depends = ['deoplete.nvim']
 on_ft = ['rust']
@@ -93,6 +100,7 @@ hook_add = '''
   nnoremap <Space>M :<C-u>Denite menu<CR>
   nnoremap <Space>g :<C-u>Denite grep -no-empty<CR>
   nnoremap <Space>G :<C-u>Denite grep -input=`@0`<CR>
+  nnoremap <Space>? :<C-u>Denite grep -input=`@/`<CR>
   nnoremap <Space>W :<C-u>Denite grep -no-empty -input=`expand("<cword>")`<CR>
   nnoremap <Space>c :<C-u>Denite command<CR>
   nnoremap <Space>C :<C-u>Denite command_history<CR>
