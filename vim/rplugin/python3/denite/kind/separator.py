@@ -1,4 +1,4 @@
-from denite.kind.word import Kind as Base
+from denite.kind.base import Base
 
 
 class Kind(Base):

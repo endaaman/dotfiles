@@ -1,4 +1,4 @@
-from .base import Base
+from denite.source.base import Base
 from denite import util, process
 
 

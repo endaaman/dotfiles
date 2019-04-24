@@ -1,5 +1,5 @@
 import re
-from denite.base.source import Base
+from denite.source.base import Base
 
 
 REGISTER_HIGHLIGHT_SYNTAX = [

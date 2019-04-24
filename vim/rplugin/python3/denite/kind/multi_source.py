@@ -1,4 +1,4 @@
-from denite.base.kind import Base
+from denite.kind.base import Base
 
 
 class Kind(Base):

@@ -1,5 +1,5 @@
 from functools import cmp_to_key
-from denite.base.source import Base
+from denite.source.base import Base
 from denite import util, process
 
 
