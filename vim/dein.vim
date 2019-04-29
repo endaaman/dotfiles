@@ -60,4 +60,7 @@ if dein#load_state(s:dein_repo_dir)
     endif
     set tabline=%!lightline#tabline()
   endfunction
+  if get(g:, 'loaded_webdevicons')
+    call webdevicons#refresh()
+  endif
 endif

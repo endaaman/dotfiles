@@ -30,6 +30,7 @@ hook_add = '''
     \ 'Ignored'   : '',
     \ 'Unknown'   : '  '
     \ }
+  let g:NERDTreeShowIgnoredStatus = 1
 '''
 
 [[plugins]]

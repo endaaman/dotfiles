@@ -43,7 +43,8 @@
   s = status -u
   st = stash
   sm = submodule
-  u = pull --rebase --autostash
+  u = pull --rebase
+  us = pull --rebase --autostash
 
 [color]
   ui = true
