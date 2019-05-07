@@ -23,7 +23,7 @@ tym.set_keymaps({
     tym.set_timeout(coroutine.wrap(function()
       tym.send_key('<Alt>t')
       coroutine.yield(true)
-      tym.put('gh')
+      tym.send_key('<Ctrl>g')
       coroutine.yield(true)
       tym.send_key('<Ctrl>m')
       coroutine.yield(false)
