@@ -41,9 +41,9 @@ hook_add = '''
   " TODO: use
   "   system('which racer')
   " and
-  "   system('rustc --print sysroot')
-  let g:deoplete#sources#rust#racer_binary=$HOME . '/.cargo/bin/racer'
-  let g:deoplete#sources#rust#rust_source_path=$HOME . '/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
+  "
+  let g:deoplete#sources#rust#racer_binary = Chomp(system('which racer'))
+  let g:deoplete#sources#rust#rust_source_path = Chomp(system('rustc --print sysroot')) . '/lib/rustlib/src/rust/src'
   let g:deoplete#sources#rust#show_duplicates = 1
   let g:deoplete#sources#rust#disable_keymap = 1
   " nnoremap <buffer> <Space>gd <plug>DeopleteRustGoToDefinitionDefault

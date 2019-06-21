@@ -29,6 +29,10 @@ function! SwapWithAboveLine() abort
   endif
 endfunction
 
+function! Chomp(string)
+  return substitute(a:string, '\n\+$', '', '')
+endfunction
+
 function! IndentWithI() abort
   if len(getline('.')) == 0
     return 'cc'

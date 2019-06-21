@@ -78,7 +78,7 @@ repo = 'rust-lang/rust.vim'
 on_ft = ['rust']
 hook_add = '''
   let g:rustfmt_autosave = 1
-  let g:rustfmt_command = $HOME . '/.cargo/bin/rustfmt'
+  let g:rustfmt_command = Chomp(system('which rustfmt'))
   autocmd EN FileType rust nmap <Plug>(go-to-def) :<C-u>call racer#GoToDefinition()<CR>
   autocmd EN FileType rust nmap <Plug>(go-to-def-tab) :<C-u>split<CR>:call racer#GoToDefinition()<CR><C-w>T
 '''
@@ -88,7 +88,7 @@ repo = 'racer-rust/vim-racer'
 on_ft = ['rust']
 hook_add = '''
   " set hidden
-  let g:racer_cmd = $HOME . "/.cargo/bin/racer"
+  let g:racer_cmd = Chomp(system('which racer'))
   let g:racer_experimental_completer = 1
 '''
 
