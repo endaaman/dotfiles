@@ -50,6 +50,47 @@ hook_add = '''
   nnoremap <buffer> <Space>K <plug>DeopleteRustShowDocumentation
 '''
 
+# [[plugins]]
+# repo = 'Shougo/denite.nvim'
+# hook_add = '''
+#   autocmd FileType denite let b:deoplete_disable_auto_complete = 1
+#   autocmd FileType denite-filter let b:deoplete_disable_auto_complete = 1
+#   nnoremap <Space>f :<C-u>Denite `finddir('.git', ';') != '' ? 'my/git/all' : 'file/rec'`<CR>
+#
+#   autocmd FileType denite call s:denite_my_settings()
+#   function! s:denite_my_settings() abort
+#     nnoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
+#     nnoremap <silent><buffer><expr> d denite#do_map('do_action', 'delete')
+#     nnoremap <silent><buffer><expr> p denite#do_map('do_action', 'preview')
+#     nnoremap <silent><buffer><expr> <Esc> denite#do_map('quit')
+#     nnoremap <silent><buffer><expr> i denite#do_map('open_filter_buffer')
+#     nnoremap <silent><buffer><expr> <Tab> 'j'
+#     nnoremap <silent><buffer><expr> <S-Tab> 'k'
+#   endfunction
+#
+#   autocmd FileType denite-filter call s:denite_filter_my_settings()
+#   function! s:denite_filter_my_settings() abort
+#     " imap <silent><buffer> <C-o> <Plug>(denite_filter_quit)
+#     inoremap <silent><buffer><expr> <Esc> denite#do_map('quit')
+#     inoremap <silent><buffer> <Tab> <C-o>j
+#     inoremap <silent><buffer> <S-Tab> 'k'
+#
+# 	  inoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
+# 	  inoremap <silent><buffer> <Tab> <Esc><C-w>p:call cursor(line('.')+1,1)<CR><C-w>pA
+# 	  inoremap <silent><buffer> <S-Tab> <Esc><C-w>p:call cursor(line('.')-1,1)<CR><C-w>pA
+#   endfunction
+#
+#   call denite#custom#option('_', { 'highlight_matched_char': 'Title' })
+#   if get(g:, 'rich')
+#     call denite#custom#option('_', 'prompt', '')
+#   endif
+#   call denite#custom#option('_', 'start_filter', 1)
+#
+#   call denite#custom#alias('source', 'my/git/all', 'file/rec')
+#   call denite#custom#var('my/git/all', 'command',
+#     \ ['git', 'ls-files', '--cached', '--others', '--exclude-standard'])
+# '''
+
 [[plugins]]
 repo = 'Shougo/denite.nvim'
 ev = '738670414117c1065791c3c3b6a299a3a7cab5ba'

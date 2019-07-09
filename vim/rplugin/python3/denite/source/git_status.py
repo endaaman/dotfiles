@@ -10,8 +10,9 @@ ICON_RENAMED = '➜'
 ICON_UNTRACKED = ''
 ICON_UNKNOWN = ''
 
-NOT_STAGED_LABEL = '  Not staged  '
-UNTRACKED_LABEL =  '  Untracked   '
+LABEL_MODIFIED  = '  Modifid    '
+LABEL_STAGED    = '  Staged     '
+LABEL_UNTRACKED = '  Untracked  '
 
 GITCHANGED_HIGHLIGHT_SYNTAX = [
     {'name': 'IModified',  'link': 'Title',     're': ICON_MODIFIED },
@@ -19,8 +20,9 @@ GITCHANGED_HIGHLIGHT_SYNTAX = [
     {'name': 'IDeleted',   'link': 'Error',     're': ICON_DELETED },
     {'name': 'IRenamed',   'link': 'Number',    're': ICON_RENAMED },
     {'name': 'IUntracked', 'link': 'Directory', 're': ICON_UNTRACKED },
-    {'name': 'LNotStaged', 'link': 'Comment',   're': r'.\+' + NOT_STAGED_LABEL + r'.\+' },
-    {'name': 'LUntracked', 'link': 'Comment',   're': r'.\+' + UNTRACKED_LABEL + r'.\+' },
+    {'name': 'LModified',  'link': 'Comment',   're': r'.\+' + LABEL_MODIFIED + r'.\+' },
+    {'name': 'LStaged',    'link': 'Comment',   're': r'.\+' + LABEL_STAGED + r'.\+' },
+    {'name': 'LUntracked', 'link': 'Comment',   're': r'.\+' + LABEL_UNTRACKED + r'.\+' },
 ]
 
 
@@ -63,6 +65,7 @@ class Source(Base):
             'A': ICON_ADDED,
             'D': ICON_DELETED,
             '??': ICON_UNTRACKED,
+
         }
         iii = [[], [], []]
         for out in outs:
@@ -94,8 +97,13 @@ class Source(Base):
             ii.sort(key=lambda x:x['path'])
         last_type = 0
         candidates = []
-        for _type, ii in enumerate(iii):
-            if _type > 0:
+        TYPE_STAGED = 0
+        TYPE_MODIFIED = 1
+        TYPE_UNTRACKED = 2
+        orders = [TYPE_MODIFIED, TYPE_STAGED, TYPE_UNTRACKED]
+        for i, _type in enumerate(orders):
+            ii = iii[_type]
+            if i > 0:
                 candidates.append({
                     'word': '',
                     'abbr': self._get_separator(_type),
@@ -109,8 +117,9 @@ class Source(Base):
                     })
         return candidates
 
+
     def _get_separator(self, _type):
-        label = NOT_STAGED_LABEL if _type is 1 else UNTRACKED_LABEL
+        label = [LABEL_STAGED, LABEL_MODIFIED, LABEL_UNTRACKED][_type]
         w = self.vim.eval('winwidth(0)')
         lpad = (w - len(label)) // 2
         rpad = w - len(label) - lpad

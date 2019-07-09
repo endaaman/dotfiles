@@ -12,6 +12,11 @@ class Kind(Base):
     def action_vsplit(self, context):
         return self.action_stage(context)
 
+    def action_open_and_move(self, context):
+        v = self.action_open(context)
+        self.vim.command("GitGutterNextHunk")
+        return v
+
     def action_stage(self, context):
         for target in context['targets']:
             path = target['action__path']
