@@ -93,7 +93,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
-ev = '738670414117c1065791c3c3b6a299a3a7cab5ba'
+rev = '738670414117c1065791c3c3b6a299a3a7cab5ba'
 hook_add = '''
   call denite#custom#map('_', '<Esc>', '<denite:leave_mode>', 'noremap')
   call denite#custom#map('_', '<Tab>', '<denite:move_to_next_line>', 'noremap')
