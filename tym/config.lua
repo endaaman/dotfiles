@@ -28,7 +28,17 @@ tym.set_keymaps({
       tym.send_key('<Ctrl>m')
       coroutine.yield(false)
     end), 100)
-  end
+  end,
+  ['<Alt><Shift>g'] = function()
+    tym.set_timeout(coroutine.wrap(function()
+      tym.send_key('<Alt><Shift>t')
+      coroutine.yield(true)
+      tym.send_key('<Ctrl>g')
+      coroutine.yield(true)
+      tym.send_key('<Ctrl>m')
+      coroutine.yield(false)
+    end), 100)
+  end,
 })
 local remap = function (a, b)
   tym.set_keymap(a, function()
