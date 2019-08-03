@@ -9,6 +9,16 @@ tym.set_config({
   autohide = true,
 })
 
+
+function update_alpha(delta)
+  r, g, b, a = tym.color_to_rgba(tym.get('color_background'))
+  a = math.max(math.min(1.0, a + delta), 0.0)
+  bg = tym.rgba_to_color(r, g, b, a)
+  tym.set('color_background', bg)
+  tym.notify(string.format('%s alpha to %f', (delta > 0 and 'Inc' or 'Dec'), a))
+  tym.apply()
+end
+
 tym.set_keymaps({
   ['<Ctrl><Shift>r'] = function()
     tym.reload()
@@ -19,19 +29,15 @@ tym.set_keymaps({
     tym.reload()
     tym.notify('Reset and Reloaded')
   end,
+  ['<Ctrl><Shift>Up'] = function()
+    update_alpha(0.05)
+  end,
+  ['<Ctrl><Shift>Down'] = function()
+    update_alpha(-0.05)
+  end,
   ['<Ctrl><Shift>g'] = function()
     tym.set_timeout(coroutine.wrap(function()
       tym.send_key('<Alt>t')
-      coroutine.yield(true)
-      tym.send_key('<Ctrl>g')
-      coroutine.yield(true)
-      tym.send_key('<Ctrl>m')
-      coroutine.yield(false)
-    end), 100)
-  end,
-  ['<Alt><Shift>g'] = function()
-    tym.set_timeout(coroutine.wrap(function()
-      tym.send_key('<Alt><Shift>t')
       coroutine.yield(true)
       tym.send_key('<Ctrl>g')
       coroutine.yield(true)

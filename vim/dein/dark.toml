@@ -158,8 +158,8 @@ hook_add = '''
   nnoremap <Space>a :<C-u>DeniteBufferDir file/rec<CR>
   nnoremap <Space>A :<C-u>Denite directory_rec<CR>
   nnoremap <Space>l :<C-u>Denite my/git/log<CR>
-  nnoremap <Space><C-n> :<C-u>Denite -resume -cursor-pos=+1 -immediately<CR>
-  nnoremap <Space><C-p> :<C-u>Denite -resume -cursor-pos=-1 -immediately<CR>
+  nnoremap <Space><C-f> :<C-u>Denite -resume -cursor-pos=+1 -immediately<CR>
+  nnoremap <Space><C-b> :<C-u>Denite -resume -cursor-pos=-1 -immediately<CR>
   nnoremap <Space><Space> :<C-u>Denite -resume<CR>
 
   let s:menus = {}

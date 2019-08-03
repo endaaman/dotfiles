@@ -13,8 +13,10 @@ nmap <Space>K <Plug>(go-to-def-tab)
 noremap <Space>i :<C-u>vs<CR>
 noremap <Space>- :<C-u>sp<CR>
 noremap <Space>e :<C-u>e!<CR>
-noremap <Space>L <C-l>
+noremap <Space><C-l> <C-l>
 noremap <Space>t :<C-u>terminal<CR>
+nnoremap <S-Left> :tabm -1<CR>
+nnoremap <S-Right> :tabm +1<CR>
 noremap <Space>q :<C-u>:q!<CR>
 nnoremap <expr> <Space>/ SearchByRegister()
 
@@ -64,8 +66,6 @@ nnoremap <C-a> ggVG
 nnoremap <C-n> gt
 nnoremap <C-p> gT
 nnoremap <C-t> :<C-u>tabnew<CR>
-nnoremap <Left> :tabm -1<CR>
-nnoremap <Right> :tabm +1<CR>
 
 nnoremap <C-u> :<C-u>noh<CR><C-l>
 nnoremap <C-q> :<C-u>qa<CR>

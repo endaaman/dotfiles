@@ -94,6 +94,13 @@ if get(g:, 'rich')
   endif
 endif
 
+autocmd EN ColorScheme * highlight Normal guibg=NONE ctermbg=NONE
+" autocmd EN ColorScheme * highlight NormalNC guibg=NONE ctermbg=NONE
+" autocmd EN ColorScheme * highlight Text guibg=NONE ctermbg=NONE
+autocmd EN ColorScheme * highlight NonText guibg=NONE ctermbg=NONE
+autocmd EN ColorScheme * highlight LineNr guibg=NONE ctermbg=NONE
+autocmd EN ColorScheme * highlight EndOfBuffer guibg=NONE ctermbg=NONE
+
 autocmd EN InsertLeave * set cursorline | set cursorcolumn
 autocmd EN InsertEnter * set nocursorline | set nocursorcolumn
 autocmd EN CursorHold * call ShiftRegister()
