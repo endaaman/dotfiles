@@ -1,0 +1,3 @@
+#!/bin/bash
+
+printf '\033[3m%s\033[23m\n' "highlight"
