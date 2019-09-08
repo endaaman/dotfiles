@@ -70,6 +70,7 @@ class Source(Base):
         iii = [[], [], []]
         for out in outs:
             content = out[3:]
+            # marks is like ` M` or `A `
             marks = out[:2]
             for i, mark in enumerate(marks):
                 if mark == ' ':

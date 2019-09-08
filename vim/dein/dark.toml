@@ -183,9 +183,10 @@ hook_add = '''
     \ ]
   call denite#custom#var('menu', 'menus', s:menus)
 
-  call denite#custom#alias('source', 'my/git/all', 'file/rec')
-  call denite#custom#var('my/git/all', 'command',
-    \ ['git', 'ls-files', '--cached', '--others', '--exclude-standard'])
+  call denite#custom#source('my/git/all', 'converters', ['devicons_denite_converter'])
+  " call denite#custom#alias('source', 'my/git/all', 'file/rec')
+  " call denite#custom#var('my/git/all', 'command',
+  "   \ ['git', 'ls-files', '--cached', '--others', '--exclude-standard'])
 
   if executable('ag')
     call denite#custom#var('file/rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
