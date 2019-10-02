@@ -431,6 +431,10 @@ if [ -d ~/.go ]; then
   export GO15VENDOREXPERIMENT=1
 fi
 
+if which pip &> /dev/null; then
+  eval "$(pip completion --zsh)"
+fi
+
 mkdir-today
 mkdir -p $HOME/.cache/shell/
 
