@@ -155,7 +155,7 @@ if $nodejs; then
     echo -e "${CYAN}Installing nodebrew${NC}"
     curl -L git.io/nodebrew | perl - setup
     echo -e "${CYAN}Installing node.js v7${NC}"
-    ~/.nodebrew/nodebrew install-binary 10
+    ~/.nodebrew/nodebrew install-binary 12
   else
     echo -e "${CYAN}Updating nodebrew${NC}"
     ~/.nodebrew/nodebrew selfupdate
