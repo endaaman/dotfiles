@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# find -maxdepth 1 -type f -name 'Beatmap*' | xargs -I{} unrar x {}
+
+
+find -maxdepth 1 -type f -name 'Beatmap*' | sort | while read line
+do
+  if [ ${line: -3} == '.7z' ]; then
+    echo '7z: ' $line
+    7z e -aoa -- "$line"
+  fi
+  if [ ${line: -4} == '.rar' ]; then
+    echo 'rar: ' "$line"
+    unrar x "$line"
+  fi
+done
+echo done.
