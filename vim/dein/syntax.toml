@@ -18,9 +18,9 @@ hook_add = '''
   autocmd EN BufEnter *.java UnusedImports
 '''
 
-# [[plugins]]
-# repo = 'pangloss/vim-javascript'
-# on_ft = ['javascript', 'vue']
+[[plugins]]
+repo = 'pangloss/vim-javascript'
+on_ft = ['javascript', 'vue']
 
 [[plugins]]
 repo = 'maxmellon/vim-jsx-pretty'
