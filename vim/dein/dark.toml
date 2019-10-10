@@ -1,4 +1,14 @@
 [[plugins]]
+repo = 'neoclide/coc.nvim'
+rev = 'release'
+hook_add = '''
+  nmap <Space>kk <Plug>(coc-definition)
+  nmap <Space>kt <Plug>(coc-type-definition)
+  nmap <Space>ki <Plug>(coc-implementation)
+  nmap <Space>kr <Plug>(coc-references)
+'''
+
+[[plugins]]
 repo = 'Shougo/defx.nvim'
 hook_add = '''
   nnoremap <Space>a :<C-u>Defx<CR>
@@ -35,6 +45,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'sebastianmarkow/deoplete-rust'
+if = '0'
 depends = ['deoplete.nvim']
 on_ft = ['rust']
 hook_add = '''
