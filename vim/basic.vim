@@ -1,5 +1,9 @@
 scriptencoding utf-8
+let s:columns = &columns
+let s:lines = &lines
 set all&
+execute 'set columns=' . s:columns
+execute 'set lines=' . s:lines
 
 set autoindent
 set background=dark
