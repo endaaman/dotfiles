@@ -120,6 +120,7 @@ repo = 'tpope/vim-fugitive'
 
 [[plugins]]
 repo = 'neomake/neomake'
+if = '0'
 hook_add = '''
   function! NeomakeLocal() abort
     if &modified

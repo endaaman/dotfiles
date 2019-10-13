@@ -9,8 +9,8 @@ nnoremap <silent> <Esc> <Esc>:<C-u>call EscapeHook()<CR>
 noremap <Space>j J
 " noremap <Spac>K
 " noremap <Space>k
-nmap <Space>kd <Plug>(go-to-def)
-nmap <Space>kD <Plug>(go-to-def-tab)
+" nmap <Space>kd <Plug>(go-to-def)
+" nmap <Space>kD <Plug>(go-to-def-tab)
 noremap <Space>i :<C-u>vs<CR>
 noremap <Space>- :<C-u>sp<CR>
 noremap <Space>e :<C-u>e!<CR>

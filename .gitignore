@@ -4,3 +4,4 @@ tym/theme.lua
 fonts/.uuid
 xkb/keymap/current
 Xmodmap
+.ccls-cache/
