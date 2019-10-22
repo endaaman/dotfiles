@@ -136,6 +136,7 @@ let s:neomake_marks = {
   \ }
 
 function! LightlineNeomake() abort
+  return ''
   if !exists(':Neomake')
     return ''
   endif

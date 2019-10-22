@@ -2,11 +2,11 @@
 repo = 'neoclide/coc.nvim'
 rev = 'release'
 hook_add = '''
-  nmap <Space>kk <Plug>(coc-definition)
+  nnoremap <silent> <Space>kk :call CocActionAsync('doHover')<cr>
+  nmap <Space>kK <Plug>(coc-definition)
   nmap <Space>kt <Plug>(coc-type-definition)
   nmap <Space>ki <Plug>(coc-implementation)
   nmap <Space>kr <Plug>(coc-references)
-  nnoremap <silent> <Space>kK :call CocActionAsync('doHover')<cr>
 
   set updatetime=300
   au CursorHold * sil call CocActionAsync('highlight')
