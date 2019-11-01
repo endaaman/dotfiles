@@ -136,8 +136,7 @@ let s:neomake_marks = {
   \ }
 
 function! LightlineNeomake() abort
-  return ''
-  if !exists(':Neomake')
+  silent! if dein#check_install('neomake')
     return ''
   endif
   let running = neomake#statusline#get(bufnr('%'), {
