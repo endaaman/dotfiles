@@ -124,4 +124,4 @@ autocmd EN BufRead,BufNewFile *.json.jbuilder setlocal ft=ruby
 autocmd EN BufRead,BufNewFile Schemafile setlocal ft=ruby
 autocmd EN BufRead,BufNewFile /etc/nginx/* setlocal ft=nginx
 autocmd EN BufRead,BufNewFile *.ejs setlocal ft=ejs
-autocmd EN BufRead,BufNewFile *.vue setlocal ft=vue'
+autocmd EN BufRead,BufNewFile *.vue setlocal ft=vue
