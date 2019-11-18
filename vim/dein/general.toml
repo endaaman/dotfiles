@@ -2,10 +2,39 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
+repo = 'sheerun/vim-polyglot'
+
+[[plugins]]
 repo = 'Shougo/context_filetype.vim'
 hook_add = '''
   let g:context_filetype#search_offset = 10000
 '''
+
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim', 'vim-textobj-user']
+hook_add = '''
+  let g:precious_enable_switchers = {
+  \ '*' : {
+  \  'setfiletype' : 1
+  \ },
+  \ 'vue' : {
+  \  'setfiletype' : 0
+  \ },
+  \}
+'''
+
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+hook_add = '''
+  if get(g:, 'rich')
+    let g:indentLine_char = ''
+  else
+    let g:indentLine_char = '¦'
+  endif
+  let g:indentLine_fileTypeExclude = ['nerdtree', 'markdown']
+'''
+
 
 [[plugins]]
 repo = 'Shougo/echodoc.vim'
@@ -49,32 +78,6 @@ hook_add = '''
     \  }
     \}
 '''
-
-[[plugins]]
-repo = 'osyo-manga/vim-precious'
-depends = ['context_filetype.vim', 'vim-textobj-user']
-hook_add = '''
-  let g:precious_enable_switchers = {
-  \ '*' : {
-  \  'setfiletype' : 1
-  \ },
-  \ 'vue' : {
-  \  'setfiletype' : 1
-  \ },
-  \}
-'''
-
-[[plugins]]
-repo = 'Yggdroot/indentLine'
-hook_add = '''
-  if get(g:, 'rich')
-    let g:indentLine_char = ''
-  else
-    let g:indentLine_char = '¦'
-  endif
-  let g:indentLine_fileTypeExclude = ['nerdtree', 'markdown']
-'''
-
 
 # [[plugins]]
 # repo = 'bronson/vim-trailing-whitespace'

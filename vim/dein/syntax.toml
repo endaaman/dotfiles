@@ -23,17 +23,24 @@ hook_add = '''
   autocmd EN BufEnter *.java UnusedImports
 '''
 
-[[plugins]]
-repo = 'pangloss/vim-javascript'
-on_ft = ['javascript', 'vue']
-
-[[plugins]]
-repo = 'maxmellon/vim-jsx-pretty'
-on_ft = ['javascript', 'vue']
+# [[plugins]]
+# repo = 'pangloss/vim-javascript'
+# on_ft = ['javascript', 'vue']
+#
+# [[plugins]]
+# repo = 'maxmellon/vim-jsx-pretty'
+# on_ft = ['javascript', 'vue']
 
 [[plugins]]
 repo = 'digitaltoad/vim-pug'
 on_ft = ['pug', 'vue']
+
+[[plugins]]
+repo = 'posva/vim-vue'
+on_ft = ['vue']
+hook_add = '''
+  let g:vue_pre_processors = 'detect_on_enter'
+'''
 
 [[plugins]]
 repo = 'elzr/vim-json'
