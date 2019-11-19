@@ -372,6 +372,13 @@ function select-directry-history() {
 }
 zle -N select-directry-history
 
+function select-pacman-files() {
+  select-items \
+    'pacman -Ql' \
+    'cat'
+}
+zle -N select-pacman-files
+
 ###* Key binding
 
 bindkey "^o" select-cwd-files
@@ -396,6 +403,7 @@ bindkey $prefix'^j' select-excutables
 bindkey $prefix'^l' select-git-files
 bindkey $prefix'^o' select-cwd-files-2
 bindkey $prefix'^k' select-directry-history
+bindkey $prefix'^p' select-pacman-files
 bindkey $prefix'^y' paste-clipboard
 bindkey $prefix'^d' nop
 
@@ -435,7 +443,11 @@ if which pip &> /dev/null; then
   eval "$(pip completion --zsh)"
 fi
 
-mkdir-today
+if which pipenv &> /dev/null; then
+  eval "$(pipenv --completion)"
+fi
+
+mkdir-today &
 mkdir -p $HOME/.cache/shell/
 
 zstyle ':chpwd:*' recent-dirs-default true
