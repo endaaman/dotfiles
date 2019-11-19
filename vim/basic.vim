@@ -114,7 +114,7 @@ let s:match_trailing_spaces_ignores = ['defx', 'qf', 'nerdtree']
 autocmd EN ColorScheme * highlight default TrailingSpaces ctermbg=green guibg=green
 autocmd EN BufWinEnter,InsertLeave,FileType * call MatchTrailingSpaces(v:false, s:match_trailing_spaces_ignores)
 autocmd EN InsertEnter * call MatchTrailingSpaces(v:false, s:match_trailing_spaces_ignores)
-autocmd EN BufWinLeave * call clearmatches()
+" autocmd EN BufWinLeave * call clearmatches()
 " autocmd EN BufWritePre * call TrimTrailingSpaces()
 " autocmd EN BufWritePre * call TrimTrailingTabs()
 
