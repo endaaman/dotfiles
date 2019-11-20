@@ -231,9 +231,9 @@ function! GetSigns(needle, reversed) abort
   return l:signs
 endfunction
 
-function! s:neomake_jump_sign(reversed) abort
+function! s:jump_sign(needle, reversed) abort
   let l:line_number = line('.')
-  for l:sign in GetSigns('neomake_file_', a:reversed)
+  for l:sign in GetSigns(a:needle, a:reversed)
     let l:diff = l:sign['line_number'] - l:line_number
     if a:reversed
       let l:diff = l:diff * -1
@@ -244,12 +244,14 @@ function! s:neomake_jump_sign(reversed) abort
     endif
   endfor
   echohl WarningMsg
-  echo 'NeomakeSigns: No more signs'
+  echo 'No more signs'
   echohl None
 endfunction
 
-command! NeomakeNextSign :call s:neomake_jump_sign(0)
-command! NeomakePrevSign :call s:neomake_jump_sign(1)
+command! NeomakeNextSign :call s:jump_sign('neomake_file_', 0)
+command! NeomakePrevSign :call s:jump_sign('neomake_file_', 1)
+command! CocNextSign :call s:jump_sign('Coc', 0)
+command! CocPrevSign :call s:jump_sign('Coc', 1)
 
 function! NeomakeSignCounts() abort
   let l:counts = { 'err': 0, 'warn': 0, 'info':0, 'msg': 0 }

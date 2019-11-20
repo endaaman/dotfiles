@@ -7,6 +7,9 @@ hook_add = '''
   nmap <Space>kt <Plug>(coc-type-definition)
   nmap <Space>ki <Plug>(coc-implementation)
   nmap <Space>kr <Plug>(coc-references)
+  nnoremap <C-f> :<C-u>CocNextSign<CR>
+  nnoremap <C-b> :<C-u>CocPrevSign<CR>
+
 
   set updatetime=300
   au CursorHold * sil call CocActionAsync('highlight')
@@ -28,6 +31,12 @@ hook_add = '''
     \ coc#refresh()
 '''
 
+[[plugins]]
+repo = 'neoclide/coc-denite'
+depends = ['coc.nvim', 'denite.nvim']
+hook_add = '''
+  " nnoremap <Space>J :<C-u>Denite coc-diagnostic -default-action=jump<CR>
+'''
 
 [[plugins]]
 repo = 'Shougo/defx.nvim'

@@ -18,7 +18,7 @@ let g:lightline.active = {}
 let g:lightline.active.left = [
   \   [ 'mode', 'paste' ],
   \   [ 'dirname', 'filename' ],
-  \   [ 'branch', 'neomake' ],
+  \   [ 'branch', 'neomake', 'coc'],
   \ ]
 let g:lightline.active.right = [
   \   [ 'syntastic', 'lineinfo' ],
@@ -32,6 +32,7 @@ let g:lightline.component_function = {
   \   'filename': 'LightlineFilename',
   \   'branch': 'LightlineBranch',
   \   'neomake': 'LightlineNeomake',
+  \   'coc': 'LightlineCoc',
   \   'fileformat': 'LightlineFileformat',
   \   'filetype': 'LightlineFiletype',
   \   'fileencoding': 'LightlineFileencoding',
@@ -154,6 +155,35 @@ function! LightlineNeomake() abort
     endif
   endfor
   return len(l:marks) > 0 ? join(l:marks, ' ') : '✓'
+endfunction
+
+
+let s:coc_marks = {
+  \   'error': '',
+  \   'warning': '',
+  \   'information': '',
+  \   'hint': '',
+  \ }
+
+function! LightlineCoc() abort
+  silent! if dein#check_install('coc.nvim')
+    return ''
+  endif
+  let l:info = get(b:, 'coc_diagnostic_info', {})
+  if empty(l:info)
+    return '✓'
+  endif
+  let l:marks = []
+  for l:k in keys(s:coc_marks)
+    if get(l:info, l:k, 0)
+      call add(l:marks, s:coc_marks[k] . ':' . l:info[k])
+    endif
+  endfor
+  let message = join(l:marks, ' ')
+  if empty(l:message)
+    return '✓'
+  endif
+  return l:message
 endfunction
 
 function! LightlineFileformat() abort
