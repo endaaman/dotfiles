@@ -92,6 +92,9 @@ repo = 'rking/ag.vim'
 repo = 'jiangmiao/auto-pairs'
 
 [[plugins]]
+repo = 'gregsexton/MatchTag'
+
+[[plugins]]
 repo = 'airblade/vim-gitgutter'
 hook_source = '''
   " let g:gitgutter_async = 0

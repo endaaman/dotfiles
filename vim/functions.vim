@@ -181,6 +181,11 @@ function! DeniteFileActionXdgOpen(context) abort
   execute '!xdg-open ' . a:context.targets[0].action__path
 endfunction
 
+function! s:xdg_open() abort
+  execute '!xdg-open ' . expand('%:p')
+endfunction
+command! XdgOpen :call s:xdg_open()
+
 function! DeniteWordActionPrepend(context) abort
   execute ':normal! i' . a:context.targets[0].action__text
 endfunction
