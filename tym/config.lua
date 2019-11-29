@@ -3,11 +3,18 @@ local home = os.getenv('HOME')
 
 
 function update_alpha(delta)
-  r, g, b, a = tym.color_to_rgba(tym.get('color_background'))
-  a = math.max(math.min(1.0, a + delta), 0.0)
-  bg = tym.rgba_to_color(r, g, b, a)
-  tym.set('color_background', bg)
-  tym.notify(string.format('%s alpha to %f', (delta > 0 and 'Inc' or 'Dec'), a))
+  r, g, b, old_alpha = tym.color_to_rgba(tym.get('color_background'))
+  new_alpha = math.max(math.min(1.0, old_alpha + delta), 0.0)
+  new_bg = tym.rgba_to_color(r, g, b, new_alpha)
+  tym.set('color_background', new_bg)
+  tym.notify(string.format('%s alpha to %f', (delta > 0 and 'Inc' or 'Dec'), new_alpha))
+end
+
+function update_scale(delta)
+  old_value = tym.get('scale')
+  new_value = math.max(math.min(1000, old_value + delta), 10)
+  tym.set('scale', new_value)
+  tym.notify(string.format('%s scale to %d', (delta > 0 and 'Inc' or 'Dec'), new_value))
 end
 
 function remap(a, b)
@@ -43,6 +50,12 @@ tym.set_keymaps({
     tym.notify('Reset and Reloaded')
   end,
   ['<Ctrl><Shift>Up'] = function()
+    update_scale(10)
+  end,
+  ['<Ctrl><Shift>Down'] = function()
+    update_scale(-10)
+  end,
+  ['<Ctrl><Shift>Up'] = function()
     update_alpha(0.05)
   end,
   ['<Ctrl><Shift>Down'] = function()
@@ -63,13 +76,7 @@ tym.set_keymaps({
 tym.set_hooks({
   scroll = function(dx, dy, x, y)
     if tym.check_mod_state('<Ctrl>') then
-      if dy > 0 then
-        s = tym.get('scale') - 10
-      else
-        s = tym.get('scale') + 10
-      end
-      tym.set('scale', s)
-      tym.notify('Scale: ' .. s .. '%')
+      update_scale(dy < 0 and 10 or -10)
       return true
     end
     if tym.check_mod_state('<Shift>') then
