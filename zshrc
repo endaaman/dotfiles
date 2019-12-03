@@ -379,6 +379,11 @@ function select-pacman-files() {
 }
 zle -N select-pacman-files
 
+function select-pacman-libs() {
+  select-items 'pacman -Qq' 'cat'
+}
+zle -N select-pacman-libs
+
 ###* Key binding
 
 bindkey "^o" select-cwd-files
@@ -403,7 +408,8 @@ bindkey $prefix'^j' select-excutables
 bindkey $prefix'^l' select-git-files
 bindkey $prefix'^o' select-cwd-files-2
 bindkey $prefix'^k' select-directry-history
-bindkey $prefix'^p' select-pacman-files
+bindkey $prefix'^a' select-pacman-files
+bindkey $prefix'^p' select-pacman-libs
 bindkey $prefix'^y' paste-clipboard
 bindkey $prefix'^d' nop
 
