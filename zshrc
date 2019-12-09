@@ -213,6 +213,8 @@ alias path="echo \$PATH | sed 's/:/\\n/g'"
 alias tap_production='export NODE_ENV=production; export RAILS_ENV=production'
 alias untap_production='unset NODE_ENV; unset RAILS_ENV'
 alias mozc-config='env LANG=ja_JP.UTF-8 /usr/lib/mozc/mozc_tool --mode=config_dialog'
+alias mozc-config='env LANG=ja_JP.UTF-8 /usr/lib/mozc/mozc_tool --mode=config_dialog'
+alias inspect-pid='xprop _NET_WM_PID | cut -d " " -f 3 | xargs ps -fw'
 
 if which trash-put &> /dev/null; then
   alias rm='trash-put'
