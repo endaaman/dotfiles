@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import re
 import os
 import argparse
 from itertools import filterfalse
@@ -7,12 +8,29 @@ import subprocess as sp
 
 ROOT = os.getenv('GHR_ROOT') or os.getenv('HOME') + '/src'
 
+# simple
+#   endaaman/dotfiles
+# other
+#   http://githu.com/endaaman/dotfiles
+#   git@github.com/
+def get_clone_target_and_path(arg):
+    simple = re.match(r'^[^/]+/[^/]+$', args.arg1)
+    if not simple:
+        # `hoge/fuga` style
+        return arg, arg
+
+    if is_ssh:
+        base = 'git@github.com:{}.git'
+    else:
+        base = 'https://github.com/{}.git'
+    uri = base.format(arg)
+    return uri, arg
+
 class SubCommand():
     def register(self, p):
         pass
     def __call__(self, args):
         pass
-
 
 class CommandList(SubCommand):
     name = 'list'
@@ -36,15 +54,12 @@ class CommandGet(SubCommand):
 
     def __call__(self, args):
         is_ssh = args.p
-        repo = args.arg1
-        if is_ssh:
-            base = 'git@github.com:{}.git'
-        else:
-            base = 'https://github.com/{}.git'
-        uri = base.format(repo)
-        dest = '{}/github.com/{}'.format(ROOT, repo)
-        cmd = 'git clone {} {}'.format(uri, dest)
-        sp.Popen(cmd, shell=True)
+        target = get_clone_target(args.arg1)
+        repo = (args.arg1)
+        dest_dir = '{}/github.com/{}'.format(ROOT, repo)
+        cmd = 'git clone {} {}'.format(uri, dest_dir)
+        p = sp.Popen(cmd, shell=True)
+        p.wait()
 
 
 if __name__ == '__main__':
