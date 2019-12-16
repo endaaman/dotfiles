@@ -13,18 +13,23 @@ ROOT = os.getenv('GHR_ROOT') or os.getenv('HOME') + '/src'
 # other
 #   http://githu.com/endaaman/dotfiles
 #   git@github.com/
-def get_clone_target_and_path(arg):
-    simple = re.match(r'^[^/]+/[^/]+$', args.arg1)
-    if not simple:
-        # `hoge/fuga` style
-        return arg, arg
-
-    if is_ssh:
-        base = 'git@github.com:{}.git'
+def get_clone_target_and_path(arg, is_ssh):
+    simple = re.match(r'^[^/]+/[^/]+$', arg)
+    if simple:
+        path = arg
+        if is_ssh:
+            base = 'git@github.com:{}.git'
+        else:
+            base = 'https://github.com/{}.git'
+        uri = base.format(arg)
+        return uri, arg
     else:
-        base = 'https://github.com/{}.git'
-    uri = base.format(arg)
-    return uri, arg
+        uri = arg
+        m = re.search(r'([^/]+/[^/]+$)', arg)
+        if not m:
+            return None, None
+        path = re.sub(r'\.git', '', m.group())
+    return arg, path
 
 class SubCommand():
     def register(self, p):
@@ -54,10 +59,11 @@ class CommandGet(SubCommand):
 
     def __call__(self, args):
         is_ssh = args.p
-        target = get_clone_target(args.arg1)
-        repo = (args.arg1)
-        dest_dir = '{}/github.com/{}'.format(ROOT, repo)
-        cmd = 'git clone {} {}'.format(uri, dest_dir)
+        src, path = get_clone_target_and_path(args.arg1, is_ssh)
+        if not src:
+            print(f'Invalid src: `{src}`')
+        dest_dir = '{}/github.com/{}'.format(ROOT, path)
+        cmd = 'git clone {} {}'.format(src, dest_dir)
         p = sp.Popen(cmd, shell=True)
         p.wait()
 
