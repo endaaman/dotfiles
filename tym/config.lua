@@ -71,6 +71,12 @@ tym.set_keymaps({
       coroutine.yield(false)
     end), 100)
   end,
+  ['<Ctrl>equal'] = function()
+    tym.set('scale', 100)
+    r, g, b, old_alpha = tym.color_to_rgba(tym.get('color_background'))
+    tym.set('color_background', tym.rgba_to_color(r, g, b, 1))
+    tym.notify('Reset alpha and scale')
+  end
 })
 
 tym.set_hooks({
