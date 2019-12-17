@@ -26,6 +26,7 @@ set matchtime=1
 set modifiable
 set mouse=a
 set nobackup
+set nofoldenable
 set noswapfile
 set number
 set ruler

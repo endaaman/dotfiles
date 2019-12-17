@@ -12,6 +12,7 @@ repo = 'gabrielelana/vim-markdown'
 on_ft = ['markdown']
 if = '0'
 hook_add = '''
+  let g:vim_markdown_folding_disabled = 1
   let g:markdown_enable_spell_checking = 0
 '''
 
