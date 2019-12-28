@@ -5,19 +5,19 @@ s0_run_command_terminal_key = <Super>t
 [commands]
 s0_command0 = mate-screenshot
 s0_command1 = mate-screenshot -a -d 100
-s0_command2 = gyazo
+s0_command2 = mate-screenshot --window
 s0_command3 = tym -e /usr/bin/zsh
-s0_command4 = mate-screenshot --window
 s0_run_command0_key = <Shift><Super>p
 s0_run_command1_key = <Super>p
-s0_run_command2_key = <Super>g
+s0_run_command2_key = <Alt><Super>p
 s0_run_command3_key = <Super>z
-s0_run_command4_key = <Alt><Super>p
 
 [composite]
 s0_refresh_rate = 50
+s0_unredirect_fullscreen_windows = false
 
 [addhelper]
+s0_toggle_key = <Super>o
 s0_brightness = 90
 s0_saturation = 90
 s0_opacity = 90
@@ -38,6 +38,14 @@ s0_position_matches = ;
 s0_position_x_values = -32768;
 s0_position_y_values = -32768;
 s0_position_constrain_workarea = false;
+
+[workarounds]
+s0_keep_minimized_windows = true
+s0_ooo_menu_fix = false
+s0_java_fix = false
+s0_java_taskbar_fix = false
+s0_aiglx_fragment_fix = false
+s0_initial_damage_complete_redraw = false
 
 [resize]
 s0_mode = 2
@@ -61,12 +69,15 @@ s0_next_all_key = <Super>Tab
 s0_prev_all_key = <Shift><Super>Tab
 s0_use_background_color = true
 
+[opacify]
+s0_toggle_key = <Shift><Super>o
+
 [scale]
 s0_key_bindings_toggle = true
 s0_button_bindings_toggle = true
 
 [core]
-s0_active_plugins = core;composite;opengl;compiztoolbox;decor;grid;imgjpeg;imgpng;imgsvg;matecompat;move;obs;place;regex;resize;snap;staticswitcher;text;wall;animation;commands;dbus;notification;
+s0_active_plugins = core;composite;opengl;compiztoolbox;decor;grid;imgjpeg;imgpng;imgsvg;matecompat;move;obs;place;regex;resize;snap;staticswitcher;text;wall;animation;commands;dbus;notification;workarounds;
 s0_outputs = 1920x1080+0+0;
 s0_close_window_key = <Super>w
 s0_unmaximize_window_key = Disabled

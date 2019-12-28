@@ -11,7 +11,7 @@ bindkey -e
 bindkey '^r' _reload-zsh
 
 if [ -n "$PROFILING" ]; then
-  zmodload zsh/zprof && zprof
+  zmodload sh/zprof && zprof
 fi
 
 if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
@@ -208,7 +208,6 @@ alias nr='npm run'
 alias pm='python manage.py'
 alias be='bundle exec'
 alias psp='ps aux | fzf'
-alias xm='setxkbmap -option && xmodmap ~/.Xmodmap'
 alias path="echo \$PATH | sed 's/:/\\n/g'"
 alias tap_production='export NODE_ENV=production; export RAILS_ENV=production'
 alias untap_production='unset NODE_ENV; unset RAILS_ENV'
