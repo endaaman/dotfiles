@@ -13,8 +13,7 @@ s0_run_command2_key = <Alt><Super>p
 s0_run_command3_key = <Super>z
 
 [composite]
-s0_refresh_rate = 50
-s0_unredirect_fullscreen_windows = false
+s0_unredirect_match = (any) & !(class=Totem) & !(class=MPlayer) & !(class=vlc) & !(class=Plugin-container) & !(class=QtQmlViewer) & !(class=Firefox) & !(class=google-chrome) & !(class=google-chrome-unstable) & !(class=chromium-browser) & !(name=osu!.exe)
 
 [addhelper]
 s0_toggle_key = <Super>o
@@ -23,8 +22,6 @@ s0_saturation = 90
 s0_opacity = 90
 
 [switcher]
-s0_next_key = Disabled
-s0_prev_key = Disabled
 s0_next_all_key = <Super>Tab
 s0_prev_all_key = <Shift><Super>Tab
 s0_focus_on_switch = true
@@ -47,7 +44,13 @@ s0_java_taskbar_fix = false
 s0_aiglx_fragment_fix = false
 s0_initial_damage_complete_redraw = false
 
+[shelf]
+s0_trigger_key = Disabled
+s0_triggerscreen_key = Disabled
+s0_inc_button = <Alt><Super>Button2
+
 [resize]
+s0_initiate_button = <Alt>Button3
 s0_mode = 2
 
 [neg]
@@ -77,7 +80,7 @@ s0_key_bindings_toggle = true
 s0_button_bindings_toggle = true
 
 [core]
-s0_active_plugins = core;composite;opengl;compiztoolbox;decor;grid;imgjpeg;imgpng;imgsvg;matecompat;move;obs;place;regex;resize;snap;staticswitcher;text;wall;animation;commands;dbus;notification;workarounds;
+s0_active_plugins = core;composite;crashhandler;opengl;compiztoolbox;decor;imgjpeg;imgpng;imgsvg;matecompat;mousepoll;move;obs;place;regex;resize;scale;snap;staticswitcher;text;thumbnail;vpswitch;wall;wallpaper;animation;animationaddon;animationjc;animationplus;commands;dbus;notification;shelf;workarounds;
 s0_outputs = 1920x1080+0+0;
 s0_close_window_key = <Super>w
 s0_unmaximize_window_key = Disabled
@@ -102,8 +105,15 @@ s0_close_matches = (type=Normal | Dialog | ModalDialog | Unknown) & !(name=gnome
 s0_minimize_effects = animation:Glide 2;
 s0_unminimize_effects = animation:Glide 2;
 
+[wallpaper]
+s0_bg_image = ;
+s0_bg_image_pos = 0;
+s0_bg_fill_type = 0;
+s0_bg_color1 = #0c170eff;
+s0_bg_color2 = #0c170eff;
+
 [put]
-s0_put_restore_key = <Super>Insert
+s0_put_pointer_key = Disabled
 
 [decor]
 s0_command = emerald --replace
