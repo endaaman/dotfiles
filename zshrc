@@ -454,6 +454,10 @@ if which pipenv &> /dev/null; then
   eval "$(pipenv --completion)"
 fi
 
+if which java &> /dev/null; then
+  export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:/bin/java::")
+fi
+
 mkdir-today &
 mkdir -p $HOME/.cache/shell/
 

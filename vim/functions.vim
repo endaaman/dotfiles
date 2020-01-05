@@ -266,3 +266,11 @@ function! NeomakeSignCounts() abort
   endfor
   return l:counts
 endfunction
+
+function! s:format_xml() abort
+  %s/></>\r</g
+  filetype indent on
+  setf xml
+  normal gg=G
+endfunction
+command! FormatXml :call s:format_xml()

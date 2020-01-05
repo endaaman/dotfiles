@@ -1,4 +1,5 @@
 set main-view = id date author commit-title:graph=yes,refs=yes
 set vertical-split = yes
+set diff-highlight = true
 
 bind status M !git commit --amend

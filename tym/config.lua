@@ -32,8 +32,6 @@ function safe_dofile(path)
 end
 
 tym.set_config({
-  width = 120,
-  height = 32,
   shell = home .. '/dotfiles/bin/tmux-attach-or-new',
   cursor_blink_mode = 'off',
   autohide = true,

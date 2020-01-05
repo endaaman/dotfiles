@@ -13,6 +13,7 @@ s0_run_command2_key = <Alt><Super>p
 s0_run_command3_key = <Super>z
 
 [composite]
+s0_refresh_rate = 50
 s0_unredirect_match = (any) & !(class=Totem) & !(class=MPlayer) & !(class=vlc) & !(class=Plugin-container) & !(class=QtQmlViewer) & !(class=Firefox) & !(class=google-chrome) & !(class=google-chrome-unstable) & !(class=chromium-browser) & !(name=osu!.exe)
 
 [addhelper]
@@ -80,7 +81,7 @@ s0_key_bindings_toggle = true
 s0_button_bindings_toggle = true
 
 [core]
-s0_active_plugins = core;composite;crashhandler;opengl;compiztoolbox;decor;imgjpeg;imgpng;imgsvg;matecompat;mousepoll;move;obs;place;regex;resize;scale;snap;staticswitcher;text;thumbnail;vpswitch;wall;wallpaper;animation;animationaddon;animationjc;animationplus;commands;dbus;notification;shelf;workarounds;
+s0_active_plugins = core;composite;crashhandler;opengl;compiztoolbox;decor;grid;imgjpeg;imgpng;imgsvg;matecompat;mousepoll;move;obs;place;regex;resize;scale;snap;staticswitcher;text;thumbnail;vpswitch;wall;wallpaper;animation;animationaddon;animationjc;animationplus;commands;dbus;notification;shelf;workarounds;
 s0_outputs = 1920x1080+0+0;
 s0_close_window_key = <Super>w
 s0_unmaximize_window_key = Disabled
@@ -91,6 +92,8 @@ s0_hsize = 3
 s0_vsize = 2
 
 [grid]
+s0_put_top_key = <Control><Super>Up
+s0_put_bottom_key = <Control><Super>Down
 s0_put_restore_key = <Control><Super>space
 s0_top_left_corner_action = 7
 s0_top_right_corner_action = 9
