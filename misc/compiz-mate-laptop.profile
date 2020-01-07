@@ -1,5 +1,5 @@
 [core]
-s0_active_plugins = core;composite;crashhandler;opengl;compiztoolbox;decor;grid;imgjpeg;imgpng;imgsvg;matecompat;mousepoll;move;obs;place;regex;resize;scale;snap;staticswitcher;text;thumbnail;vpswitch;wall;wallpaper;animation;animationaddon;animationjc;animationplus;commands;dbus;notification;shelf;workarounds;
+s0_active_plugins = core;composite;crashhandler;opengl;compiztoolbox;decor;grid;imgjpeg;imgpng;imgsvg;matecompat;mousepoll;move;obs;place;regex;resize;snap;staticswitcher;text;thumbnail;vpswitch;wall;wallpaper;animation;animationaddon;animationjc;animationplus;commands;dbus;notification;shelf;workarounds;
 s0_outputs = 1920x1080+0+0;
 s0_close_window_key = <Super>w
 s0_unmaximize_window_key = Disabled
