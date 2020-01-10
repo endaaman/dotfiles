@@ -93,89 +93,11 @@ hook_add = '''
   nnoremap <buffer> <Space>K <plug>DeopleteRustShowDocumentation
 '''
 
-# [[plugins]]
-# repo = 'Shougo/denite.nvim'
-# hook_add = '''
-#   autocmd FileType denite let b:deoplete_disable_auto_complete = 1
-#   autocmd FileType denite-filter let b:deoplete_disable_auto_complete = 1
-#   nnoremap <Space>f :<C-u>Denite `finddir('.git', ';') != '' ? 'my/git/all' : 'file/rec'`<CR>
-#
-#   autocmd FileType denite call s:denite_my_settings()
-#   function! s:denite_my_settings() abort
-#     nnoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
-#     nnoremap <silent><buffer><expr> d denite#do_map('do_action', 'delete')
-#     nnoremap <silent><buffer><expr> p denite#do_map('do_action', 'preview')
-#     nnoremap <silent><buffer><expr> <Esc> denite#do_map('quit')
-#     nnoremap <silent><buffer><expr> i denite#do_map('open_filter_buffer')
-#     nnoremap <silent><buffer><expr> <Tab> 'j'
-#     nnoremap <silent><buffer><expr> <S-Tab> 'k'
-#   endfunction
-#
-#   autocmd FileType denite-filter call s:denite_filter_my_settings()
-#   function! s:denite_filter_my_settings() abort
-#     " imap <silent><buffer> <C-o> <Plug>(denite_filter_quit)
-#     inoremap <silent><buffer><expr> <Esc> denite#do_map('quit')
-#     inoremap <silent><buffer> <Tab> <C-o>j
-#     inoremap <silent><buffer> <S-Tab> 'k'
-#
-# 	  inoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
-# 	  inoremap <silent><buffer> <Tab> <Esc><C-w>p:call cursor(line('.')+1,1)<CR><C-w>pA
-# 	  inoremap <silent><buffer> <S-Tab> <Esc><C-w>p:call cursor(line('.')-1,1)<CR><C-w>pA
-#   endfunction
-#
-#   call denite#custom#option('_', { 'highlight_matched_char': 'Title' })
-#   if get(g:, 'rich')
-#     call denite#custom#option('_', 'prompt', '')
-#   endif
-#   call denite#custom#option('_', 'start_filter', 1)
-#
-#   call denite#custom#alias('source', 'my/git/all', 'file/rec')
-#   call denite#custom#var('my/git/all', 'command',
-#     \ ['git', 'ls-files', '--cached', '--others', '--exclude-standard'])
-# '''
-
 [[plugins]]
 repo = 'Shougo/denite.nvim'
-rev = '738670414117c1065791c3c3b6a299a3a7cab5ba'
 hook_add = '''
-  call denite#custom#map('_', '<Esc>', '<denite:leave_mode>', 'noremap')
-  call denite#custom#map('_', '<Tab>', '<denite:move_to_next_line>', 'noremap')
-  call denite#custom#map('_', '<S-Tab>', '<denite:move_to_previous_line>', 'noremap')
-  call denite#custom#map('_', '<C-d>', '<denite:quit>', 'noremap')
-  call denite#custom#map('insert', '<C-j>', '<denite:choose_action>', 'noremap')
-  call denite#custom#map('insert', '<C-k>', '<denite:do_action:echo>', 'noremap')
-  call denite#custom#map('insert', '<C-t>', '<denite:do_action:tabopen>', 'noremap')
-  call denite#custom#map('insert', '<C-p>', '<denite:do_action:split>', 'noremap')
-  call denite#custom#map('insert', '<C-s>', '<denite:do_action:vsplit>', 'noremap')
-  call denite#custom#map('insert', '<C-y>', '<denite:do_action:yank>', 'noremap')
-  call denite#custom#map('insert', '<C-o>', '<denite:do_action:xdg-open>', 'noremap')
-  call denite#custom#map('insert', '<C-a>', '<Home>')
-  call denite#custom#map('insert', '<C-e>', '<End>')
-  call denite#custom#map('insert', '<C-f>', '<Right>')
-  call denite#custom#map('insert', '<C-b>', '<Left>')
-  call denite#custom#map('insert', '<PageDown>', '<denite:scroll_page_forwards>')
-  call denite#custom#map('insert', '<PageUp>', '<denite:scroll_page_backwards>')
-
-  call denite#custom#action('file', 'xdg-open', 'DeniteFileActionXdgOpen')
-  call denite#custom#action('word', 'prepend', 'DeniteWordActionPrepend')
-  call denite#custom#action('word', 'yank', 'DeniteWordActionYank')
-  call denite#custom#action('command', 'tabopen', 'DeniteCommandActionTabopen')
-  call denite#custom#action('_', 'nop', 'DeniteCommonActionNop', {'is_quit': 0})
-
-  call denite#custom#filter('matcher_ignore_globs', 'ignore_globs', [
-    \ '*~', '*.o', '*.exe', '*.bak',
-    \ '.DS_Store', '*.pyc', '*.sw[po]', '*.class',
-    \ '.hg/', '.git/', '.bzr/', '.svn/',
-    \ 'tags', 'tags-*',
-    \ 'node_modules/', '*.ttf', 'vendor/'
-    \ ])
-
-  call denite#custom#source('_', 'matchers', ['matcher_substring'])
-  call denite#custom#option('_', { 'highlight_matched_char': 'Title' })
-  if get(g:, 'rich')
-    call denite#custom#option('_', 'prompt', '')
-  endif
-	call denite#custom#source('grep', 'converters', ['converter/abbr_word'])
+  autocmd FileType denite let b:deoplete_disable_auto_complete = 1
+  autocmd FileType denite-filter let b:deoplete_disable_auto_complete = 1
 
   nnoremap <Space>o :<C-u>Denite outline<CR>
   nnoremap <Space>O :<C-u>Denite file/old<CR>
@@ -186,7 +108,7 @@ hook_add = '''
   nnoremap <Space>g :<C-u>Denite grep -no-empty<CR>
   nnoremap <Space>G :<C-u>Denite grep -input=`@0`<CR>
   nnoremap <Space>? :<C-u>Denite grep -input=`@/`<CR>
-  nnoremap <Space>W :<C-u>Denite grep -no-empty -input=`expand("<cword>")`<CR>
+  nnoremap <Space>W :<C-u>DeniteCursorWord grep -no-empty<CR>
   nnoremap <Space>c :<C-u>Denite command<CR>
   nnoremap <Space>C :<C-u>Denite command_history<CR>
   nnoremap <Space>h :<C-u>Denite help -default-action=tabopen<CR>
@@ -195,7 +117,7 @@ hook_add = '''
   nnoremap <Space>r :<C-u>Denite my/register -default-action=yank<CR>
   nnoremap <Space>d :<C-u>Denite my/git/status<CR>
   nnoremap <Space>f :<C-u>Denite `finddir('.git', ';') != '' ? 'my/git/all' : 'file/rec'`<CR>
-  nnoremap <Space>F :<C-u>Denite `finddir('.git', ';') != '' ? 'my/git/all' : 'file/rec'` -input=`expand("<cword>")`<CR>
+  nnoremap <Space>F :<C-u>DeniteCursorWord `finddir('.git', ';') != '' ? 'my/git/all' : 'file/rec'`<CR>
   nnoremap <Space>y :<C-u>Denite menu:yank<CR>
   nnoremap <Space>, :<C-u>Denite file/rec -path=,<CR>
   nnoremap <Space>a :<C-u>DeniteBufferDir file/rec<CR>
@@ -226,20 +148,46 @@ hook_add = '''
     \ ]
   call denite#custom#var('menu', 'menus', s:menus)
 
-  call denite#custom#source('my/git/all', 'converters', ['devicons_denite_converter'])
-  " call denite#custom#alias('source', 'my/git/all', 'file/rec')
-  " call denite#custom#var('my/git/all', 'command',
-  "   \ ['git', 'ls-files', '--cached', '--others', '--exclude-standard'])
+  autocmd FileType denite call s:denite_my_settings()
+  function! s:denite_my_settings() abort
+    nnoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
+    nnoremap <silent><buffer><expr> d denite#do_map('do_action', 'delete')
+    nnoremap <silent><buffer><expr> p denite#do_map('do_action', 'preview')
+    nnoremap <silent><buffer><expr> <Esc> denite#do_map('quit')
+    nnoremap <silent><buffer><expr> i denite#do_map('open_filter_buffer')
+    nnoremap <silent><buffer><expr> <Tab> 'j'
+    nnoremap <silent><buffer><expr> <S-Tab> 'k'
+  endfunction
 
-  if executable('ag')
-    call denite#custom#var('file/rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-    call denite#custom#var('grep', 'command', ['ag'])
-    call denite#custom#var('grep', 'default_opts', ['--vimgrep'])
-    call denite#custom#var('grep', 'recursive_opts', [])
-    call denite#custom#var('grep', 'pattern_opt', [])
-    call denite#custom#var('grep', 'separator', ['--'])
-    call denite#custom#var('grep', 'final_opts', [])
+  autocmd FileType denite-filter call s:denite_filter_my_settings()
+  function! s:denite_filter_my_settings() abort
+    inoremap <silent><buffer><expr> <Esc> denite#do_map('quit')
+
+	  inoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
+	  inoremap <silent><buffer> <Tab> <Esc><C-w>p:call cursor(line('.')+1,1)<CR><C-w>pA
+	  inoremap <silent><buffer> <S-Tab> <Esc><C-w>p:call cursor(line('.')-1,1)<CR><C-w>pA
+
+	  inoremap <silent><buffer> <C-a> <Home>
+	  inoremap <silent><buffer> <C-e> <End>
+    inoremap <silent><buffer> <C-d> <Delete>
+	  inoremap <silent><buffer><expr> <C-t> denite#do_map('do_action', 'tabopen')
+	  inoremap <silent><buffer><expr> <C-j> denite#do_map('choose_action')
+  endfunction
+
+  call denite#custom#action('command', 'tabopen', 'DeniteActionTabopen')
+  call denite#custom#action('command', 'quit_if_empty_or_delete', 'DeniteActionQuitIfEmptyOrDelete')
+
+  call denite#custom#source('_', 'matchers', ['matcher/regexp', 'matcher/substring'])
+
+  call denite#custom#option('_', { 'highlight_matched_char': 'Title' })
+  if get(g:, 'rich')
+    call denite#custom#option('_', 'prompt', '')
   endif
+  call denite#custom#option('_', 'start_filter', 1)
+
+  call denite#custom#alias('source', 'my/git/all', 'file/rec')
+  call denite#custom#var('my/git/all', 'command',
+    \ ['git', 'ls-files', '--cached', '--others', '--exclude-standard'])
 '''
 
 [[plugins]]

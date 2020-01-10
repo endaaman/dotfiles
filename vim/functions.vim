@@ -199,9 +199,19 @@ function! DeniteWordActionYank(context) abort
   endif
 endfunction
 
-function! DeniteCommandActionTabopen(context) abort
+function! DeniteActionTabopen(context) abort
   execute a:context.targets[0].action__command
   execute "normal! \<C-w>\T"
+endfunction
+
+function! DeniteActionQuitIfEmptyOrDelete() abort
+  call denite#call_map('quit')
+  " echom getline(1, '$')[0]
+  return
+  let l:lines = getline(1, '$')
+  let l:is_empty = len(l:lines) > 0 && !empty(l:lines[0])
+  if l:is_emptf
+  endif
 endfunction
 
 function! DeniteCommonActionNop(context) abort
