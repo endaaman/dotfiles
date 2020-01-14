@@ -198,6 +198,9 @@ hook_add = '''
 
 [[plugins]]
 repo = 'tiagofumo/vim-nerdtree-syntax-highlight'
+hook_add = '''
+  let g:NERDTreeLimitedSyntax = 1
+'''
 
 [[plugins]]
 repo = 'aufgang001/vim-nerdtree_plugin_open'
