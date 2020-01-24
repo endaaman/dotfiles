@@ -272,6 +272,12 @@ function paste-clipboard {
 }
 zle -N paste-clipboard
 
+function goto-realpath {
+  cd $(realpath .)
+  zle accept-line
+}
+zle -N goto-realpath
+
 function open-in-file-explorer() {
   local target='.'
   if [[ -n $BUFFER ]]; then
@@ -413,6 +419,7 @@ bindkey $prefix'^a' select-pacman-files
 bindkey $prefix'^p' select-pacman-libs
 bindkey $prefix'^y' paste-clipboard
 bindkey $prefix'^d' nop
+bindkey $prefix'^r' goto-realpath
 
 
 ###* XXXenv
