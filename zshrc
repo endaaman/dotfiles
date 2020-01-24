@@ -171,8 +171,8 @@ export WINEARCH=win32
 export FZF_DEFAULT_OPTS='--height 50% --reverse --border --bind "tab:down,btab:up" --exact --cycle --no-sort'
 
 export PATH=~/bin:~/.local/bin:~/dotfiles/bin:$PATH
-export T=$(date "+%Y%m%d")
-export TD=~/tmp/$T
+export C=$(date "+%Y%m")
+export CD=~/tmp/$C
 export OCAMLPARAM="_,bin-annot=1"
 export OPAMKEEPBUILDDIR=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
@@ -192,7 +192,7 @@ if which exa &> /dev/null; then
 else
   alias ll='ls -ahlF --color=auto --group-directories-first'
 fi
-alias l=ll
+alias lf='ll | fzf'
 alias mv='mv -v'
 alias cp='cp -v'
 alias rename='rename -v'
@@ -233,20 +233,20 @@ function remove-empty-dirs() {
   echo $empty_dirs | xargs -L 1 rmdir
 }
 
-function mkdir-today() {
+function mkdir-current() {
   remove-empty-dirs ~/tmp
-  mkdir -p $TD
-  ln -fsn $TD ~/tmp/today
+  mkdir -p $CD
+  ln -fsn $CD ~/tmp/current
 }
 
 ###* Widget
 
-function goto-today() {
-  mkdir-today
-  cd $TD
+function goto-current() {
+  mkdir-current
+  cd $CD
   zle accept-line
 }
-zle -N goto-today
+zle -N goto-current
 
 function toggle-fgbg {
   if [[ -z $(jobs) ]]; then
@@ -392,7 +392,7 @@ bindkey '^j' select-history
 bindkey "^x" open-in-file-explorer
 bindkey '^s' copy-buffer
 bindkey '^g' select-repos
-bindkey '^t' goto-today
+bindkey '^t' goto-current
 bindkey '^z' toggle-fgbg
 bindkey '^[[Z' reverse-menu-complete
 bindkey '^[[1~' beginning-of-line
@@ -458,7 +458,8 @@ if which java &> /dev/null; then
   export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:/bin/java::")
 fi
 
-mkdir-today &
+({mkdir-current}&) >/dev/null
+
 mkdir -p $HOME/.cache/shell/
 
 zstyle ':chpwd:*' recent-dirs-default true
