@@ -226,7 +226,7 @@ alias https='http --default-scheme=https'
 ###* Function
 
 function remove-empty-dirs() {
-  local empty_dirs=$(find $1 -maxdepth 1 -mindepth 1 -empty -type d)
+  local empty_dirs=$(find $1 -mindepth 1 -empty -type d -not -path '*/\.git/*')
   if [ -z "$empty_dirs" ]; then
     return
   fi
