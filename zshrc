@@ -188,9 +188,12 @@ alias G='grep'
 alias F='fzf'
 alias C='xsel --clipboard --input'
 if which exa &> /dev/null; then
-  alias ll='exa -agbl --group-directories-first --time-style long-iso'
+  alias l='exa -agbl --group-directories-first --time-style long-iso'
+  alias ll='exa -agbl --group-directories-first --time-style long-iso -T -L 2'
+  alias lll='exa -agbl --group-directories-first --time-style long-iso -T -L 3'
 else
   alias ll='ls -ahlF --color=auto --group-directories-first'
+  alias l=ll
 fi
 alias lf='ll | fzf'
 alias mv='mv -v'
