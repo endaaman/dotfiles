@@ -212,11 +212,11 @@ alias pm='python manage.py'
 alias be='bundle exec'
 alias psp='ps aux | fzf'
 alias path="echo \$PATH | sed 's/:/\\n/g'"
-alias tap_production='export NODE_ENV=production; export RAILS_ENV=production'
-alias untap_production='unset NODE_ENV; unset RAILS_ENV'
-alias mozc-config='env LANG=ja_JP.UTF-8 /usr/lib/mozc/mozc_tool --mode=config_dialog'
+alias tap-production='export NODE_ENV=production; export RAILS_ENV=production'
+alias untap-production='unset NODE_ENV; unset RAILS_ENV'
 alias mozc-config='env LANG=ja_JP.UTF-8 /usr/lib/mozc/mozc_tool --mode=config_dialog'
 alias inspect-pid='xprop _NET_WM_PID | cut -d " " -f 3 | xargs ps -fw'
+alias use-ms-font='export FONTCONFIG_FILE=$HOME/dotfiles/misc/fonts-ms.conf'
 
 if which trash-put &> /dev/null; then
   alias rm='trash-put'
