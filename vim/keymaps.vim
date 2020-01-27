@@ -48,6 +48,8 @@ nnoremap o o<Esc>
 nnoremap O O<Esc>
 nnoremap p p`]
 nnoremap M :<C-u>call AutoMarkrement()<CR>
+nnoremap <S-Down> <C-x>
+nnoremap <S-Up> <C-a>
 nnoremap - <C-x>
 nnoremap + <C-a>
 nnoremap <Tab> <C-w>w
