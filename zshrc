@@ -367,6 +367,13 @@ function select-dein-plugin-dirs() {
 }
 zle -N select-dein-plugin-dirs
 
+function select-go-projects() {
+  select-items \
+    'find $GOPATH/src -maxdepth 2 -mindepth 2' \
+    'cat'
+}
+zle -N select-go-projects
+
 function select-git-files() {
   select-items \
     'git ls-files | sort' \
@@ -413,7 +420,7 @@ org_widget=$(bindkey $prefix | awk '{ print $2 }')
 bindkey -r $prefix
 bindkey $prefix$prefix $org_widget
 bindkey $prefix'^b' select-branches
-bindkey $prefix'^g' select-dein-plugin-dirs
+bindkey $prefix'^g' select-go-projects
 bindkey $prefix'^j' select-excutables
 bindkey $prefix'^l' select-git-files
 bindkey $prefix'^o' select-cwd-files-2
@@ -450,10 +457,11 @@ if [ -d ~/.config/composer/vendor/bin ]; then
   export PATH=$PATH:$HOME/.config/composer/vendor/bin
 fi
 
-if [ -d ~/.go ]; then
-  export GOPATH=~/.go
+if [ -d ~/go ]; then
+  export GOPATH=~/go
   export PATH=$PATH:$GOPATH/bin
   export GO15VENDOREXPERIMENT=1
+  export GO11MODULE=on
 fi
 
 if which pip &> /dev/null; then
