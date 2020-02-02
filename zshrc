@@ -362,14 +362,14 @@ zle -N select-branches
 
 function select-dein-plugin-dirs() {
   select-items \
-    'find ~/.cache/dein/repos/github.com -maxdepth 2 -mindepth 2' \
+    'find ~/.cache/dein/repos/github.com -maxdepth 2 -mindepth 2 -type d' \
     'cat'
 }
 zle -N select-dein-plugin-dirs
 
 function select-go-projects() {
   select-items \
-    'find $GOPATH/src -maxdepth 2 -mindepth 2' \
+    'find $GOPATH/src -maxdepth 3 -mindepth 2 -type d -not -name '.git'' \
     'cat'
 }
 zle -N select-go-projects
@@ -461,7 +461,7 @@ if [ -d ~/go ]; then
   export GOPATH=~/go
   export PATH=$PATH:$GOPATH/bin
   export GO15VENDOREXPERIMENT=1
-  export GO11MODULE=on
+  export GO11MODULE=off
 fi
 
 if which pip &> /dev/null; then
