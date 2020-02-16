@@ -1,5 +1,11 @@
 # Define reload alias at least
 alias reload-zsh='exec zsh -l'
+if [ -f ~/.zshrc.local ]; then
+  source ~/.zshrc.local
+fi
+if [ -f ~/.zshrc.pre ]; then
+  source ~/.zshrc.pre
+fi
 alias r=reload-zsh
 function _reload-zsh() {
   BUFFER='reload-zsh'
@@ -121,7 +127,7 @@ function my_prompt() {
   symbol="%(?.%F{011}.%F{001})$symbol_glyph%f"
 
   local python_mod=''
-  if [ -n "$CONDA_DEFAULT_ENV" ]; then
+  if [ -n "$CONDA_DEFAULT_ENV" ] && [ "$CONDA_DEFAULT_ENV" != "base" ]; then
     python_mod="<%F{red}$CONDA_DEFAULT_ENV%f> "
   fi
 
@@ -181,50 +187,59 @@ if which xdotool &> /dev/null; then
 fi
 
 
-###* Alias
+###* XXXenv
 
-alias sudo='sudo -E '
-alias G='grep'
-alias F='fzf'
-alias C='xsel --clipboard --input'
-if which exa &> /dev/null; then
-  alias l='exa -agbl --group-directories-first --time-style long-iso'
-  alias ll='exa -agbl --group-directories-first --time-style long-iso -T -L 2'
-  alias lll='exa -agbl --group-directories-first --time-style long-iso -T -L 3'
-else
-  alias ll='ls -ahlF --color=auto --group-directories-first'
-  alias l=ll
+if which direnv &> /dev/null; then
+  eval "$(direnv hook zsh)"
 fi
-alias lf='ll | fzf'
-alias mv='mv -v'
-alias cp='cp -v'
-alias rename='rename -v'
-alias g='git'
-alias v='vim'
-alias vi='vim -u NONE'
-alias n='nvim'
-alias xo='xdg-open $@ &> /dev/null'
-alias s='systemctl'
-alias en='LANG=en_US.utf8'
-alias ja='LANG=ja_JP.utf-8'
-alias nr='npm run'
-alias pm='python manage.py'
-alias be='bundle exec'
-alias psp='ps aux | fzf'
-alias path="echo \$PATH | sed 's/:/\\n/g'"
-alias tap-production='export NODE_ENV=production; export RAILS_ENV=production'
-alias untap-production='unset NODE_ENV; unset RAILS_ENV'
-alias mozc-config='env LANG=ja_JP.UTF-8 /usr/lib/mozc/mozc_tool --mode=config_dialog'
-alias inspect-pid='xprop _NET_WM_PID | cut -d " " -f 3 | xargs ps -fw'
-alias use-ms-font='export FONTCONFIG_FILE=$HOME/dotfiles/misc/fonts-ms.conf'
 
-if which trash-put &> /dev/null; then
-  alias rm='trash-put'
+if [ -z "$IS_ROOT" ] && which luarocks &> /dev/null; then
+  eval $(luarocks path --bin)
 fi
-if which colordiff &> /dev/null; then
-  alias diff='colordiff'
+
+if [ -d ~/.cargo ]; then
+  export PATH=~/.cargo/bin:$PATH
+  export RUST_BACKTRACE=1
+  export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 fi
-alias https='http --default-scheme=https'
+
+if [ -d ~/.nodebrew ]; then
+  export PATH=~/.nodebrew/current/bin:$PATH
+  nodebrew use 12 1>/dev/null
+  fpath+=~/.nodebrew/completions/zsh
+fi
+
+if [ -d ~/.config/composer/vendor/bin ]; then
+  export PATH=$PATH:$HOME/.config/composer/vendor/bin
+fi
+
+if [ -d ~/go ]; then
+  export GOPATH=~/go
+  export PATH=$PATH:$GOPATH/bin
+  export GO15VENDOREXPERIMENT=1
+  export GO11MODULE=off
+fi
+
+if which pip &> /dev/null; then
+  eval "$(pip completion --zsh)"
+fi
+
+if which pipenv &> /dev/null; then
+  eval "$(pipenv --completion)"
+fi
+
+if [ -n "${CONDA_BASE}" ]; then
+  if [ -f "${CONDA_BASE}/etc/profile.d/conda.sh" ]; then
+    . "${CONDA_BASE}/etc/profile.d/conda.sh"
+  fi
+  # export PATH="${CONDA_BASE}:${CONDA_BASE}/bin"
+  # conda activate base
+fi
+
+if which java &> /dev/null; then
+  export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:/bin/java::")
+fi
+
 
 ###* Function
 
@@ -421,6 +436,7 @@ bindkey -r $prefix
 bindkey $prefix$prefix $org_widget
 bindkey $prefix'^b' select-branches
 bindkey $prefix'^g' select-go-projects
+bindkey $prefix'^s' select-dein-plugin-dirs
 bindkey $prefix'^j' select-excutables
 bindkey $prefix'^l' select-git-files
 bindkey $prefix'^o' select-cwd-files-2
@@ -432,49 +448,53 @@ bindkey $prefix'^d' nop
 bindkey $prefix'^r' goto-realpath
 
 
-###* XXXenv
-if which direnv &> /dev/null; then
-  eval "$(direnv hook zsh)"
-fi
+###* Alias
 
-if [ -z "$IS_ROOT" ] && which luarocks &> /dev/null; then
-  eval $(luarocks path --bin)
+alias sudo='sudo -E '
+alias G='grep'
+alias F='fzf'
+alias C='xsel --clipboard --input'
+if which exa &> /dev/null; then
+  alias l='exa -agbl --group-directories-first --time-style long-iso'
+  alias ll='exa -agbl --group-directories-first --time-style long-iso -T -L 2'
+  alias lll='exa -agbl --group-directories-first --time-style long-iso -T -L 3'
+else
+  alias ll='ls -ahlF --color=auto --group-directories-first'
+  alias l=ll
 fi
+alias lf='ll | fzf'
+alias mv='mv -v'
+alias cp='cp -v'
+alias rename='rename -v'
+alias g='git'
+alias v='vim'
+alias vi='vim -u NONE'
+alias n='nvim'
+alias xo='xdg-open $@ &> /dev/null'
+alias s='systemctl'
+alias en='LANG=en_US.utf8'
+alias ja='LANG=ja_JP.utf-8'
+alias nr='npm run'
+alias pm='python manage.py'
+alias be='bundle exec'
+alias psp='ps aux | fzf'
+alias path="echo \$PATH | sed 's/:/\\n/g'"
+alias tap-production='export NODE_ENV=production; export RAILS_ENV=production'
+alias untap-production='unset NODE_ENV; unset RAILS_ENV'
+alias mozc-config='env LANG=ja_JP.UTF-8 /usr/lib/mozc/mozc_tool --mode=config_dialog'
+alias inspect-pid='xprop _NET_WM_PID | cut -d " " -f 3 | xargs ps -fw'
+alias use-ms-font='export FONTCONFIG_FILE=$HOME/dotfiles/misc/fonts-ms.conf'
 
-if [ -d ~/.cargo ]; then
-  export PATH=~/.cargo/bin:$PATH
-  export RUST_BACKTRACE=1
-  export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+if which trash-put &> /dev/null; then
+  alias rm='trash-put'
 fi
+if which colordiff &> /dev/null; then
+  alias diff='colordiff'
+fi
+alias https='http --default-scheme=https'
 
-if [ -d ~/.nodebrew ]; then
-  export PATH=~/.nodebrew/current/bin:$PATH
-  nodebrew use 12 1>/dev/null
-  fpath+=~/.nodebrew/completions/zsh
-fi
 
-if [ -d ~/.config/composer/vendor/bin ]; then
-  export PATH=$PATH:$HOME/.config/composer/vendor/bin
-fi
-
-if [ -d ~/go ]; then
-  export GOPATH=~/go
-  export PATH=$PATH:$GOPATH/bin
-  export GO15VENDOREXPERIMENT=1
-  export GO11MODULE=off
-fi
-
-if which pip &> /dev/null; then
-  eval "$(pip completion --zsh)"
-fi
-
-if which pipenv &> /dev/null; then
-  eval "$(pipenv --completion)"
-fi
-
-if which java &> /dev/null; then
-  export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:/bin/java::")
-fi
+###* operations
 
 ({mkdir-current}&) >/dev/null
 
@@ -505,14 +525,11 @@ DIRSTACKSIZE=100
 HISTSIZE=100000
 SAVEHIST=100000
 
-if [ -f ~/.zshrc.local ]; then
-  source ~/.zshrc.local
-fi
-if [ -f ~/.zshrc_local ]; then
-  source ~/.zshrc_local
-fi
-
 compdef _docker nvidia-docker
+
+if [ -f ~/.zshrc.post ]; then
+  source ~/.zshrc.post
+fi
 
 if [ -n "$PROFILING" ] && which zprof > /dev/null; then
   zprof | less
