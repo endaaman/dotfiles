@@ -40,7 +40,7 @@ if [ -d ~/.zplug -a -z "$IS_ROOT" ]; then
   zplug 'junegunn/fzf-bin', as:command, from:gh-r, rename-to:fzf
   zplug 'junegunn/fzf', as:command, use:bin/fzf-tmux
   zplug 'endaaman/lxd-completion-zsh'
-  zplug 'endaaman/conda-zsh-completion'
+  zplug 'esc/conda-zsh-completion'
   if ! zplug check --verbose; then
     printf 'Install? [y/N]: '
     if read -q; then
