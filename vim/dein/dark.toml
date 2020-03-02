@@ -1,6 +1,6 @@
 [[plugins]]
 repo = 'neoclide/coc.nvim'
-# rev = 'release'
+rev = 'release'
 hook_add = '''
   nnoremap <silent> <C-o> :call CocActionAsync('doHover')<CR>
   nmap <Space>kk <Plug>(coc-definition)
