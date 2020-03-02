@@ -1,8 +1,5 @@
 # Define reload alias at least
 alias reload-zsh='exec zsh -l'
-if [ -f ~/.zshrc.local ]; then
-  source ~/.zshrc.local
-fi
 if [ -f ~/.zshrc.pre ]; then
   source ~/.zshrc.pre
 fi
