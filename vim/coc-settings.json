@@ -3,6 +3,7 @@
   "diagnostic.warningSign": "",
   "diagnostic.infoSign": "",
   "diagnostic.hintSign": "",
+  "python.jediPath": "/usr/lib/python3.8/site-packages/",
   "languageserver": {
     "ccls": {
       "command": "ccls",
