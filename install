@@ -71,6 +71,7 @@ ln -fsn ~/dotfiles/vim ~/.vim
 ln -fsn ~/dotfiles/vim ~/.config/nvim
 ln -fs ~/dotfiles/editorconfig ~/.editorconfig
 ln -fs ~/dotfiles/tigrc ~/.tigrc
+ln -fs ~/dotfiles/pylintrc ~/.pylintrc
 ln -fs ~/dotfiles/condarc ~/.condarc
 ln -fs ~/dotfiles/yaourtrc ~/.yaourtrc
 ln -fs ~/dotfiles/ideavimrc ~/.ideavimrc
