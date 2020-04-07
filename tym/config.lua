@@ -7,14 +7,14 @@ function update_alpha(delta)
   new_alpha = math.max(math.min(1.0, old_alpha + delta), 0.0)
   new_bg = tym.rgba_to_color(r, g, b, new_alpha)
   tym.set('color_background', new_bg)
-  tym.notify(string.format('%s alpha to %f', (delta > 0 and 'Inc' or 'Dec'), new_alpha))
+  tym.notify(string.format('Alpha: %f → %f', old_alpha, new_alpha))
 end
 
 function update_scale(delta)
   old_value = tym.get('scale')
-  new_value = math.max(math.min(1000, old_value + delta), 10)
+  new_value = math.max(math.min(1000, old_value + delta), 30)
   tym.set('scale', new_value)
-  tym.notify(string.format('%s scale to %d', (delta > 0 and 'Inc' or 'Dec'), new_value))
+  tym.notify(string.format('scale: %d → %d', old_value, new_value))
 end
 
 function remap(a, b)

@@ -2,6 +2,8 @@
 repo = 'neoclide/coc.nvim'
 rev = 'release'
 hook_add = '''
+  autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
+
   nnoremap <silent> <C-o> :call CocActionAsync('doHover')<CR>
   nmap <Space>kk <Plug>(coc-definition)
 

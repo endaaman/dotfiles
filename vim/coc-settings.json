@@ -4,6 +4,7 @@
   "diagnostic.infoSign": "",
   "diagnostic.hintSign": "",
   "python.jediPath": "/usr/lib/python3.8/site-packages/",
+  "python.condaPath": "$CONDA_EXE",
   "languageserver": {
     "ccls": {
       "command": "ccls",
