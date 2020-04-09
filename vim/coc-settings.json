@@ -3,8 +3,7 @@
   "diagnostic.warningSign": "",
   "diagnostic.infoSign": "",
   "diagnostic.hintSign": "",
-  "python.jediPath": "/usr/lib/python3.8/site-packages/",
-  "python.condaPath": "$CONDA_EXE",
+  "python.pythonPath": "python3",
   "languageserver": {
     "ccls": {
       "command": "ccls",
