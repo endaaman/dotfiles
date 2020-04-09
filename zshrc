@@ -124,7 +124,7 @@ function my_prompt() {
   symbol="%(?.%F{011}.%F{001})$symbol_glyph%f"
 
   local python_mod=''
-  if [ -n "$CONDA_DEFAULT_ENV" ] && [ "$CONDA_DEFAULT_ENV" != "base" ]; then
+  if [ -n "$CONDA_DEFAULT_ENV" ]; then
     python_mod="<%F{red}$CONDA_DEFAULT_ENV%f> "
   fi
 
