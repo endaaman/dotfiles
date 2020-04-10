@@ -225,18 +225,19 @@ if which pipenv &> /dev/null; then
   eval "$(pipenv --completion)"
 fi
 
-if [ -n "${CONDA_BASE}" ]; then
-  if [ -f "${CONDA_BASE}/etc/profile.d/conda.sh" ]; then
-    . "${CONDA_BASE}/etc/profile.d/conda.sh"
-  fi
-  # export PATH="${CONDA_BASE}:${CONDA_BASE}/bin"
-  # conda activate base
-fi
-
 if which java &> /dev/null; then
   export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:/bin/java::")
 fi
 
+__conda_setup="$("$CONDA_BASE/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+  eval "$__conda_setup"
+else
+  if [ -f "$CONDA_BASE/etc/profile.d/conda.sh" ]; then
+    . "$CONDA_BASE/etc/profile.d/conda.sh"
+  fi
+fi
+unset __conda_setup
 
 ###* Function
 
