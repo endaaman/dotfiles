@@ -115,3 +115,7 @@ hook_source = '''
   " nnoremap <buffer><silent>K :<C-u>call <SID>search_under_cursor(expand('<cword>'))<CR>
   " vnoremap <buffer><silent>K "gy:call <SID>search_under_cursor(getreg('g'))<CR>
 '''
+
+[[plugins]]
+repo = 'mattn/vim-goimports'
+on_ft = 'go'

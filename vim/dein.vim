@@ -34,7 +34,7 @@ if dein#load_state(s:dein_repo_dir)
   if get(g:, 'rich')
     call s:load(s:toml_dir . '/rich.toml')
   endif
-  call s:load(s:toml_dir . '/syntax.toml')
+  call s:load(s:toml_dir . '/languages.toml')
   call s:load(s:toml_dir . '/appearance.toml')
   call s:load(s:toml_dir . '/nvim.toml')
   if !has('nvim')

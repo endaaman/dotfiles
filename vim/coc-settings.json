@@ -4,6 +4,7 @@
   "diagnostic.infoSign": "",
   "diagnostic.hintSign": "",
   "python.pythonPath": "python3",
+  "vetur.useWorkspaceDependencies": true,
   "languageserver": {
     "ccls": {
       "command": "ccls",
