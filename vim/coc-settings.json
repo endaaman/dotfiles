@@ -3,8 +3,10 @@
   "diagnostic.warningSign": "",
   "diagnostic.infoSign": "",
   "diagnostic.hintSign": "",
+  "diagnostic.locationlist": false,
   "python.pythonPath": "python3",
   "vetur.useWorkspaceDependencies": true,
+  "tsserver.enableJavascript": false,
   "languageserver": {
     "ccls": {
       "command": "ccls",
@@ -21,7 +23,10 @@
       "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
       "filetypes": ["go"],
       "initializationOptions": {
-        "usePlaceholders": true
+        "usePlaceholders": false,
+        "completeUnimported": true,
+        "static_check": true,
+        "hoverKind": "FullDocumentation"
       }
     },
   },
