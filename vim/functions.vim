@@ -267,8 +267,8 @@ command! NeomakeNextSign :call s:jump_sign('neomake_file_', 0)
 command! NeomakePrevSign :call s:jump_sign('neomake_file_', 1)
 " command! CocNextSign :call s:jump_sign('Coc', 0)
 " command! CocPrevSign :call s:jump_sign('Coc', 1)
-command! CocNextSign :call CocAction('diagnosticNext')<CR>
-command! CocPrevSign :call CocAction('diagnosticPrevious')<CR>
+command! CocNextSign :call CocAction('diagnosticNext')
+command! CocPrevSign :call CocAction('diagnosticPrevious')
 
 function! NeomakeSignCounts() abort
   let l:counts = { 'err': 0, 'warn': 0, 'info':0, 'msg': 0 }
