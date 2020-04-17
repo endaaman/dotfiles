@@ -43,7 +43,7 @@ def link(params = []):
         print('Already exists: %s' % dstPath)
         exit(1)
 
-    if os.geteuid() is 0:
+    if os.geteuid() == 0:
         os.symlink(srcPath, dstPath)
     else:
         print('Need to become root. enter password')
@@ -73,7 +73,7 @@ def unlink(params = []):
             print('Answered %s != yes' % (answer))
             exit(1)
 
-    if os.geteuid() is 0:
+    if os.geteuid() == 0:
         os.remove(targetPath)
     else:
         print('Need to become root. enter password')
@@ -115,7 +115,7 @@ def enable(params = []):
             print('Already exist hard file: %s' % (dstPath))
             exit(1)
 
-    if os.geteuid() is 0:
+    if os.geteuid() == 0:
         os.symlink(srcPath, dstPath)
     else:
         print('Need to become root. enter password')
@@ -147,7 +147,7 @@ def disable(params = []):
             print('Answered %s != yes' % (answer))
             exit(1)
 
-    if os.geteuid() is 0:
+    if os.geteuid() == 0:
         os.remove(targetPath)
     else:
         print('Need to become root. enter password')

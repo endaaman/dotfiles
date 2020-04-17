@@ -97,6 +97,7 @@ autoload -Uz chpwd_recent_dirs
 autoload -Uz colors; colors
 autoload -Uz compinit; compinit -u
 autoload -Uz promptinit; promptinit
+autoload -Uz zmv
 eval `dircolors -b`
 
 
@@ -482,6 +483,7 @@ alias untap-production='unset NODE_ENV; unset RAILS_ENV'
 alias mozc-config='env LANG=ja_JP.UTF-8 /usr/lib/mozc/mozc_tool --mode=config_dialog'
 alias inspect-pid='xprop _NET_WM_PID | cut -d " " -f 3 | xargs ps -fw'
 alias use-ms-font='export FONTCONFIG_FILE=$HOME/dotfiles/misc/fonts-ms.conf'
+alias gogetlegacy='GO111MODULE=off go get -u'
 
 if which trash-put &> /dev/null; then
   alias rm='trash-put'
