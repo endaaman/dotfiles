@@ -80,8 +80,12 @@ s0_toggle_key = <Shift><Super>o
 s0_key_bindings_toggle = true
 s0_button_bindings_toggle = true
 
+[vpswitch]
+s0_next_button = Disabled
+s0_prev_button = Disabled
+
 [core]
-s0_active_plugins = core;composite;crashhandler;opengl;compiztoolbox;decor;grid;imgjpeg;imgpng;imgsvg;matecompat;mousepoll;move;obs;place;regex;resize;snap;staticswitcher;text;thumbnail;vpswitch;wall;animation;animationaddon;animationjc;animationplus;commands;dbus;notification;shelf;workarounds;
+s0_active_plugins = core;composite;crashhandler;opengl;compiztoolbox;decor;grid;imgjpeg;imgpng;imgsvg;matecompat;mousepoll;move;obs;place;regex;resize;snap;staticswitcher;text;vpswitch;wall;animation;animationaddon;animationjc;animationplus;commands;dbus;notification;shelf;workarounds;
 s0_outputs = 2560x1440+1920+0;1920x1080+0+246;
 s0_close_window_key = <Super>w
 s0_unmaximize_window_key = Disabled
