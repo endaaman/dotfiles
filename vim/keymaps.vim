@@ -108,3 +108,4 @@ cnoremap <C-b> <Left>
 cnoremap <C-d> <Delete>
 
 nnoremap <silent> <C-e> :<C-u>CaseMasterRotateCase<CR>
+vnoremap <silent> <C-e> :<C-u>CaseMasterRotateCaseVisual<CR>
