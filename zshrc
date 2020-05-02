@@ -55,7 +55,6 @@ fpath+=~/.zsh/completions
 # setopt complete_aliases
 # setopt ignoreeof # disable C-d
 setopt always_last_prompt
-setopt append_history
 setopt auto_cd
 setopt auto_list
 setopt auto_menu
@@ -68,7 +67,6 @@ setopt glob
 setopt glob_complete
 setopt hist_expand
 setopt hist_ignore_all_dups
-setopt hist_ignore_dups
 setopt hist_ignore_space
 setopt hist_no_store
 setopt hist_reduce_blanks
@@ -156,7 +154,7 @@ fi
 ###* Environment
 
 export HISTFILE=$HOME/.zsh_history
-export HISTSIZE=1000
+export HISTSIZE=100000
 export SAVEHIST=100000
 
 export VTE_CJK_WIDTH=0
@@ -172,7 +170,7 @@ export SUDO_EDITOR="$EDITOR"
 export NO_AT_BRIDGE=1
 export WINEARCH=win32
 # export WINEPREFIX=~/.wine
-export FZF_DEFAULT_OPTS='--height 50% --reverse --border --bind "tab:down,btab:up" --exact --cycle --no-sort'
+export FZF_DEFAULT_OPTS='--height 50% --reverse --border --bind "tab:down,btab:up,ctrl-j:toggle+down,ctrl-k:toggle" --exact --cycle --no-sort --multi'
 
 export PATH=~/bin:~/.local/bin:~/dotfiles/bin:$PATH
 export C=$(date "+%Y%m")
@@ -243,7 +241,7 @@ unset __conda_setup
 ###* Function
 
 function remove-empty-dirs() {
-  local empty_dirs=$(find $1 -mindepth 1 -empty -type d -not -path '*/\.git/*')
+  local empty_dirs=$(find $1 -mindepth 1 -maxdepth 2 -empty -type d -not -path '*/\.git/*')
   if [ -z "$empty_dirs" ]; then
     return
   fi
@@ -303,6 +301,15 @@ function open-in-file-explorer() {
   xdg-open $target > /dev/null 2>&1
 }
 zle -N open-in-file-explorer
+
+function edit-line() {
+  touch /tmp/LINE.sh
+  echo $BUFFER > /tmp/LINE.sh
+  $EDITOR /tmp/LINE.sh
+  LBUFFER="$(cat /tmp/LINE.sh)"
+  RBUFFER=""
+}
+zle -N edit-line
 
 function select-items() {
   local last=$(echo $BUFFER | tr ' ' '\n' | tail -1)
@@ -433,6 +440,9 @@ prefix='^v'
 org_widget=$(bindkey $prefix | awk '{ print $2 }')
 bindkey -r $prefix
 bindkey $prefix$prefix $org_widget
+bindkey $prefix'^d' nop
+bindkey $prefix'^n' edit-line
+bindkey $prefix'^r' goto-realpath
 bindkey $prefix'^b' select-branches
 bindkey $prefix'^g' select-go-projects
 bindkey $prefix'^s' select-dein-plugin-dirs
@@ -443,8 +453,6 @@ bindkey $prefix'^k' select-directry-history
 bindkey $prefix'^a' select-pacman-files
 bindkey $prefix'^p' select-pacman-libs
 bindkey $prefix'^y' paste-clipboard
-bindkey $prefix'^d' nop
-bindkey $prefix'^r' goto-realpath
 
 
 ###* Alias
