@@ -8,9 +8,10 @@ hook_add = '''
   nmap <Space>kk <Plug>(coc-definition)
 
   call coc#config('python.jediEnabled', 1)
-  let cmd = 'python3 -c "import site; print(site.getsitepackages()[0])"'
-  let g:site_packages_path = split(Chomp(system(l:cmd)))[-1]
-  call coc#config('python.jediPath', g:site_packages_path)
+  " let cmd = 'python3 -c "import site; print(site.getsitepackages()[0])"'
+  " let g:site_packages_path = split(Chomp(system(l:cmd)))[-1]
+  " call coc#config('python.jediPath', g:site_packages_path)
+  call coc#config('python.pythonPath', Chomp(system('which python')))
 
   " command! JumpToDefinitionInNewTab :tabedit % | call CocAction('jumpDefinition')
   command! JumpToDefinitionInNewTab :call CocAction('jumpDefinition', 'tab drop')

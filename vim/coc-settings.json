@@ -4,7 +4,7 @@
   "diagnostic.infoSign": "",
   "diagnostic.hintSign": "",
   "diagnostic.locationlist": false,
-  "python.pythonPath": "python3",
+  "python.jediEnabled": true,
   "vetur.useWorkspaceDependencies": true,
   "tsserver.enableJavascript": false,
   "languageserver": {
