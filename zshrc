@@ -14,7 +14,8 @@ bindkey -e
 bindkey '^r' _reload-zsh
 
 if [ -n "$PROFILING" ]; then
-  zmodload sh/zprof && zprof
+  zmodload zsh/zprof
+  zprof
 fi
 
 if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
@@ -204,6 +205,11 @@ if [ -d ~/.nodebrew ]; then
   nodebrew use 12 1>/dev/null
   fpath+=~/.nodebrew/completions/zsh
 fi
+
+###* nvm is too slow
+# if [ -d ~/.nvm ]; then
+#   source ~/.nvm/nvm.sh
+# fi
 
 if [ -d ~/.config/composer/vendor/bin ]; then
   export PATH=$PATH:$HOME/.config/composer/vendor/bin
@@ -441,7 +447,7 @@ org_widget=$(bindkey $prefix | awk '{ print $2 }')
 bindkey -r $prefix
 bindkey $prefix$prefix $org_widget
 bindkey $prefix'^d' nop
-bindkey $prefix'^n' edit-line
+bindkey $prefix'^i' edit-line
 bindkey $prefix'^r' goto-realpath
 bindkey $prefix'^b' select-branches
 bindkey $prefix'^g' select-go-projects

@@ -61,8 +61,6 @@ mkdir -p ~/src
 touch ~/.gitconfig_local
 touch ~/.zshrc_local
 
-tic ~/dotfiles/misc/xterm-256color-italic.terminfo
-
 ln -fs ~/dotfiles/gitconfig ~/.gitconfig
 ln -fs ~/dotfiles/gitignore_global ~/.gitignore_global
 ln -fs ~/dotfiles/zshrc ~/.zshrc
