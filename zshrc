@@ -202,7 +202,7 @@ fi
 
 if [ -d ~/.nodebrew ]; then
   export PATH=~/.nodebrew/current/bin:$PATH
-  nodebrew use 12 1>/dev/null
+  nodebrew use 14 1>/dev/null
   fpath+=~/.nodebrew/completions/zsh
 fi
 
