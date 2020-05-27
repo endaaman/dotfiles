@@ -7,6 +7,7 @@ hook_add = '''
   nnoremap <silent> <C-o> :call CocActionAsync('doHover')<CR>
   nmap <Space>kk <Plug>(coc-definition)
 
+  let g:coc_node_path = Chomp(system('which node'))
   call coc#config('python.jediEnabled', 1)
   " let cmd = 'python3 -c "import site; print(site.getsitepackages()[0])"'
   " let g:site_packages_path = split(Chomp(system(l:cmd)))[-1]
