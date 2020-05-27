@@ -5,6 +5,7 @@
   "diagnostic.hintSign": "",
   "diagnostic.locationlist": false,
   "python.jediEnabled": true,
+  "python.venvFolders": ["envs",".pyenv",".direnv", ".cache/pypoetry/virtualenvs/"],
   "vetur.useWorkspaceDependencies": true,
   "tsserver.enableJavascript": false,
   "languageserver": {
