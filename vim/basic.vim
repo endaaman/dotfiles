@@ -50,6 +50,7 @@ set write
 
 let g:netrw_home = '~/.cache/vim'
 let g:vim_indent_cont = &shiftwidth
+let g:tex_conceal = ""
 
 if has('nvim')
   let g:python_host_prog = PickExecutable([
