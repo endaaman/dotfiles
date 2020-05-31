@@ -29,6 +29,6 @@
         "static_check": true,
         "hoverKind": "FullDocumentation"
       }
-    },
-  },
+    }
+  }
 }

@@ -75,6 +75,7 @@ ln -fs ~/dotfiles/pylintrc ~/.pylintrc
 ln -fs ~/dotfiles/condarc ~/.condarc
 ln -fs ~/dotfiles/yaourtrc ~/.yaourtrc
 ln -fs ~/dotfiles/ideavimrc ~/.ideavimrc
+ln -fs ~/dotfiles/latexmkc ~/.latexmkc
 ln -fs ~/dotfiles/systemd/* ~/.local/share/systemd/user/
 
 # GUI
