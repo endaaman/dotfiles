@@ -186,12 +186,15 @@ fi
 
 ###* XXXenv
 
-# if which direnv &> /dev/null; then
-#   eval "$(direnv hook zsh)"
-# fi
+if [ -z "$IS_ROOT" ]; then
+  # only non root
+  if [ which luarocks &> /dev/null; then
+    eval $(luarocks path --bin)
+  fi
 
-if [ -z "$IS_ROOT" ] && which luarocks &> /dev/null; then
-  eval $(luarocks path --bin)
+  if which pip &> /dev/null; then
+    eval "$(pip completion --zsh)"
+  fi
 fi
 
 if [ -d ~/.cargo ]; then
@@ -222,10 +225,6 @@ if [ -d ~/go ]; then
   export GO11MODULE=off
 fi
 
-if which pip &> /dev/null; then
-  eval "$(pip completion --zsh)"
-fi
-
 if which pipenv &> /dev/null; then
   eval "$(pipenv --completion)"
 fi
@@ -247,6 +246,9 @@ unset __conda_setup
 ###* Function
 
 function remove-empty-dirs() {
+  if [ ! -d $1 ]; then
+    return
+  fi
   local empty_dirs=$(find $1 -mindepth 1 -maxdepth 2 -empty -type d -not -path '*/\.git/*')
   if [ -z "$empty_dirs" ]; then
     return

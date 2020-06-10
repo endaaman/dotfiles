@@ -15,9 +15,13 @@ if $TERM =~# '256color' && !exists('g:rich')
   let g:rich = 1
 endif
 
-if $USER !=# 'root' && isdirectory(g:dein_dir) && !exists('g:dein')
+if isdirectory(g:dein_dir) && !exists('g:dein')
   let g:dein = 1
 endif
+
+" if $USER !=# 'root'
+"   let g:dein = 1
+" endif
 
 runtime! functions.vim
 runtime! basic.vim
