@@ -35,6 +35,7 @@ tym.set_config({
   shell = home .. '/dotfiles/bin/tmux-attach-or-new',
   cursor_blink_mode = 'off',
   autohide = true,
+  slient = true,
 })
 
 tym.set_keymaps({

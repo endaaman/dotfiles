@@ -246,14 +246,17 @@ unset __conda_setup
 ###* Function
 
 function remove-empty-dirs() {
-  if [ ! -d $1 ]; then
-    return
+  target=$1
+  if [ ! -d $target ]; then
+    target='.'
   fi
   local empty_dirs=$(find $1 -mindepth 1 -maxdepth 2 -empty -type d -not -path '*/\.git/*')
   if [ -z "$empty_dirs" ]; then
+    echo 'Nothing to remove'
     return
   fi
   echo $empty_dirs | xargs -L 1 rmdir
+  echo removed $empty_dirs
 }
 
 function mkdir-current() {
