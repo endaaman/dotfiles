@@ -36,6 +36,7 @@ tym.set_config({
   cursor_blink_mode = 'off',
   autohide = true,
   slient = true,
+  title = 'tym',
 })
 
 tym.set_keymaps({

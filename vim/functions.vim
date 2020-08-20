@@ -21,6 +21,21 @@ function! SaveAsRoot() abort
 endfunction
 command! SaveAsRoot :call SaveAsRoot()
 
+function! VST() abort
+  vs
+  wincmd l
+  terminal
+endfunction
+command! VST :call VST()
+
+function! VSP() abort
+  vs
+  wincmd l
+  terminal
+
+endfunction
+command! VST :call VST()
+
 function! SwapWithAboveLine() abort
   if line('.') == 1
     return ''

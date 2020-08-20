@@ -8,13 +8,19 @@ if = ' 0 '
 on_ft = ['python']
 
 [[plugins]]
-repo = 'szkny/SplitTerm'
-# on_ft = ['python']
+repo = 'bfredl/nvim-ipy'
 
 [[plugins]]
-repo = 'szkny/Ipython'
-# depends = ['SplitTerm']
-on_ft = ['python']
+repo = 'jupyter-vim/jupyter-vim'
+
+# [[plugins]]
+# repo = 'szkny/SplitTerm'
+# # on_ft = ['python']
+#
+# [[plugins]]
+# repo = 'szkny/Ipython'
+# # depends = ['SplitTerm']
+# on_ft = ['python']
 
 [[plugins]]
 repo = 'gabrielelana/vim-markdown'

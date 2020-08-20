@@ -109,3 +109,6 @@ cnoremap <C-d> <Delete>
 
 nnoremap <silent> <C-e> :<C-u>CaseMasterRotateCase<CR>
 vnoremap <silent> <C-e> :<C-u>CaseMasterRotateCaseVisual<CR>
+
+tnoremap <C-c> <C-\><C-n>
+" tnoremap <Tab> <C-\><C-n><C-w>w
