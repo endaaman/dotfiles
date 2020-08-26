@@ -57,6 +57,7 @@ mkdir -p ~/.config/tym
 mkdir -p ~/.go
 mkdir -p ~/.local/share/fonts
 mkdir -p ~/src
+mkdir -p ~/.ipython/profile_default/startup
 
 touch ~/.gitconfig_local
 touch ~/.zshrc_local
@@ -77,6 +78,7 @@ ln -fs ~/dotfiles/yaourtrc ~/.yaourtrc
 ln -fs ~/dotfiles/ideavimrc ~/.ideavimrc
 ln -fs ~/dotfiles/latexmkrc ~/.latexmkrc
 ln -fs ~/dotfiles/systemd/* ~/.local/share/systemd/user/
+ln -fs ~/dotfiles/ipython/startup/* ~/.ipython/profile_default/startup
 
 # GUI
 if $gui; then
