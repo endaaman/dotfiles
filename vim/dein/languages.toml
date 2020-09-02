@@ -10,8 +10,8 @@ on_ft = ['python']
 [[plugins]]
 repo = 'bfredl/nvim-ipy'
 
-[[plugins]]
-repo = 'jupyter-vim/jupyter-vim'
+# [[plugins]]
+# repo = 'jupyter-vim/jupyter-vim'
 
 # [[plugins]]
 # repo = 'szkny/SplitTerm'

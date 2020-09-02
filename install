@@ -79,6 +79,7 @@ ln -fs ~/dotfiles/ideavimrc ~/.ideavimrc
 ln -fs ~/dotfiles/latexmkrc ~/.latexmkrc
 ln -fs ~/dotfiles/systemd/* ~/.local/share/systemd/user/
 ln -fs ~/dotfiles/ipython/startup/* ~/.ipython/profile_default/startup
+ln -fs ~/dotfiles/misc/jupyter-vim-bind.js ~/.jupyter/custom/custom.js
 
 # GUI
 if $gui; then
