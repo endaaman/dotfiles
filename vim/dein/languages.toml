@@ -23,6 +23,9 @@ repo = 'bfredl/nvim-ipy'
 # on_ft = ['python']
 
 [[plugins]]
+repo = 'szymonmaszke/vimpyter'
+
+[[plugins]]
 repo = 'gabrielelana/vim-markdown'
 on_ft = ['markdown']
 if = '0'
