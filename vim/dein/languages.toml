@@ -22,8 +22,8 @@ repo = 'bfredl/nvim-ipy'
 # # depends = ['SplitTerm']
 # on_ft = ['python']
 
-[[plugins]]
-repo = 'szymonmaszke/vimpyter'
+# [[plugins]]
+# repo = 'szymonmaszke/vimpyter'
 
 [[plugins]]
 repo = 'gabrielelana/vim-markdown'

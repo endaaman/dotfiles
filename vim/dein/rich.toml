@@ -32,8 +32,8 @@ hook_add = '''
     \ 'Unknown'   : '  '
     \ }
 
-  " let g:NERDTreeShowIgnoredStatus = 0
-  let g:NERDTreeGitStatusShowIgnored = 0
+  " let g:NERDTreeGitStatusUseNerdFonts = 1
+  " let g:NERDTreeGitStatusShowIgnored = 1
 '''
 
 [[plugins]]
