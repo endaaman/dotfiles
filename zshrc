@@ -352,7 +352,7 @@ zle -N select-items-full
 
 function select-repos {
   select-items-full \
-    'ghr list |sort' \
+    'ghr list | sort' \
     'cat'
 }
 zle -N select-repos
@@ -442,6 +442,7 @@ bindkey '^s' copy-buffer
 bindkey '^g' select-repos
 bindkey '^t' goto-current
 bindkey '^z' toggle-fgbg
+bindkey '^k' select-directry-history
 bindkey '^[[Z' reverse-menu-complete
 bindkey '^[[1~' beginning-of-line
 bindkey '^[[4~' end-of-line
@@ -460,7 +461,6 @@ bindkey $prefix'^s' select-dein-plugin-dirs
 bindkey $prefix'^j' select-excutables
 bindkey $prefix'^l' select-git-files
 bindkey $prefix'^o' select-cwd-files-2
-bindkey $prefix'^k' select-directry-history
 bindkey $prefix'^a' select-pacman-files
 bindkey $prefix'^p' select-pacman-libs
 bindkey $prefix'^y' paste-clipboard
