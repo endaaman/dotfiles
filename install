@@ -21,6 +21,7 @@ rust=false
 zplug=false
 dein=false
 firefox=false
+jupyter_vim=false
 
 for i in "$@" ; do
   case "$i" in
@@ -32,6 +33,7 @@ for i in "$@" ; do
     'zplug'   | 'zp'   ) zplug=true ;;
     'dein'    | 'dn'   ) dein=true ;;
     'firefox' | 'ff'   ) firefox=true ;;
+    'jupyter' | 'jv'   ) jupyter_vim=true ;;
     'std' )
       nodejs=true
       zplug=true
@@ -79,7 +81,6 @@ ln -fs ~/dotfiles/ideavimrc ~/.ideavimrc
 ln -fs ~/dotfiles/latexmkrc ~/.latexmkrc
 ln -fs ~/dotfiles/systemd/* ~/.local/share/systemd/user/
 ln -fs ~/dotfiles/ipython/startup/* ~/.ipython/profile_default/startup
-ln -fs ~/dotfiles/misc/jupyter-vim-bind.js ~/.jupyter/custom/custom.js
 
 # GUI
 if $gui; then
@@ -144,6 +145,17 @@ if $firefox; then
   else
     echo -e "${CYAN}Firefox config directory does not exist.${NC}"
   fi
+fi
+
+if $jupyter_vim; then
+  mkdir -p ~/.jupyter/custom
+  ln -fs ~/dotfiles/misc/jupyter-vim-bind.js ~/.jupyter/custom/custom.js
+
+  mkdir -p $(jupyter --data-dir)/nbextensions
+  cd $(jupyter --data-dir)/nbextensions
+  git clone https://github.com/lambdalisue/jupyter-vim-binding vim_binding
+  jupyter nbextension enable vim_binding/vim_binding
+  cd -
 fi
 
 if ! which setxkbmap >/dev/null 2>&1; then

@@ -4,8 +4,8 @@ require([
 ], function() {
   // Map jj to <Esc>
   // CodeMirror.Vim.map("<Ctrl>l", "<End>", "insert");
-  CodeMirror.Vim.map("<Ctrl>l", "<End>", "normal");
-  CodeMirror.Vim.map("<Ctrl>h", "<Home>", "normal");
+  CodeMirror.Vim.map("<Ctrl>l", "$", "normal");
+  CodeMirror.Vim.map("<Ctrl>h", "^", "normal");
 
   // Swap j/k and gj/gk (Note that <Plug> mappings)
   CodeMirror.Vim.map("<Ctrl>h", "<Backspace>", "insert");
@@ -13,6 +13,7 @@ require([
   // CodeMirror.Vim.map("k", "<Plug>(vim-binding-gk)", "normal");
   // CodeMirror.Vim.map("gj", "<Plug>(vim-binding-j)", "normal");
   // CodeMirror.Vim.map("gk", "<Plug>(vim-binding-k)", "normal");
+  // CodeMirror.Vim.map("jj", "<Esc>", "insert");
 });
 
 // Configure Jupyter Keymap
@@ -24,7 +25,8 @@ require([
   vim_binding.on_ready_callbacks.push(function(){
     var km = ns.keyboard_manager;
     // Allow Ctrl-2 to change the cell mode into Markdown in Vim normal mode
-    km.edit_shortcuts.add_shortcut('ctrl-2', 'vim-binding:change-cell-to-markdown', true);
+    // km.edit_shortcuts.add_shortcut('ctrl-2', 'vim-binding:change-cell-to-markdown', true);
+
     // Update Help
     km.edit_shortcuts.events.trigger('rebuild.QuickHelp');
   });
