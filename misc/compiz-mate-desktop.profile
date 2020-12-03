@@ -107,8 +107,10 @@ s0_bottom_right_corner_action = 3
 [animation]
 s0_open_effects = animation:Glide 2;animation:Fade;animation:Fade;
 s0_open_matches = (type=Normal | Dialog | ModalDialog | Unknown);(type=Menu | PopupMenu | DropdownMenu | Combo);(type=Tooltip | Notification | Utility) & !(name=compiz) & !(title=notify-osd);
-s0_close_effects = animation:Glide 2;animation:Fade;animation:Fade;
-s0_close_matches = (type=Normal | Dialog | ModalDialog | Unknown) & !(name=gnome-screensaver) & !(name=mate-screenshot);(type=Menu | PopupMenu | DropdownMenu | Combo);(type=Tooltip | Notification | Utility) & !(name=compiz) & !(title=notify-osd) ;
+s0_close_effects = animation:Glide 2;
+s0_close_durations = 200;
+s0_close_matches = (type=Normal | Dialog | ModalDialog | Unknown) & !(name=gnome-screensaver) & !(name=mate-screenshot);
+s0_close_options = ;
 s0_minimize_effects = animation:Glide 2;
 s0_unminimize_effects = animation:Glide 2;
 
