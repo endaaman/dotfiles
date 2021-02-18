@@ -260,8 +260,8 @@ function remove-empty-dirs() {
 }
 
 function mkdir-current() {
-  remove-empty-dirs ~/tmp
   mkdir -p $CD
+  remove-empty-dirs ~/tmp
   ln -fsn $CD ~/tmp/current
 }
 
