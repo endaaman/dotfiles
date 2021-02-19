@@ -1,13 +1,11 @@
 [core]
-s0_active_plugins = core;composite;crashhandler;opengl;compiztoolbox;decor;grid;imgjpeg;imgpng;imgsvg;matecompat;mousepoll;move;obs;place;regex;resize;snap;staticswitcher;text;thumbnail;vpswitch;wall;animation;animationaddon;animationjc;animationplus;commands;dbus;notification;shelf;workarounds;
+s0_active_plugins = core;composite;crashhandler;opengl;compiztoolbox;decor;grid;imgjpeg;imgpng;imgsvg;matecompat;mousepoll;move;obs;place;regex;resize;resizeinfo;snap;staticswitcher;text;vpswitch;wall;animation;animationaddon;animationjc;animationplus;commands;dbus;notification;shelf;workarounds;
 s0_outputs = 1920x1080+0+0;
 s0_close_window_key = <Super>w
 s0_unmaximize_window_key = Disabled
 s0_window_menu_key = Disabled
 s0_window_menu_button = Disabled
 s0_toggle_window_maximized_key = <Super>space
-s0_hsize = 3
-s0_vsize = 2
 
 [showmouse]
 s0_guide_thickness = 0
