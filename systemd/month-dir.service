@@ -1,0 +1,10 @@
+[Unit]
+Description=Create current month dir on ~/tmp
+
+[Service]
+ExecStart=bash -c '~/dotfiles/bin/create-current-month-direcotry'
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

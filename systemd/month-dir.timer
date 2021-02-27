@@ -1,5 +1,5 @@
 [Unit]
-Description=create today dir daily and on boot
+Description=Create current month dir on ~/tmp
 
 [Timer]
 Persistent=true

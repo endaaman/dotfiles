@@ -1,7 +1,8 @@
 #!/bin/bash
 
-
+# remote empty dir
 find ~/tmp -type d -empty -regextype posix-egrep -regex '.*/[0-9]{8}$' -exec rm -r {} \;
-dir="$HOME/tmp/$(date "+%Y%m%d")"
+
+dir="$HOME/tmp/$(date "+%Y%m")"
 mkdir -p $dir
-ln -sfn $dir "$HOME/tmp/today"
+ln -sfn $dir "$HOME/tmp/current"
