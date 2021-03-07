@@ -282,7 +282,7 @@ fi
 if $conda; then
   # conda install -y -c pytorch pytorch torchvision cudatoolkit
   # conda install -y -c conda-forge pydicom matplotlib jedi pylint keras opencv
-  # conda install -y -c anaconda pandas xlrd scipy scikit-image
+  # conda install -y -c anaconda pandas xlrd scipy scikit-image scikit-learn jupyter
 fi
 
 

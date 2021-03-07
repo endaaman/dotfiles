@@ -223,6 +223,3 @@ hook_add = '''
   endif
   call denite#custom#source('grep', 'converters', ['converter/abbr_word'])
 '''
-
-[[plugins]]
-repo = 'neoclide/coc-denite'
