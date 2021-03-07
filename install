@@ -22,18 +22,20 @@ zplug=false
 dein=false
 firefox=false
 jupyter_vim=false
+conda=false
 
 for i in "$@" ; do
   case "$i" in
-    'gui'     | 'g'    ) gui=true ;;
-    'nodejs'  | 'node' ) nodejs=true ;;
-    'python'  | 'py'   ) python=true ;;
-    'ruby'    | 'rb'   ) ruby=true ;;
-    'rust'    | 'rs'   ) rust=true ;;
-    'zplug'   | 'zp'   ) zplug=true ;;
-    'dein'    | 'dn'   ) dein=true ;;
-    'firefox' | 'ff'   ) firefox=true ;;
-    'jupyter' | 'jv'   ) jupyter_vim=true ;;
+    'gui'     ) gui=true ;;
+    'nodejs'  ) nodejs=true ;;
+    'python'  ) python=true ;;
+    'ruby'    ) ruby=true ;;
+    'rust'    ) rust=true ;;
+    'zplug'   ) zplug=true ;;
+    'dein'    ) dein=true ;;
+    'firefox' ) firefox=true ;;
+    'jupyter' ) jupyter_vim=true ;;
+    'conda'   ) conda=true ;;
     'std' )
       nodejs=true
       zplug=true
@@ -147,25 +149,6 @@ if $firefox; then
   fi
 fi
 
-if $jupyter_vim; then
-  mkdir -p ~/.jupyter/custom
-  ln -fs ~/dotfiles/misc/jupyter-vim-bind.js ~/.jupyter/custom/custom.js
-
-  mkdir -p $(jupyter --data-dir)/nbextensions
-  cd $(jupyter --data-dir)/nbextensions
-  git clone https://github.com/lambdalisue/jupyter-vim-binding vim_binding
-  jupyter nbextension enable vim_binding/vim_binding
-  cd -
-fi
-
-if ! which setxkbmap >/dev/null 2>&1; then
-  if [ -e ~/dotfiles/Xmodmap ]; then
-    ln -sf ~/dotfiles/Xmodmap ~/.Xmodmap
-    setxkbmap && xmodmap ~/.Xmodmap
-    echo -e "${CYAN}Loaded Xmodmap${NC}"
-  fi
-fi
-
 if $nodejs; then
   if [ ! -d ~/.nodebrew ]; then
     echo
@@ -275,6 +258,31 @@ if $dein; then
     cd
     echo
   fi
+fi
+
+if $jupyter_vim; then
+  mkdir -p ~/.jupyter/custom
+  ln -fs ~/dotfiles/misc/jupyter-vim-bind.js ~/.jupyter/custom/custom.js
+
+  mkdir -p $(jupyter --data-dir)/nbextensions
+  cd $(jupyter --data-dir)/nbextensions
+  git clone https://github.com/lambdalisue/jupyter-vim-binding vim_binding
+  jupyter nbextension enable vim_binding/vim_binding
+  cd -
+fi
+
+if ! which setxkbmap >/dev/null 2>&1; then
+  if [ -e ~/dotfiles/Xmodmap ]; then
+    ln -sf ~/dotfiles/Xmodmap ~/.Xmodmap
+    setxkbmap && xmodmap ~/.Xmodmap
+    echo -e "${CYAN}Loaded Xmodmap${NC}"
+  fi
+fi
+
+if $conda; then
+  # conda install -y -c pytorch pytorch torchvision cudatoolkit
+  # conda install -y -c conda-forge pydicom matplotlib jedi pylint keras opencv
+  # conda install -y -c anaconda pandas xlrd scipy scikit-image
 fi
 
 
