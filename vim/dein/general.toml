@@ -11,6 +11,9 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'vim-scripts/sudo.vim'
+
+[[plugins]]
 repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim', 'vim-textobj-user']
 hook_add = '''
