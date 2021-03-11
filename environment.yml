@@ -117,6 +117,7 @@ dependencies:
   - rsa=4.6=py_0
   - scikit-learn=0.23.2=py38h0573a6f_0
   - scipy=1.6.1=py38h91f5cce_0
+  - seaborn=0.11.0=py_0
   - setuptools=49.6.0=py38h578d9bd_3
   - sip=4.19.24=py38he6710b0_0
   - six=1.15.0=pyh9f0ad1d_0
@@ -146,4 +147,5 @@ dependencies:
   - zlib=1.2.11=h516909a_1010
   - zstd=1.4.9=ha95c52a_0
   - pip:
+    - fire==0.4.0
     - recordclass==0.14.3
