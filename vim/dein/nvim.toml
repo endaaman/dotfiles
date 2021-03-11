@@ -127,9 +127,9 @@ hook_add = '''
   nnoremap <Space>c :<C-u>Denite command<CR>
   nnoremap <Space>C :<C-u>Denite command_history<CR>
   nnoremap <Space>h :<C-u>Denite help -default-action=tabopen<CR>
-  nnoremap <Space>p :<C-u>Denite my/register<CR>
-  nnoremap <Space>P :<C-u>Denite my/register -default-action=prepend<CR>
-  nnoremap <Space>r :<C-u>Denite my/register -default-action=yank<CR>
+  nnoremap <Space>p :<C-u>Denite my/copyq<CR>
+  nnoremap <Space>P :<C-u>Denite my/copyq -default-action=prepend<CR>
+  nnoremap <Space>r :<C-u>Denite my/copyq -default-action=yank<CR>
   nnoremap <Space>d :<C-u>Denite my/git/status<CR>
   nnoremap <Space>f :<C-u>Denite `finddir('.git', ';') != '' ? 'my/git/all' : 'file/rec'`<CR>
   nnoremap <Space>F :<C-u>DeniteCursorWord `finddir('.git', ';') != '' ? 'my/git/all' : 'file/rec'`<CR>
@@ -209,7 +209,7 @@ hook_add = '''
     \ '.DS_Store', '*.pyc', '*.sw[po]', '*.class',
     \ '.hg/', '.git/', '.bzr/', '.svn/',
     \ 'tags', 'tags-*',
-    \ 'node_modules/', '*.ttf', 'vendor/'
+    \ 'node_modules/', '*.ttf', 'vendor/', '*.pyc'
     \ ])
 
   if executable('ag')

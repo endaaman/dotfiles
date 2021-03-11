@@ -14,7 +14,7 @@ CYAN='\033[0;34m'
 NC='\033[0m'
 
 gui=false
-nodejs=false
+node=false
 python=false
 ruby=false
 rust=false
@@ -27,7 +27,7 @@ conda=false
 for i in "$@" ; do
   case "$i" in
     'gui'     ) gui=true ;;
-    'nodejs'  ) nodejs=true ;;
+    'node'    ) node=true ;;
     'python'  ) python=true ;;
     'ruby'    ) ruby=true ;;
     'rust'    ) rust=true ;;
@@ -37,12 +37,12 @@ for i in "$@" ; do
     'jupyter' ) jupyter_vim=true ;;
     'conda'   ) conda=true ;;
     'std' )
-      nodejs=true
+      node=true
       zplug=true
       dein=true
       ;;
     'full' )
-      nodejs=true
+      node=true
       python=true
       ruby=true
       rust=true
@@ -149,7 +149,7 @@ if $firefox; then
   fi
 fi
 
-if $nodejs; then
+if $node; then
   if [ ! -d ~/.nodebrew ]; then
     echo
     echo -e "${CYAN}Installing nodebrew${NC}"

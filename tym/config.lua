@@ -37,6 +37,7 @@ tym.set_config({
   autohide = true,
   silent = true,
   title = 'tym',
+  cjk_width = 'narrow',
 })
 
 tym.set_keymaps({

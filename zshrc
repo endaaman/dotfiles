@@ -229,6 +229,10 @@ if which pipenv &> /dev/null; then
   eval "$(pipenv --completion)"
 fi
 
+if [ -d ~/.poetry ]; then
+  export PATH="$HOME/.poetry/bin:$PATH"
+fi
+
 if which java &> /dev/null; then
   export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:/bin/java::")
 fi

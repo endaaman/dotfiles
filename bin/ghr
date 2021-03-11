@@ -41,7 +41,7 @@ class CommandList(SubCommand):
     name = 'list'
 
     def __call__(self, args):
-        cmd = 'find {} -maxdepth 4 -mindepth 4 -follow -type d -name ".git"' \
+        cmd = 'find {} -maxdepth 4 -mindepth 3 -follow -type d -name ".git"' \
               ' | sed -e s/.git$//' \
               ' | xargs readlink -f'
         p = sp.Popen(cmd.format(ROOT), shell=True, stdout=sp.PIPE)
