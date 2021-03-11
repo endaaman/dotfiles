@@ -7,8 +7,8 @@ repo = 'numirias/semshi'
 if = ' 0 '
 on_ft = ['python']
 
-[[plugins]]
-repo = 'bfredl/nvim-ipy'
+# [[plugins]]
+# repo = 'bfredl/nvim-ipy'
 
 # [[plugins]]
 # repo = 'jupyter-vim/jupyter-vim'
