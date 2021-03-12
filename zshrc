@@ -128,6 +128,11 @@ function my_prompt() {
     python_mod="<%F{red}$CONDA_DEFAULT_ENV%f> "
   fi
 
+  if [ -n "$VIRTUAL_ENV" ]; then
+    local name=$(basename $VIRTUAL_ENV)
+    python_mod="<%F{magent}$name%f> "
+  fi
+
   echo "$pre$dirname $python_mod$symbol "
 }
 
