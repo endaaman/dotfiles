@@ -4,8 +4,12 @@ rev = 'release'
 hook_add = '''
   autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
 
+	" let g:coc_enable_locationlist = 0
+  " autocmd User CocLocationsChange
+	" CocList --normal location
+
   nnoremap <silent> <C-o> :call CocActionAsync('doHover')<CR>
-  nmap <Space>kk <Plug>(coc-definition)
+  nmap <Space>kk <Plug>(coc-definition))
 
   let g:coc_node_path = Chomp(system('which node'))
   call coc#config('python.jediEnabled', 1)
@@ -17,7 +21,7 @@ hook_add = '''
   " call coc#config('python.venvPath', '~/.cache/pypoetry/virtualenvs')
 
   " command! JumpToDefinitionInNewTab :tabedit % | call CocAction('jumpDefinition')
-  command! JumpToDefinitionInNewTab :call CocAction('jumpDefinition', 'tab drop')
+  command! JumpToDefinitionInNewTab :call CocAction('jumpDefinition')
   nnoremap <silent> <Space>kK :<C-u>JumpToDefinitionInNewTab<CR>
   nmap <Space>kd <Plug>(coc-type-definition)
   nmap <Space>ki <Plug>(coc-implementation)

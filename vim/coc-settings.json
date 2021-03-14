@@ -1,12 +1,14 @@
 {
+  "coc.preferences.jumpCommand": "tab drop",
   "diagnostic.errorSign": "",
   "diagnostic.warningSign": "",
   "diagnostic.infoSign": "",
   "diagnostic.hintSign": "",
-  "diagnostic.locationlist": false,
+  "diagnostic.locationlistUpdate": false,
+  // "diagnostic.locationlist": false,
   "python.jediEnabled": true,
   "python.venvFolders": ["envs",".pyenv",".direnv", ".cache/pypoetry/virtualenvs/"],
-  "vetur.useWorkspaceDependencies": true,
+  // "vetur.useWorkspaceDependencies": true,
   "tsserver.enableJavascript": false,
   "languageserver": {
     "ccls": {
@@ -18,17 +20,17 @@
            "directory": ".ccls-cache"
          }
        }
-    },
-    "golang": {
-      "command": "gopls",
-      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
-      "filetypes": ["go"],
-      "initializationOptions": {
-        "usePlaceholders": false,
-        "completeUnimported": true,
-        "static_check": true,
-        "hoverKind": "FullDocumentation"
-      }
     }
+    // "golang": {
+    //   "command": "gopls",
+    //   "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+    //   "filetypes": ["go"],
+    //   "initializationOptions": {
+    //     "usePlaceholders": false,
+    //     "completeUnimported": true,
+    //     "static_check": true,
+    //     "hoverKind": "FullDocumentation"
+    //   }
+    // }
   }
 }
