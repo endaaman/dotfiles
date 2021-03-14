@@ -1,6 +1,7 @@
 let g:dein#install_max_processes = 16
 let g:dein#install_progress_type = 'title'
-let g:dein#install_message_type = 'none'
+" let g:dein#install_message_type = 'none'
+let g:dein#install_message_type = 'echo'
 let g:dein#enable_notification = 1
 
 let s:toml_dir = expand('<sfile>:p:h') . '/dein'
@@ -31,14 +32,14 @@ endfunction
 if dein#load_state(s:dein_repo_dir)
   call dein#begin(g:dein_dir)
   call s:load(s:toml_dir . '/general.toml')
-  if get(g:, 'rich')
-    call s:load(s:toml_dir . '/rich.toml')
-  endif
   call s:load(s:toml_dir . '/languages.toml')
   call s:load(s:toml_dir . '/appearance.toml')
   call s:load(s:toml_dir . '/nvim.toml')
   if !has('nvim')
     call s:load(s:toml_dir . '/vim.toml')
+  endif
+  if get(g:, 'rich')
+    call s:load(s:toml_dir . '/rich.toml')
   endif
   call dein#end()
 
@@ -52,12 +53,10 @@ if dein#load_state(s:dein_repo_dir)
   function! ReloadHook() abort
     echom 'reload hook'
     call dein#source()
-    if exists('*webdevicons#refresh')
-      call webdevicons#refresh()
-    endif
+    call dein#call_hook('post_source')
+    " if exists('*webdevicons#refresh')
+    "   call webdevicons#refresh()
+    " endif
     set tabline=%!lightline#tabline()
   endfunction
-  if get(g:, 'loaded_webdevicons')
-    call webdevicons#refresh()
-  endif
 endif

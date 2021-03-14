@@ -202,7 +202,7 @@ hook_add = '''
     let g:NERDTreeDirArrowCollapsible = '-'
   endif
 
-  function MyNERDTreeOpen() abort
+  function! MyNERDTreeOpen() abort
     let l:n = g:NERDTreeFileNode.GetSelected()
     echo l:n
   endfunction

@@ -1,10 +1,12 @@
 [[plugins]]
 repo = 'itchyny/lightline.vim'
 hook_add = '''
-  source ~/.vim/dein/sub/lightline.vim
-  let g:lightline.colorscheme = 'iceberg'
+  " source ~/.vim/dein/sub/lightline.vim
+  runtime! dein/sub/lightline.vim
   " let g:lightline.colorscheme = 'nord'
   " let g:lightline.colorscheme = 'hybrid'
+'''
+hook_post_source = '''
 '''
 
 [[plugins]]
@@ -59,4 +61,7 @@ hook_add = '''
   " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
   let g:DevIconsDefaultFolderOpenSymbol = ''
   let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+'''
+hook_post_source = '''
+  call webdevicons#refresh()
 '''

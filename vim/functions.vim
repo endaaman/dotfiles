@@ -169,8 +169,9 @@ function! LoadLocalVimConfig() abort
 endfunction
 
 function! LoadFtConfig() abort
-  call SafeExec(g:base_path . '/ft/default.vim')
-  call SafeExec(g:base_path . '/ft/' . &filetype . '.vim')
+  let l:base_path = expand('<sfile>:p:h')
+  call SafeExec(l:base_path . '/ft/default.vim')
+  call SafeExec(l:base_path . '/ft/' . &filetype . '.vim')
   call SafeExec(getcwd() . '/.vim/' . &filetype . '.vim')
 endfunction
 

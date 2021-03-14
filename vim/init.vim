@@ -8,20 +8,15 @@ augroup EN
   autocmd!
 augroup END
 
-let g:base_path = expand('<sfile>:p:h')
 let g:dein_dir = expand('~/.cache/dein')
 
 if $TERM =~# '256color' && !exists('g:rich')
   let g:rich = 1
 endif
 
-if isdirectory(g:dein_dir) && !exists('g:dein')
+if isdirectory(g:dein_dir) && !exists('g:dein') && $USER != 'root'
   let g:dein = 1
 endif
-
-" if $USER !=# 'root'
-"   let g:dein = 1
-" endif
 
 runtime! functions.vim
 runtime! basic.vim

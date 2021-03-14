@@ -465,8 +465,8 @@ bindkey $prefix'^d' nop
 bindkey $prefix'^i' edit-line
 bindkey $prefix'^r' goto-realpath
 bindkey $prefix'^b' select-branches
-bindkey $prefix'^g' select-go-projects
-bindkey $prefix'^s' select-dein-plugin-dirs
+bindkey $prefix'^s' select-go-projects
+bindkey $prefix'^g' select-dein-plugin-dirs
 bindkey $prefix'^j' select-excutables
 bindkey $prefix'^l' select-git-files
 bindkey $prefix'^o' select-cwd-files-2

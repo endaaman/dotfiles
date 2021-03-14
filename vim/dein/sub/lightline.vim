@@ -2,7 +2,9 @@ let s:width_0 = 40
 let s:width_1 = 80
 let s:width_2 = 120
 
-let g:lightline = {}
+let g:lightline = {
+  \ 'colorscheme': 'iceberg',
+  \ }
 
 let g:lightline.enable = {
   \ 'statusline': 1,
