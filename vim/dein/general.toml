@@ -172,20 +172,20 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'scrooloose/nerdtree'
+repo = 'preservim/nerdtree'
 hook_add = '''
   " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
   autocmd EN FileType nerdtree setlocal nolist
 
-  function! NERDTreeCustom() abort
+  function! MyNERDTree() abort
     if strlen(expand('%')) > 0
       NERDTreeFind
     else
       NERDTree
     endif
   endfunction
-  command! -nargs=* -bar -bang -count=0 -complete=dir NERDTreeCustom <args>
-  nnoremap <C-g> :<C-u>call NERDTreeCustom()<CR>
+  command! -nargs=* -bar -bang -count=0 -complete=dir MyNERDTree <args>
+  nnoremap <C-g> :<C-u>call MyNERDTree()<CR>
 
   let g:NERDTreeShowHidden = 1
   let g:NERDTreeHijackNetrw = 1
@@ -201,6 +201,14 @@ hook_add = '''
     let g:NERDTreeDirArrowExpandable = '|'
     let g:NERDTreeDirArrowCollapsible = '-'
   endif
+
+  function MyNERDTreeOpen() abort
+    let l:n = g:NERDTreeFileNode.GetSelected()
+    echo l:n
+  endfunction
+'''
+hook_post_source = '''
+  call NERDTreeAddKeyMap({ 'key': '<CR>', 'callback': 'MyNERDTreeOpen', 'quickhelpText': 'open file wisely' })
 '''
 
 [[plugins]]

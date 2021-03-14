@@ -46,11 +46,8 @@ if dein#load_state(s:dein_repo_dir)
   if dein#check_install()
     call dein#install()
   endif
-  " if has('nvim')
-  "   call dein#remote_plugins()
-  " endif
 
-  colorscheme iceberg
+	autocmd EN VimEnter * call dein#call_hook('post_source')
 
   function! ReloadHook() abort
     echom 'reload hook'

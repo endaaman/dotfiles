@@ -9,6 +9,9 @@ repo = 'kristijanhusak/vim-hybrid-material'
 
 [[plugins]]
 repo = 'cocopon/iceberg.vim'
+hook_source = '''
+  colorscheme iceberg
+'''
 
 [[plugins]]
 repo = 'arcticicestudio/nord-vim'

@@ -367,3 +367,60 @@ hook_add = '''
 
 [[plugins]]
 repo = 'kshenoy/vim-signature'
+
+
+
+[[plugins]]
+repo = 'Shougo/defx.nvim'
+hook_add = '''
+  nnoremap <Space>a :<C-u>Defx<CR>
+'''
+
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+if = '0'
+hook_add = '''
+  let g:deoplete#enable_at_startup = 1
+  if !exists('g:deoplete#omni#input_patterns')
+    let g:deoplete#omni#input_patterns = {}
+  endif
+  let g:deoplete#omni#functions = {}
+  " let g:deoplete#omni#input_patterns.python = '\h\w*\|[^. \t]\.\w*'
+  " let g:deoplete#omni#functions.python = 'jedi#completions'
+  inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+  inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+'''
+hook_source = '''
+  call deoplete#custom#option({
+    \ 'auto_complete_delay': 100,
+    \ 'camel_case': 1,
+    \ 'ignore_case': 0,
+    \ 'smart_case': 1,
+    \ })
+'''
+
+[[plugins]]
+repo = 'deoplete-plugins/deoplete-jedi'
+if = '0'
+on_ft = ['python']
+hook_add = '''
+  let g:deoplete#sources#jedi#show_docstring = 0
+'''
+
+[[plugins]]
+repo = 'sebastianmarkow/deoplete-rust'
+if = '0'
+depends = ['deoplete.nvim']
+on_ft = ['rust']
+hook_add = '''
+  " TODO: use
+  "   system('which racer')
+  " and
+  "
+  let g:deoplete#sources#rust#racer_binary = Chomp(system('which racer'))
+  let g:deoplete#sources#rust#rust_source_path = Chomp(system('rustc --print sysroot')) . '/lib/rustlib/src/rust/src'
+  let g:deoplete#sources#rust#show_duplicates = 1
+  let g:deoplete#sources#rust#disable_keymap = 1
+  " nnoremap <buffer> <Space>gd <plug>DeopleteRustGoToDefinitionDefault
+  nnoremap <buffer> <Space>K <plug>DeopleteRustShowDocumentation
+'''
