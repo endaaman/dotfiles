@@ -477,6 +477,7 @@ bindkey $prefix'^y' paste-clipboard
 
 ###* Alias
 
+alias ssudo='\sudo'
 alias sudo='sudo -E '
 alias G='grep'
 alias F='fzf'
