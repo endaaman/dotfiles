@@ -26,11 +26,14 @@ dependencies:
   - cffi=1.14.3=py38he30daa8_0
   - chardet=3.0.4=py38_1003
   - click=7.1.2=py_0
+  - cloudpickle=1.6.0=py_0
   - coverage=5.3=py38h7b6447c_0
   - cryptography=3.1.1=py38h1ba5d50_0
   - cudatoolkit=11.1.1=h6406543_8
   - cycler=0.10.0=py38_0
   - cython=0.29.21=py38he6710b0_0
+  - cytoolz=0.11.0=py38h7b6447c_0
+  - dask-core=2.30.0=py_0
   - decorator=4.4.2=py_0
   - expat=2.2.10=he6710b0_2
   - ffmpeg=4.3=hf484d3e_0
@@ -47,6 +50,7 @@ dependencies:
   - hdf5=1.10.6=hb1b8bf9_0
   - icu=58.2=he6710b0_3
   - idna=2.10=py_0
+  - imageio=2.9.0=py_0
   - importlib-metadata=2.0.0=py_1
   - ipython=7.18.1=py38h5ca1d4c_0
   - ipython_genutils=0.2.0=py38_0
@@ -86,6 +90,7 @@ dependencies:
   - multidict=4.7.6=py38h7b6447c_1
   - ncurses=6.2=h58526e2_4
   - nettle=3.6=he412f7d_0
+  - networkx=2.5=py_0
   - ninja=1.10.2=h4bd325d_0
   - numpy=1.19.2=py38h54aff64_0
   - numpy-base=1.19.2=py38hfa32c7d_0
@@ -120,11 +125,13 @@ dependencies:
   - python_abi=3.8=1_cp38
   - pytorch=1.8.0=py3.8_cuda11.1_cudnn8.0.5_0
   - pytz=2020.1=py_0
+  - pywavelets=1.1.1=py38h7b6447c_2
   - pyyaml=5.3.1=py38h7b6447c_1
   - readline=8.0=he28a2e2_2
   - requests=2.24.0=py_0
   - requests-oauthlib=1.3.0=py_0
   - rsa=4.6=py_0
+  - scikit-image=0.17.2=py38hdf5156a_0
   - scikit-learn=0.23.2=py38h0573a6f_0
   - scipy=1.6.1=py38h91f5cce_0
   - setuptools=49.6.0=py38h578d9bd_3
@@ -138,8 +145,10 @@ dependencies:
   - tensorflow-estimator=2.4.1=pyheb71bc4_0
   - termcolor=1.1.0=py38_1
   - threadpoolctl=2.1.0=pyh5ca1d4c_0
+  - tifffile=2020.10.1=py38hdd07704_2
   - tk=8.6.10=h21135ba_1
   - toml=0.10.1=py_0
+  - toolz=0.11.1=py_0
   - torchaudio=0.8.0=py38
   - torchvision=0.9.0=py38_cu111
   - tornado=6.0.4=py38h7b6447c_1
