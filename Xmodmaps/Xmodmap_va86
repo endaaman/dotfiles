@@ -10,7 +10,7 @@ remove shift = Shift_R
 keysym Shift_R = Muhenkan
 
 ! swap left with right for Overwatch
-keysym Control_L = Control_R
+! keysym Control_L = Control_R
 
 ! 9: Escape
 keycode 9 = grave asciitilde

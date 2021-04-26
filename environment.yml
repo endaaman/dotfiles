@@ -168,6 +168,11 @@ dependencies:
   - zlib=1.2.11=h516909a_1010
   - zstd=1.4.9=ha95c52a_0
   - pip:
+    - albumentations==0.5.2
     - fire==0.4.0
+    - imgaug==0.4.0
+    - opencv-python==4.5.1.48
+    - opencv-python-headless==4.5.1.48
     - recordclass==0.14.3
     - seaborn==0.11.1
+    - shapely==1.7.1
