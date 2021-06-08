@@ -37,7 +37,6 @@ dependencies:
   - cython=0.29.21=py38he6710b0_0
   - cytoolz=0.11.0=py38h7b6447c_0
   - dask-core=2.30.0=py_0
-  - dbus=1.13.18=hb2f20db_0
   - decorator=4.4.2=py_0
   - defusedxml=0.6.0=py_0
   - entrypoints=0.3=py38_0
@@ -46,15 +45,12 @@ dependencies:
   - fontconfig=2.13.0=h9420a91_0
   - freetype=2.10.4=h0708190_1
   - gast=0.4.0=py_0
-  - glib=2.56.2=hd408876_0
   - gmp=6.2.1=h58526e2_0
   - gnutls=3.6.13=h85f3911_1
   - google-auth=1.22.1=py_0
   - google-auth-oauthlib=0.4.1=py_2
   - google-pasta=0.2.0=py_0
   - grpcio=1.36.1=py38h2157cd5_1
-  - gst-plugins-base=1.14.0=hbbd80ab_1
-  - gstreamer=1.14.0=hb453b48_1
   - h5py=2.10.0=py38hd6299e0_1
   - hdf5=1.10.6=hb1b8bf9_0
   - icu=58.2=he6710b0_3
@@ -72,7 +68,6 @@ dependencies:
   - joblib=0.17.0=py_0
   - jpeg=9b=habf39ab_1
   - jsonschema=3.2.0=py_2
-  - jupyter=1.0.0=py38_7
   - jupyter_client=6.1.7=py_0
   - jupyter_console=6.2.0=py_0
   - jupyter_core=4.6.3=py38_0
@@ -150,7 +145,6 @@ dependencies:
   - pylint=2.6.0=py38_0
   - pyopenssl=19.1.0=py_1
   - pyparsing=2.4.7=py_0
-  - pyqt=5.9.2=py38h05f1152_4
   - pyrsistent=0.17.3=py38h7b6447c_0
   - pysocks=1.7.1=py38_0
   - python=3.8.8=hffdb5ce_0_cpython
@@ -162,8 +156,6 @@ dependencies:
   - pywavelets=1.1.1=py38h7b6447c_2
   - pyyaml=5.3.1=py38h7b6447c_1
   - pyzmq=19.0.2=py38he6710b0_1
-  - qt=5.9.7=h5867ecd_1
-  - qtconsole=4.7.7=py_0
   - qtpy=1.9.0=py_0
   - readline=8.0=he28a2e2_2
   - requests=2.24.0=py_0
@@ -216,10 +208,12 @@ dependencies:
     - efficientnet-pytorch==0.6.3
     - fire==0.4.0
     - imgaug==0.4.0
+    - jupyter==1.0.0
     - munch==2.5.0
     - opencv-python==4.5.1.48
     - opencv-python-headless==4.5.1.48
     - pretrainedmodels==0.7.4
+    - qtconsole==5.1.0
     - recordclass==0.14.3
     - seaborn==0.11.1
     - segmentation-models-pytorch==0.1.3
