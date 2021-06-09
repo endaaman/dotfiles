@@ -2,7 +2,6 @@
 [user]
   name = endaaman
 	email = endaaman@frontier.hokudai.ac.jp
-	useConfigOnly = true
 
 [include]
   path = ~/.gitconfig_local
