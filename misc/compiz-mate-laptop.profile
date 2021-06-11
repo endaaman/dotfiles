@@ -1,5 +1,5 @@
 [core]
-s0_active_plugins = core;composite;crashhandler;opengl;compiztoolbox;imgjpeg;maximumize;switcher;decor;grid;imgpng;imgsvg;matecompat;mblur;mousepoll;move;place;regex;resize;resizeinfo;staticswitcher;text;wall;animation;animationaddon;animationplus;animationsim;annotate;blur;commands;dbus;notification;obs;workarounds;
+s0_active_plugins = core;composite;crashhandler;opengl;compiztoolbox;imgjpeg;maximumize;decor;grid;imgpng;imgsvg;matecompat;mblur;mousepoll;move;place;regex;resize;resizeinfo;staticswitcher;text;wall;animation;animationaddon;animationplus;animationsim;annotate;blur;commands;dbus;notification;obs;workarounds;
 s0_close_window_key = <Super>w
 s0_maximize_window_key = Disabled
 s0_unmaximize_window_key = Disabled
@@ -13,11 +13,13 @@ s0_trigger_key = Disabled
 s0_triggerscreen_key = Disabled
 
 [staticswitcher]
-s0_next_all_key = Disabled
-s0_prev_all_key = Disabled
-s0_icon_only = true
+s0_next_all_key = <Super>Tab
+s0_prev_all_key = <Shift><Super>Tab
+s0_auto_change_vp = true
+s0_mipmap = false
 s0_focus_on_switch = true
-s0_bring_to_front = false
+s0_use_background_color = true
+s0_background_color = #3d3846ff
 
 [grid]
 s0_put_restore_key = <Super>q
@@ -71,12 +73,6 @@ s0_run_command0_key = <Super>p
 s0_run_command1_key = <Shift><Super>p
 s0_run_command2_key = <Alt><Super>p
 s0_run_command3_key = <Super>z
-
-[switcher]
-s0_next_key = Disabled
-s0_prev_key = Disabled
-s0_next_all_key = <Super>Tab
-s0_prev_all_key = <Shift><Super>Tab
 
 [resizeinfo]
 s0_always_show = true
