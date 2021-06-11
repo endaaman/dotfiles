@@ -1,5 +1,5 @@
 [core]
-s0_active_plugins = core;composite;crashhandler;opengl;compiztoolbox;imgjpeg;maximumize;decor;grid;imgpng;imgsvg;matecompat;mblur;mousepoll;move;place;regex;resize;resizeinfo;staticswitcher;text;wall;animation;animationaddon;animationplus;animationsim;annotate;blur;commands;dbus;notification;obs;workarounds;
+s0_active_plugins = core;composite;crashhandler;opengl;compiztoolbox;imgjpeg;maximumize;switcher;decor;grid;imgpng;imgsvg;matecompat;mblur;mousepoll;move;place;regex;resize;resizeinfo;staticswitcher;text;wall;animation;animationaddon;animationplus;animationsim;annotate;blur;commands;dbus;notification;obs;workarounds;
 s0_close_window_key = <Super>w
 s0_maximize_window_key = Disabled
 s0_unmaximize_window_key = Disabled
@@ -13,8 +13,11 @@ s0_trigger_key = Disabled
 s0_triggerscreen_key = Disabled
 
 [staticswitcher]
-s0_next_all_key = <Super>Tab
-s0_prev_all_key = <Shift><Super>Tab
+s0_next_all_key = Disabled
+s0_prev_all_key = Disabled
+s0_icon_only = true
+s0_focus_on_switch = true
+s0_bring_to_front = false
 
 [grid]
 s0_put_restore_key = <Super>q
@@ -42,6 +45,8 @@ s0_focus_durations = 50;
 
 [matecompat]
 s0_run_key = <Super>r
+s0_command_terminal = wmctrl -x -a tym  || tym &
+s0_run_command_terminal_key = <Super>t
 
 [wall]
 s0_left_key = <Super>h
@@ -62,12 +67,16 @@ s0_command0 = mate-screenshot -a -d 100
 s0_command1 = mate-screenshot
 s0_command2 = mate-screenshot -w
 s0_command3 = tym -e /usr/bin/zsh
-s0_command4 = wmctrl -x -a tym || tym
 s0_run_command0_key = <Super>p
 s0_run_command1_key = <Shift><Super>p
 s0_run_command2_key = <Alt><Super>p
 s0_run_command3_key = <Super>z
-s0_run_command4_key = <Super>t
+
+[switcher]
+s0_next_key = Disabled
+s0_prev_key = Disabled
+s0_next_all_key = <Super>Tab
+s0_prev_all_key = <Shift><Super>Tab
 
 [resizeinfo]
 s0_always_show = true
