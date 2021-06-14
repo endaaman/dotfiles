@@ -261,7 +261,6 @@ function remove-empty-dirs() {
   fi
   local empty_dirs=$(find $target -mindepth 1 -maxdepth 2 -empty -type d -not -path '*/\.git/*')
   if [ -z "$empty_dirs" ]; then
-    echo 'Nothing to remove'
     return
   fi
   echo $empty_dirs | xargs -L 1 rmdir
