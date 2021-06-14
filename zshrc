@@ -255,20 +255,31 @@ unset __conda_setup
 ###* Function
 
 function remove-empty-dirs() {
+  local -A opthash
+  zparseopts -D -M -A opthash -- s -silent=s
+  if [[ -n "${opthash[(i)-s]}" ]]; then
+    local o_silent=1
+  fi
+
   target=$1
   if [ ! -d $target ]; then
     target='.'
   fi
   local empty_dirs=$(find $target -mindepth 1 -maxdepth 2 -empty -type d -not -path '*/\.git/*')
   if [ -z "$empty_dirs" ]; then
+    if [ -z "$o_silent" ]; then
+      echo 'nothing to delete'
+    fi
     return
   fi
-  echo $empty_dirs | xargs -L 1 rmdir
-  echo removed $empty_dirs
+  if [ -z "$o_silent" ]; then
+    echo $empty_dirs | xargs -L 1 rmdir
+    echo removed $empty_dirs
+  fi
 }
 
 function mkdir-current() {
-  remove-empty-dirs ~/tmp
+  remove-empty-dirs -s ~/tmp
   mkdir -p $CD
   ln -fsn $CD ~/tmp/current
 }

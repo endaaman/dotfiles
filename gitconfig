@@ -50,9 +50,6 @@
   ui = true
   diff = true
 
-[ghq]
-  root = ~/src
-
 [http "https://gopkg.in"]
 	followRedirects = true
 

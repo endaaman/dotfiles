@@ -66,8 +66,8 @@ hook_add = '''
   autocmd FileType denite let b:deoplete_disable_auto_complete = 1
   autocmd FileType denite-filter let b:deoplete_disable_auto_complete = 1
 
-  nnoremap <Space>o :<C-u>Denite outline<CR>
-  nnoremap <Space>O :<C-u>Denite file/old<CR>
+  nnoremap <Space>O :<C-u>Denite outline<CR>
+  nnoremap <Space>o :<C-u>Denite file/old<CR>
   nnoremap <Space>J :<C-u>Denite jump<CR>
   nnoremap <Space>b :<C-u>Denite buffer<CR>
   nnoremap <Space>m :<C-u>Denite mark<CR>
