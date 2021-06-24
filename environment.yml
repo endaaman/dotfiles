@@ -27,6 +27,8 @@ dependencies:
   - chardet=3.0.4=py38_1003
   - click=7.1.2=py_0
   - cloudpickle=1.6.0=py_0
+  - conda=4.9.0=py38_0
+  - conda-package-handling=1.7.2=py38h03888b9_0
   - coverage=5.3=py38h7b6447c_0
   - cryptography=3.1.1=py38h1ba5d50_0
   - cudatoolkit=11.1.1=h6406543_8
@@ -62,16 +64,24 @@ dependencies:
   - keras-base=2.4.3=py_0
   - keras-preprocessing=1.1.2=pyhd3eb1b0_0
   - kiwisolver=1.2.0=py38hfd86e86_0
+  - krb5=1.19.1=h3535a68_0
   - lame=3.100=h7f98852_1001
   - lazy-object-proxy=1.5.1=py38h7b6447c_0
   - lcms2=2.11=h396b838_0
   - ld_impl_linux-64=2.35.1=hea4e1c9_2
+  - libarchive=3.5.1=h3f442fb_1
+  - libcurl=7.77.0=h2574ce0_0
+  - libedit=3.1.20191231=h14c3975_1
+  - libev=4.33=h7b6447c_0
   - libffi=3.3=h58526e2_2
   - libgcc-ng=9.3.0=h2828fa1_18
   - libgfortran-ng=7.3.0=hdf63c60_0
   - libiconv=1.16=h516909a_0
+  - libnghttp2=1.43.0=h812cca2_0
   - libpng=1.6.37=h21135ba_2
   - libprotobuf=3.14.0=h8c45485_0
+  - libsolv=0.7.18=h780b84a_0
+  - libssh2=1.9.0=h1ba5d50_1
   - libstdcxx-ng=9.3.0=h6de172a_18
   - libtiff=4.1.0=h2733197_1
   - libuuid=1.0.3=h1bed415_2
@@ -81,6 +91,8 @@ dependencies:
   - lightgbm=2.3.0=py38he6710b0_0
   - llvm-openmp=11.0.1=h4bd325d_0
   - lz4-c=1.9.3=h9c3ff4c_0
+  - lzo=2.10=h7b6447c_2
+  - mamba=0.14.0=py38h2aa5da1_0
   - markdown=3.3.2=py38_0
   - matplotlib-base=3.3.1=py38h817c723_0
   - mccabe=0.6.1=py38_1
@@ -107,11 +119,11 @@ dependencies:
   - pickleshare=0.7.5=py38_1000
   - pillow=8.0.0=py38h9a89aac_0
   - pip=21.0.1=pyhd8ed1ab_0
-  - prompt-toolkit=3.0.8=py_0
   - protobuf=3.14.0=py38h2531618_1
   - ptyprocess=0.6.0=py38_0
   - pyasn1=0.4.8=py_0
   - pyasn1-modules=0.2.8=py_0
+  - pycosat=0.6.3=py38h7b6447c_1
   - pycparser=2.20=py_2
   - pydicom=2.1.2=pyhd3deb0d_0
   - pygments=2.7.1=py_0
@@ -129,9 +141,12 @@ dependencies:
   - pywavelets=1.1.1=py38h7b6447c_2
   - pyyaml=5.3.1=py38h7b6447c_1
   - readline=8.0=he28a2e2_2
+  - reproc=14.2.1=h36c2ea0_0
+  - reproc-cpp=14.2.1=h58526e2_0
   - requests=2.24.0=py_0
   - requests-oauthlib=1.3.0=py_0
   - rsa=4.6=py_0
+  - ruamel_yaml=0.15.87=py38h7b6447c_1
   - scikit-image=0.17.2=py38hdf5156a_0
   - scikit-learn=0.23.2=py38h0573a6f_0
   - scipy=1.6.1=py38h91f5cce_0
@@ -153,7 +168,6 @@ dependencies:
   - torchaudio=0.8.0=py38
   - torchtext=0.9.0=py38
   - torchvision=0.9.0=py38_cu111
-  - tornado=6.0.4=py38h7b6447c_1
   - tqdm=4.50.2=py_0
   - traitlets=5.0.5=py_0
   - typing_extensions=3.7.4.3=py_0
@@ -171,21 +185,71 @@ dependencies:
   - zstd=1.4.9=ha95c52a_0
   - pip:
     - albumentations==0.5.2
+    - altair==4.1.0
+    - anyio==3.2.0
+    - astor==0.8.1
+    - babel==2.9.1
+    - base58==2.1.0
+    - blis==0.7.4
+    - catalogue==2.0.4
+    - colorama==0.4.4
+    - commonmark==0.9.1
+    - cymem==2.0.5
+    - dartsclone==0.9.0
+    - de-core-news-sm==3.0.0
     - efficientnet-pytorch==0.6.3
+    - en-core-web-sm==3.0.0
     - fire==0.4.0
+    - gitdb==4.0.7
+    - gitpython==3.1.18
     - imgaug==0.4.0
+    - ja-core-news-sm==3.0.0
     - jinja2==3.0.1
+    - json5==0.9.6
+    - jupyter-server==1.8.0
+    - jupyterlab==3.0.16
+    - jupyterlab-server==2.6.0
+    - kernel-driver==0.0.6
     - markupsafe==2.0.1
     - munch==2.5.0
+    - murmurhash==1.0.5
+    - nbclassic==0.3.1
+    - nbterm==0.0.11
     - opencv-python==4.5.1.48
     - opencv-python-headless==4.5.1.48
     - packaging==20.9
+    - pathy==0.5.2
+    - plac==1.1.3
+    - preshed==3.0.5
     - pretrainedmodels==0.7.4
+    - prompt-toolkit==3.0.19
+    - pyarrow==4.0.1
+    - pydantic==1.7.4
+    - pydeck==0.6.2
     - qtconsole==5.1.0
     - recordclass==0.14.3
+    - rich==10.4.0
     - seaborn==0.11.1
     - segmentation-models-pytorch==0.1.3
     - shapely==1.7.1
+    - smart-open==3.0.0
+    - smmap==4.0.0
+    - sniffio==1.2.0
+    - sortedcontainers==2.1.0
+    - spacy==3.0.6
+    - spacy-legacy==3.0.6
+    - spacy-streamlit==1.0.0
+    - srsly==2.4.1
+    - streamlit==0.83.0
+    - sudachidict-core==20210608
+    - sudachipy==0.5.2
+    - thinc==8.0.6
     - timm==0.3.2
+    - tornado==6.1
+    - typer==0.3.2
+    - tzlocal==2.1
+    - validators==0.18.2
+    - wasabi==0.8.2
+    - watchdog==2.1.2
     - webencodings==0.5.1
     - xlsxwriter==1.4.3
