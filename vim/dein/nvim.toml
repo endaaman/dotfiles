@@ -22,7 +22,7 @@ hook_add = '''
 
   " command! JumpToDefinitionInNewTab :tabedit % | call CocAction('jumpDefinition')
   command! JumpToDefinitionInNewTab :call CocAction('jumpDefinition')
-  nnoremap <silent> <Space>kK :<C-u>JumpToDefinitionInNewTab<CR>
+  nnoremap <silent> <Space>K :<C-u>JumpToDefinitionInNewTab<CR>
   nmap <Space>kt <Plug>(coc-type-definition)
   nmap <Space>ki <Plug>(coc-implementation)
   nmap <Space>kr <Plug>(coc-references)

@@ -37,6 +37,7 @@ hook_add = '''
   endif
   let g:indentLine_fileTypeExclude = ['nerdtree', 'markdown']
   let g:vim_json_syntax_conceal = 0
+  let g:indentLine_setConceal = 1
   " autocmd EN Filetype json let g:indentLine_setConceal = 0
 '''
 
