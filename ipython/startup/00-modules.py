@@ -6,6 +6,10 @@ import torch
 import torch.nn as nn
 import pandas as pd
 
+
+get_ipython().run_line_magic('precision', 5)
+np.set_printoptions(precision=5, floatmode='fixed', suppress=True)
+
 get_ipython().run_line_magic('load_ext', 'autoreload')
 # %load_ext autoreload
 
