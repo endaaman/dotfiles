@@ -1,4 +1,5 @@
 let s:width_0 = 40
+
 let s:width_1 = 80
 let s:width_2 = 120
 
@@ -20,7 +21,7 @@ let g:lightline.active = {}
 let g:lightline.active.left = [
   \   [ 'mode', 'paste' ],
   \   [ 'dirname', 'filename' ],
-  \   [ 'branch', 'neomake', 'coc'],
+  \   [ 'branch', 'coc'],
   \ ]
 let g:lightline.active.right = [
   \   [ 'syntastic', 'lineinfo' ],
