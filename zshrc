@@ -184,7 +184,7 @@ export CD=~/tmp/$C
 export OCAMLPARAM="_,bin-annot=1"
 export OPAMKEEPBUILDDIR=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
-if which xdotool &> /dev/null; then
+if [ -n "$DISPLAY" ] && which xdotool &> /dev/null; then
   export WINDOWID=$(xdotool getwindowfocus)
 fi
 
@@ -523,6 +523,8 @@ alias mozc-config='env LANG=ja_JP.UTF-8 /usr/lib/mozc/mozc_tool --mode=config_di
 alias inspect-pid='xprop _NET_WM_PID | cut -d " " -f 3 | xargs ps -fw'
 alias use-ms-font='export FONTCONFIG_FILE=$HOME/dotfiles/misc/fonts-ms.conf'
 alias gogetlegacy='GO111MODULE=off go get -u'
+alias reload-udev='sudo udevadm control --reload-rules && sudo udevadm trigger'
+
 
 if which trash-put &> /dev/null; then
   alias rm='trash-put'
