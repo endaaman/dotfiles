@@ -5,7 +5,7 @@ if [ ${EUID:-${UID}} = 0 ]; then
   case "$yn" in [yY]*) ;; *) echo "abort." ; exit ;; esac
 fi
 
-if ! which git >/dev/null 2>&1; then
+if ![ -x "$(command -v git)" ]; then
   echo 'Please install git'
   exit 1
 fi
