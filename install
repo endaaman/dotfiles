@@ -154,7 +154,7 @@ if $node; then
     echo
     echo -e "${CYAN}Installing nodebrew${NC}"
     curl -L git.io/nodebrew | perl - setup
-    node_version=14
+    node_version=16
     echo -e "${CYAN}Installing node.js ${node_version}${NC}"
     ~/.nodebrew/nodebrew install-binary ${node_version}
   else

@@ -8,7 +8,17 @@ hook_add = '''
   " autocmd User CocLocationsChange
 	" CocList --normal location
 
-  nnoremap <silent> <C-o> :call CocActionAsync('doHover')<CR>
+  function! s:show_documentation()
+    if (index(['vim','help'], &filetype) >= 0)
+      execute 'h '.expand('<cword>')
+    elseif (coc#rpc#ready())
+      call CocActionAsync('doHover')
+    else
+      execute '!' . &keywordprg . " " . expand('<cword>')
+    endif
+  endfunction
+
+  nnoremap <silent> <C-o> :call <SID>show_documentation()<CR>
   nmap <Space>kk <Plug>(coc-definition))
 
   let g:coc_node_path = Chomp(system('which node'))

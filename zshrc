@@ -210,7 +210,7 @@ fi
 
 if [ -d ~/.nodebrew ]; then
   export PATH=~/.nodebrew/current/bin:$PATH
-  nodebrew use 14 1>/dev/null
+  nodebrew use 16 1>/dev/null
   # fpath+=~/.nodebrew/completions/zsh
 fi
 
@@ -223,12 +223,10 @@ if [ -d ~/.config/composer/vendor/bin ]; then
   export PATH=$PATH:$HOME/.config/composer/vendor/bin
 fi
 
-if [ -d ~/go ]; then
-  export GOPATH=~/go
-  export PATH=$PATH:$GOPATH/bin
-  export GO15VENDOREXPERIMENT=1
-  export GO11MODULE=off
-fi
+export GOPATH=~/.go
+export PATH=$PATH:$GOPATH/bin
+export GO15VENDOREXPERIMENT=1
+export GO11MODULE=off
 
 if which pipenv &> /dev/null; then
   eval "$(pipenv --completion)"

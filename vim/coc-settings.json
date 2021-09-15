@@ -6,10 +6,10 @@
   "diagnostic.hintSign": "",
   "diagnostic.locationlistUpdate": false,
   // "diagnostic.locationlist": false,
-  "python.jediEnabled": true,
-  "python.venvFolders": ["envs",".pyenv",".direnv", ".cache/pypoetry/virtualenvs/"],
+  // "python.jediEnabled": true,
+  // "python.venvFolders": ["envs",".pyenv",".direnv", ".cache/pypoetry/virtualenvs/"],
   // "vetur.useWorkspaceDependencies": true,
-  "tsserver.enableJavascript": false,
+  // "tsserver.enableJavascript": false,
   "languageserver": {
     "ccls": {
       "command": "ccls",
@@ -32,5 +32,44 @@
     //     "hoverKind": "FullDocumentation"
     //   }
     // }
+  },
+
+  "diagnostic-languageserver.filetypes": {
+    "python": "pylint"
+  },
+  "diagnostic-languageserver.linters": {
+    "pylint": {
+      "sourceName": "pylint",
+      "command": "pylint",
+      "args": [
+        "--output-format",
+        "text",
+        "--score",
+        "no",
+        "--msg-template",
+        "'{line}:{column}:{category}:{msg} ({msg_id}:{symbol})'",
+        "%file"
+      ],
+      "formatPattern": [
+        "^(\\d+?):(\\d+?):([a-z]+?):(.*)$",
+        {
+          "line": 1,
+          "column": 2,
+          "security": 3,
+          "message": 4
+        }
+      ],
+      "rootPatterns": [".git", "pyproject.toml", "setup.py"],
+      "securities": {
+        "informational": "hint",
+        "refactor": "info",
+        "convention": "info",
+        "warning": "warning",
+        "error": "error",
+        "fatal": "error"
+      },
+      "offsetColumn": 1,
+      "formatLines": 1
+    }
   }
 }
