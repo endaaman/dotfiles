@@ -89,8 +89,8 @@ if $gui; then
   ln -fs ~/dotfiles/fonts.conf ~/.config/fontconfig/fonts.conf
   ln -fsn ~/dotfiles/fonts ~/.local/share/fonts/dotfiles
 
-  mkdir -p ~/wineprefixes
-  ln -fs ~/.wine ~/wineprefixes/current
+  mkdir -p ~/.wineprefixes
+  ln -fs ~/.wine ~/.wineprefixes/current
 
   ln -fs ~/dotfiles/tym/config.lua ~/.config/tym/config.lua
   ln -fs ~/dotfiles/tym/local.lua ~/.config/tym/local.lua
