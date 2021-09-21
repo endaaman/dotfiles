@@ -1,10 +1,12 @@
+import re
 import os
+
 from PIL import Image
 import numpy as np
-from matplotlib import pyplot as plt
-import torch
-import torch.nn as nn
 import pandas as pd
+import torch
+from torch import nn
+from matplotlib import pyplot as plt
 
 
 get_ipython().run_line_magic('precision', 5)

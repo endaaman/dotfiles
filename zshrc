@@ -282,6 +282,49 @@ function mkdir-current() {
   ln -fsn $CD ~/tmp/current
 }
 
+
+function chpwd() {
+  powered_cd_add_log
+}
+
+function powered_cd_add_log() {
+  local i=0
+  cat ~/.powered_cd.log | while read line; do
+    (( i++ ))
+    if [ i = 30 ]; then
+      sed -i -e "30,30d" ~/.powered_cd.log
+    elif [ "$line" = "$PWD" ]; then
+      sed -i -e "${i},${i}d" ~/.powered_cd.log
+    fi
+  done
+  echo "$PWD" >> ~/.powered_cd.log
+}
+
+function powered_cd() {
+  if [ $# = 0 ]; then
+    # cd $(tac ~/.powered_cd.log | fzf)
+  elif [ $# = 1 ]; then
+    cd $1
+  else
+    echo "powered_cd: too many arguments"
+  fi
+}
+
+_powered_cd_history() {
+  # local _l=(aaa bbb ccc ddd)
+  local -a _l=(${(@f)"$(_call_program history tac ~/.powered_cd.log)"})
+  _describe -t history "Directory history" _l
+}
+
+_powered_cd() {
+  _arguments -C \
+    '1: :_files ' \
+    # '1: :_powered_cd_history '
+}
+
+compdef _powered_cd powered_cd
+
+
 ###* Widget
 
 function goto-current() {
@@ -490,14 +533,6 @@ alias sudo='sudo -E '
 alias G='grep'
 alias F='fzf'
 alias C='xsel --clipboard --input'
-if which exa &> /dev/null; then
-  alias l='exa -agbl --group-directories-first --time-style long-iso'
-  alias ll='exa -agbl --group-directories-first --time-style long-iso -T -L 2'
-  alias lll='exa -agbl --group-directories-first --time-style long-iso -T -L 3'
-else
-  alias ll='ls -ahlF --color=auto --group-directories-first'
-  alias l=ll
-fi
 alias lf='ll | fzf'
 alias mv='mv -v'
 alias cp='cp -v'
@@ -522,20 +557,33 @@ alias inspect-pid='xprop _NET_WM_PID | cut -d " " -f 3 | xargs ps -fw'
 alias use-ms-font='export FONTCONFIG_FILE=$HOME/dotfiles/misc/fonts-ms.conf'
 alias gogetlegacy='GO111MODULE=off go get -u'
 alias reload-udev='sudo udevadm control --reload-rules && sudo udevadm trigger'
+alias mam='mamba'
+alias https='http --default-scheme=https'
 
-
+# replacing
+if which exa &> /dev/null; then
+  alias l='exa -agbl --group-directories-first --time-style long-iso'
+  alias ll='exa -agbl --group-directories-first --time-style long-iso -T -L 2'
+  alias lll='exa -agbl --group-directories-first --time-style long-iso -T -L 3'
+else
+  alias ll='ls -ahlF --color=auto --group-directories-first --time-style="+%m-%d %H:%M"'
+  alias l=ll
+fi
+if which fzf &> /dev/null; then
+  alias cd="powered_cd"
+fi
 if which trash-put &> /dev/null; then
   alias rm='trash-put'
 fi
 if which colordiff &> /dev/null; then
   alias diff='colordiff'
 fi
-alias https='http --default-scheme=https'
-
 
 ###* operations
 
 ({mkdir-current}&) >/dev/null
+
+[ -e ~/.powered_cd.log ] || touch ~/.powered_cd.log
 
 mkdir -p $HOME/.cache/shell/
 
