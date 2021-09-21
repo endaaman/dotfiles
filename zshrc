@@ -476,7 +476,7 @@ zle -N select-git-files
 function select-directry-history() {
   select-items-full \
     'tac ~/.powered_cd.log' \
-    'awk '\''{print $2}'\' \
+    'cat' \
     1
 }
 zle -N select-directry-history
