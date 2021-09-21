@@ -64,3 +64,6 @@
 
 [diff]
   compactionHeuristic = true
+
+[credential]
+	helper = store
