@@ -317,12 +317,12 @@ _powered_cd_history() {
 }
 
 _powered_cd() {
-  _arguments -C \
-    '1: :_files ' \
-    # '1: :_powered_cd_history '
+  _alternative 'files:Local:_files' 'arguments:custom arg:_powered_cd_history'
+  # _arguments -C \
+  #   '1: : _files _powered_cd_history'
 }
 
-compdef _powered_cd powered_cd
+compdef _powered_cd cd
 
 
 ###* Widget
@@ -475,7 +475,7 @@ zle -N select-git-files
 
 function select-directry-history() {
   select-items-full \
-    'dirs -l -v -p | tail -n+2' \
+    'tac ~/.powered_cd.log' \
     'awk '\''{print $2}'\' \
     1
 }
