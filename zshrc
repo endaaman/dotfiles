@@ -569,9 +569,6 @@ else
   alias ll='ls -ahlF --color=auto --group-directories-first --time-style="+%m-%d %H:%M"'
   alias l=ll
 fi
-if which fzf &> /dev/null; then
-  alias cd="powered_cd"
-fi
 if which trash-put &> /dev/null; then
   alias rm='trash-put'
 fi
