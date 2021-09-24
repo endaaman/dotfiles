@@ -474,7 +474,7 @@ function select-git-files() {
 zle -N select-git-files
 
 function select-directry-history() {
-  select-items-full \
+  select-items \
     'tac ~/.powered_cd.log' \
     'cat' \
     1
