@@ -4,32 +4,54 @@ import os
 import argparse
 from itertools import filterfalse
 import subprocess as sp
+from urllib.parse import urlparse
 
 
 ROOT = os.getenv('GHR_ROOT') or os.getenv('HOME') + '/src'
 
-# simple
-#   endaaman/dotfiles
-# other
-#   http://githu.com/endaaman/dotfiles
-#   git@github.com/
-def get_clone_target_and_path(arg, is_ssh):
-    simple = re.match(r'^[^/^@^:]+/[^/^@^:]+$', arg)
-    if simple:
-        path = arg
-        if is_ssh:
-            base = 'git@github.com:{}.git'
+
+def get_remote_url(domain, name, is_ssh):
+    if is_ssh:
+        return f'git@{domain}:{name}.git'
+    return f'https://{domain}/{name}.git'
+
+def get_clone_target(arg, is_ssh):
+    # url like
+    parsed = urlparse(arg)
+    if parsed.netloc:
+        domain = parsed.netloc
+        if parsed.scheme == 'ssh':
+            domain = re.sub('^[^@]*@', '', domain) # headind ssh username
+            remote = arg
         else:
-            base = 'https://github.com/{}.git'
-        uri = base.format(arg)
-        return uri, arg
-    else:
-        uri = arg
-        m = re.search(r'([^/^@^:]+/[^/^@^:]+$)', arg)
-        if not m:
-            return None, None
-        path = re.sub(r'\.git', '', m.group())
-    return arg, path
+            remote = get_remote_url(domain, name, is_ssh)
+        name = re.sub(r'\.git$', '', parsed.path) # trailing .git
+        name = re.sub(r'^/', '', name) # heading /
+        return {
+            'remote': remote,
+            'path': os.path.join(domain, name),
+        }
+
+    # git ssh
+    # git@github.com:endaaman/tym.git
+    matched = re.search(r'^(.*)@([^:^/]+):?(.*)$', arg)
+    if matched:
+        domain = matched.group(2)
+        name = matched.group(3)
+        name = re.sub(r'\.git$', '', name) # trim trailing .git
+        name = re.sub(r'^/', '', name) # trim heading /
+        return {
+            'remote': arg,
+            'path': os.path.join(domain, name),
+        }
+
+    # foo/bar
+    if not re.match(r'^[^/^@^:]+/[^/^@^:]+$', arg):
+        return None
+    return {
+        'remote': get_remote_url('github.com', arg, is_ssh),
+        'path': os.path.join('github.com', arg)
+    }
 
 class SubCommand():
     def register(self, p):
@@ -59,21 +81,22 @@ class CommandGet(SubCommand):
         p.add_argument('arg1')
         p.add_argument('-p', action='store_true') # ssh
         p.add_argument('-s', action='store_true') # dry
-        # p.add_argument('-v', action='store_true') # verbose
 
     def __call__(self, args):
         is_ssh = args.p
         dryrun = args.s
-        src, path = get_clone_target_and_path(args.arg1, is_ssh)
-        if not src:
-            print(f'Invalid src: `{src}`')
-        dest_dir = '{}/github.com/{}'.format(ROOT, path)
-        cmd = 'git clone {} {}'.format(src, dest_dir)
+        target = get_clone_target(args.arg1, is_ssh)
+        if not target:
+            print(f'Invalid argument: {args.arg1}')
+            return
+        dest_dir = os.path.join(ROOT, target['path'])
+        cmd = f'git clone {target["remote"]} {dest_dir}'
+        print(f'Exec: `{cmd}`')
         if dryrun:
-            print('CMD: ', cmd)
-        else:
-            p = sp.Popen(cmd, shell=True)
-            p.wait()
+            print('Skip execution')
+            return
+        p = sp.Popen(cmd, shell=True)
+        p.wait()
 
 
 if __name__ == '__main__':
