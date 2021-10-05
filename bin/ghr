@@ -19,14 +19,14 @@ def get_clone_target(arg, is_ssh):
     # url like
     parsed = urlparse(arg)
     if parsed.netloc:
-        domain = parsed.netloc
+        name = re.sub(r'\.git$', '', parsed.path) # trim trailing .git
+        name = re.sub(r'^/', '', name) # trim heading /
         if parsed.scheme == 'ssh':
-            domain = re.sub('^[^@]*@', '', domain) # headind ssh username
+            domain = re.sub('^[^@]*@', '', domain) # trim headind ssh username
             remote = arg
         else:
+            domain = parsed.netloc
             remote = get_remote_url(domain, name, is_ssh)
-        name = re.sub(r'\.git$', '', parsed.path) # trailing .git
-        name = re.sub(r'^/', '', name) # heading /
         return {
             'remote': remote,
             'path': os.path.join(domain, name),
