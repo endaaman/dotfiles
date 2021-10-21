@@ -52,9 +52,6 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'kana/vim-textobj-user'
-
-[[plugins]]
 repo =  'luochen1990/rainbow'
 if = '0'
 hook_add = '''
@@ -237,4 +234,14 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'kana/vim-textobj-user'
+
+[[plugins]]
 repo = 'PeterRincker/vim-argumentative'
+
+[[plugins]]
+repo = 'sgur/vim-textobj-parameter'
+
+hook_add = '''
+  let g:vim_textobj_parameter_mapping = 'a'
+'''

@@ -327,7 +327,7 @@ command! MagicW :call s:magic_W()
 function! s:magic_B() abort
   " TODO: support visual mode
   let pos = getpos('.')
-  normal! B"zy
+  normal! vB"zy
   let jump_area = @z[:-2]
   call setpos('.', pos)
 
@@ -345,7 +345,7 @@ function! s:magic_B() abort
   let d = matched[1] + 1
 
   let c = col('.')
-  # if breaks
+  " if breaks
   if c <= d
     normal! k$
     let d -= (c + 1)
