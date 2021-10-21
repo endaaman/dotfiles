@@ -67,7 +67,9 @@ nnoremap <Space>P :<C-u>lprev<CR>
 
 nnoremap <C-a> ggVG
 nnoremap <C-n> gt
+nnoremap <C-Tab> gt
 nnoremap <C-p> gT
+nnoremap <C-S-Tab> gt
 nnoremap <C-t> :<C-u>tabnew<CR>
 
 nnoremap <C-u> :<C-u>noh<CR><C-l>

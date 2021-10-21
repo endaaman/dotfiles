@@ -97,5 +97,7 @@ remap('<Alt>h', '<Alt>Left')
 remap('<Alt>l', '<Alt>Right')
 remap('<Alt><Shift>h', '<Alt><Shift>Left')
 remap('<Alt><Shift>l', '<Alt><Shift>Right')
+remap('<Ctrl>Tab', '<Ctrl>n')
+remap('<Ctrl><Shift>Tab', '<Ctrl>p')
 
 safe_dofile(home .. '/.config/tym/local.lua')
