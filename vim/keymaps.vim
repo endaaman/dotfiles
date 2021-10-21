@@ -19,6 +19,8 @@ noremap <Space>t :<C-u>terminal<CR>
 nnoremap <S-Left> :tabm -1<CR>
 nnoremap <S-Right> :tabm +1<CR>
 noremap <Space>q :<C-u>:q!<CR>
+nnoremap <Space>l <C-i>
+nnoremap <Space>h <C-o>
 nnoremap <expr> <Space>/ SearchByRegister()
 
 noremap j gj
@@ -58,8 +60,6 @@ nnoremap <S-Tab> <C-w>W
 nnoremap <C-y> <Nop>
 nnoremap <C-e> <Nop>
 
-nnoremap <C-l> <C-i>
-nnoremap <C-h> <C-o>
 nnoremap <Space>N :<C-u>lnext<CR>
 nnoremap <Space>P :<C-u>lprev<CR>
 " nnoremap <C-f> "zdd"zp
@@ -86,6 +86,8 @@ vnoremap p <C-[>:<C-u>let @z=@+<CR>gvp`]:let @+=@z<CR>
 vnoremap O :sort<CR>
 vnoremap R c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
 vnoremap / "zy:<C-u>let @/=@z\|set hlsearch<CR>
+vnoremap H ^
+vnoremap L $
 
 noremap <silent> <expr> y RegisterPrefix('y')
 noremap <silent> <expr> d RegisterPrefix('d')
@@ -111,6 +113,11 @@ cnoremap <C-d> <Delete>
 
 nnoremap <silent> <C-e> :<C-u>CaseMasterRotateCase<CR>
 vnoremap <silent> <C-e> :<C-u>CaseMasterRotateCaseVisual<CR>
+
+noremap <silent> W :<C-u>MagicW<CR>
+nnoremap <silent> B :<C-u>MagicB<CR>
+noremap gW W
+noremap gB B
 
 tnoremap <C-c> <C-\><C-n>
 " tnoremap <Tab> <C-\><C-n><C-w>w

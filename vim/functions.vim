@@ -302,3 +302,57 @@ function! s:format_xml() abort
   normal gg=G
 endfunction
 command! FormatXml :call s:format_xml()
+
+function! s:magic_W() abort
+  " 次のジャンプ区切りまでに
+  " ( [ { で関数の引数や配列が始まる
+  " ばあいは最初の要素の頭に移動する
+
+  let l:line = getline('.')
+  let l:latter_line = l:line[col('.')-1:-1]
+  let l:matched = matchstrpos(l:latter_line, '\s')
+
+  let l:jump_area = l:latter_line[0:l:matched[1]]
+  let l:matched = matchstrpos(l:jump_area, '[\(\[\{\.].')
+  " no dots or parens
+  if empty(matched[0])
+    normal! W
+    return
+  endif
+  exec 'normal! ' . (l:matched[1]+1) . 'l'
+endfunction
+
+command! MagicW :call s:magic_W()
+
+function! s:magic_B() abort
+  " TODO: support visual mode
+  let pos = getpos('.')
+  normal! B"zy
+  let jump_area = @z[:-2]
+  call setpos('.', pos)
+
+  let matched = 0
+  let i = 0
+
+  let rev_jump_area = join(reverse(split(jump_area, '\zs')), '')
+  let matched =  matchstrpos(rev_jump_area, '\S[\.\(\)]')
+
+  " no dots or parens in area to jump over
+  if empty(matched[0])
+    normal! B
+    return
+  endif
+  let d = matched[1] + 1
+
+  let c = col('.')
+  # if breaks
+  if c <= d
+    normal! k$
+    let d -= (c + 1)
+  endif
+  if d > 0
+    exec 'normal! ' . d . 'h'
+  endif
+endfunction
+
+command! MagicB :call s:magic_B()

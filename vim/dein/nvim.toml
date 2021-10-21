@@ -88,7 +88,6 @@ hook_add = '''
   nnoremap <Space>W :<C-u>DeniteCursorWord grep -no-empty<CR>
   nnoremap <Space>c :<C-u>Denite command<CR>
   nnoremap <Space>C :<C-u>Denite command_history<CR>
-  nnoremap <Space>h :<C-u>Denite help -default-action=tabopen<CR>
   nnoremap <Space>p :<C-u>Denite my/clipboard<CR>
   nnoremap <Space>P :<C-u>Denite my/clipboard -default-action=prepend<CR>
   nnoremap <Space>r :<C-u>Denite my/clipboard -default-action=yank<CR>
@@ -99,7 +98,8 @@ hook_add = '''
   nnoremap <Space>, :<C-u>Denite file/rec -path=,<CR>
   nnoremap <Space>a :<C-u>DeniteBufferDir file/rec<CR>
   nnoremap <Space>A :<C-u>Denite directory_rec<CR>
-  nnoremap <Space>l :<C-u>Denite my/git/log<CR>
+  nnoremap <Space>H :<C-u>Denite help -default-action=tabopen<CR>
+  nnoremap <Space>L :<C-u>Denite my/git/log<CR>
   nnoremap <Space><C-f> :<C-u>Denite -resume -cursor-pos=+1 -immediately<CR>
   nnoremap <Space><C-b> :<C-u>Denite -resume -cursor-pos=-1 -immediately<CR>
   nnoremap <Space><Space> :<C-u>Denite -resume<CR>

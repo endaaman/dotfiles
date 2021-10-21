@@ -235,3 +235,6 @@ hook_add = '''
   " nmap gz <Plug>ZVOperator
   " nmap <leader><leader>z <Plug>ZVKeyDocset
 '''
+
+[[plugins]]
+repo = 'PeterRincker/vim-argumentative'
