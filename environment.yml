@@ -1,7 +1,5 @@
 name: ml
 channels:
-  - pytorch
-  - nvidia
   - anaconda
   - defaults
   - conda-forge
@@ -27,6 +25,7 @@ dependencies:
   - blas=1.0=mkl
   - bleach=3.2.1=py_0
   - blinker=1.4=py38_0
+  - bokeh=2.3.3=py38h06a4308_0
   - brotlipy=0.7.0=py38h7b6447c_1000
   - bzip2=1.0.8=h7b6447c_0
   - c-ares=1.17.1=h27cfd23_0
@@ -47,20 +46,24 @@ dependencies:
   - conda-package-handling=1.7.2=py38h03888b9_0
   - coverage=5.3=py38h7b6447c_0
   - cryptography=3.1.1=py38h1ba5d50_0
-  - cudatoolkit=11.1.74=h6bb024c_0
+  - cudatoolkit=11.3.1=h2bc3f7f_2
+  - cudnn=8.2.1.32=h86fa8c9_0
   - cycler=0.10.0=py38_0
   - cython=0.29.21=py38he6710b0_0
   - cytoolz=0.11.0=py38h7b6447c_0
-  - dask-core=2.30.0=py_0
+  - dask=2021.9.1=pyhd8ed1ab_0
+  - dask-core=2021.9.1=pyhd8ed1ab_0
   - dbus=1.13.18=hb2f20db_0
   - decorator=4.4.2=py_0
   - defusedxml=0.6.0=py_0
+  - distributed=2021.9.1=py38h578d9bd_0
   - easydict=1.9=py_0
   - entrypoints=0.3=py38_0
   - expat=2.2.10=he6710b0_2
   - ffmpeg=4.3.2=hca11adc_0
   - fontconfig=2.13.1=h6c09931_0
   - freetype=2.10.4=h5ab3b9f_0
+  - fsspec=2021.10.0=pyhd8ed1ab_0
   - future=0.18.2=py38_1
   - gast=0.4.0=py_0
   - geos=3.9.1=h9c3ff4c_2
@@ -80,6 +83,7 @@ dependencies:
   - h5py=2.10.0=py38hd6299e0_1
   - harfbuzz=2.8.2=h83ec7ef_0
   - hdf5=1.10.6=hb1b8bf9_0
+  - heapdict=1.0.1=py_0
   - icu=68.1=h58526e2_0
   - idna=2.10=py_0
   - imageio=2.9.0=py_0
@@ -151,8 +155,10 @@ dependencies:
   - libzlib=1.2.11=h36c2ea0_1013
   - lightgbm=2.3.0=py38he6710b0_0
   - llvm-openmp=11.1.0=h4bd325d_1
+  - locket=0.2.1=py38h06a4308_1
   - lz4-c=1.9.2=heb0550a_3
   - lzo=2.10=h7b6447c_2
+  - magma=2.5.4=h6103c52_2
   - mako=1.1.5=pyhd8ed1ab_0
   - mamba=0.14.0=py38h2aa5da1_0
   - markdown=3.3.2=py38_0
@@ -163,12 +169,14 @@ dependencies:
   - mkl-service=2.4.0=py38h7f8727e_0
   - mkl_fft=1.3.0=py38h42c9631_2
   - mkl_random=1.2.2=py38h51133e4_0
+  - msgpack-python=1.0.2=py38hff7bd54_1
   - multidict=4.7.6=py38h7b6447c_1
   - mysql-common=8.0.23=ha770c72_1
   - mysql-libs=8.0.23=h935591d_1
   - nbclient=0.5.1=py_0
   - nbconvert=6.0.7=py38_0
   - nbformat=5.0.8=py_0
+  - nccl=2.11.4.1=hdc17891_0
   - ncurses=6.2=he6710b0_1
   - nest-asyncio=1.4.1=py_0
   - nettle=3.4.1=hbb512f6_0
@@ -183,13 +191,14 @@ dependencies:
   - olefile=0.46=py_0
   - opencv=4.5.1=py38h578d9bd_0
   - openh264=2.1.1=h780b84a_0
-  - openssl=1.1.1l=h7f8727e_0
+  - openssl=1.1.1l=h7f98852_0
   - opt_einsum=3.1.0=py_0
   - optuna=2.9.1=pyhd8ed1ab_0
   - pandas=1.1.3=py38he6710b0_0
   - pandoc=2.11=hb0f4dca_0
   - pandocfilters=1.4.2=py38_1
   - parso=0.8.0=py_0
+  - partd=1.2.0=pyhd3eb1b0_0
   - pbr=5.6.0=pyhd3eb1b0_0
   - pcre=8.44=he6710b0_0
   - pexpect=4.8.0=py38_0
@@ -202,12 +211,14 @@ dependencies:
   - prompt-toolkit=3.0.8=py_0
   - prompt_toolkit=3.0.8=0
   - protobuf=3.18.1=py38h709712a_0
+  - psutil=5.8.0=py38h27cfd23_1
   - ptyprocess=0.6.0=py38_0
   - py-opencv=4.5.1=py38h81c977d_0
   - pyasn1=0.4.8=py_0
   - pyasn1-modules=0.2.8=py_0
   - pycosat=0.6.3=py38h7b6447c_1
   - pycparser=2.20=py_2
+  - pydeprecate=0.3.1=pyhd8ed1ab_0
   - pydicom=2.1.2=pyhd3deb0d_0
   - pygments=2.7.1=py_0
   - pyjwt=1.7.1=py38_0
@@ -221,8 +232,9 @@ dependencies:
   - python-dateutil=2.8.1=py_0
   - python-flatbuffers=1.12=pyhd3eb1b0_0
   - python_abi=3.8=2_cp38
-  - pytorch=1.9.1=cpu_py38h1ee18c8_3
-  - pytorch-cpu=1.9.1=cpu_py38h718b53a_3
+  - pytorch=1.9.1=cuda112py38h4f2a933_3
+  - pytorch-gpu=1.9.1=cuda112py38h0bbbad9_3
+  - pytorch-lightning=1.4.9=pyhd8ed1ab_0
   - pytz=2020.1=py_0
   - pywavelets=1.1.1=py38h7b6447c_2
   - pyyaml=5.3.1=py38h7b6447c_1
@@ -245,10 +257,12 @@ dependencies:
   - sip=4.19.24=py38he6710b0_0
   - six=1.15.0=py_0
   - sleef=3.5.1=h9b69904_2
+  - sortedcontainers=2.4.0=pyhd3eb1b0_0
   - sqlalchemy=1.4.22=py38h7f8727e_0
   - sqlite=3.36.0=h9cd32fc_2
   - stevedore=3.4.0=py38h578d9bd_0
   - tbb=2021.3.0=hd09550d_0
+  - tblib=1.7.0=py_0
   - tensorboard=2.5.0=py_0
   - tensorboard-plugin-wit=1.6.0=py_0
   - tensorflow=2.4.1=mkl_py38hb2083e0_0
@@ -262,11 +276,9 @@ dependencies:
   - tk=8.6.10=hbc83047_0
   - toml=0.10.1=py_0
   - toolz=0.11.1=py_0
-  - torchaudio=0.9.1=py38
-  - torchtext=0.10.1=py38
-  - torchvision=0.10.1=py38h9e2e28c_0_cpu
+  - torchmetrics=0.5.1=pyhd8ed1ab_0
+  - torchvision=0.10.1=py38cuda112h04b465a_0_cuda
   - tornado=6.0.4=py38h7b6447c_1
-  - tqdm=4.50.2=py_0
   - traitlets=5.0.5=py_0
   - typing-extensions=3.7.4.3=0
   - typing_extensions=3.7.4.3=py_0
@@ -290,19 +302,24 @@ dependencies:
   - xorg-xproto=7.0.31=h7f98852_1007
   - xz=5.2.5=h7b6447c_0
   - yaml=0.2.5=h7b6447c_0
-  - yarl=1.6.2=py38h7b6447c_0
   - zeromq=4.3.3=he6710b0_3
+  - zict=2.0.0=py_0
   - zipp=3.3.1=py_0
   - zlib=1.2.11=h36c2ea0_1013
   - zstd=1.4.8=hdf46e1d_0
   - pip:
     - antlr4-python3-runtime==4.8
+    - datasets==1.13.0
+    - dill==0.3.4
     - effdet==0.2.4
     - efficientnet-pytorch==0.6.3
+    - filelock==3.3.0
     - fire==0.4.0
+    - huggingface-hub==0.0.19
     - jinja2==3.0.1
     - jupyter==1.0.0
     - markupsafe==2.0.1
+    - multiprocess==0.70.12.2
     - munch==2.5.0
     - omegaconf==2.1.0
     - opencv-python==4.5.1.48
@@ -310,10 +327,19 @@ dependencies:
     - packaging==20.9
     - pretrainedmodels==0.7.4
     - ptflops==0.6.6
+    - pyarrow==5.0.0
     - pycocotools==2.0.2
     - qtconsole==5.1.0
     - recordclass==0.14.3
+    - regex==2021.10.8
+    - sacremoses==0.0.46
     - seaborn==0.11.1
     - segmentation-models-pytorch==0.2.0
+    - sentencepiece==0.1.96
     - timm==0.4.12
+    - tokenizers==0.10.3
+    - tqdm==4.62.3
+    - transformers==4.12.0.dev0
     - xlsxwriter==1.4.3
+    - xxhash==2.0.2
+    - yarl==1.5.1
