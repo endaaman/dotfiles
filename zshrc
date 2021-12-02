@@ -229,7 +229,7 @@ export GO15VENDOREXPERIMENT=1
 export GO11MODULE=off
 
 if which pipenv &> /dev/null; then
-  eval "$(pipenv --completion)"
+  eval "$(_PIPENV_COMPLETE=zsh_source pipenv)"
 fi
 
 if [ -d ~/.poetry ]; then
