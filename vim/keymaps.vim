@@ -116,7 +116,7 @@ nnoremap <C-h> <C-o>
 nnoremap <silent> <C-e> :<C-u>CaseMasterRotateCase<CR>
 vnoremap <silent> <C-e> :<C-u>CaseMasterRotateCaseVisual<CR>
 
-noremap <silent> W :<C-u>MagicW<CR>
+nnoremap <silent> W :<C-u>MagicW<CR>
 nnoremap <silent> B :<C-u>MagicB<CR>
 noremap gW W
 noremap gB B
