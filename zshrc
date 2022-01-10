@@ -393,6 +393,9 @@ function select-items() {
   LBUFFER="$base$result"
   RBUFFER=""
   zle reset-prompt
+  if [[ -n "$3" ]]; then
+    zle accept-line
+  fi
 }
 
 function select-items-full {
@@ -493,6 +496,14 @@ function select-pacman-libs() {
 }
 zle -N select-pacman-libs
 
+function select-conda-envs() {
+  select-items \
+    'conda env list -q | head -n -1 | tail -n +3' \
+    'awk '\''{print $1}'\'' | cat <(echo -n "conda activate ") -' \
+    1
+}
+zle -N select-conda-envs
+
 ###* Key binding
 
 bindkey "^o" select-cwd-files
@@ -523,6 +534,7 @@ bindkey $prefix'^l' select-git-files
 bindkey $prefix'^o' select-cwd-files-2
 bindkey $prefix'^a' select-pacman-files
 bindkey $prefix'^p' select-pacman-libs
+bindkey $prefix'^k' select-conda-envs
 bindkey $prefix'^y' paste-clipboard
 
 
