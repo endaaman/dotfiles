@@ -5,7 +5,8 @@ if [ ${EUID:-${UID}} = 0 ]; then
   case "$yn" in [yY]*) ;; *) echo "abort." ; exit ;; esac
 fi
 
-if ![ -x "$(command -v git)" ]; then
+if ! command -v git &> /dev/null
+then
   echo 'Please install git'
   exit 1
 fi
@@ -271,7 +272,8 @@ if $jupyter_vim; then
   cd -
 fi
 
-if ! which setxkbmap >/dev/null 2>&1; then
+if ! command -v setxkbmap &> /dev/null
+then
   if [ -e ~/dotfiles/Xmodmap ]; then
     ln -sf ~/dotfiles/Xmodmap ~/.Xmodmap
     setxkbmap && xmodmap ~/.Xmodmap
