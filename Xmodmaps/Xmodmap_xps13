@@ -28,7 +28,7 @@ keycode 40 = d D Right Right
 
 keycode 43 = h H Home Home
 keycode 44 = j J Next Next
-keycode 45 = k K Prior Prior
+! keycode 45 = k K Prior Prior
 keycode 46 = l L End End
 
 !PageUp -> Home

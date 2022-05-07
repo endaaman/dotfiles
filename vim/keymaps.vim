@@ -41,6 +41,8 @@ nnoremap S "_S
 noremap n nzz
 noremap N Nzz
 noremap G Gzz
+nnoremap <CR> yy
+vnoremap <CR> y
 
 nnoremap <expr> i IndentWithI()
 nnoremap * :<C-u>let @/=expand("<cword>")\|set hlsearch<CR>
