@@ -129,7 +129,7 @@ function! LightlineFilename() abort
 endfunction
 
 function! LightlineBranch() abort
-  return winwidth(0) > s:width_2 ? fugitive#head() : ''
+  return winwidth(0) > s:width_2 ? FugitiveHead() : ''
 endfunction
 
 let s:neomake_marks = {
