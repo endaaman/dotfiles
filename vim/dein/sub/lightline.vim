@@ -95,7 +95,7 @@ function! LightLineFugitive() abort
   if &ft == 'nerdtree'
     return ''
   endif
-  return exists('*fugitive#head') ?  fugitive#head() : ''
+  return exists('*fugitive#head') ?  FugitiveHead() : ''
 endfunction
 
 function! LightlineDirname() abort
