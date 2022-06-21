@@ -42,7 +42,7 @@ hook_add = '''
 
   set updatetime=300
   au CursorHold * sil call CocActionAsync('highlight')
-  au CursorHoldI * sil call CocActionAsync('showSignatureHelp')
+  " au CursorHoldI * sil call CocActionAsync('showSignatureHelp')
 
   function! s:check_back_space() abort
     let col = col('.') - 1
