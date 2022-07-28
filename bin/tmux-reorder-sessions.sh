@@ -8,3 +8,4 @@ do
   tmux rename -t $old $new
   ((new++))
 done
+exit 0
