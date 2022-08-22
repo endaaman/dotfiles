@@ -324,6 +324,10 @@ _powered_cd() {
 
 compdef _powered_cd cd
 
+function new-ipynb() {
+  cp $HOME/dotfiles/template.ipynb $1.ipynb
+}
+
 
 ###* Widget
 
