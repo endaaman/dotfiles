@@ -14,7 +14,7 @@ if $TERM =~# '256color' && !exists('g:rich')
   let g:rich = 1
 endif
 
-if isdirectory(g:dein_dir) && !exists('g:dein') && $USER != 'root'
+if isdirectory(g:dein_dir) && !exists('g:dein') && $USER != 'root' && !$PURE_VIM
   let g:dein = 1
 endif
 
