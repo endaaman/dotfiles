@@ -15,7 +15,8 @@ noremap <Space>i :<C-u>vs<CR>
 noremap <Space>- :<C-u>sp<CR>
 noremap <Space>e :<C-u>e!<CR>
 noremap <Space><C-l> <C-l>
-noremap <Space>t :<C-u>terminal<CR>
+noremap <Space>T :<C-u>terminal<CR>
+noremap <Space>t <C-w>v<C-w>w:<C-u>terminal<CR>
 nnoremap <S-Left> :tabm -1<CR>
 nnoremap <S-Right> :tabm +1<CR>
 noremap <Space>q :<C-u>:q!<CR>
@@ -123,5 +124,6 @@ nnoremap <silent> B :<C-u>MagicB<CR>
 noremap gW W
 noremap gB B
 
-tnoremap <C-c> <C-\><C-n>
+" tnoremap <C-c> <C-\><C-n>
+tnoremap <C-Esc> <C-\><C-n>
 " tnoremap <Tab> <C-\><C-n><C-w>w

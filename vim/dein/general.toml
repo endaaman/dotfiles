@@ -259,7 +259,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'hanschen/vim-ipython-cell'
-add_hook = '''
+hook_source = '''
   " xmap <F5> <Plug>SlimeRegionSend
   " nmap <F5> <Plug>SlimeParagraphSend
   let g:ipython_cell_regex = 1
@@ -275,21 +275,24 @@ repo = 'jpalardy/vim-slime'
 hook_source = '''
   let g:slime_no_mappings = 1
 
-  let g:slime_target = 'tmux'
   " ipythonを使う
   let g:slime_python_ipython = 1
   " セルの区切り文字を指定
   let g:slime_cell_delimiter = "# %%"
 
-  " always send text to the right pane in the current tmux tab without asking
-  let g:slime_default_config = {
-    \ 'socket_name': get(split($TMUX, ','), 0),
-    \ 'target_pane': '{right-of}' }
-  let g:slime_dont_ask_default = 1
+  " TMUX
+  " let g:slime_target = 'tmux'
+  " let g:slime_default_config = {
+  "   \ 'socket_name': get(split($TMUX, ','), 0),
+  "   \ 'target_pane': '{right-of}' }
+  " let g:slime_dont_ask_default = 1
+
+  " NeoVim terminal
+  let g:slime_target = "neovim"
+  " let g:slime_default_config = {
+  "   \ 'socket_name': get(split($TMUX, ','), 0),
+  "   \ 'target_pane': '{right-of}' }
 
   " " 環境変数 $STY から GNU Screen のセッション名を取得する
   " let g:slime_default_config = {"sessionname": $STY, "windowname": "ipython3"}
-
-  " 接続先情報はユーザ入力させない
-  let g:slime_dont_ask_default = 1
 '''
