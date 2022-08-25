@@ -1,19 +1,23 @@
 import re
 import os
 
-from PIL import Image
-import numpy as np
-import pandas as pd
-import torch
-from torch import nn
-from matplotlib import pyplot as plt
-
-
 get_ipython().run_line_magic('precision', 5)
-np.set_printoptions(precision=5, floatmode='fixed', suppress=True)
-
 get_ipython().run_line_magic('load_ext', 'autoreload')
 # %load_ext autoreload
+
+try:
+    import numpy as np
+    from PIL import Image
+    import pandas as pd
+    from matplotlib import pyplot as plt
+    np.set_printoptions(precision=5, floatmode='fixed', suppress=True)
+except ImportError as e:
+    print(e)
+
+try:
+    from torch import nn
+except ImportError as e:
+    print(e)
 
 # %config IPCompleter.use_jedi = False
 # ipython profile create

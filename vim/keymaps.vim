@@ -17,6 +17,7 @@ noremap <Space>e :<C-u>e!<CR>
 noremap <Space><C-l> <C-l>
 noremap <Space>T :<C-u>terminal<CR>
 noremap <Space>t <C-w>v<C-w>w:<C-u>terminal<CR>
+noremap <Space><C-p> <C-w>v<C-w>w:<C-u>terminal ipython<CR><C-\><C-n><C-w>p
 nnoremap <S-Left> :tabm -1<CR>
 nnoremap <S-Right> :tabm +1<CR>
 noremap <Space>q :<C-u>:q!<CR>
@@ -91,6 +92,22 @@ vnoremap R c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
 vnoremap / "zy:<C-u>let @/=@z\|set hlsearch<CR>
 vnoremap H ^
 vnoremap L $
+" vnoremap E "zy:<C-u><C-r>z<CR>
+
+function! ExecuteSelection() abort
+  if visualmode() != 'v'
+    return
+  endif
+  let [l:row_start, l:start] = getpos("'<")[1:2]
+  let [l:row_end, l:end] = getpos("'>")[1:2]
+  let l:lines = getline(row_start, row_end)
+  for l:line in l:lines
+    execute l:line
+  endfor
+endfunction
+
+vnoremap <silent> E :<C-u>call ExecuteSelection()<CR>
+
 
 noremap <silent> <expr> y RegisterPrefix('y')
 noremap <silent> <expr> d RegisterPrefix('d')
@@ -124,6 +141,7 @@ nnoremap <silent> B :<C-u>MagicB<CR>
 noremap gW W
 noremap gB B
 
+tnoremap <Esc> <C-\><C-n>
+tnoremap <C-Esc> <Esc>
 " tnoremap <C-c> <C-\><C-n>
-tnoremap <C-Esc> <C-\><C-n>
-" tnoremap <Tab> <C-\><C-n><C-w>w
+" tnoremap <Tab> <C-\><C-Tab><C-w>w

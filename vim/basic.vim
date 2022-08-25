@@ -131,3 +131,5 @@ autocmd EN BufRead,BufNewFile /etc/nginx/* setlocal ft=nginx
 autocmd EN BufRead,BufNewFile *.ejs setlocal ft=ejs
 autocmd EN BufRead,BufNewFile *.vue setlocal ft=vue
 autocmd EN BufRead,BufNewFile fonts.conf setlocal ft=xml
+
+autocmd TermOpen * startinsert
