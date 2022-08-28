@@ -324,7 +324,11 @@ _powered_cd() {
 
 compdef _powered_cd cd
 
-function new-ipynb() {
+function touch-ipynb() {
+  if [[ -z "$1" ]]; then
+    echo 'arg needed'
+    return 1
+  fi
   cp $HOME/dotfiles/template.ipynb $1.ipynb
 }
 
