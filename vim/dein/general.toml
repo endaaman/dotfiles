@@ -8,6 +8,13 @@ repo = 'sheerun/vim-polyglot'
 repo = 'Shougo/context_filetype.vim'
 hook_add = '''
   let g:context_filetype#search_offset = 10000
+
+  if !exists('g:context_filetype#filetypes')
+    let g:context_filetype#filetypes = {}
+  endif
+  let g:context_filetype#filetypes.bash =
+    \ [{'filetype' : 'python',
+    \   'start' : '^# %%', 'end' : '^# %%'}]
 '''
 
 [[plugins]]
@@ -253,7 +260,7 @@ hook_add = '''
   let g:jupytext_fmt = 'py:percent'
 
   " vimのPython向けシンタックスハイライトを有効にする
-  let g:jupytext_filetype_map = {'py': 'python'}
+  let g:jupytext_filetype_map = {'py:percent': 'bash'}
 '''
 
 
@@ -289,7 +296,6 @@ hook_source = '''
     wincmd l
     let l:chan = &channel
     wincmd h
-    echom l:chan
     let b:slime_config = {
       \ 'jobid': l:chan,
       \ }
