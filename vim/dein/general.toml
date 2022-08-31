@@ -293,9 +293,9 @@ hook_source = '''
   " NeoVim terminal
   let g:slime_target = 'neovim'
   function SlimeOverrideConfig()
-    wincmd l
+    wincmd w
     let l:chan = &channel
-    wincmd h
+    wincmd W
     let b:slime_config = {
       \ 'jobid': l:chan,
       \ }

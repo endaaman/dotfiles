@@ -129,6 +129,7 @@ hook_add = '''
 	  inoremap <silent><buffer> <C-e> <End>
     inoremap <silent><buffer> <C-d> <Delete>
 	  inoremap <silent><buffer><expr> <C-t> denite#do_map('do_action', 'tabopen')
+	  inoremap <silent><buffer><expr> <C-s> denite#do_map('do_action', 'split')
 	  inoremap <silent><buffer><expr> <C-j> denite#do_map('choose_action')
   endfunction
 '''

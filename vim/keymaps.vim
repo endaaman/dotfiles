@@ -106,7 +106,7 @@ function! ExecuteSelection() abort
   endfor
 endfunction
 
-vnoremap <silent> E :<C-u>call ExecuteSelection()<CR>
+vnoremap <silent> <Space>e :<C-u>call ExecuteSelection()<CR>
 
 
 noremap <silent> <expr> y RegisterPrefix('y')
