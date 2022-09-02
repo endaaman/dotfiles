@@ -12,9 +12,19 @@ hook_add = '''
   if !exists('g:context_filetype#filetypes')
     let g:context_filetype#filetypes = {}
   endif
-  let g:context_filetype#filetypes.bash =
-    \ [{'filetype' : 'python',
-    \   'start' : '^# %%', 'end' : '^# %%'}]
+
+  let g:context_filetype#filetypes.ipynb =
+    \ [{
+    \   'filetype' : 'python',
+    \   'start' : '^# %%', 'end' : '\(^# %%\|\%$\)'
+    \ }, {
+    \   'filetype' : 'python',
+    \   'start' : '\%^', 'end' : '\(^# %%\|\%$\)'
+    \ }, {
+    \   'filetype' : '\1',
+    \   'start' : '^# %% \[\(\h\w*\)\]', 'end' : '\(^# %%\|\%$\)'
+    \ }]
+
 '''
 
 [[plugins]]
@@ -260,7 +270,7 @@ hook_add = '''
   let g:jupytext_fmt = 'py:percent'
 
   " vimのPython向けシンタックスハイライトを有効にする
-  let g:jupytext_filetype_map = {'py:percent': 'bash'}
+  let g:jupytext_filetype_map = {'py:percent': 'ipynb'}
 '''
 
 
