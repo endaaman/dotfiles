@@ -16,6 +16,7 @@ except ImportError as e:
     print(e)
 
 try:
+    import torch
     from torch import nn
 except ImportError as e:
     print(e)
