@@ -32,7 +32,7 @@ keycode 47 = colon semicolon
 ! keycode 46 = l L End End
 
 !PageUp -> Home
-keycode 112 = Home
+keycode 112 = Home Home Home Home
 
 !PageDown -> End
-keycode 117 = End
+keycode 117 = End End End End

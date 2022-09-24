@@ -521,7 +521,6 @@ bindkey '^s' copy-buffer
 bindkey '^g' select-repos
 bindkey '^t' goto-current
 bindkey '^z' toggle-fgbg
-bindkey '^k' select-directry-history
 bindkey '^[[Z' reverse-menu-complete
 bindkey '^[[1~' beginning-of-line
 bindkey '^[[4~' end-of-line
@@ -542,7 +541,8 @@ bindkey $prefix'^l' select-git-files
 bindkey $prefix'^o' select-cwd-files-2
 bindkey $prefix'^a' select-pacman-files
 bindkey $prefix'^p' select-pacman-libs
-bindkey $prefix'^k' select-conda-envs
+# bindkey $prefix'^k' select-conda-envs
+bindkey $prefix'^k' select-directry-history
 bindkey $prefix'^y' paste-clipboard
 
 
