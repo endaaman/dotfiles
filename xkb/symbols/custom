@@ -21,3 +21,7 @@ xkb_symbols "va86" {
   key <INS> {[ Home ]};
   key <DELE> {[ End ]};
 };
+
+xkb_symbols "colon" {
+  key <AC10> {[ colon, semicolon ]};
+};
