@@ -1,0 +1,3 @@
+partial alphanumeric_keys xkb_symbols "colon" {
+  key <AC10> {[ colon, semicolon ]};
+};

@@ -1,21 +1,9 @@
-# Caps -> Escape
-# R-Shift -> Muhenkan
-# R-Alt -> Henkan
-# PageUp -> Home
-# PageDown -> End
-
 # ls -l /dev/input/by-path/*
 # sudo evtest /dev/input/event-<num>
 
-# evdev:atkbd:dmi:bvn*:bvr*:bd*:svn*:pn*:pvr
 evdev:atkbd:dmi:*
-  KEYBOARD_KEY_3a=esc  
+  KEYBOARD_KEY_3a=esc
   KEYBOARD_KEY_36=muhenkan
   KEYBOARD_KEY_b8=henkan
-  KEYBOARD_KEY_c9=home 
+  KEYBOARD_KEY_c9=home
   KEYBOARD_KEY_d1=end
-
-# KEYBOARD_KEY_27=colon semicolon
-# KEYBOARD_KEY_28=semicolon
-# KEYBOARD_KEY_70039=esc
-# KEYBOARD_KEY_e049=!home

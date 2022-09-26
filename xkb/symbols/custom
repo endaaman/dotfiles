@@ -1,27 +1,6 @@
-xkb_symbols "mod4" {
-  key <AC06> { type="PC_SUPER_LEVEL2", [ Left ] };
-  key <AC07> { type="PC_SUPER_LEVEL2", [ Down ] };
-  key <AC08> { type="PC_SUPER_LEVEL2", [ Up ] };
-  key <AC09> { type="PC_SUPER_LEVEL2", [ Right ] };
-};
-
-xkb_symbols "us_base" {
-  key <CAPS> {[ Escape ]};
-  key <RALT> {[ Henkan_Mode, Henkan_Mode ]};
-  key <RTSH> {[ Muhenkan ]};
-  key <AC10> {[ colon, semicolon ]};
-  modifier_map Mod1 { Alt_L };
-};
-
-xkb_symbols "escape_as_grave" {
-  key <ESC> {[ grave, asciitilde ]};
-};
-
-xkb_symbols "va86" {
-  key <INS> {[ Home ]};
-  key <DELE> {[ End ]};
-};
-
-xkb_symbols "colon" {
-  key <AC10> {[ colon, semicolon ]};
+default partial alphanumeric_keys modifier_keys
+xkb_symbols "basic" {
+    include "us(basic)"
+    name[Group1]= "CUSTOM";
+    key <AC10>	{[ colon,	semicolon	]};
 };
