@@ -357,12 +357,12 @@ function copy-buffer() {
   if [[ -z "$BUFFER" ]]; then
     data=$(pwd)
   fi
-  print -rn $data | xsel --clipboard --input
+  print -rn $data | wl-copy
 }
 zle -N copy-buffer
 
 function paste-clipboard {
-  LBUFFER+="$(xsel --clipboard --output)"
+  LBUFFER+="$(cb-paste)"
 }
 zle -N paste-clipboard
 
@@ -552,7 +552,6 @@ alias ssudo='\sudo'
 alias sudo='sudo -E '
 alias G='grep'
 alias F='fzf'
-alias C='xsel --clipboard --input'
 alias lf='ll | fzf'
 alias mv='mv -v'
 alias cp='cp -v'
