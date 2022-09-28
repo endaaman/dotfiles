@@ -128,7 +128,7 @@ if false; then
   ln -fs ~/dotfiles/compton.conf ~/.config/compton.conf
   ln -fs ~/.config/compton.conf ~/.config/marco-compton.conf
 
-  ln -fsn ~/dotfiles/xkb ~/.xkb
+  # ln -fsn ~/dotfiles/xkb ~/.xkb
 
   mkdir -p ~/.config/byobu
   ln -fs ~/dotfiles/byobu.conf ~/.config/byobu/.tmux.conf
