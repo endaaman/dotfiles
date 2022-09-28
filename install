@@ -70,6 +70,7 @@ touch ~/.zshrc_local
 ln -fs ~/dotfiles/gitconfig ~/.gitconfig
 ln -fs ~/dotfiles/gitignore_global ~/.gitignore_global
 ln -fs ~/dotfiles/zshrc ~/.zshrc
+ln -fs ~/dotfiles/zshenv ~/.zshenv
 # ln -fs ~/dotfiles/bashrc ~/.bashrc
 ln -fs ~/dotfiles/tmux.conf ~/.tmux.conf
 ln -fs ~/dotfiles/vimrc ~/.vimrc

@@ -26,6 +26,8 @@ if [ ${EUID:-${UID}} = 0 ]; then
   IS_ROOT='is_root'
 fi
 
+# DEFAUTL_PATH=$PATH
+# DOTFILES_PATH=$(realpath $(dirname "$0"))
 
 ###* zplug
 
@@ -159,31 +161,13 @@ fi
 
 ###* Environment
 
-export HISTFILE=$HOME/.zsh_history
-export HISTSIZE=100000
-export SAVEHIST=100000
-
 export VTE_CJK_WIDTH=0
-if which nvim &> /dev/null; then
-  export EDITOR=nvim
-else
-  export EDITOR=vim
-fi
-export FCEDIT="$EDITOR"
-export VISUAL="$EDITOR"
-export SUDO_EDITOR="$EDITOR"
 # export XDG_CONFIG_HOME=~/.config
 export NO_AT_BRIDGE=1
-export WINEARCH=win32
 # export WINEPREFIX=~/.wine
-export FZF_DEFAULT_OPTS='--height 50% --reverse --border --bind "tab:down,btab:up,ctrl-j:toggle+down,ctrl-k:toggle" --exact --cycle --no-sort --multi'
 
-export PATH=~/.bin:~/.local/bin:~/dotfiles/bin:$PATH
 export C=$(date '+%Y%m')
 export CD=~/tmp/$C
-export OCAMLPARAM="_,bin-annot=1"
-export OPAMKEEPBUILDDIR=1
-export VIRTUAL_ENV_DISABLE_PROMPT=1
 if [ -n "$DISPLAY" ] && which xdotool &> /dev/null; then
   export WINDOWID=$(xdotool getwindowfocus)
 fi
