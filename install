@@ -20,6 +20,7 @@ python=false
 ruby=false
 rust=false
 zplug=false
+zinit=false
 dein=false
 firefox=false
 jupyter_vim=false
@@ -33,6 +34,7 @@ for i in "$@" ; do
     'ruby'    ) ruby=true ;;
     'rust'    ) rust=true ;;
     'zplug'   ) zplug=true ;;
+    'zinit'   ) zinit=true ;;
     'dein'    ) dein=true ;;
     'firefox' ) firefox=true ;;
     'jupyter' ) jupyter_vim=true ;;
@@ -242,6 +244,14 @@ if $zplug; then
     cd
     echo
   fi
+fi
+
+if $zinit; then
+  print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+  command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+  command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+      print -P "%F{33} %F{34}Installation successful.%f%b" || \
+      print -P "%F{160} The clone has failed.%f%b"
 fi
 
 

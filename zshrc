@@ -31,23 +31,42 @@ fi
 
 ###* zplug
 
-if [ -d ~/.zplug -a -z "$IS_ROOT" ]; then
-  source ~/.zplug/init.zsh
-  zplug 'zsh-users/zsh-completions'
-  zplug 'zsh-users/zsh-syntax-highlighting', defer:2
-  zplug 'endaaman/zsh-git-prompt', use:'zshrc.sh'
-  # zplug 'stedolan/jq', as:command, from:gh-r, rename-to:jq
-  zplug 'junegunn/fzf-bin', as:command, from:gh-r, rename-to:fzf
-  zplug 'junegunn/fzf', as:command, use:bin/fzf-tmux
-  zplug 'endaaman/lxd-completion-zsh'
-  zplug 'esc/conda-zsh-completion'
-  if ! zplug check --verbose; then
-    printf 'Install? [y/N]: '
-    if read -q; then
-      echo; zplug install
-    fi
-  fi
-  zplug load
+# if [ -d ~/.zplug -a -z "$IS_ROOT" ]; then
+#   source ~/.zplug/init.zsh
+#   zplug 'zsh-users/zsh-completions'
+#   zplug 'zsh-users/zsh-syntax-highlighting', defer:2
+#   zplug 'endaaman/zsh-git-prompt', use:'zshrc.sh'
+#   # zplug 'stedolan/jq', as:command, from:gh-r, rename-to:jq
+#   zplug 'junegunn/fzf-bin', as:command, from:gh-r, rename-to:fzf
+#   zplug 'junegunn/fzf', as:command, use:bin/fzf-tmux
+#   zplug 'endaaman/lxd-completion-zsh'
+#   zplug 'esc/conda-zsh-completion'
+#   if ! zplug check --verbose; then
+#     printf 'Install? [y/N]: '
+#     if read -q; then
+#       echo; zplug install
+#     fi
+#   fi
+#   zplug load
+# fi
+
+if [ -f ~/.local/share/zinit/zinit.git/zinit.zsh -a -z "$IS_ROOT" ]; then
+  source ~/.local/share/zinit/zinit.git/zinit.zsh
+  autoload -Uz _zinit
+  (( ${+_comps} )) && _comps[zinit]=_zinit
+
+  zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust \
+    zsh-users/zsh-completions \
+    zsh-users/zsh-syntax-highlighting \
+    esc/conda-zsh-completion \
+    endaaman/lxd-completion-zsh \
+    src'zshrc.sh' endaaman/zsh-git-prompt
+
+    # from"gh-r" as"program" junegunn/fzf
 fi
 
 
