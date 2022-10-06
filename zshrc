@@ -359,7 +359,7 @@ function copy-buffer() {
   if [[ -z "$BUFFER" ]]; then
     data=$(pwd)
   fi
-  print -rn $data | wl-copy
+  print -rn $data | cb-copy
 }
 zle -N copy-buffer
 

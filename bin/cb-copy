@@ -1,6 +1,5 @@
 #!/bin/bash
 
-echo 'COP'
 if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
   wl-copy "$@"
 else
