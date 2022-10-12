@@ -64,9 +64,8 @@ if [ -f ~/.local/share/zinit/zinit.git/zinit.zsh -a -z "$IS_ROOT" ]; then
     zsh-users/zsh-syntax-highlighting \
     esc/conda-zsh-completion \
     endaaman/lxd-completion-zsh \
-    src'zshrc.sh' endaaman/zsh-git-prompt
-
-    # from"gh-r" as"program" junegunn/fzf
+    src'zshrc.sh' endaaman/zsh-git-prompt \
+    from"gh-r" as"program" junegunn/fzf
 fi
 
 
