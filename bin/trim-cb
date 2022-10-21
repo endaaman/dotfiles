@@ -1,0 +1,7 @@
+#!/usr/bin/python
+#
+import pyperclip
+
+x = pyperclip.paste()
+x = x.replace(' ', '').replace('\n', '')
+pyperclip.copy(x)
