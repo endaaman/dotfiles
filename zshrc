@@ -312,13 +312,13 @@ function powered_cd() {
   fi
 }
 
-_powered_cd_history() {
+function _powered_cd_history() {
   # local _l=(aaa bbb ccc ddd)
   local -a _l=(${(@f)"$(_call_program history tac ~/.powered_cd.log)"})
   _describe -t history "Directory history" _l
 }
 
-_powered_cd() {
+function _powered_cd() {
   _alternative 'files:Local:_files' 'arguments:custom arg:_powered_cd_history'
   # _arguments -C \
   #   '1: : _files _powered_cd_history'
@@ -332,6 +332,15 @@ function touch-ipynb() {
     return 1
   fi
   cp $HOME/dotfiles/template.ipynb $1.ipynb
+}
+
+function trash-takeback() {
+  target=$(trash-list | fzf | cut -d' ' -f3)
+  if [[ -z "$target" ]]; then
+    echo "no item to takeback"
+    return 1
+  fi
+  print 0 | trash-restore $target
 }
 
 
