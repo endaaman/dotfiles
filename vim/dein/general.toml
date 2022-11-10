@@ -187,6 +187,12 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'lambdalisue/fern.vim'
+hook_add = '''
+  " nnoremap <C-g> :<C-u>Fern .<CR>
+'''
+
+[[plugins]]
 repo = 'preservim/nerdtree'
 hook_add = '''
   " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
