@@ -383,14 +383,19 @@ function goto-realpath {
 }
 zle -N goto-realpath
 
-function open-in-file-explorer() {
+function xdg-open-current-buffer() {
   local target='.'
   if [[ -n $BUFFER ]]; then
     target=$BUFFER
   fi
   xdg-open $target > /dev/null 2>&1
 }
-zle -N open-in-file-explorer
+zle -N xdg-open-current-buffer
+
+function xdg-open-current-dir() {
+  xdg-open . > /dev/null 2>&1
+}
+zle -N xdg-open-current-dir
 
 function edit-line() {
   touch /tmp/LINE.sh
@@ -527,7 +532,7 @@ zle -N select-conda-envs
 
 bindkey "^o" select-cwd-files
 bindkey '^j' select-history
-bindkey "^x" open-in-file-explorer
+bindkey "^x" xdg-open-current-dir
 bindkey '^s' copy-buffer
 bindkey '^g' select-repos
 bindkey '^t' goto-current
@@ -555,6 +560,7 @@ bindkey $prefix'^p' select-pacman-libs
 # bindkey $prefix'^k' select-conda-envs
 bindkey $prefix'^k' select-directry-history
 bindkey $prefix'^y' paste-clipboard
+bindkey $prefix'^x' xdg-open-current-buffer
 
 
 ###* Alias
