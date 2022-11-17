@@ -32,7 +32,8 @@ function safe_dofile(path)
 end
 
 tym.set_config({
-  shell = home .. '/dotfiles/bin/tmux-attach-or-new',
+  -- shell = home .. '/dotfiles/bin/tmux-attach-or-new',
+  shell = 'tmux new -As0',
   cursor_blink_mode = 'off',
   autohide = true,
   silent = true,

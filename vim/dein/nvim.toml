@@ -123,7 +123,7 @@ hook_add = '''
 	  inoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
 	  " inoremap <silent><buffer> <Tab> <Esc><C-w>p:call cursor(line('.')+1,1)<CR><C-w>pA
 	  " inoremap <silent><buffer> <S-Tab> <Esc><C-w>p:call cursor(line('.')-1,1)<CR><C-w>pA
-	  " inoremap <silent><buffer><expr> <Tab> denite#increment_parent_cursor(1)
+	  inoremap <silent><buffer><expr> <Tab> denite#increment_parent_cursor(1)
 	  inoremap <silent><buffer><expr> <S-Tab> denite#increment_parent_cursor(-1)
 
 	  inoremap <silent><buffer> <C-a> <Home>

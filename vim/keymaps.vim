@@ -21,8 +21,8 @@ noremap <Space><C-p> <C-w>v<C-w>w:<C-u>terminal ipython<CR><C-\><C-n><C-w>p
 nnoremap <S-Left> :tabm -1<CR>
 nnoremap <S-Right> :tabm +1<CR>
 noremap <Space>q :<C-u>:q!<CR>
-nnoremap <Space>l <C-i>
-nnoremap <Space>h <C-o>
+" nnoremap <Space>l <nop>
+" nnoremap <Space>h <nop>
 nnoremap <expr> <Space>/ SearchByRegister()
 
 noremap j gj
