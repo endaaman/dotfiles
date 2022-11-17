@@ -8,6 +8,7 @@ disable=unused-argument,
         no-member,
         attribute-defined-outside-init,
         too-many-arguments,
+        not-callable,
         # C0326, C0115, C0116 # for alignment
 
 # [VARIABLES]
