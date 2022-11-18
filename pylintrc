@@ -9,6 +9,7 @@ disable=unused-argument,
         attribute-defined-outside-init,
         too-many-arguments,
         not-callable,
+        too-few-public-methods,
         # C0326, C0115, C0116 # for alignment
 
 # [VARIABLES]
