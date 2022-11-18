@@ -1,7 +1,7 @@
 vim/local.vim
 tym/local.lua
 tym/theme.lua
-fonts/.uuid
+.uuid
 xkb/keymap/current
 Xmodmap
 .ccls-cache/

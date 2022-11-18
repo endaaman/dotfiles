@@ -13,7 +13,12 @@ disable=unused-argument,
         too-many-statements,
         too-many-branches,
         too-many-locals,
+        too-many-attributes,
+        no-self-use,
         # C0326, C0115, C0116 # for alignment
 
 # [VARIABLES]
 # allow-global-unused-variables=yes
+
+[FORMAT]
+max-line-length=140
