@@ -22,6 +22,7 @@ rust=false
 zplug=false
 zinit=false
 dein=false
+jetpack=false
 firefox=false
 jupyter_vim=false
 conda=false
@@ -36,6 +37,7 @@ for i in "$@" ; do
     'zplug'   ) zplug=true ;;
     'zinit'   ) zinit=true ;;
     'dein'    ) dein=true ;;
+    'jetpack' ) jetpack=true ;;
     'firefox' ) firefox=true ;;
     'jupyter' ) jupyter_vim=true ;;
     'conda'   ) conda=true ;;
@@ -270,6 +272,10 @@ if $dein; then
     cd
     echo
   fi
+fi
+
+if $jetpack; then
+  curl -fLo ~/.local/share/nvim/site/pack/jetpack/opt/vim-jetpack/plugin/jetpack.vim --create-dirs https://raw.githubusercontent.com/tani/vim-jetpack/master/plugin/jetpack.vim
 fi
 
 if $jupyter_vim; then

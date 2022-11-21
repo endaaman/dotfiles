@@ -8,18 +8,18 @@ augroup EN
   autocmd!
 augroup END
 
-let g:dein_dir = expand('~/.cache/dein')
 
 if $TERM =~# '256color' && !exists('g:rich')
   let g:rich = 1
 endif
 
-if isdirectory(g:dein_dir) && !exists('g:dein') && $USER != 'root'
-  if $VIM_USE_DEIN
-    let g:dein = 1
-  endif
+let g:dein_dir = expand('~/.cache/dein')
+let s:jetpackfile = stdpath('data') .. '/site/pack/jetpack/opt/vim-jetpack/plugin/jetpack.vim'
 
-  if !$VIM_NO_JETPACK
+if $USER != 'root' && !$VIM_PURE
+  if $VIM_USE_DEIN && isdirectory(g:dein_dir)
+    let g:dein = 1
+  elseif filereadable(s:jetpackfile)
     let g:jetpack = 1
   endif
 endif
