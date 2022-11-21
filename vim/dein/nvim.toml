@@ -190,9 +190,9 @@ hook_post_source = '''
    call denite#custom#source('grep', 'converters', ['converter/abbr_word'])
 '''
 
-[[plugins]]
-repo = 'TheLeoP/fern-renderer-web-devicons.nvim'
-hook_add = '''
-  let g:fern#renderer = 'nvim-web-devicons'
-  " let g:glyph_palette#palette = v:lua.require'fr-web-icons'.palette()
-'''
+# [[plugins]]
+# repo = 'TheLeoP/fern-renderer-web-devicons.nvim'
+# hook_add = '''
+#   let g:fern#renderer = 'nvim-web-devicons'
+#   " let g:glyph_palette#palette = v:lua.require'fr-web-icons'.palette()
+# '''

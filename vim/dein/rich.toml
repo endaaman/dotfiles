@@ -61,6 +61,12 @@ hook_add = '''
   " let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
   let g:DevIconsDefaultFolderOpenSymbol = ''
   let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+
+  " let g:fern#renderer#default#leading = ' '
+  " let g:fern#renderer#default#root_symbol = ''
+  " let g:fern#renderer#default#leaf_symbol = '- '
+  " let g:fern#renderer#default#collapsed_symbol = ' '
+  " let g:fern#renderer#default#expanded_symbol = ' '
 '''
 hook_post_source = '''
   call webdevicons#refresh()

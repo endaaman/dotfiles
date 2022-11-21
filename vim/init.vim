@@ -14,8 +14,14 @@ if $TERM =~# '256color' && !exists('g:rich')
   let g:rich = 1
 endif
 
-if isdirectory(g:dein_dir) && !exists('g:dein') && $USER != 'root' && !$PURE_VIM
-  let g:dein = 1
+if isdirectory(g:dein_dir) && !exists('g:dein') && $USER != 'root'
+  if $VIM_USE_DEIN
+    let g:dein = 1
+  endif
+
+  if !$VIM_NO_JETPACK
+    let g:jetpack = 1
+  endif
 endif
 
 runtime! functions.vim
@@ -23,6 +29,8 @@ runtime! basic.vim
 runtime! keymaps.vim
 if get(g:, 'dein')
   runtime! dein.vim
+elseif get(g:, 'jetpack')
+  runtime! jetpack.vim
 else
   runtime! vanilla.vim
 endif
