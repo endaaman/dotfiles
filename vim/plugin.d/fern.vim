@@ -55,6 +55,8 @@ endfunction
 augroup fern-custom
   au! *
   au FileType fern call s:init_fern()
+  " au VimEnter,WinEnter,BufWinEnter fern setlocal cursorline
+  " au WinLeave fern setlocal nocursorline
 augroup END
 
 function! s:on_highlight() abort

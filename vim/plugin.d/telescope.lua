@@ -12,6 +12,8 @@ vim.keymap.set('n', '<Space>h', builtin.help_tags, {})
 vim.keymap.set('n', '<Space>d', builtin.git_status, {})
 vim.keymap.set('n', '<Space><Space>', builtin.resume, {})
 
+require('telescope').load_extension('coc')
+
 
 local default_maps = {
   n = {
@@ -40,5 +42,13 @@ telescope.setup{
     git_status = {
       mappings = default_maps,
     },
+  },
+
+  extensions = {
+    coc = {
+        -- theme = 'ivy',
+        -- always use Telescope locations to preview definitions/declarations/implementations etc
+        prefer_locations = true,
+    }
   },
 }

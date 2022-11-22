@@ -81,6 +81,7 @@ if has('nvim')
   " Jetpack 'Shougo/denite.nvim'
   Jetpack 'nvim-lua/plenary.nvim'
   Jetpack 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
+  Jetpack 'fannheyward/telescope-coc.nvim'
   if get(g:, 'rich')
     Jetpack 'nvim-tree/nvim-web-devicons'
   endif
