@@ -1,10 +1,14 @@
 nnoremap <C-g> :<C-u>Fern . -drawer -width=40 -toggle -reveal=%<CR>
 
 let g:fern#disable_default_mappings = 1
+if get(g:, 'rich')
+  let g:fern#renderer = 'nerdfont'
+endif
 
 function! s:init_fern() abort
   setlocal nonumber
   setlocal nocursorcolumn
+  setlocal guicursor=n:hor2000
 
   nmap <buffer><silent><expr>
     \ <Plug>(fern-my-open-or-expand-collapse)
@@ -21,9 +25,16 @@ function! s:init_fern() abort
   nmap <buffer> T <Plug>(fern-action-open:tabedit)gT
   nmap <buffer> i <Plug>(fern-action-open:split)
   nmap <buffer> s <Plug>(fern-action-open:vsplit)
+  nmap <buffer> X <Plug>(fern-action-open:system)
   nmap <buffer> R <Plug>(fern-action-reload)
-  nmap <buffer> d <Plug>(fern-action-trash=)
+
+  nmap <buffer> A <Plug>(fern-action-new-path=)
+  nmap <buffer> m <Plug>(fern-action-mark)j
+  nmap <buffer> M <Plug>(fern-action-rename:bottom)
+  nmap <buffer> D <Plug>(fern-action-trash=)
+
   nmap <buffer> q :<C-u>quit<CR>
+
 
   " nmap <buffer> cd <Plug>(fern-action-cd)
   " nmap <buffer> go <Plug>(fern-action-open:edit)<C-w>p
@@ -43,8 +54,9 @@ augroup fern-custom
 augroup END
 
 function! s:on_highlight() abort
-  highlight link FernRootSymbol Title
-  highlight link FernRootText   Title
+  hi link FernRootSymbol Title
+  hi link FernRootText   Title
+  " hi CursorLine gui=underline cterm=underline
 endfunction
 
 augroup my-fern-highlight
@@ -52,20 +64,12 @@ augroup my-fern-highlight
   autocmd User FernHighlight call s:on_highlight()
 augroup END
 
-
-
 " let g:fern_git_status#disable_ignored = 1
 " let g:fern_git_status#disable_untracked = 1
 let g:fern_git_status#disable_submodules = 1
 " let g:fern_git_status#disable_directories = 1
 
-" Jetpack 'lambdalisue/glyph-palette.vim'
 " augroup my-glyph-palette
 "   autocmd! *
 "   autocmd FileType fern call glyph_palette#apply()
-"   " autocmd FileType nerdtree,startify call glyph_palette#apply()
 " augroup END
-
-
-" Jetpack 'lambdalisue/fern-renderer-nerdfont.vim'
-" let g:fern#renderer = "nerdfont"

@@ -79,7 +79,10 @@ endif
 if get(g:, 'rich')
   Jetpack 'endaaman/lightline-hybrid.vim'
   Jetpack 'itchyny/lightline.vim'
-  Jetpack 'ryanoasis/vim-devicons'  "call webdevicons#refresh()
+  " Jetpack 'ryanoasis/vim-devicons'  "call webdevicons#refresh()
+  Jetpack 'lambdalisue/nerdfont.vim'
+  Jetpack 'lambdalisue/fern-renderer-nerdfont.vim'
+  " Jetpack 'lambdalisue/glyph-palette.vim'
 endif
 
 call jetpack#end()
