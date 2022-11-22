@@ -13,10 +13,10 @@ disable=unused-argument,
         too-many-statements,
         too-many-branches,
         too-many-locals,
-        too-many-attributes,
-        too-many-attributes,
-        no-self-use,
+        # too-many-attributes,
+        # no-self-use,
         too-many-instance-attributes,
+        unnecessary-lambda-assignment
         # C0326, C0115, C0116 # for alignment
 
 # [VARIABLES]

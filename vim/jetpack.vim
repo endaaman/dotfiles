@@ -16,10 +16,9 @@ call jetpack#begin()
 
 " Common
 Jetpack 'tani/vim-jetpack', {'opt': 1} "bootstrap
-Jetpack 'Shougo/dein.vim'
+Jetpack 'editorconfig/editorconfig-vim'
 Jetpack 'sheerun/vim-polyglot'
 Jetpack 'rhysd/conflict-marker.vim'
-Jetpack 'editorconfig/editorconfig-vim'
 Jetpack 'rking/ag.vim'
 Jetpack 'jiangmiao/auto-pairs'
 Jetpack 'gregsexton/MatchTag'
@@ -95,7 +94,7 @@ if get(g:, 'rich')
   Jetpack 'lambdalisue/nerdfont.vim'
   Jetpack 'lambdalisue/fern-renderer-nerdfont.vim'
   " Jetpack 'lambdalisue/fern-renderer-devicons.vim'
-  " Jetpack 'lambdalisue/glyph-palette.vim'
+  Jetpack 'lambdalisue/glyph-palette.vim'
 endif
 
 call jetpack#end()

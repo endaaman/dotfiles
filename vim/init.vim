@@ -13,12 +13,12 @@ if $TERM =~# '256color' && !exists('g:rich')
 endif
 
 let g:dein_dir = expand('~/.cache/dein')
-let s:jetpackfile = stdpath('data') .. '/site/pack/jetpack/opt/vim-jetpack/plugin/jetpack.vim'
+let g:jetpack_file = stdpath('data') .. '/site/pack/jetpack/opt/vim-jetpack/plugin/jetpack.vim'
 
 if $USER != 'root' && !$VIM_PURE
   if $VIM_USE_DEIN && isdirectory(g:dein_dir)
     let g:dein = 1
-  elseif filereadable(s:jetpackfile)
+  elseif filereadable(g:jetpack_file)
     let g:jetpack = 1
   endif
 endif

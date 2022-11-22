@@ -72,7 +72,7 @@ augroup END
 let g:fern_git_status#disable_submodules = 1
 " let g:fern_git_status#disable_directories = 1
 
-" augroup my-glyph-palette
-"   autocmd! *
-"   autocmd FileType fern call glyph_palette#apply()
-" augroup END
+augroup my-glyph-palette
+  autocmd! *
+  autocmd FileType fern call glyph_palette#apply()
+augroup END
