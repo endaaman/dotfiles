@@ -1,3 +1,4 @@
+finish
 autocmd FileType denite let b:deoplete_disable_auto_complete = 1
 autocmd FileType denite-filter let b:deoplete_disable_auto_complete = 1
 
@@ -11,8 +12,8 @@ nnoremap <Space>g :<C-u>Denite grep -no-empty<CR>
 nnoremap <Space>G :<C-u>Denite grep -input=`@0`<CR>
 nnoremap <Space>? :<C-u>Denite grep -input=`@/`<CR>
 nnoremap <Space>W :<C-u>DeniteCursorWord grep -no-empty<CR>
-nnoremap <Space>c :<C-u>Denite command<CR>
-nnoremap <Space>C :<C-u>Denite command_history<CR>
+nnoremap <Space>c :<C-u>Denite command_history<CR>
+nnoremap <Space>C :<C-u>Denite colorscheme<CR>
 nnoremap <Space>p :<C-u>Denite my/clipboard<CR>
 nnoremap <Space>P :<C-u>Denite my/clipboard -default-action=prepend<CR>
 nnoremap <Space>r :<C-u>Denite my/clipboard -default-action=yank<CR>

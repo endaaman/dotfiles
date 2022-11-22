@@ -6,6 +6,11 @@ function! s:load_config(p) abort
   endfor
 endfunction
 
+function! s:load_lua(p) abort
+  for path in glob(a:p, 1, 1, 1)
+    execute printf('luafile %s', fnameescape(path))
+  endfor
+endfunction
 
 call jetpack#begin()
 
@@ -41,10 +46,11 @@ Jetpack 'hanschen/vim-ipython-cell'
 Jetpack 'jpalardy/vim-slime'
 
 " Appearance
-Jetpack 'chriskempson/base16-vim'
+Jetpack 'cocopon/iceberg.vim'
+Jetpack 'EdenEast/nightfox.nvim'
+" Jetpack 'chriskempson/base16-vim'
 Jetpack 'jacoborus/tender.vim'
 Jetpack 'kristijanhusak/vim-hybrid-material'
-Jetpack 'cocopon/iceberg.vim'
 Jetpack 'arcticicestudio/nord-vim'
 Jetpack 'ErichDonGubler/vim-sublime-monokai'
 Jetpack 'ayu-theme/ayu-vim'
@@ -72,16 +78,23 @@ Jetpack 'mattn/vim-goimports', {'ft': 'go'}
 
 if has('nvim')
   Jetpack 'neoclide/coc.nvim', { 'branch': 'release' }
-  Jetpack 'neoclide/coc-denite'
-  Jetpack 'Shougo/denite.nvim'
+  " Jetpack 'neoclide/coc-denite'
+  " Jetpack 'Shougo/denite.nvim'
+  Jetpack 'nvim-lua/plenary.nvim'
+  Jetpack 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
+  if get(g:, 'rich')
+    Jetpack 'nvim-tree/nvim-web-devicons'
+  endif
 endif
 
 if get(g:, 'rich')
   Jetpack 'endaaman/lightline-hybrid.vim'
   Jetpack 'itchyny/lightline.vim'
+
   " Jetpack 'ryanoasis/vim-devicons'  "call webdevicons#refresh()
   Jetpack 'lambdalisue/nerdfont.vim'
   Jetpack 'lambdalisue/fern-renderer-nerdfont.vim'
+  " Jetpack 'lambdalisue/fern-renderer-devicons.vim'
   " Jetpack 'lambdalisue/glyph-palette.vim'
 endif
 
@@ -102,5 +115,9 @@ endif
 
 " call s:load_config(expand('<sfile>:p:h') .. '/plugin-pre.d/*.vim')
 call s:load_config(expand('<sfile>:p:h') .. '/plugin.d/*.vim')
+if has('nvim')
+  call s:load_lua(expand('<sfile>:p:h') .. '/plugin.d/*.lua')
+endif
+
 
 colorscheme iceberg

@@ -3,12 +3,13 @@ nnoremap <C-g> :<C-u>Fern . -drawer -width=40 -toggle -reveal=%<CR>
 let g:fern#disable_default_mappings = 1
 if get(g:, 'rich')
   let g:fern#renderer = 'nerdfont'
+  " let g:fern#renderer = 'devicons'
 endif
 
 function! s:init_fern() abort
   setlocal nonumber
   setlocal nocursorcolumn
-  setlocal guicursor=n:hor2000
+  " setlocal guicursor=n:hor2000
 
   nmap <buffer><silent><expr>
     \ <Plug>(fern-my-open-or-expand-collapse)
@@ -35,6 +36,9 @@ function! s:init_fern() abort
 
   nmap <buffer> q :<C-u>quit<CR>
 
+  " let s:guicuror_back = &guicursor
+  " setlocal guicursor=n:hor25
+  " au BufLeave fern setlocal guicursor=s:guicuror_back
 
   " nmap <buffer> cd <Plug>(fern-action-cd)
   " nmap <buffer> go <Plug>(fern-action-open:edit)<C-w>p
@@ -49,14 +53,13 @@ function! s:init_fern() abort
 endfunction
 
 augroup fern-custom
-  autocmd! *
-  autocmd FileType fern call s:init_fern()
+  au! *
+  au FileType fern call s:init_fern()
 augroup END
 
 function! s:on_highlight() abort
   hi link FernRootSymbol Title
   hi link FernRootText   Title
-  " hi CursorLine gui=underline cterm=underline
 endfunction
 
 augroup my-fern-highlight
