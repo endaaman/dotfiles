@@ -1,9 +1,11 @@
 packadd vim-jetpack
 
+function! s:load_config(p) abort
+  for path in glob(a:p, 1, 1, 1)
+    execute printf('source %s', fnameescape(path))
+  endfor
+endfunction
 
-for path in glob('$VIMHOME/pre-plugin.d/*.vim', 1, 1, 1)
-  execute printf('source %s', fnameescape(path))
-endfor
 
 call jetpack#begin()
 
@@ -95,8 +97,7 @@ else
   silent! packadd vim-healthcheck
 endif
 
-for path in glob('$VIMHOME/plugin.d/*.vim', 1, 1, 1)
-  execute printf('source %s', fnameescape(path))
-endfor
+" call s:load_config(expand('<sfile>:p:h') .. '/plugin-pre.d/*.vim')
+call s:load_config(expand('<sfile>:p:h') .. '/plugin.d/*.vim')
 
 colorscheme iceberg

@@ -1,4 +1,3 @@
-
 let g:precious_enable_switchers = {
 \ '*' : {
 \  'setfiletype' : 1
@@ -30,7 +29,7 @@ let g:context_filetype#filetypes.ipynb =
 let g:vim_textobj_parameter_mapping = 'a'
 let g:winresizer_start_key = '<Space>R'
 
-# git-gutter
+" git-gutter
 nnoremap <C-k> :<C-u>GitGutterPrevHunk<CR>
 nnoremap <C-j> :<C-u>GitGutterNextHunk<CR>
 autocmd EN BufWritePost * :GitGutter
