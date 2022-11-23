@@ -117,7 +117,7 @@ autocmd EN InsertLeave * set nopaste
 
 highlight default TrailingSpaces ctermbg=green guibg=green
 autocmd EN ColorScheme * highlight default TrailingSpaces ctermbg=green guibg=green
-let s:match_trailing_spaces_ignores = ['defx', 'qf', 'nerdtree']
+let s:match_trailing_spaces_ignores = ['defx', 'qf', 'nerdtree', 'TelescopePrompt']
 autocmd EN BufEnter,InsertEnter,InsertLeave,FileType * call MatchTrailingSpaces(0, s:match_trailing_spaces_ignores)
 " autocmd EN BufWinLeave * call clearmatches()
 " autocmd EN BufWritePre * call TrimTrailingSpaces()

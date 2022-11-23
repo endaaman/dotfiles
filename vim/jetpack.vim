@@ -34,8 +34,9 @@ Jetpack 'Yggdroot/indentLine'
 Jetpack 'Shougo/echodoc.vim'
 Jetpack 'airblade/vim-gitgutter'
 Jetpack 'simeji/winresizer'
+Jetpack 'thinca/vim-quickrun'
 " Jetpack 'junegunn/vim-easy-align'
-"
+
 Jetpack 'lambdalisue/fern.vim'
 Jetpack 'lambdalisue/fern-git-status.vim'
 Jetpack 'sgur/vim-textobj-parameter'
@@ -77,14 +78,11 @@ Jetpack 'mattn/vim-goimports', {'ft': 'go'}
 
 if has('nvim')
   Jetpack 'neoclide/coc.nvim', { 'branch': 'release' }
-  " Jetpack 'neoclide/coc-denite'
-  " Jetpack 'Shougo/denite.nvim'
   Jetpack 'nvim-lua/plenary.nvim'
   Jetpack 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
   Jetpack 'fannheyward/telescope-coc.nvim'
-  if get(g:, 'rich')
-    Jetpack 'nvim-tree/nvim-web-devicons'
-  endif
+  " Jetpack 'neoclide/coc-denite'
+  " Jetpack 'Shougo/denite.nvim'
 endif
 
 if get(g:, 'rich')
@@ -96,6 +94,9 @@ if get(g:, 'rich')
   Jetpack 'lambdalisue/fern-renderer-nerdfont.vim'
   " Jetpack 'lambdalisue/fern-renderer-devicons.vim'
   Jetpack 'lambdalisue/glyph-palette.vim'
+  if has('nvim')
+    Jetpack 'nvim-tree/nvim-web-devicons'
+  endif
 endif
 
 call jetpack#end()
