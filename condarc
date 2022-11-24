@@ -3,6 +3,6 @@ auto_activate_base: false
 channel_priority: true
 channels:
   - pytorch
-  - anaconda
   - conda-forge
+  - anaconda
   - defaults
