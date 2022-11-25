@@ -112,8 +112,9 @@ autocmd EN ColorScheme * highlight EndOfBuffer guibg=NONE ctermbg=NONE
 
 autocmd EN InsertLeave * set cursorline | set cursorcolumn
 autocmd EN InsertEnter * set nocursorline | set nocursorcolumn
-autocmd EN CursorHold * call ShiftRegister()
+" autocmd EN CursorHold * call ShiftRegister()
 autocmd EN InsertLeave * set nopaste
+
 
 highlight default TrailingSpaces ctermbg=green guibg=green
 autocmd EN ColorScheme * highlight default TrailingSpaces ctermbg=green guibg=green
