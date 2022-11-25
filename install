@@ -63,6 +63,7 @@ mkdir -p ~/.config/fontconfig
 mkdir -p ~/.config/systemd/user
 mkdir -p ~/.local/share/systemd/user/
 mkdir -p ~/.config/tym
+mkdir -p ~/.config/zellij
 mkdir -p ~/.go
 mkdir -p ~/.local/share/fonts
 mkdir -p ~/src
@@ -89,6 +90,7 @@ ln -fs ~/dotfiles/ideavimrc ~/.ideavimrc
 ln -fs ~/dotfiles/latexmkrc ~/.latexmkrc
 ln -fs ~/dotfiles/systemd/* ~/.local/share/systemd/user/
 ln -fs ~/dotfiles/ipython/startup/* ~/.ipython/profile_default/startup
+ln -fs ~/dotfiles/zellij.kdl ~/.config/zellij/config.kdl
 
 # GUI
 if $gui; then

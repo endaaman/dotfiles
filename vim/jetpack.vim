@@ -75,6 +75,7 @@ Jetpack 'rust-lang/rust.vim', {'ft': 'rust'}
 Jetpack 'racer-rust/vim-racer', {'ft': 'rust'}
 Jetpack 'rhysd/rust-doc.vim', {'ft': 'rust'}
 Jetpack 'mattn/vim-goimports', {'ft': 'go'}
+Jetpack 'imsnif/kdl.vim', {'ft': 'kdl'}
 
 if has('nvim')
   Jetpack 'neoclide/coc.nvim', { 'branch': 'release' }
