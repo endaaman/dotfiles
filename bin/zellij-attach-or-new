@@ -1,0 +1,9 @@
+#!/bin/bash
+
+ss=$(zellij list-sessions)
+if [ $? -ne 0 ]; then
+  zellij
+  exit 0
+fi
+
+zellij attach $(echo $ss | head -n 1)
