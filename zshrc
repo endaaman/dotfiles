@@ -242,6 +242,13 @@ if which java &> /dev/null; then
   export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:/bin/java::")
 fi
 
+if which virtualenvwrapper.sh &> /dev/null; then
+  export WORKON_HOME=$HOME/.virtualenvs
+  if [ -z "$VIRTUALENVWRAPPER_SCRIPT" ];
+    source $(virtualenvwrapper.sh)
+  fi
+fi
+
 __conda_setup="$("$CONDA_BASE/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
   eval "$__conda_setup"
