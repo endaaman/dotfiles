@@ -1,8 +1,13 @@
 local telescope = require('telescope')
 local actions = require('telescope.actions')
+local make_entry = require "telescope.make_entry"
 local action_layout = require('telescope.actions.layout')
 local builtin = require('telescope.builtin')
+local action_state = require('telescope.actions.state')
 local sorters = require('telescope.sorters')
+local pickers = require('telescope.pickers')
+local finders = require('telescope.finders')
+local conf = require('telescope.config').values
 
 vim.keymap.set('n', '<Space>f', builtin.git_files, {})
 vim.keymap.set('n', '<Space>o', builtin.oldfiles, {})
@@ -14,6 +19,47 @@ vim.keymap.set('n', '<Space>W', function()
   builtin.live_grep({ default_text=vim.fn.expand('<cword>') })
 end, {})
 
+local clipboard = function(opts)
+
+  local cmd
+  if 1 == vim.fn.executable 'copyq' then
+    cmd = { 'copyq', 'tab', 'clipboard', 'read' }
+  elseif 1 == vim.fn.executable 'qdbus' then
+    cmd = { 'qdbus', 'org.kde.klipper', '/klipper', 'org.kde.klipper.klipper.getClipboardHistoryMenu' }
+  else
+    return 1
+  end
+
+  pickers
+    .new(opts, {
+      prompt_title = "Klipper",
+      finder = finders.new_oneshot_job(
+        cmd,
+        opts
+      ),
+      -- previewer = conf.qflist_previewer(opts),
+      sorter = conf.generic_sorter(opts),
+      attach_mappings = function(v)
+        actions.select_default:replace(function(bufnr)
+          print(bufnr)
+          local selection = action_state.get_selected_entry()
+          if selection == nil then
+            print('nil')
+            utils.__warn_no_selection "actions.paste_register"
+            return
+          end
+          print(vim.fn.printf('hi %s', selection.content))
+          actions.close(bufnr)
+        end)
+        return true
+      end,
+    })
+    :find()
+end
+
+vim.keymap.set('n', '<Space>r', function()
+  clipboard({})
+end, {})
 
 vim.keymap.set('n', '<Space><Space>', builtin.resume, {})
 
