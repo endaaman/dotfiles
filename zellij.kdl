@@ -3,6 +3,7 @@ simplified_ui true
 // theme_dir "/path/to/my/theme_dir"
 default_layout "compact"
 default_mode "normal"
+pane_frames false
 
 keybinds {
     normal {
@@ -18,10 +19,13 @@ keybinds {
         bind "Alt r" { SwitchToMode "RenameTab"; TabNameInput 0; }
 
         unbind "Ctrl s"
+        // bind "Ctrl Alt p" { SwitchToMode "pane"; }
         unbind "Ctrl h"
         unbind "Ctrl t"
+        // bind "Ctrl Alt t" { SwitchToMode "tab"; }
         unbind "Ctrl g"
         unbind "Ctrl p"
+        // bind "Ctrl Alt p" { SwitchToMode "pane"; }
         unbind "Ctrl n"
         unbind "Ctrl o"
     }
