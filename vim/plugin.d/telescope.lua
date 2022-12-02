@@ -26,6 +26,7 @@ local clipboard = function(opts)
     cmd = { 'copyq', 'tab', 'clipboard', 'read' }
   elseif 1 == vim.fn.executable 'qdbus' then
     cmd = { 'qdbus', 'org.kde.klipper', '/klipper', 'org.kde.klipper.klipper.getClipboardHistoryMenu' }
+    -- qdbus org.kde.klipper /klipper org.kde.klipper.klipper.getClipboardHistoryItem 0
   else
     return 1
   end

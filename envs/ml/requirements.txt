@@ -35,6 +35,7 @@ nvidia-cudnn-cu11==8.5.0.96
 omegaconf==2.2.3
 opencv-python-headless==4.6.0.66
 openpyxl==3.0.10
+openslide-python==1.2.0
 packaging==21.3
 pandas==1.5.2
 parso==0.8.3
@@ -47,6 +48,7 @@ ptflops==0.6.9
 ptyprocess==0.7.0
 pure-eval==0.2.2
 pycocotools==2.0.6
+pydicom==2.3.1
 Pygments==2.13.0
 pylint==2.15.7
 pyparsing==3.0.9
