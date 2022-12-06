@@ -18,6 +18,11 @@ vim.keymap.set('n', '<Space>g', builtin.live_grep, {})
 vim.keymap.set('n', '<Space>W', function()
   builtin.live_grep({ default_text=vim.fn.expand('<cword>') })
 end, {})
+vim.keymap.set('n', '<Space>G', function()
+  local reg = vim.fn.getreg('+')
+  local first = reg:gmatch("[^\r\n]+")()
+  builtin.live_grep({ default_text=first })
+end, {})
 
 local clipboard = function(opts)
 
