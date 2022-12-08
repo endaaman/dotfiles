@@ -19,7 +19,7 @@ Jetpack 'tani/vim-jetpack', {'opt': 1} "bootstrap
 Jetpack 'editorconfig/editorconfig-vim'
 Jetpack 'sheerun/vim-polyglot'
 Jetpack 'rhysd/conflict-marker.vim'
-Jetpack 'rking/ag.vim'
+" Jetpack 'rking/ag.vim'
 Jetpack 'jiangmiao/auto-pairs'
 Jetpack 'gregsexton/MatchTag'
 Jetpack 'tomtom/tcomment_vim'
@@ -35,11 +35,14 @@ Jetpack 'Shougo/echodoc.vim'
 Jetpack 'airblade/vim-gitgutter'
 Jetpack 'simeji/winresizer'
 Jetpack 'thinca/vim-quickrun'
+Jetpack 'kana/vim-textobj-user'
+Jetpack 'thinca/vim-textobj-between'
+Jetpack 'thinca/vim-textobj-keyvalue'
+Jetpack 'sgur/vim-textobj-parameter'
 " Jetpack 'junegunn/vim-easy-align'
 
 Jetpack 'lambdalisue/fern.vim'
 Jetpack 'lambdalisue/fern-git-status.vim'
-Jetpack 'sgur/vim-textobj-parameter'
 
 Jetpack 'goerz/jupytext.vim'
 Jetpack 'hanschen/vim-ipython-cell'
@@ -104,7 +107,7 @@ call jetpack#end()
 
 for name in jetpack#names()
   if !jetpack#tap(name)
-    call jetpack#sync()
+    " call jetpack#sync()
     break
   endif
 endfor

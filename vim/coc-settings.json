@@ -42,6 +42,7 @@
     "pylint": {
       "sourceName": "pylint",
       "command": "pylint",
+      "debounce": 1000,
       "args": [
         "--output-format",
         "text",
@@ -56,11 +57,12 @@
         {
           "line": 1,
           "column": 2,
+          "endColumn": 2,
           "security": 3,
           "message": 4
         }
       ],
-      "rootPatterns": [".git", "pyproject.toml", "setup.py"],
+      "rootPatterns": ["pyproject.toml", "setup.py", ".git"],
       "securities": {
         "informational": "hint",
         "refactor": "info",
@@ -70,6 +72,7 @@
         "fatal": "error"
       },
       "offsetColumn": 1,
+      "offsetColumnEnd": 1,
       "formatLines": 1
     }
   }
