@@ -12,105 +12,107 @@ function! s:load_lua(p) abort
   endfor
 endfunction
 
-call jetpack#begin()
+" call jetpack#begin()
+call plug#begin()
 
 " Common
-Jetpack 'tani/vim-jetpack', {'opt': 1} "bootstrap
-Jetpack 'editorconfig/editorconfig-vim'
-Jetpack 'sheerun/vim-polyglot'
-Jetpack 'rhysd/conflict-marker.vim'
-" Jetpack 'rking/ag.vim'
-Jetpack 'jiangmiao/auto-pairs'
-Jetpack 'gregsexton/MatchTag'
-Jetpack 'tomtom/tcomment_vim'
-Jetpack 'tpope/vim-surround'
-Jetpack 'tpope/vim-fugitive'
-Jetpack 'kana/vim-textobj-user'
-Jetpack 'PeterRincker/vim-argumentative'
-Jetpack 'vim-scripts/sudo.vim'
-Jetpack 'Shougo/context_filetype.vim'
-Jetpack 'osyo-manga/vim-precious'
-Jetpack 'Yggdroot/indentLine'
-Jetpack 'Shougo/echodoc.vim'
-Jetpack 'airblade/vim-gitgutter'
-Jetpack 'simeji/winresizer'
-Jetpack 'thinca/vim-quickrun'
-Jetpack 'kana/vim-textobj-user'
-Jetpack 'thinca/vim-textobj-between'
-Jetpack 'thinca/vim-textobj-keyvalue'
-Jetpack 'sgur/vim-textobj-parameter'
-" Jetpack 'junegunn/vim-easy-align'
+" Plug 'tani/vim-jetpack', {'opt': 1} "bootstrap
+Plug 'editorconfig/editorconfig-vim'
+Plug 'sheerun/vim-polyglot'
+Plug 'rhysd/conflict-marker.vim'
+" Plug 'rking/ag.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'gregsexton/MatchTag'
+Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
+Plug 'kana/vim-textobj-user'
+Plug 'PeterRincker/vim-argumentative'
+Plug 'vim-scripts/sudo.vim'
+Plug 'Shougo/context_filetype.vim'
+Plug 'osyo-manga/vim-precious'
+Plug 'Yggdroot/indentLine'
+Plug 'Shougo/echodoc.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'simeji/winresizer'
+" Plug 'thinca/vim-quickrun'
+" Plug 'kana/vim-textobj-user'
+" Plug 'thinca/vim-textobj-between'
+" Plug 'thinca/vim-textobj-keyvalue'
+" Plug 'sgur/vim-textobj-parameter'
+" Plug 'junegunn/vim-easy-align'
 
-Jetpack 'lambdalisue/fern.vim'
-Jetpack 'lambdalisue/fern-git-status.vim'
+Plug 'lambdalisue/fern.vim'
+Plug 'lambdalisue/fern-git-status.vim'
 
-Jetpack 'goerz/jupytext.vim'
-Jetpack 'hanschen/vim-ipython-cell'
-Jetpack 'jpalardy/vim-slime'
+Plug 'goerz/jupytext.vim'
+Plug 'hanschen/vim-ipython-cell'
+Plug 'jpalardy/vim-slime'
 
 " Appearance
-Jetpack 'cocopon/iceberg.vim'
-Jetpack 'EdenEast/nightfox.nvim'
-" Jetpack 'chriskempson/base16-vim'
-Jetpack 'jacoborus/tender.vim'
-Jetpack 'kristijanhusak/vim-hybrid-material'
-Jetpack 'arcticicestudio/nord-vim'
-Jetpack 'ErichDonGubler/vim-sublime-monokai'
-Jetpack 'ayu-theme/ayu-vim'
+Plug 'cocopon/iceberg.vim'
+Plug 'EdenEast/nightfox.nvim'
+" Plug 'chriskempson/base16-vim'
+Plug 'jacoborus/tender.vim'
+Plug 'kristijanhusak/vim-hybrid-material'
+Plug 'arcticicestudio/nord-vim'
+Plug 'ErichDonGubler/vim-sublime-monokai'
+Plug 'ayu-theme/ayu-vim'
 
 " Languages
-Jetpack 'cespare/vim-toml', {'ft': 'toml'}
-Jetpack 'gabrielelana/vim-markdown', {'ft': 'markdown'}
-Jetpack 'akhaku/vim-java-unused-imports', {'ft': 'java'}
-Jetpack 'digitaltoad/vim-pug', {'ft': ['pug', 'vue']}
-Jetpack 'posva/vim-vue', {'ft': 'vue'}
-Jetpack 'elzr/vim-json', {'ft': 'json'}
-Jetpack 'briancollins/vim-jst', {'ft': ['ejs', 'jst']}
-Jetpack 'kchmck/vim-coffee-script', {'ft': 'coffee'}
-Jetpack 'jwalton512/vim-blade', {'ft': 'php'}
-Jetpack 'leafgarland/typescript-vim', {'ft': 'typescript'}
-Jetpack 'keith/tmux.vim', {'ft': 'tmux'}
-Jetpack 'tkztmk/vim-vala', {'ft': 'vala'}
-Jetpack 'vim-scripts/nginx.vim', {'ft': 'nginx'}
-Jetpack 'dag/vim-fish', {'ft': 'fish'}
-Jetpack 'def-lkb/ocp-indent-vim', {'ft': 'ocaml'}
-Jetpack 'rust-lang/rust.vim', {'ft': 'rust'}
-Jetpack 'racer-rust/vim-racer', {'ft': 'rust'}
-Jetpack 'rhysd/rust-doc.vim', {'ft': 'rust'}
-Jetpack 'mattn/vim-goimports', {'ft': 'go'}
-Jetpack 'imsnif/kdl.vim', {'ft': 'kdl'}
+Plug 'cespare/vim-toml', {'ft': 'toml'}
+Plug 'gabrielelana/vim-markdown', {'ft': 'markdown'}
+Plug 'akhaku/vim-java-unused-imports', {'ft': 'java'}
+Plug 'digitaltoad/vim-pug', {'ft': ['pug', 'vue']}
+Plug 'posva/vim-vue', {'ft': 'vue'}
+Plug 'elzr/vim-json', {'ft': 'json'}
+Plug 'briancollins/vim-jst', {'ft': ['ejs', 'jst']}
+Plug 'kchmck/vim-coffee-script', {'ft': 'coffee'}
+Plug 'jwalton512/vim-blade', {'ft': 'php'}
+Plug 'leafgarland/typescript-vim', {'ft': 'typescript'}
+Plug 'keith/tmux.vim', {'ft': 'tmux'}
+Plug 'tkztmk/vim-vala', {'ft': 'vala'}
+Plug 'vim-scripts/nginx.vim', {'ft': 'nginx'}
+Plug 'dag/vim-fish', {'ft': 'fish'}
+Plug 'def-lkb/ocp-indent-vim', {'ft': 'ocaml'}
+Plug 'rust-lang/rust.vim', {'ft': 'rust'}
+Plug 'racer-rust/vim-racer', {'ft': 'rust'}
+Plug 'rhysd/rust-doc.vim', {'ft': 'rust'}
+Plug 'mattn/vim-goimports', {'ft': 'go'}
+Plug 'imsnif/kdl.vim', {'ft': 'kdl'}
 
 if has('nvim')
-  Jetpack 'neoclide/coc.nvim', { 'branch': 'release' }
-  Jetpack 'nvim-lua/plenary.nvim'
-  Jetpack 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
-  Jetpack 'fannheyward/telescope-coc.nvim'
-  " Jetpack 'neoclide/coc-denite'
-  " Jetpack 'Shougo/denite.nvim'
+  Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
+  Plug 'fannheyward/telescope-coc.nvim'
+  " Plug 'neoclide/coc-denite'
+  " Plug 'Shougo/denite.nvim'
 endif
 
 if get(g:, 'rich')
-  Jetpack 'endaaman/lightline-hybrid.vim'
-  Jetpack 'itchyny/lightline.vim'
+  Plug 'endaaman/lightline-hybrid.vim'
+  Plug 'itchyny/lightline.vim'
 
-  " Jetpack 'ryanoasis/vim-devicons'  "call webdevicons#refresh()
-  Jetpack 'lambdalisue/nerdfont.vim'
-  Jetpack 'lambdalisue/fern-renderer-nerdfont.vim'
-  " Jetpack 'lambdalisue/fern-renderer-devicons.vim'
-  Jetpack 'lambdalisue/glyph-palette.vim'
+  " Plug 'ryanoasis/vim-devicons'  "call webdevicons#refresh()
+  Plug 'lambdalisue/nerdfont.vim'
+  Plug 'lambdalisue/fern-renderer-nerdfont.vim'
+  " Plug 'lambdalisue/fern-renderer-devicons.vim'
+  Plug 'lambdalisue/glyph-palette.vim'
   if has('nvim')
-    Jetpack 'nvim-tree/nvim-web-devicons'
+    Plug 'nvim-tree/nvim-web-devicons'
   endif
 endif
 
-call jetpack#end()
+call plug#end()
+" call jetpack#end()
 
-for name in jetpack#names()
-  if !jetpack#tap(name)
-    " call jetpack#sync()
-    break
-  endif
-endfor
+" for name in jetpack#names()
+"   if !jetpack#tap(name)
+"     call jetpack#sync()
+"     break
+"   endif
+" endfor
 
 if has('nvim')
   silent! packadd nvim-treesitter
@@ -123,6 +125,5 @@ call s:load_config(expand('<sfile>:p:h') .. '/plugin.d/*.vim')
 if has('nvim')
   call s:load_lua(expand('<sfile>:p:h') .. '/plugin.d/*.lua')
 endif
-
 
 colorscheme iceberg
