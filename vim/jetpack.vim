@@ -1,4 +1,4 @@
-packadd vim-jetpack
+" packadd vim-jetpack
 
 function! s:load_config(p) abort
   for path in glob(a:p, 1, 1, 1)
