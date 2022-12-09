@@ -14,13 +14,13 @@ endif
 
 let g:dein_dir = expand('~/.cache/dein')
 " let g:jetpack_file = stdpath('data') .. '/site/pack/jetpack/opt/vim-jetpack/plugin/jetpack.vim'
-let g:jetpack_file = stdpath('data') .. '/site/autoload/plug.vim'
+let g:vimplug_file = stdpath('data') .. '/site/autoload/plug.vim'
 
 if $USER != 'root' && !$VIM_PURE
   if $VIM_USE_DEIN && isdirectory(g:dein_dir)
     let g:dein = 1
-  elseif filereadable(g:jetpack_file)
-    let g:jetpack = 1
+  elseif filereadable(g:vimplug_file)
+    let g:vimplug = 1
   endif
 endif
 

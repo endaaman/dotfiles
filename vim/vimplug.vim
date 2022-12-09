@@ -1,5 +1,3 @@
-" packadd vim-jetpack
-
 function! s:load_config(p) abort
   for path in glob(a:p, 1, 1, 1)
     execute printf('source %s', fnameescape(path))
@@ -12,7 +10,6 @@ function! s:load_lua(p) abort
   endfor
 endfunction
 
-" call jetpack#begin()
 call plug#begin()
 
 " Common
@@ -105,14 +102,6 @@ if get(g:, 'rich')
 endif
 
 call plug#end()
-" call jetpack#end()
-
-" for name in jetpack#names()
-"   if !jetpack#tap(name)
-"     call jetpack#sync()
-"     break
-"   endif
-" endfor
 
 if has('nvim')
   silent! packadd nvim-treesitter
