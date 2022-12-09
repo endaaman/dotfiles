@@ -8,7 +8,7 @@ augroup EN
   autocmd!
 augroup END
 
-if $TERM =~# '256color' && !exists('g:rich')
+if $TERM =~# '256color' && !exists('g:rich') && !$SSH_CONNECTION
   let g:rich = 1
 endif
 
@@ -29,8 +29,8 @@ runtime! basic.vim
 runtime! keymaps.vim
 if get(g:, 'dein')
   runtime! dein.vim
-elseif get(g:, 'jetpack')
-  runtime! jetpack.vim
+elseif get(g:, 'vimplug')
+  runtime! vimplug.vim
 else
   runtime! vanilla.vim
 endif

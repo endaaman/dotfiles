@@ -83,18 +83,14 @@ if has('nvim')
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
   Plug 'fannheyward/telescope-coc.nvim'
-  " Plug 'neoclide/coc-denite'
-  " Plug 'Shougo/denite.nvim'
 endif
 
 if get(g:, 'rich')
   Plug 'endaaman/lightline-hybrid.vim'
   Plug 'itchyny/lightline.vim'
 
-  " Plug 'ryanoasis/vim-devicons'  "call webdevicons#refresh()
   Plug 'lambdalisue/nerdfont.vim'
   Plug 'lambdalisue/fern-renderer-nerdfont.vim'
-  " Plug 'lambdalisue/fern-renderer-devicons.vim'
   Plug 'lambdalisue/glyph-palette.vim'
   if has('nvim')
     Plug 'nvim-tree/nvim-web-devicons'
