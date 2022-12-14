@@ -9,12 +9,14 @@ local pickers = require('telescope.pickers')
 local finders = require('telescope.finders')
 local conf = require('telescope.config').values
 
-vim.keymap.set('n', '<Space>f', builtin.git_files, {})
-vim.keymap.set('n', '<Space>o', builtin.oldfiles, {})
 vim.keymap.set('n', '<Space>b', builtin.buffers, {})
+vim.keymap.set('n', '<Space>o', builtin.oldfiles, {})
 vim.keymap.set('n', '<Space>h', builtin.help_tags, {})
-vim.keymap.set('n', '<Space>d', builtin.git_status, {})
 vim.keymap.set('n', '<Space>g', builtin.live_grep, {})
+
+vim.keymap.set('n', '<Space>f', builtin.git_files, {})
+vim.keymap.set('n', '<Space>d', builtin.git_status, {})
+
 vim.keymap.set('n', '<Space>W', function()
   builtin.live_grep({ default_text=vim.fn.expand('<cword>') })
 end, {})
@@ -24,8 +26,8 @@ vim.keymap.set('n', '<Space>G', function()
   builtin.live_grep({ default_text=first })
 end, {})
 
-local clipboard = function(opts)
 
+function clipboard(opts)
   local cmd
   if 1 == vim.fn.executable 'copyq' then
     cmd = { 'copyq', 'tab', 'clipboard', 'read' }
@@ -69,8 +71,6 @@ end, {})
 
 vim.keymap.set('n', '<Space><Space>', builtin.resume, {})
 
-require('telescope').load_extension('coc')
-
 
 local default_maps = {
   n = {
@@ -88,7 +88,8 @@ local default_maps = {
 telescope.setup{
   defaults = {
     -- generic_sorter = sorters.get_fzy_sorter,
-    file_sorter = sorters.get_generic_fuzzy_sorter,
+    -- file_sorter = sorters.get_fzy_sorter,
+    -- file_sorter = sorters.get_generic_fuzzy_sorter,
     sorting_strategy = 'ascending',
     layout_config = {
       prompt_position="top",
@@ -106,6 +107,16 @@ telescope.setup{
         -- theme = 'ivy',
         -- always use Telescope locations to preview definitions/declarations/implementations etc
         prefer_locations = true,
+    },
+    fzf = {
+      fuzzy = true,                    -- false will only do exact matching
+      override_generic_sorter = true,  -- override the generic sorter
+      override_file_sorter = true,     -- override the file sorter
+      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                       -- the default case_mode is "smart_case"
     }
   },
 }
+
+telescope.load_extension('coc')
+telescope.load_extension('fzf')

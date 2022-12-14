@@ -82,6 +82,7 @@ if has('nvim')
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
+  Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
   Plug 'fannheyward/telescope-coc.nvim'
 endif
 
