@@ -76,12 +76,14 @@ local default_maps = {
   n = {
     ['<Tab>'] = actions.move_selection_next,
     ['<S-Tab>'] = actions.move_selection_previous,
+    ['<Del>'] = actions.remove_selection,
   },
   i = {
     ['<Tab>'] = actions.move_selection_next,
     ['<S-Tab>'] = actions.move_selection_previous,
     ['<Esc>'] = actions.close,
     ['<C-j>'] = actions.git_staging_toggle,
+    ['<Del>'] = actions.remove_selection,
   },
 }
 
