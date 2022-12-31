@@ -28,7 +28,7 @@ call coc#config('python.poetryPath', Chomp(system('which poetry')))
 " call coc#config('python.venvPath', '~/.cache/pypoetry/virtualenvs')
 
 " command! JumpToDefinitionInNewTab :tabedit % | call CocAction('jumpDefinition')
-command! JumpToDefinitionInNewTab :call CocAction('jumpDefinition')
+command! JumpToDefinitionInNewTab call CocAction('jumpDefinition')
 nnoremap <silent> <Space>K :<C-u>JumpToDefinitionInNewTab<CR>
 nmap <Space>kt <Plug>(coc-type-definition)
 nmap <Space>ki <Plug>(coc-implementation)
