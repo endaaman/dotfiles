@@ -67,7 +67,7 @@ jedi-language-server==0.40.0
 jeepney==0.8.0
 jsonpath-rw==1.4.0
 jsonschema==4.14.0
-jupyter-core==4.11.1
+jupyter-core==4.11.2
 jupytext==1.14.1
 kaggle==1.5.12
 keyring==23.11.0
