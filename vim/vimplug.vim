@@ -1,15 +1,3 @@
-function! s:load_config(p) abort
-  for path in glob(a:p, 1, 1, 1)
-    execute printf('source %s', fnameescape(path))
-  endfor
-endfunction
-
-function! s:load_lua(p) abort
-  for path in glob(a:p, 1, 1, 1)
-    execute printf('luafile %s', fnameescape(path))
-  endfor
-endfunction
-
 call plug#begin()
 
 " Common
@@ -36,7 +24,7 @@ Plug 'kana/vim-textobj-user'
 Plug 'thinca/vim-quickrun'
 Plug 'kana/vim-textobj-user'
 Plug 'thinca/vim-textobj-between'
-Plug 'thinca/vim-textobj-keyvalue'
+Plug 'vimtaku/vim-textobj-keyvalue'
 Plug 'sgur/vim-textobj-parameter'
 Plug 'Julian/vim-textobj-variable-segment'
 " Plug 'junegunn/vim-easy-align'
@@ -108,10 +96,32 @@ else
   silent! packadd vim-healthcheck
 endif
 
-" call s:load_config(expand('<sfile>:p:h') .. '/plugin-pre.d/*.vim')
-call s:load_config(expand('<sfile>:p:h') .. '/plugin.d/*.vim')
-if has('nvim')
-  call s:load_lua(expand('<sfile>:p:h') .. '/plugin.d/*.lua')
-endif
+function! s:load_config(p) abort
+  for path in glob(a:p, 1, 1, 1)
+    execute printf('source %s', fnameescape(path))
+  endfor
+endfunction
 
-colorscheme iceberg
+function! s:load_lua(p) abort
+  for path in glob(a:p, 1, 1, 1)
+    execute printf('luafile %s', fnameescape(path))
+  endfor
+endfunction
+
+let s:dir = expand('<sfile>:p:h')
+
+function! s:load_plugin_d() abort
+  call s:load_config(s:dir .. '/plugin.d/*.vim')
+  if has('nvim')
+    call s:load_lua(s:dir .. '/plugin.d/*.lua')
+  endif
+endfunction
+
+function! s:install_plugs() abort
+  if !empty(filter(copy(g:plugs), '!isdirectory(v:val.dir)'))
+    PlugInstall --sync
+  endif
+  call s:load_plugin_d()
+endfunction
+
+call s:install_plugs()

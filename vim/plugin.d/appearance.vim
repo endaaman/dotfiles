@@ -12,3 +12,5 @@ let g:indentLine_setConceal = 1
 let ayucolor="mirage"
 " let ayucolor="dark"
 " autocmd EN VimEnter * nested colorscheme ayu
+"
+colorscheme iceberg
