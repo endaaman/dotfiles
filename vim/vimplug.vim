@@ -117,11 +117,7 @@ function! s:load_plugin_d() abort
   endif
 endfunction
 
-function! s:install_plugs() abort
-  if !empty(filter(copy(g:plugs), '!isdirectory(v:val.dir)'))
-    PlugInstall --sync
-  endif
-  call s:load_plugin_d()
-endfunction
-
-call s:install_plugs()
+if !empty(filter(copy(g:plugs), '!isdirectory(v:val.dir)'))
+  PlugInstall --sync
+endif
+call s:load_plugin_d()
