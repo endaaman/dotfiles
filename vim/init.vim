@@ -13,8 +13,11 @@ if $TERM =~# '256color' && !exists('g:rich') && !$SSH_CONNECTION
 endif
 
 let g:dein_dir = expand('~/.cache/dein')
-" let g:jetpack_file = stdpath('data') .. '/site/pack/jetpack/opt/vim-jetpack/plugin/jetpack.vim'
-let g:vimplug_file = stdpath('data') .. '/site/autoload/plug.vim'
+if has('nvim')
+  let g:vimplug_file = stdpath('data') .. '/site/autoload/plug.vim'
+else
+  let g:vimplug_file = expand('~/.vim/autoload/plug.vim')
+endif
 
 if $USER != 'root' && !$VIM_NO_PLUGS
   if $VIM_USE_DEIN && isdirectory(g:dein_dir)

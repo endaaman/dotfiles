@@ -40,6 +40,7 @@ set smarttab
 set softtabstop=2
 set switchbuf=usetab
 set tabstop=2
+set termguicolors
 set timeout timeoutlen=1000 ttimeoutlen=50
 set undodir=~/.cache/vim
 set undofile

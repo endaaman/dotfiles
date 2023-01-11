@@ -96,24 +96,19 @@ else
   silent! packadd vim-healthcheck
 endif
 
-function! s:load_config(p) abort
+function! s:load_scripts(p, islua) abort
   for path in glob(a:p, 1, 1, 1)
-    execute printf('source %s', fnameescape(path))
-  endfor
-endfunction
-
-function! s:load_lua(p) abort
-  for path in glob(a:p, 1, 1, 1)
-    execute printf('luafile %s', fnameescape(path))
+    let cmd = 'luafile' ? islua : 'source'
+    execute printf('%s %s', cmd, fnameescape(path))
   endfor
 endfunction
 
 let s:dir = expand('<sfile>:p:h')
 
 function! s:load_plugin_d() abort
-  call s:load_config(s:dir .. '/plugin.d/*.vim')
+  call s:load_scripts(s:dir .. '/plugin.d/*.vim', 0)
   if has('nvim')
-    call s:load_lua(s:dir .. '/plugin.d/*.lua')
+    call s:load_scripts(s:dir .. '/plugin.d/*.lua', 1)
   endif
 endfunction
 
