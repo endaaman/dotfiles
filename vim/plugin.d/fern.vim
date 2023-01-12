@@ -1,6 +1,7 @@
 nnoremap <C-g> :<C-u>Fern . -drawer -width=40 -toggle -reveal=%<CR>
 nnoremap <Space><C-g> :<C-u>Fern %:h -drawer -width=40 -toggle -reveal=%<CR>
 
+let g:fern#default_hidden = 1
 let g:fern#disable_default_mappings = 1
 if get(g:, 'rich')
   let g:fern#renderer = 'nerdfont'
