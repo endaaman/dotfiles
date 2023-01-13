@@ -224,7 +224,7 @@ fi
 
 if which virtualenvwrapper.sh &> /dev/null; then
   export WORKON_HOME=$HOME/.virtualenvs
-  if [ -z "$VIRTUALENVWRAPPER_SCRIPT" ]; then
+  if ! which workon &> /dev/null; then
     source virtualenvwrapper.sh
   fi
 fi
