@@ -17,7 +17,8 @@ disable=unused-argument,
         # no-self-use,
         too-many-instance-attributes,
         unnecessary-lambda-assignment,
-        consider-using-f-string
+        consider-using-f-string,
+        global-statement
         # C0326, C0115, C0116 # for alignment
 
 # [VARIABLES]
