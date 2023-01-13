@@ -595,6 +595,7 @@ else
 fi
 if which trash-put &> /dev/null; then
   alias rm='trash-put'
+  compdef _rm trash-put
 fi
 if which colordiff &> /dev/null; then
   alias diff='colordiff'
