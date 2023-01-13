@@ -8,7 +8,7 @@ augroup EN
   autocmd!
 augroup END
 
-if $TERM =~# '256color' && !exists('g:rich') && !$SSH_CONNECTION
+if $TERM =~# '256color' && !exists('g:rich')
   let g:rich = 1
 endif
 
