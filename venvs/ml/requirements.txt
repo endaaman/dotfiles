@@ -76,7 +76,7 @@ platformdirs==2.6.2
 pretrainedmodels==0.7.4
 prettytable==3.6.0
 prompt-toolkit==3.0.36
-protobuf==3.9.2
+protobuf==3.18.3
 ptflops==0.6.9
 ptyprocess==0.7.0
 pure-eval==0.2.2
