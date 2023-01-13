@@ -8,9 +8,10 @@ Plug 'rhysd/conflict-marker.vim'
 " Plug 'rking/ag.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'gregsexton/MatchTag'
-Plug 'tomtom/tcomment_vim'
+" Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
 Plug 'PeterRincker/vim-argumentative'
 Plug 'vim-scripts/sudo.vim'
 Plug 'Shougo/context_filetype.vim'
@@ -69,11 +70,13 @@ Plug 'mattn/vim-goimports', {'ft': 'go'}
 Plug 'imsnif/kdl.vim', {'ft': 'kdl'}
 
 if has('nvim')
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
   Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
   Plug 'fannheyward/telescope-coc.nvim'
+  Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 endif
 
 if get(g:, 'rich')
