@@ -18,6 +18,7 @@ disable=unused-argument,
         too-many-instance-attributes,
         unnecessary-lambda-assignment,
         consider-using-f-string,
+        abstract-method,
         global-statement
         # C0326, C0115, C0116 # for alignment
 
