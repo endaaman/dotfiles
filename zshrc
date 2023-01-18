@@ -171,7 +171,11 @@ if [ -n "$DISPLAY" ] && which xdotool &> /dev/null; then
 fi
 
 
-###* XXXenv
+###* CLI tools
+
+if which gh &> /dev/null; then
+  eval "$(gh completion -s zsh)"
+fi
 
 if [ -z "$IS_ROOT" ]; then
   # only non root
