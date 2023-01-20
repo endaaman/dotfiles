@@ -519,6 +519,13 @@ function select-conda-envs() {
 }
 zle -N select-conda-envs
 
+function select-tsp() {
+  select-items \
+    'tsp | tail -n +2' \
+    'cat'
+}
+zle -N select-tsp
+
 ###* Key binding
 
 bindkey "^o" select-cwd-files
@@ -546,6 +553,7 @@ bindkey $prefix'^g' select-dein-plugin-dirs
 bindkey $prefix'^j' select-excutables
 bindkey $prefix'^l' select-git-files
 bindkey $prefix'^o' select-cwd-files-2
+bindkey $prefix'^t' select-tsp
 bindkey $prefix'^a' select-pacman-files
 bindkey $prefix'^p' select-pacman-libs
 # bindkey $prefix'^k' select-conda-envs
