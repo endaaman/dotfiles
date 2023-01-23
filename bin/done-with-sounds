@@ -1,0 +1,3 @@
+#!/bin/bash
+
+mpg123 "$HOME/dotfiles/misc/potate.mp3"
