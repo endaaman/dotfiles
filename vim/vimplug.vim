@@ -14,8 +14,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'PeterRincker/vim-argumentative'
 Plug 'vim-scripts/sudo.vim'
-Plug 'Shougo/context_filetype.vim'
-Plug 'osyo-manga/vim-precious'
+" Plug 'Shougo/context_filetype.vim'
+" Plug 'osyo-manga/vim-precious'
 Plug 'Yggdroot/indentLine'
 Plug 'Shougo/echodoc.vim'
 Plug 'airblade/vim-gitgutter'
@@ -77,7 +77,9 @@ if has('nvim')
   Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
   Plug 'fannheyward/telescope-coc.nvim'
   Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+  Plug 'windwp/nvim-ts-autotag'
 endif
+
 
 if get(g:, 'rich')
   Plug 'endaaman/lightline-hybrid.vim'

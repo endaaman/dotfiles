@@ -141,6 +141,9 @@ nnoremap <silent> B :<C-u>MagicB<CR>
 noremap gW W
 noremap gB B
 
+nnoremap mm mA
+nnoremap M 'A
+
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-Esc> <Esc>
 " tnoremap <C-c> <C-\><C-n>
