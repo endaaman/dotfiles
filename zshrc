@@ -522,7 +522,7 @@ zle -N select-conda-envs
 function select-tsp() {
   select-items \
     'tsp | tail -n +2' \
-    'cat'
+    "sed '/ / s/ /:/'"
 }
 zle -N select-tsp
 
