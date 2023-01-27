@@ -22,4 +22,5 @@ __pycache__/
 *.glade~
 .~*
 
-mlruns/
+out/
+runs/
