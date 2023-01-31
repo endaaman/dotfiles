@@ -19,7 +19,8 @@ disable=unused-argument,
         unnecessary-lambda-assignment,
         consider-using-f-string,
         abstract-method,
-        global-statement
+        global-statement,
+        redefined-outer-name
         # C0326, C0115, C0116 # for alignment
 
 # [VARIABLES]
