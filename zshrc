@@ -18,7 +18,7 @@ if [ -n "$PROFILING" ]; then
   zprof
 fi
 
-if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
+if [ ! -f ~/.zshrc.zwc -o ~/.zshrc -nt ~/.zshrc.zwc ]; then
   zcompile ~/.zshrc
 fi
 
@@ -315,7 +315,8 @@ function _powered_cd() {
   #   '1: : _files _powered_cd_history'
 }
 
-compdef _powered_cd cd
+# compdef _powered_cd cd
+compdef _cd cd
 
 function touch-ipynb() {
   if [[ -z "$1" ]]; then
