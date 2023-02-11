@@ -91,7 +91,7 @@ importlib-metadata==6.0.0
 incremental==22.10.0
 inflate64==0.3.1
 inflect==6.0.2
-ipython==8.8.0
+ipython==8.10.0
 isort==5.11.4
 jaraco.classes==3.2.3
 jaraco.context==4.2.0
