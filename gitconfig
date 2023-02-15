@@ -15,6 +15,7 @@
   aa = add .
   ac = !git add . && git commit
   acu = !git add . && git commit -m update
+  acup = !git add . && git commit -m update && git push
   aca = !git add . && git commit --amend
   br = branch
   c = commit
