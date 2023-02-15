@@ -20,7 +20,8 @@ disable=unused-argument,
         consider-using-f-string,
         abstract-method,
         global-statement,
-        redefined-outer-name
+        redefined-outer-name,
+        abstract-class-instantiated,
         # C0326, C0115, C0116 # for alignment
 
 # [VARIABLES]
