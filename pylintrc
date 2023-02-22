@@ -22,6 +22,7 @@ disable=unused-argument,
         global-statement,
         redefined-outer-name,
         abstract-class-instantiated,
+        logging-fstring-interpolation,
         # C0326, C0115, C0116 # for alignment
 
 # [VARIABLES]
