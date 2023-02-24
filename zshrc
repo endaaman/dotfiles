@@ -197,7 +197,7 @@ fi
 if [ -d ~/.nodebrew ]; then
   export PATH=~/.nodebrew/current/bin:$PATH
   nodebrew use 18 1>/dev/null
-  # fpath+=~/.nodebrew/completions/zsh
+  fpath+=~/.nodebrew/completions/zsh
 fi
 
 ###* nvm is too slow

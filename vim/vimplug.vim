@@ -57,7 +57,7 @@ Plug 'elzr/vim-json', {'ft': 'json'}
 Plug 'briancollins/vim-jst', {'ft': ['ejs', 'jst']}
 Plug 'kchmck/vim-coffee-script', {'ft': 'coffee'}
 Plug 'jwalton512/vim-blade', {'ft': 'php'}
-Plug 'leafgarland/typescript-vim', {'ft': 'typescript'}
+" Plug 'leafgarland/typescript-vim', {'ft': 'typescript'}
 Plug 'keith/tmux.vim', {'ft': 'tmux'}
 Plug 'tkztmk/vim-vala', {'ft': 'vala'}
 Plug 'vim-scripts/nginx.vim', {'ft': 'nginx'}
