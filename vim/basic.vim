@@ -10,6 +10,7 @@ set background=dark
 set backspace=indent,eol,start
 set backupdir=~/.cache/vim
 set completeopt-=preview
+set conceallevel=0
 set cursorcolumn
 set cursorline
 set directory=~/.cache/vim

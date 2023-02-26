@@ -97,6 +97,7 @@ autoload -Uz colors; colors
 autoload -Uz compinit; compinit -u
 autoload -Uz promptinit; promptinit
 autoload -Uz zmv
+autoload -Uz edit-command-line
 eval `dircolors -b`
 
 
@@ -527,6 +528,8 @@ function select-tsp() {
 }
 zle -N select-tsp
 
+zle -N edit-command-line
+
 ###* Key binding
 
 bindkey "^o" select-cwd-files
@@ -558,9 +561,10 @@ bindkey $prefix'^t' select-tsp
 bindkey $prefix'^a' select-pacman-files
 bindkey $prefix'^p' select-pacman-libs
 # bindkey $prefix'^k' select-conda-envs
-bindkey $prefix'^k' select-directry-history
+bindkey $prefix'^h' select-directry-history
 bindkey $prefix'^y' paste-clipboard
 bindkey $prefix'^x' xdg-open-current-buffer
+bindkey $prefix'^k' edit-command-line
 
 
 ###* Alias
