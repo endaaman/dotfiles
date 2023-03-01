@@ -181,7 +181,7 @@ fi
 if [ -z "$IS_ROOT" ]; then
   # only non root
   if [ which luarocks &> /dev/null; then
-    eval $(luarocks path --bin)
+    eval "$(luarocks path)"
   fi
 
   if which pip &> /dev/null; then

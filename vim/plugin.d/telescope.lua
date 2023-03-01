@@ -16,16 +16,19 @@ vim.keymap.set('n', '<Space>g', builtin.live_grep, {})
 vim.keymap.set('n', '<Space>m', builtin.marks, {})
 vim.keymap.set('n', '<Space>f', builtin.git_files, {})
 vim.keymap.set('n', '<Space>d', builtin.git_status, {})
+vim.keymap.set('n', '<Space>r', builtin.registers, {})
+vim.keymap.set('n', '<Space>l', '<CMD>Telescope coc workspace_symbols<CR>', {})
+vim.keymap.set('n', '<Space>k', '<CMD>Telescope coc references_used<CR>', {})
 
 vim.keymap.set('n', '<Space>W', function()
   builtin.live_grep({ default_text=vim.fn.expand('<cword>') })
 end, {})
+
 vim.keymap.set('n', '<Space>G', function()
   local reg = vim.fn.getreg('+')
   local first = reg:gmatch("[^\r\n]+")()
   builtin.live_grep({ default_text=first })
 end, {})
-
 
 function clipboard(opts)
   local cmd
@@ -65,10 +68,7 @@ function clipboard(opts)
     :find()
 end
 
-vim.keymap.set('n', '<Space>r', function()
-  clipboard({})
-end, {})
-
+vim.keymap.set('n', '<Space>c', clipboard, {})
 vim.keymap.set('n', '<Space><Space>', builtin.resume, {})
 
 

@@ -78,6 +78,7 @@ if has('nvim')
   Plug 'fannheyward/telescope-coc.nvim'
   Plug 'JoosepAlviste/nvim-ts-context-commentstring'
   Plug 'windwp/nvim-ts-autotag'
+  Plug 'AckslD/nvim-neoclip.lua'
 endif
 
 
