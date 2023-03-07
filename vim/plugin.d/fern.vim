@@ -2,6 +2,12 @@ nnoremap <C-g> :<C-u>Fern . -drawer -width=40 -toggle -reveal=%<CR>
 nnoremap <Space><C-g> :<C-u>Fern %:h -drawer -width=40 -toggle -reveal=%<CR>
 
 let g:fern#default_hidden = 1
+let g:fern#hide_cursor = 1
+
+let hide_dirs  = '^\%(\.git\|node_modules\|__pycache__\)$'
+let hide_files = '\%(\.byebug\|\.ruby-\)\+'
+let g:fern#default_exclude = hide_dirs . '\|' . hide_files  " here you exclude them
+
 let g:fern#disable_default_mappings = 1
 if get(g:, 'rich')
   let g:fern#renderer = 'nerdfont'
