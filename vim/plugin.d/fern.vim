@@ -18,15 +18,31 @@ function! s:init_fern() abort
   setlocal nonumber
   setlocal nocursorcolumn
   " setlocal guicursor=n:hor2000
+  "
+  nnoremap <Plug>(fern-close-drawer) :<C-u>FernDo close -drawer -stay<CR>
+
+  nmap <buffer><silent> <Plug>(fern-my-open-and-close)
+      \ <Plug>(fern-action-open)
+      \ <Plug>(fern-close-drawer)
 
   nmap <buffer><silent><expr>
-    \ <Plug>(fern-my-open-or-expand-collapse)
+    \ <Plug>(fern-my-open-close-expand-collapse)
+    \ fern#smart#leaf(
+    \   "\<Plug>(fern-my-open-and-close)",
+    \   "\<Plug>(fern-action-expand)",
+    \   "\<Plug>(fern-action-collapse)",
+    \ )
+
+  nmap <buffer><silent><expr>
+    \ <Plug>(fern-my-open-expand-collapse)
     \ fern#smart#leaf(
     \   "\<Plug>(fern-action-open)",
     \   "\<Plug>(fern-action-expand)",
     \   "\<Plug>(fern-action-collapse)",
     \ )
-  nmap <buffer> o <Plug>(fern-my-open-or-expand-collapse)
+
+  nmap <buffer> o <Plug>(fern-my-open-expand-collapse)
+  nmap <buffer> O <Plug>(fern-my-open-expand-collapse)
   nmap <buffer> <C-m> <Plug>(fern-action-open)<C-w>p:<C-u>quit<CR>
   nmap <buffer> x <Plug>(fern-action-collapse)
   nmap <buffer> C <Plug>(fern-action-enter)
