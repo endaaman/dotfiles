@@ -135,8 +135,8 @@ sqlparse==0.4.3
 stack-data==0.6.2
 stevedore==4.1.1
 tabulate==0.9.0
-tensorboard==2.11.1
-tensorboard-data-server==0.6.1
+tensorboard==2.12.0
+tensorboard-data-server==0.7.0
 tensorboard-plugin-wit==1.8.1
 threadpoolctl==3.1.0
 tifffile==2022.10.10
@@ -155,4 +155,5 @@ wcwidth==0.2.5
 websocket-client==1.4.2
 Werkzeug==2.2.3
 wrapt==1.14.1
+XlsxWriter==3.0.8
 zipp==3.11.0
