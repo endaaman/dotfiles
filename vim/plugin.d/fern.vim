@@ -41,7 +41,7 @@ function! s:init_fern() abort
     \   "\<Plug>(fern-action-collapse)",
     \ )
 
-  nmap <buffer> o <Plug>(fern-my-open-expand-collapse)
+  nmap <buffer> o <Plug>(fern-my-open-close-expand-collapse)
   nmap <buffer> O <Plug>(fern-my-open-expand-collapse)
   nmap <buffer> <C-m> <Plug>(fern-action-open)<C-w>p:<C-u>quit<CR>
   nmap <buffer> x <Plug>(fern-action-collapse)
