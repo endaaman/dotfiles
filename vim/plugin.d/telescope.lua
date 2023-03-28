@@ -102,6 +102,10 @@ telescope.setup{
     git_status = {
       mappings = default_maps,
     },
+    git_files = {
+      git_command = {'git', 'ls-files', '--cached', '--others', '--exclude-standard'},
+      -- git_command = {'ls'},
+    },
   },
 
   extensions = {
