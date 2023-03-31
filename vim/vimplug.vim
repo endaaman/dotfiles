@@ -71,14 +71,15 @@ Plug 'imsnif/kdl.vim', {'ft': 'kdl'}
 
 if has('nvim')
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-  Plug 'neoclide/coc.nvim', { 'branch': 'release' }
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
   Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-  Plug 'fannheyward/telescope-coc.nvim'
   Plug 'JoosepAlviste/nvim-ts-context-commentstring'
   Plug 'windwp/nvim-ts-autotag'
   Plug 'AckslD/nvim-neoclip.lua'
+  Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+  Plug 'fannheyward/telescope-coc.nvim'
+  " Plug 'neovim/nvim-lspconfig'
 endif
 
 
