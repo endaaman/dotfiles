@@ -7,9 +7,11 @@ astroid==2.13.2
 asttokens==2.2.1
 attrs==22.2.0
 autopage==0.5.1
+awscli==1.27.109
 backcall==0.2.0
 binaryiotools==2021.0.3
 blendmodes==2022
+botocore==1.29.109
 brackettree==0.2.5
 cachetools==5.2.1
 certifi==2022.12.7
@@ -20,6 +22,7 @@ cliff==4.1.0
 cloudpickle==2.2.1
 cmaes==0.9.1
 cmd2==2.4.2
+colorama==0.4.4
 colorlog==6.7.0
 contourpy==1.0.6
 cryptography==39.0.1
@@ -29,6 +32,7 @@ decorator==5.1.1
 deprecation==2.1.0
 dill==0.3.6
 docker==6.0.1
+docutils==0.16
 effdet @ git+https://github.com/rwightman/efficientdet-pytorch.git@b035355c128931a4dae8d6db9c247c18926ea7be
 efficientnet-pytorch==0.7.1
 entrypoints==0.4
@@ -56,6 +60,7 @@ isort==5.11.4
 itsdangerous==2.1.2
 jedi==0.18.2
 Jinja2==3.1.2
+jmespath==1.0.1
 joblib==1.2.0
 kiwisolver==1.4.4
 lazy-object-proxy==1.9.0
@@ -104,6 +109,8 @@ pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycocotools==2.0.6
 pycparser==2.21
+pydantic==1.10.7
+pydantic-cli==4.3.0
 pydicom==2.3.1
 Pygments==2.14.0
 PyJWT==2.6.0
@@ -115,12 +122,13 @@ pytorch-gradcam==0.2.1
 pytorch-ranger==0.1.1
 pytz==2022.7
 PyWavelets==1.4.1
-PyYAML==6.0
+PyYAML==5.4.1
 qudida==0.0.4
 querystring-parser==1.2.4
 requests==2.28.2
 requests-oauthlib==1.3.1
-rsa==4.9
+rsa==4.7.2
+s3transfer==0.6.0
 scikit-image==0.19.3
 scikit-learn==1.2.0
 scipy==1.10.0
