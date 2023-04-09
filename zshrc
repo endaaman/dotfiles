@@ -163,7 +163,7 @@ fi
 export VTE_CJK_WIDTH=0
 # export XDG_CONFIG_HOME=~/.config
 export NO_AT_BRIDGE=1
-# export WINEPREFIX=~/.wine
+export WINEARCH=win64
 
 export C=$(date '+%Y%m')
 export CD=~/tmp/$C
@@ -444,19 +444,22 @@ function select-history {
 }
 zle -N select-history
 
-function select-cwd-files() {
-  select-items \
-    'ls -alhF --group-directories-first | tail -n+2 | grep -v " \./"' \
-    'awk '\''{print $9}'\'' | sed -e "s/^ *//g" -e "s/\*$//"'
-}
-zle -N select-cwd-files
-
 function select-excutables() {
   select-items \
     'whence -pm "*"' \
     'cat'
 }
 zle -N select-excutables
+
+function select-cwd-files() {
+  # select-items \
+  #   'ls -alhF --group-directories-first | tail -n+2 | grep -v " \./"' \
+  #   'awk '\''{print $9}'\'' | sed -e "s/^ *//g" -e "s/\*$//"'
+  select-items \
+    'find -maxdepth 1' \
+    'cat'
+}
+zle -N select-cwd-files
 
 function select-cwd-files-2() {
   select-items \
