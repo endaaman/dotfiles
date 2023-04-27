@@ -5,3 +5,7 @@ tym/theme.lua
 xkb/keymap/current
 Xmodmap
 .ccls-cache/
+
+datasets
+data
+out
