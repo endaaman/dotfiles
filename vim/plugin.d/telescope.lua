@@ -9,7 +9,7 @@ local pickers = require('telescope.pickers')
 local finders = require('telescope.finders')
 local conf = require('telescope.config').values
 
-vim.keymap.set('n', '<Space>b', builtin.buffers, {})
+vim.keymap.set('n', '<Space><Space>', builtin.buffers, {})
 vim.keymap.set('n', '<Space>o', builtin.oldfiles, {})
 vim.keymap.set('n', '<Space>h', builtin.help_tags, {})
 vim.keymap.set('n', '<Space>g', builtin.live_grep, {})
@@ -17,6 +17,7 @@ vim.keymap.set('n', '<Space>m', builtin.marks, {})
 vim.keymap.set('n', '<Space>f', builtin.git_files, {})
 vim.keymap.set('n', '<Space>d', builtin.git_status, {})
 vim.keymap.set('n', '<Space>r', builtin.registers, {})
+vim.keymap.set('n', '<Space>p', builtin.resume, {})
 vim.keymap.set('n', '<Space>l', '<CMD>Telescope coc workspace_symbols<CR>', {})
 vim.keymap.set('n', '<Space>k', '<CMD>Telescope coc references_used<CR>', {})
 
@@ -69,7 +70,6 @@ function clipboard(opts)
 end
 
 vim.keymap.set('n', '<Space>c', clipboard, {})
-vim.keymap.set('n', '<Space><Space>', builtin.resume, {})
 
 
 local default_maps = {

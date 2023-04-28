@@ -27,8 +27,8 @@ disable=unused-argument,
         abstract-class-instantiated,
         logging-fstring-interpolation,
         assignment-from-none,
-        redefined-builtin
-        # C0326, C0115, C0116 # for alignment
+        redefined-builtin,
+        too-many-return-statements
 
 # [VARIABLES]
 # allow-global-unused-variables=yes
