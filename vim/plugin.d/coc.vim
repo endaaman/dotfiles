@@ -56,3 +56,5 @@ inoremap <silent><expr> <S-TAB>
   \ coc#pum#visible() ? coc#pum#prev(1):
   \ pumvisible() ? "\<C-p>" :
   \ coc#refresh()
+
+inoremap <silent><expr> <C-o> CocActionAsync('showSignatureHelp')
