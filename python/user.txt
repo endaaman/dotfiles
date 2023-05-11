@@ -1,10 +1,11 @@
 alembic==1.10.4
-augmend==0.1.0
+augmend @ git+https://github.com/stardist/augmend.git@b9583ab2a2407e9ca9d5e43dea033dace8350232
 blinker==1.6.2
 cloudpickle==2.2.1
 csbdeep==0.7.3
 databricks-cli==0.17.7
 docker==6.1.1
+entrypoints==0.4
 Flask==2.3.2
 fsspec==2023.5.0
 gitdb==4.0.10
@@ -12,12 +13,11 @@ GitPython==3.1.31
 gunicorn==20.1.0
 huggingface-hub==0.14.1
 imageio==2.28.1
-itsdangerous==2.1.2
 jax==0.4.9
-Jinja2==3.1.2
 lazy_loader==0.2
 libclang==16.0.0
 llvmlite==0.40.0
+Mako==1.2.4
 ml-dtypes==0.1.0
 mlflow==2.3.1
 networkx==3.1
@@ -41,4 +41,5 @@ tensorboardX==2.6
 tensorflow-io-gcs-filesystem==0.32.0
 tifffile==2023.4.12
 timm==0.6.13
+websocket-client==1.5.1
 Werkzeug==2.3.4
