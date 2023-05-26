@@ -44,6 +44,7 @@ tym.set_config({
 tym.set_keymaps({
   ['<Ctrl><Shift>r'] = function()
     tym.reload()
+    tym.reset_keymaps()
     tym.notify('Reloaded')
   end,
   ['<Ctrl><Shift>u'] = function()
@@ -78,6 +79,16 @@ tym.set_keymaps({
     r, g, b, old_alpha = tym.color_to_rgba(tym.get('color_background'))
     tym.set('color_background', tym.rgba_to_color(r, g, b, 1))
     tym.notify('Reset alpha and scale')
+  end,
+  ['<Ctrl><Shift>plus'] = function()
+    local s = tym.get('scale') + 10
+    tym.set('scale', s)
+    tym.notify('Scale:'..s)
+  end,
+  ['<Ctrl>minus'] = function()
+    local s = tym.get('scale') - 10
+    tym.set('scale', s)
+    tym.notify('Scale:'..s)
   end
 })
 
