@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+
+export WINEARCH=win64
+export WINEPREFIX="$HOME/.wineprefixes/ndpview"
+export LANG=ja_JP.utf-8
+
+if [ -n "$1" ]; then
+  p=$(winepath -w $1)
+else
+  p=""
+fi
+wine $WINEPREFIX/drive_c/Program\ Files/Hamamatsu/NDP.view\ 2/NDPView2.exe $p
