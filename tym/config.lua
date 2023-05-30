@@ -17,12 +17,6 @@ function update_scale(delta)
   tym.notify(string.format('scale: %d → %d', old_value, new_value))
 end
 
-function remap(a, b)
-  tym.set_keymap(a, function()
-    tym.send_key(b)
-  end)
-end
-
 function safe_dofile(path)
   local f = io.open(path, 'r')
   if f ~= nil then
@@ -41,10 +35,15 @@ tym.set_config({
   cjk_width = 'narrow',
 })
 
+function remap(b)
+  return function()
+    tym.send_key(b)
+  end
+end
+
 tym.set_keymaps({
   ['<Ctrl><Shift>r'] = function()
     tym.reload()
-    tym.reset_keymaps()
     tym.notify('Reloaded')
   end,
   ['<Ctrl><Shift>u'] = function()
@@ -89,7 +88,13 @@ tym.set_keymaps({
     local s = tym.get('scale') - 10
     tym.set('scale', s)
     tym.notify('Scale:'..s)
-  end
+  end,
+  ['<Alt>h'] = remap('<Alt>Left'),
+  ['<Alt>l'] = remap('<Alt>Right'),
+  ['<Alt><Shift>h'] = remap('<Alt><Shift>Left'),
+  ['<Alt><Shift>l'] = remap('<Alt><Shift>Right'),
+  ['<Ctrl>Tab'] = remap('<Ctrl>n'),
+  ['<Ctrl><Shift>Tab'] = remap('<Ctrl>p'),
 })
 
 tym.set_hooks({
@@ -104,12 +109,5 @@ tym.set_hooks({
     end
   end
 })
-
-remap('<Alt>h', '<Alt>Left')
-remap('<Alt>l', '<Alt>Right')
-remap('<Alt><Shift>h', '<Alt><Shift>Left')
-remap('<Alt><Shift>l', '<Alt><Shift>Right')
-remap('<Ctrl>Tab', '<Ctrl>n')
-remap('<Ctrl><Shift>Tab', '<Ctrl>p')
 
 safe_dofile(home .. '/.config/tym/local.lua')
