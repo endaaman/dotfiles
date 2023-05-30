@@ -28,11 +28,8 @@ mlflow==2.3.1
 networkx==3.1
 numba==0.57.0
 omegaconf==2.3.0
-opencv-python==4.7.0.72
-opencv-python-headless==4.7.0.72
 patsy==0.5.3
 protobuf==3.20.3
-pyarrow==11.0.0
 pycocotools==2.0.6
 pydantic-cli==4.3.0
 PyJWT==2.7.0

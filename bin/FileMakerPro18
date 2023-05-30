@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
-export WINEARCH=win64
-export WINEPREFIX="$HOME/.wineprefixes/fm18"
-export LANG=ja_JP.utf-8
+if [ -z "$WINEPREFIX" ]; then
+  export WINEPREFIX="$HOME/.wine"
+fi
 
 wine $WINEPREFIX/drive_c/Program\ Files/FileMaker/FileMaker\ Pro\ 18\ Advanced/FileMaker\ Pro\ 18\ Advanced.exe $1

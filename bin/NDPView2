@@ -1,8 +1,8 @@
 #!/usr/bin/bash
 
-export WINEARCH=win64
-export WINEPREFIX="$HOME/.wineprefixes/ndpview"
-export LANG=ja_JP.utf-8
+if [ -z "$WINEPREFIX" ]; then
+  export WINEPREFIX="$HOME/.wine"
+fi
 
 if [ -n "$1" ]; then
   p=$(winepath -w $1)
