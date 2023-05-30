@@ -63,10 +63,10 @@ class CommandList(SubCommand):
     name = 'list'
 
     def __call__(self, args):
-        cmd = 'find {} -maxdepth 4 -mindepth 3 -follow -type d -name ".git"' \
+        cmd = 'find "' + ROOT + '" -maxdepth 4 -mindepth 3 -follow -type d -name ".git"' \
               ' | sed -e s/.git$//' \
-              ' | xargs readlink -f'
-        p = sp.Popen(cmd.format(ROOT), shell=True, stdout=sp.PIPE)
+              ' | xargs -I{} readlink -f {}'
+        p = sp.Popen(cmd, shell=True, stdout=sp.PIPE)
         stdout_data, stderr_data = p.communicate()
         repos = stdout_data.decode().split('\n')
         for repo in repos:
