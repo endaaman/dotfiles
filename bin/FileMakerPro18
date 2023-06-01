@@ -4,4 +4,5 @@ if [ -z "$WINEPREFIX" ]; then
   export WINEPREFIX="$HOME/.wine"
 fi
 
+# wine $WINEPREFIX/drive_c/Program\ Files/FileMaker/FileMaker\ Pro\ 18\ Advanced/FileMaker\ Pro\ 18\ Advanced.exe $1
 wine $WINEPREFIX/drive_c/Program\ Files/FileMaker/FileMaker\ Pro\ 18\ Advanced/FileMaker\ Pro\ 18\ Advanced.exe $1
