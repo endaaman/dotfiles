@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-if [ -z "$WINEPREFIX" ]; then
+if [ -z ${WINEPREFIX} ]; then
   export WINEPREFIX="$HOME/.wine"
 fi
 
