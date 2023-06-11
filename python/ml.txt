@@ -33,7 +33,7 @@ decorator==5.1.1
 defusedxml==0.7.1
 dill==0.3.6
 docker==6.1.0
-effdet @ git+https://github.com/rwightman/efficientdet-pytorch.git@faadf038d2a57f3857a2866eadb608b4d97fb9b5
+effdet==0.4.1
 efficientnet-pytorch==0.7.1
 entrypoints==0.4
 et-xmlfile==1.1.0
@@ -198,7 +198,7 @@ termcolor==2.3.0
 terminado==0.17.1
 threadpoolctl==3.1.0
 tifffile==2023.4.12
-timm==0.6.13
+timm==0.9.2
 tinycss2==1.2.1
 tomli==2.0.1
 tomlkit==0.11.8
