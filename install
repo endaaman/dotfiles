@@ -16,47 +16,15 @@ NC='\033[0m'
 
 gui=false
 node=false
-python=false
-ruby=false
-rust=false
-zplug=false
 zinit=false
-dein=false
-jetpack=false
 vimplug=false
-firefox=false
-jupyter_vim=false
-conda=false
 
 for i in "$@" ; do
   case "$i" in
     'gui'     ) gui=true ;;
     'node'    ) node=true ;;
-    'python'  ) python=true ;;
-    'ruby'    ) ruby=true ;;
-    'rust'    ) rust=true ;;
-    'zplug'   ) zplug=true ;;
     'zinit'   ) zinit=true ;;
-    'dein'    ) dein=true ;;
-    'jetpack' ) jetpack=true ;;
     'vimplug' ) vimplug=true ;;
-    'firefox' ) firefox=true ;;
-    'jupyter' ) jupyter_vim=true ;;
-    'conda'   ) conda=true ;;
-    'std' )
-      node=true
-      zplug=true
-      dein=true
-      ;;
-    'full' )
-      node=true
-      python=true
-      ruby=true
-      rust=true
-      zplug=true
-      dein=true
-      firefox=true
-      ;;
   esac
 done
 
@@ -87,26 +55,21 @@ ln -fs ~/dotfiles/editorconfig ~/.editorconfig
 ln -fs ~/dotfiles/tigrc ~/.tigrc
 ln -fs ~/dotfiles/pylintrc ~/.pylintrc
 ln -fs ~/dotfiles/condarc ~/.condarc
-ln -fs ~/dotfiles/yaourtrc ~/.yaourtrc
-ln -fs ~/dotfiles/ideavimrc ~/.ideavimrc
-ln -fs ~/dotfiles/latexmkrc ~/.latexmkrc
 ln -fs ~/dotfiles/systemd/* ~/.local/share/systemd/user/
 ln -fs ~/dotfiles/ipython/startup/* ~/.ipython/profile_default/startup
 ln -fs ~/dotfiles/zellij.kdl ~/.config/zellij/config.kdl
+ln -fs ~/dotfiles/latexmkrc ~/.latexmkrc
 
 # GUI
 if $gui; then
+  ln -fs ~/dotfiles/ideavimrc ~/.ideavimrc
   ln -fs ~/dotfiles/fonts.conf ~/.config/fontconfig/fonts.conf
   ln -fsn ~/dotfiles/fonts ~/.local/share/fonts/dotfiles
 
   mkdir -p ~/.wineprefixes
-  ln -fs ~/.wine ~/.wineprefixes/current
 
   ln -fs ~/dotfiles/tym/config.lua ~/.config/tym/config.lua
   ln -fs ~/dotfiles/tym/local.lua ~/.config/tym/local.lua
-
-  mkdir -p ~/.config/termite
-  ln -fs ~/dotfiles/termite/config ~/.config/termite/config
 
   mkdir -p ~/.mpv
   ln -fs ~/dotfiles/mpv.conf ~/.mpv/input.conf
@@ -115,52 +78,6 @@ if $gui; then
   ln -fs ~/dotfiles/env.conf ~/.config/environment.d/dotfiles.conf
 fi
 
-# NOT USED
-if false; then
-  mkdir -p ~/.config/fish/functions
-  ln -fs ~/dotfiles/config.fish ~/.config/fish/config.fish
-
-  mkdir -p ~/.config/peco
-  ln -fs ~/dotfiles/peco.json ~/.config/peco/config.json
-
-  ln -fs ~/dotfiles/Xdefaults ~/.Xdefaults
-  ln -fs ~/dotfiles/Xresources ~/.Xresources
-
-  mkdir -p ~/.mlterm
-  ln -fs ~/dotfiles/mlterm/* ~/.mlterm/
-
-  ln -fs ~/dotfiles/vimperatorrc ~/.vimperatorrc
-
-  ln -fsn ~/dotfiles/vimfx ~/.config/vimfx
-
-  mkdir -p ~/.config/nyaovim
-  ln -fs ~/dotfiles/nyaovimrc.html ~/.config/nyaovim/nyaovimrc.html
-
-  ln -fs ~/dotfiles/compton.conf ~/.config/compton.conf
-  ln -fs ~/.config/compton.conf ~/.config/marco-compton.conf
-
-  # ln -fsn ~/dotfiles/xkb ~/.xkb
-
-  mkdir -p ~/.config/byobu
-  ln -fs ~/dotfiles/byobu.conf ~/.config/byobu/.tmux.conf
-fi
-
-
-if $firefox; then
-  echo -e "${CYAN}nstalling Firefox config${NC}"
-  dir=`find ~/.mozilla/firefox/ -maxdepth 1 | grep default`
-  if [[ -d $dir ]]; then
-    dir2=`echo $dir/chrome`
-    if [[ -e $dir2 ]]; then
-      echo -e "${CYAN}'$dir2' already exists${NC}"
-    else
-      echo -e "${CYAN}Linked '~/dotfiles/misc/firefox' to '$dir2'${NC}"
-      ln -sn ~/dotfiles/misc/firefox $dir2
-    fi
-  else
-    echo -e "${CYAN}Firefox config directory does not exist.${NC}"
-  fi
-fi
 
 if $node; then
   if [ ! -d ~/.nodebrew ]; then
@@ -177,143 +94,14 @@ if $node; then
 fi
 
 
-if $python; then
-  if [ ! -d ~/.pyenv ]; then
-    echo
-    echo -e "${CYAN}Installing pyenv${NC}"
-    git clone https://github.com/yyuu/pyenv.git ~/.pyenv
-  else
-    echo -e "${CYAN}Updating pyenv${NC}"
-    cd ~/.pyenv
-    git pull
-    cd
-    echo
-  fi
-
-  if [ ! -d ~/.pyenv/plugins/pyenv-virtualenv ]; then
-    echo
-    echo -e "${CYAN}Installing pyenv-virtualenv${NC}"
-    git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
-  else
-    echo -e "${CYAN}Updating pyenv-virtualenv${NC}"
-    cd ~/.pyenv/plugins/pyenv-virtualenv
-    git pull
-    cd
-    echo
-  fi
-fi
-
-
-if $ruby; then
-  if [ ! -d ~/.rbenv ]; then
-    echo
-    echo -e "${CYAN}Installing rbenv${NC}"
-    git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-  else
-    echo -e "${CYAN}Updating rbenv${NC}"
-    cd ~/.rbenv
-    git pull
-    cd
-    echo
-  fi
-  if [ ! -d ~/.rbenv/plugins/ruby-build ]; then
-    echo
-    echo -e "${CYAN}Installing ruby-build${NC}"
-    git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-  else
-    echo -e "${CYAN}Updating ruby-build${NC}"
-    cd ~/.rbenv/plugins/ruby-build
-    git pull
-    cd
-    echo
-  fi
-fi
-
-
-if $rust; then
-  echo -e "${CYAN}Installing rust components${NC}"
-  if [ -d ~/.rustup ]; then
-    p=~/.zsh/completions/_rustup
-    if [ ! -f "$p" ]; then
-      rustup completions zsh > $p
-    fi
-  fi
-fi
-
-
-if $zplug; then
-  if [ ! -d ~/.zplug ]; then
-    echo
-    echo -e "${CYAN}Installing zplug${NC}"
-    git clone https://github.com/zplug/zplug ~/.zplug
-  else
-    echo -e "${CYAN}Updating zplug${NC}"
-    cd ~/.zplug
-    git pull
-    cd
-    echo
-  fi
-fi
-
 if $zinit; then
-  print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-  command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-  command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
-      print -P "%F{33} %F{34}Installation successful.%f%b" || \
-      print -P "%F{160} The clone has failed.%f%b"
-fi
-
-
-if $dein; then
-  dein_base_dir=~/.cache/dein/repos/github.com/Shougo
-  dein_dir=$dein_base_dir/dein.vim
-  mkdir -p "$dein_base_dir"
-  if [ ! -d $dein_dir ]; then
-    echo
-    echo -e "${CYAN}Installing dein${NC}"
-    git clone https://github.com/Shougo/dein.vim $dein_dir
-  else
-    echo -e "${CYAN}Updating dein${NC}"
-    cd $dein_dir
-    git pull
-    cd
-    echo
-  fi
-fi
-
-if $jetpack; then
-  curl -fLo ~/.local/share/nvim/site/pack/jetpack/opt/vim-jetpack/plugin/jetpack.vim --create-dirs https://raw.githubusercontent.com/tani/vim-jetpack/master/plugin/jetpack.vim
+  mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+  git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git"
 fi
 
 if $vimplug; then
   sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 fi
-
-if $jupyter_vim; then
-  mkdir -p ~/.jupyter/custom
-  ln -fs ~/dotfiles/misc/jupyter-vim-bind.js ~/.jupyter/custom/custom.js
-
-  mkdir -p $(jupyter --data-dir)/nbextensions
-  cd $(jupyter --data-dir)/nbextensions
-  git clone https://github.com/lambdalisue/jupyter-vim-binding vim_binding
-  jupyter nbextension enable vim_binding/vim_binding
-  cd -
-fi
-
-if ! command -v setxkbmap &> /dev/null
-then
-  if [ -e ~/dotfiles/Xmodmap ]; then
-    ln -sf ~/dotfiles/Xmodmap ~/.Xmodmap
-    setxkbmap && xmodmap ~/.Xmodmap
-    echo -e "${CYAN}Loaded Xmodmap${NC}"
-  fi
-fi
-
-# if $conda; then
-#   conda install -y -c pytorch pytorch torchvision cudatoolkit
-#   conda install -y -c conda-forge pydicom matplotlib jedi pylint keras opencv
-#   conda install -y -c anaconda pandas xlrd scipy scikit-image scikit-learn jupyter
-# fi
 
 
 echo -e "${CYAN}Done.${NC}"
