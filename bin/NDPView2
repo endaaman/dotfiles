@@ -1,7 +1,8 @@
 #!/usr/bin/bash
 
+export WINEARCH=win64
 if [ -z ${WINEPREFIX} ]; then
-  export WINEPREFIX="$HOME/.wine"
+  export WINEPREFIX=~/.wine
 fi
 
 if [ -n "$1" ]; then
@@ -9,4 +10,5 @@ if [ -n "$1" ]; then
 else
   p=""
 fi
+
 wine $WINEPREFIX/drive_c/Program\ Files/Hamamatsu/NDP.view\ 2/NDPView2.exe $p
