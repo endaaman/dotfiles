@@ -1,0 +1,35 @@
+#!/usr/bin/python
+import shlex
+import os
+
+def sorter(x):
+    if os.path.isdir(x):
+        return -x
+    return x
+
+paths = sorted(os.listdir('.'))
+
+dd = ['..']
+pp = []
+for path in paths:
+    item = path
+    islink = os.path.islink(path)
+    if islink:
+        real_path = shlex.quote(os.readlink(path))
+
+    if os.path.isdir(path):
+        item += '/'
+
+    item = shlex.quote(item)
+
+    if islink:
+        item = f'{item} → {real_path}'
+
+    if os.path.isdir(path):
+        dd.append(item)
+    else:
+        pp.append(item)
+
+for p in dd + pp:
+    print(p)
+

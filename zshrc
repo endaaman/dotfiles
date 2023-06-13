@@ -452,12 +452,18 @@ function select-excutables() {
 zle -N select-excutables
 
 function select-cwd-files() {
+  select-items \
+    'ls-simple' \
+    "awk -F '→ ' '{print \$1}'"
+  # select-items \
+  #   'ls-simple' \
+  #   "awk -F '→ ' '{print \$NF}'"
   # select-items \
   #   'ls -alhF --group-directories-first | tail -n+2 | grep -v " \./"' \
   #   'awk '\''{print $9}'\'' | sed -e "s/^ *//g" -e "s/\*$//"'
-  select-items \
-    'find -maxdepth 1' \
-    'cat'
+  # select-items \
+  #   'find -maxdepth 1' \
+  #   'cat'
 }
 zle -N select-cwd-files
 
