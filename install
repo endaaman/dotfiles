@@ -110,6 +110,9 @@ if $gui; then
 
   mkdir -p ~/.mpv
   ln -fs ~/dotfiles/mpv.conf ~/.mpv/input.conf
+
+  mkdir -p ~/.config/environment.d
+  ln -fs ~/dotfiles/env.conf ~/.config/environment.d/dotfiles.conf
 fi
 
 # NOT USED
