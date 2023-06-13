@@ -6,9 +6,10 @@ if [ -z ${WINEPREFIX} ]; then
 fi
 
 if [ -n "$1" ]; then
-  p=$(winepath -w $1)
+  p=$(winepath -w "$1")
 else
-  p=""
+  P=""
 fi
 
+# zenity --info --title=title --text="$p" --no-markup
 wine $WINEPREFIX/drive_c/Program\ Files/Hamamatsu/NDP.view\ 2/NDPView2.exe $p
