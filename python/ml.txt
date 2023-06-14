@@ -53,6 +53,7 @@ GitPython==3.1.31
 google-auth==2.17.3
 google-auth-oauthlib==1.0.0
 google-pasta==0.2.0
+grad-cam==1.4.6
 greenlet==2.0.2
 grpcio==1.54.0
 gunicorn==20.1.0
@@ -123,6 +124,7 @@ nvidia-nccl-cu11==2.14.3
 nvidia-nvtx-cu11==11.7.91
 oauthlib==3.2.2
 omegaconf==2.3.0
+opencv-python==4.7.0.72
 opencv-python-headless==4.7.0.72
 openpyxl==3.1.2
 opt-einsum==3.3.0
@@ -208,6 +210,7 @@ tornado==6.3.1
 tqdm==4.65.0
 traitlets==5.9.0
 triton==2.0.0
+ttach==0.0.3
 typing_extensions==4.5.0
 tzdata==2023.3
 uri-template==1.2.0
