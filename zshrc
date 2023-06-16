@@ -399,6 +399,10 @@ function edit-line() {
 }
 zle -N edit-line
 
+function tspc() {
+  tsp "$@" | xargs -I{} tsp -c {}
+}
+
 function select-items() {
   local last=$(echo $BUFFER | tr ' ' '\n' | tail -1)
   local result=$(eval $1 | fzf --query "$last"| eval $2)
