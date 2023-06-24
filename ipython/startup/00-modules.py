@@ -12,16 +12,15 @@ try:
     import numpy as np
     import pandas as pd
     from matplotlib import pyplot as plt
+    import timm
+    import torch
+    from torch import nn
+
     np.set_printoptions(precision=5, floatmode='fixed', suppress=True)
     Image.MAX_IMAGE_PIXELS = 8_000_000_000
 except ImportError as e:
     print(e)
 
-try:
-    import torch
-    from torch import nn
-except ImportError as e:
-    print(e)
 
 # %config IPCompleter.use_jedi = False
 # ipython profile create
