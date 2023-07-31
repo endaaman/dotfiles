@@ -39,6 +39,7 @@ if [ -f ~/.local/share/zinit/zinit.git/zinit.zsh -a -z "$IS_ROOT" ]; then
     zdharma-continuum/zinit-annex-bin-gem-node \
     zdharma-continuum/zinit-annex-patch-dl \
     zdharma-continuum/zinit-annex-rust \
+    as"completion"  pick"_pip" srijanshetty/zsh-pip-completion \
     zsh-users/zsh-completions \
     zsh-users/zsh-syntax-highlighting \
     esc/conda-zsh-completion \
@@ -184,9 +185,9 @@ if [ -z "$IS_ROOT" ]; then
     eval "$(luarocks path)"
   fi
 
-  if which pip &> /dev/null; then
-    eval "$(pip completion --zsh)"
-  fi
+  # if which pip &> /dev/null; then
+  #   eval "$(pip completion --zsh)"
+  # fi
 fi
 
 if [ -d ~/.cargo ]; then
