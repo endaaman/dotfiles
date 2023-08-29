@@ -49,7 +49,7 @@ Plug 'ayu-theme/ayu-vim'
 
 " Languages
 Plug 'cespare/vim-toml', {'ft': 'toml'}
-Plug 'gabrielelana/vim-markdown', {'ft': 'markdown'}
+" Plug 'gabrielelana/vim-markdown', {'ft': 'markdown'}
 Plug 'akhaku/vim-java-unused-imports', {'ft': 'java'}
 Plug 'digitaltoad/vim-pug', {'ft': ['pug', 'vue']}
 Plug 'posva/vim-vue', {'ft': 'vue'}
