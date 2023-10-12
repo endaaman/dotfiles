@@ -43,8 +43,9 @@ nnoremap S "_S
 noremap n nzz
 noremap N Nzz
 noremap G Gzz
-nnoremap <CR> yy
-vnoremap <CR> y
+" nnoremap <CR> yy
+" vnoremap <CR> y
+" nnoremap <silent> <expr> <CR> RegisterPrefix('yy')
 
 nnoremap <expr> i IndentWithI()
 nnoremap * :<C-u>let @/=expand("<cword>")\|set hlsearch<CR>

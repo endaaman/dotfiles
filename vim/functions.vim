@@ -50,7 +50,7 @@ endfunction
 
 function! IndentWithI() abort
   if len(getline('.')) == 0
-    return 'cc'
+    return '"_cc'
   else
     return 'i'
   endif
