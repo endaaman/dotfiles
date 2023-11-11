@@ -33,7 +33,8 @@ tym.set_config({
   silent = true,
   title = 'tym',
   cjk_width = 'narrow',
-  font = 'Monospace 14',
+  -- font = 'Monospace 14',
+  font = 'Hack 14',
   width = 140,
   height = 40,
 })
