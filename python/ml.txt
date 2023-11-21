@@ -151,7 +151,7 @@ platformdirs==3.5.0
 pretrainedmodels==0.7.4
 prometheus-client==0.16.0
 prompt-toolkit==3.0.38
-protobuf==4.23.4
+protobuf==3.20.3
 psutil==5.9.5
 ptflops==0.7
 ptyprocess==0.7.0
@@ -168,6 +168,7 @@ Pygments==2.15.1
 PyJWT==2.6.0
 pylint==2.17.4
 pylint-plugin-utils==0.7
+pynndescent==0.5.10
 pyparsing==3.0.9
 PyQt5-sip==12.12.1
 pyrsistent==0.19.3
@@ -203,6 +204,7 @@ stardist @ git+https://github.com/stardist/stardist.git@fbb38a808ddd5f269302cdc7
 statsmodels==0.14.0
 sympy==1.12
 tabulate==0.9.0
+tbb==2021.11.0
 tensorboard==2.13.0
 tensorboard-data-server==0.7.0
 tensorboard-plugin-wit==1.8.1
@@ -228,6 +230,7 @@ ttach==0.0.3
 typing==3.7.4.3
 typing_extensions==4.5.0
 tzdata==2023.3
+umap-learn==0.5.4
 uri-template==1.2.0
 urllib3==2.0.2
 vistats @ git+https://github.com/endaaman/vistats.git@25b020fa4a6ad81c23ccf2773af63e388e49709d
