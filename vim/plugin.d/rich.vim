@@ -1,5 +1,7 @@
  " let g:hybrid_reduced_contrast = 1
 
+let g:nerdfont#autofix_cellwidths = 0
+
 let g:DevIconsEnableFoldersOpenClose = 1
 let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
 let g:WebDevIconsUnicodeDecorateFileNodes = 1

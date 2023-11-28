@@ -74,7 +74,7 @@ if has('nvim')
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.3' }
   Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-  Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+  " Plug 'JoosepAlviste/nvim-ts-context-commentstring'
   Plug 'windwp/nvim-ts-autotag'
   Plug 'AckslD/nvim-neoclip.lua'
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
