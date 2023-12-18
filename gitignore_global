@@ -7,6 +7,7 @@
 .envrc
 .netrwhist
 .python-version
+.ccls-cache
 .sass-cache
 .vagrant
 npm-debug.log
