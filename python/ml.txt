@@ -182,7 +182,7 @@ pylint==2.17.4
 pylint-plugin-utils==0.7
 pynndescent==0.5.10
 pyparsing==3.0.9
-PyPDF2==3.0.1
+PyPDF2==2.12.1
 PyQt5-sip==12.12.1
 pyrsistent==0.19.3
 python-dateutil==2.8.2
