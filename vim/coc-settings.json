@@ -75,5 +75,6 @@
       "offsetColumnEnd": 1,
       "formatLines": 1
     }
-  }
+  },
+  "svelte.enable-ts-plugin": true
 }
