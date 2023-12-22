@@ -8,9 +8,9 @@ Plug 'rhysd/conflict-marker.vim'
 " Plug 'rking/ag.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'gregsexton/MatchTag'
-" Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
+" Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-commentary'
 Plug 'PeterRincker/vim-argumentative'
 Plug 'vim-scripts/sudo.vim'
@@ -39,7 +39,6 @@ Plug 'jpalardy/vim-slime'
 
 " Appearance
 Plug 'cocopon/iceberg.vim'
-Plug 'EdenEast/nightfox.nvim'
 " Plug 'chriskempson/base16-vim'
 Plug 'jacoborus/tender.vim'
 Plug 'kristijanhusak/vim-hybrid-material'
@@ -70,6 +69,8 @@ Plug 'mattn/vim-goimports', {'ft': 'go'}
 Plug 'imsnif/kdl.vim', {'ft': 'kdl'}
 
 if has('nvim')
+  Plug 'EdenEast/nightfox.nvim'
+
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.3' }
@@ -78,10 +79,11 @@ if has('nvim')
   Plug 'AckslD/nvim-neoclip.lua'
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
   Plug 'fannheyward/telescope-coc.nvim'
-
-  Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+  Plug 'numToStr/Comment.nvim'
+  " Plug 'JoosepAlviste/nvim-ts-context-commentstring'
   " Plug 'neovim/nvim-lspconfig'
 endif
+
 
 
 if get(g:, 'rich')
