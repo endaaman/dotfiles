@@ -80,7 +80,7 @@ if has('nvim')
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
   Plug 'fannheyward/telescope-coc.nvim'
   Plug 'numToStr/Comment.nvim'
-  " Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+  Plug 'JoosepAlviste/nvim-ts-context-commentstring'
   " Plug 'neovim/nvim-lspconfig'
 endif
 
