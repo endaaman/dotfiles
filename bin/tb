@@ -1,3 +1,20 @@
 #!/bin/bash
 
-tensorboard --bind_all --load_fast=false --reload_multifile=true --logdir $@
+# オプション引数を初期化
+port="6006"
+
+while getopts "p:" opt; do
+  case $opt in
+    p)
+      port=$OPTARG
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
+
+shift $((OPTIND -1))
+
+tensorboard --bind_all --load_fast=false --reload_multifile=true --port $port --logdir $@
