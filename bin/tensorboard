@@ -1,0 +1,5 @@
+#!/bin/bash
+
+original_path=$(PATH=$(echo "$PATH" | sed -e "s|$(dirname "$0"):[^:]*:||g") which ls)
+
+"$original_path" --load_fast=false --reload_multifile  "$@"

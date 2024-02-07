@@ -21,3 +21,5 @@ export FB_NOAUTH=true
 
 export PNPM_HOME="$HOME/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
+
+export TF_CPP_MIN_LOG_LEVEL=3
