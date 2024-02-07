@@ -1,20 +1,26 @@
-#!/bin/bash
+#!/usr/bin/python
 
-# オプション引数を初期化
-port="6006"
+import argparse
+import subprocess
 
-while getopts "p:" opt; do
-  case $opt in
-    p)
-      port=$OPTARG
-      ;;
-    \?)
-      echo "Invalid option: -$OPTARG" >&2
-      exit 1
-      ;;
-  esac
-done
+parser = argparse.ArgumentParser(prog='TensorBoard Wrapper',
+                                 description='TensorBoard Wrapper')
 
-shift $((OPTIND -1))
+parser.add_argument('logdir')
+parser.add_argument('-p', '--port', default=6006)
 
-tensorboard --bind_all --load_fast=false --reload_multifile=true --port $port --logdir $@
+args = parser.parse_args()
+
+cmd = f'tensorboard --bind_all --load_fast=false --reload_multifile=true ' \
+      f'--port {args.port} --logdir {args.logdir}'
+
+with subprocess.Popen(
+    cmd, shell=True, text=True,
+    stdout=subprocess.PIPE, stderr=subprocess.STDOUT
+) as proc:
+    for line in proc.stdout:
+        print(line, end='')
+    exit_code = proc.wait()
+
+print(f"Exit code: {exit_code}")
+exit(exit_code)
