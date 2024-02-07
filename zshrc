@@ -614,6 +614,8 @@ alias gogetlegacy='GO111MODULE=off go get -u'
 alias reload-udev='sudo udevadm control --reload-rules && sudo udevadm trigger'
 alias mam='mamba'
 alias https='http --default-scheme=https'
+alias p='pueue'
+alias pa='pueue add'
 
 # replacing
 if which exa &> /dev/null; then
