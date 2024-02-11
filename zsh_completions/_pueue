@@ -43,10 +43,49 @@ __pueue_global_flags() {
   _describe -o -t global_options 'global option' _l
 }
 
-__pueue_task_ids () {
-  # local -a _l=("${(@f)$(pueue status --json | jq -r '.tasks | .[] | .id')}")
+__pueue_groups () {
+  local -a _l=("${(@f)$(pueue status --json | jq -r '.groups | keys[]')}")
+  _describe -t groups 'Groups' _l
+}
+
+__pueue_all_task_ids () {
   local -a _l=("${(@f)$(pueue status --json | jq -r '.tasks | map((.id|tostring) + ":" + .command)[]')}")
-  _describe -t tasks 'Task ids' _l
+  _describe -t all_tasks 'All task ids' _l
+}
+
+__pueue_running_task_ids () {
+  local -a _l=("${(@f)$(pueue status --json | jq -r '.tasks | map(select(.status == "Running")) | map((.id|tostring) + ":" + .command)[]')}")
+  _describe -t running_tasks 'Running task ids' _l
+}
+
+__pueue_queued_task_ids () {
+  local -a _l=("${(@f)$(pueue status --json | jq -r '.tasks | map(select(.status == "Queued")) | map((.id|tostring) + ":" + .command)[]')}")
+  _describe -t queued_tasks 'Queued task ids' _l
+}
+
+__pueue_killed_task_ids () {
+  local -a _l=("${(@f)$(pueue status --json | jq -r '.tasks | map(select(.status.Done == "Killed")) | map((.id|tostring) + ":" + .command)[]')}")
+  _describe -t killed_tasks 'Killed task ids' _l
+}
+
+__pueue_succeeded_task_ids () {
+  local -a _l=("${(@f)$(pueue status --json | jq -r '.tasks | map(select(.status.Done == "Success")) | map((.id|tostring) + ":" + .command)[]')}")
+  _describe -t succeeded_tasks 'Succeeded task ids' _l
+}
+
+__pueue_failed_task_ids () {
+  local -a _l=("${(@f)$(pueue status --json | jq -r '.tasks | map(select(.status.Done | type == "object" and has("Failed"))) | map((.id|tostring) + ":" + .command)[]')}")
+  _describe -t failed_tasks 'Failed task ids' _l
+}
+
+__pueue_done_task_ids () {
+  # __pueue_succeeded_task_ids
+  # __pueue_failed_task_ids
+
+  _alternative \
+    'failed:Failed:__pueue_failed_task_ids' \
+    'succeeded:Succeeded:__pueue_succeeded_task_ids'
+  #   'queued:Queued:__pueue_killed_task_ids'
 }
 
 
@@ -62,31 +101,53 @@ _pueue() {
     (args)
       case $words[1] in
         (add)
-          _arguments -C \
-            {-w,--working-directory=}'[Specify current working directory]:dir:_directories' \
-            {-e,--escape}'[Escape any special shell characters (" ", "&", "!", etc.). Beware: This implicitly disables nearly all shell specific syntax ("&&", "&>")]' \
-            {-i,--immediate}'[Immediately start the task]' \
-            {-s,--stashed}'[Create the task in Stashed state. Useful to avoid immediate execution if the queue is empty]' \
-            {-d,--delay}'[Prevents the task from being enqueued until <delay> elapses. See "enqueue" for accepted formats]::' \
-            {-g,--group:}':Assign the task to a group. Groups kind of act as separate queues.:group:__pueue_groups' \
-            {-a,--after}':Start the task once all specified tasks have successfully finished.'
-
-            # -o,--priority <PRIORITY>
-            #         Start this task with a higher priority. The higher the number, the faster it will be processed
-            # -l,--label <LABEL>
-            #         Add some information for yourself. This string will be shown in the "status" table.
-            # -p,--print-task-id
-            #         Only return the task id instead of a text. This is useful when working with dependencies
-            # -h,--help
-            #         Print help
+          if [[ "${words[CURRENT-1]}" == "--" ]]; then
+            _path_commands
+          else
+            _arguments -C \
+              '1: :_path_commands' \
+              {-w,--working-directory=}'[Specify current working directory]:dir:_directories' \
+              {-e,--escape}'[Escape any special shell characters (" ", "&", "!", etc.). Beware: This implicitly disables nearly all shell specific syntax ("&&", "&>")]' \
+              {-i,--immediate}'[Immediately start the task]' \
+              {-s,--stashed}'[Create the task in Stashed state. Useful to avoid immediate execution if the queue is empty]' \
+              {-d,--delay}'[Prevents the task from being enqueued until <delay> elapses. See "enqueue" for accepted formats]::' \
+              {-g,--group:}'[Assign the task to a group. Groups kind of act as separate queues.]:groups:__pueue_groups' \
+              {-a,--after}'[Start the task once all specified tasks have successfully finished.]::' \
+              {-o,--priority}'[Start this task with a higher priority. The higher the number, the faster it will be processed]::' \
+              {-l,--label}'[Add some information for yourself. This string will be shown in the "status" table.]::' \
+              {-p,--print-task-id}'[Only return the task id instead of a text. This is useful when working with dependencies]' \
+              {-h,--help}'[Print help]'
+          fi
         ;;
 
         (follow)
           _arguments -C \
-            '1: :__pueue_task_ids' \
+            '1: :__pueue_all_task_ids' \
             {-l,--lines}'[Only print the last X lines of the output before following]'\
             {-h,--help}'[Print help]'
         ;;
+
+        (kill)
+          _arguments -C \
+            '1: :__pueue_running_task_ids' \
+            {-g,--group}'[Kill all running tasks in a group. This also pauses the group]:groups:__pueue_groups' \
+            {-a,--all}'[Kill all running tasks across ALL groups. This also pauses all groups]' \
+            {-s,--signal}'Send a UNIX signal instead of simply killing the process.::' \
+            {-h,--help}'[Print help]'
+        ;;
+
+        (clean)
+          _arguments -C \
+            '1: :__pueue_done_task_ids' \
+            {-s,--successful-only}'[Only clean tasks that finished successfully]' \
+            {-g,--group}'[Kill all running tasks in a group. This also pauses the group]:groups:__pueue_groups' \
+            {-h,--help}'[Print help]'
+          ;;
+
+        (restart)
+          _arguments -C \
+            '1: :__pueue_done_task_ids'
+          ;;
       esac
     ;;
   esac

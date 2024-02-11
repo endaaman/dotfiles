@@ -1,0 +1,12 @@
+[Unit]
+Description=pueue daemon
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/pueued
+
+[Install]
+WantedBy=default.target
+
+# add bellow when login
+# export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
