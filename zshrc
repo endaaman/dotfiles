@@ -52,7 +52,7 @@ fi
 
 ###* Option
 
-fpath+=~/.zsh/completions
+fpath=(~/.zsh/completion $fpath)
 
 # setopt complete_aliases
 # setopt ignoreeof # disable C-d
@@ -95,7 +95,7 @@ unsetopt list_beep
 autoload -Uz add-zsh-hock
 autoload -Uz chpwd_recent_dirs
 autoload -Uz colors; colors
-autoload -Uz compinit; compinit -u
+autoload -Uz compinit; compinit
 autoload -Uz promptinit; promptinit
 autoload -Uz zmv
 autoload -Uz edit-command-line
@@ -616,6 +616,7 @@ alias mam='mamba'
 alias https='http --default-scheme=https'
 alias p='pueue'
 alias pa='pueue add'
+alias pf='pueue follow'
 
 # replacing
 if which exa &> /dev/null; then

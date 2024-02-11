@@ -36,8 +36,9 @@ mkdir -p ~/.config/tym
 mkdir -p ~/.config/zellij
 mkdir -p ~/.go
 mkdir -p ~/.local/share/fonts
-mkdir -p ~/src
 mkdir -p ~/.ipython/profile_default/startup
+mkdir -p ~/.zsh
+mkdir -p ~/src
 
 touch ~/.gitconfig_local
 touch ~/.zshrc.pre
@@ -46,6 +47,7 @@ ln -fs ~/dotfiles/gitconfig ~/.gitconfig
 ln -fs ~/dotfiles/gitignore_global ~/.gitignore_global
 ln -fs ~/dotfiles/zshrc ~/.zshrc
 ln -fs ~/dotfiles/zshenv ~/.zshenv
+ln -fs ~/dotfiles/zsh_completions ~/.zsh/completion
 # ln -fs ~/dotfiles/bashrc ~/.bashrc
 ln -fs ~/dotfiles/tmux.conf ~/.tmux.conf
 ln -fs ~/dotfiles/vimrc ~/.vimrc

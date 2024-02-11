@@ -3,7 +3,7 @@ call plug#begin()
 " Common
 " Plug 'tani/vim-jetpack', {'opt': 1} "bootstrap
 Plug 'editorconfig/editorconfig-vim'
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 Plug 'rhysd/conflict-marker.vim'
 " Plug 'rking/ag.vim'
 Plug 'jiangmiao/auto-pairs'
