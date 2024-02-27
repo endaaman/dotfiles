@@ -8,14 +8,20 @@ parser = argparse.ArgumentParser(prog='TensorBoard Wrapper',
 
 parser.add_argument('logdir')
 parser.add_argument('-p', '--port', default=6006)
+parser.add_argument('-f', '--fast', action='store_true')
+parser.add_argument('-n', '--nomulti', action='store_true')
 
 args = parser.parse_args()
+fast = 'true' if args.fast else 'false'
+multi = 'false' if args.nomulti else 'true'
 
-cmd = f'tensorboard --bind_all --load_fast=false --reload_multifile=true ' \
+pre = 'ulimit -n 50000'
+cmd = f'tensorboard --bind_all --load_fast={fast} --reload_multifile={multi} ' \
       f'--port {args.port} --logdir {args.logdir}'
 
+print(f'RUN: {cmd}')
 with subprocess.Popen(
-    cmd, shell=True, text=True,
+    f'{pre}; {cmd}', shell=True, text=True,
     stdout=subprocess.PIPE, stderr=subprocess.STDOUT
 ) as proc:
     for line in proc.stdout:
