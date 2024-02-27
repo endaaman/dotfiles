@@ -615,7 +615,7 @@ alias reload-udev='sudo udevadm control --reload-rules && sudo udevadm trigger'
 alias mam='mamba'
 alias https='http --default-scheme=https'
 alias p='pueue'
-alias pa='pueue add --'
+alias pa='pueue add'
 alias pf='pueue follow'
 
 # replacing
