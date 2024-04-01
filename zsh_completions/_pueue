@@ -111,11 +111,12 @@ _pueue() {
       case $words[1] in
         (add)
           if [[ "${words[CURRENT-1]}" == "--" ]]; then
-            _path_commands
+            # _path_commands
             # _cmdambivalent
+            _normal
           else
             _arguments -C \
-              '1: :_path_commands' \
+              '*:: :_normal' \
               {-w,--working-directory=}'[Specify current working directory]:dir:_directories' \
               {-e,--escape}'[Escape any special shell characters (" ", "&", "!", etc.). Beware: This implicitly disables nearly all shell specific syntax ("&&", "&>")]' \
               {-i,--immediate}'[Immediately start the task]' \
