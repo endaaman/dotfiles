@@ -16,7 +16,7 @@ fast = 'true' if args.fast else 'false'
 multi = 'false' if args.nomulti else 'true'
 
 pre = 'ulimit -n 50000'
-cmd = f'tensorboard --bind_all --load_fast={fast} --reload_multifile={multi} ' \
+cmd = f'tensorboard --bind_all --load_fast={fast} --reload_multifile={multi} --reload_interval 5 ' \
       f'--port {args.port} --logdir {args.logdir}'
 
 print(f'RUN: {cmd}')
