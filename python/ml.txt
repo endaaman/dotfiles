@@ -73,6 +73,7 @@ google-auth-oauthlib==1.0.0
 google-crc32c==1.5.0
 google-pasta==0.2.0
 grad-cam==1.4.6
+graphviz==0.20.1
 greenlet==2.0.2
 grpcio==1.60.1
 gunicorn==20.1.0
@@ -117,7 +118,7 @@ lifelines==0.27.7
 lightgbm==3.3.5
 linkify-it-py==2.0.3
 lit==17.0.1
-llvmlite==0.40.0
+llvmlite==0.42.0
 lxml==5.1.0
 Mako==1.2.4
 Markdown==3.4.3
@@ -146,8 +147,8 @@ nest-asyncio==1.5.6
 networkx==3.1
 notebook==6.5.4
 notebook_shim==0.2.3
-numba==0.57.0
-numpy==1.24.3
+numba==0.59.1
+numpy==1.26.4
 nvidia-cublas-cu11==11.10.3.66
 nvidia-cuda-cupti-cu11==11.7.101
 nvidia-cuda-nvrtc-cu11==11.7.99
@@ -205,7 +206,7 @@ PyJWT==2.6.0
 pylibsrtp==0.9.1
 pylint==2.17.4
 pylint-plugin-utils==0.7
-pynndescent==0.5.10
+pynndescent==0.5.12
 pyOpenSSL==23.3.0
 pyparsing==3.0.9
 PyPDF2==2.12.1
@@ -286,7 +287,7 @@ typing_extensions==4.9.0
 tzdata==2023.3
 tzlocal==5.2
 uc-micro-py==1.0.3
-umap-learn==0.5.4
+umap-learn==0.5.6
 uri-template==1.2.0
 urllib3==2.1.0
 uvicorn==0.26.0
