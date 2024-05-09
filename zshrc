@@ -196,11 +196,11 @@ if [ -d ~/.cargo ]; then
   export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 fi
 
-if [ -d ~/.nodebrew ]; then
-  export PATH=~/.nodebrew/current/bin:$PATH
-  nodebrew use 20 1>/dev/null
-  fpath+=~/.nodebrew/completions/zsh
-fi
+# if [ -d ~/.nodebrew ]; then
+#   export PATH=~/.nodebrew/current/bin:$PATH
+#   nodebrew use 20 1>/dev/null
+#   fpath+=~/.nodebrew/completions/zsh
+# fi
 
 ###* nvm is too slow
 # if [ -d ~/.nvm ]; then
@@ -244,6 +244,10 @@ else
   fi
 fi
 unset __conda_setup
+
+if [ -f "/opt/asdf-vm/asdf.sh" ]; then
+  . /opt/asdf-vm/asdf.sh
+fi
 
 ###* Function
 
