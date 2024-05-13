@@ -15,7 +15,7 @@ def get_remote_url(domain, name, is_ssh):
         return f'git@{domain}:{name}.git'
     return f'https://{domain}/{name}.git'
 
-def get_clone_target(arg, is_ssh):
+def parse_clone_target(arg, is_ssh):
     # url like
     parsed = urlparse(arg)
     if parsed.netloc:
@@ -46,12 +46,19 @@ def get_clone_target(arg, is_ssh):
         }
 
     # foo/bar
-    if not re.match(r'^[^/^@^:]+/[^/^@^:]+$', arg):
-        return None
-    return {
-        'remote': get_remote_url('github.com', arg, is_ssh),
-        'path': os.path.join('github.com', arg)
-    }
+    if re.match(r'^[^/^@^:]+/[^/^@^:]+$', arg):
+        return {
+            'remote': get_remote_url('github.com', arg, is_ssh),
+            'path': os.path.join('github.com', arg)
+        }
+    slash_count = arg.count('/')
+    if slash_count == 0:
+        return {
+            'remote': get_remote_url('github.com', f'endaaman/{arg}', True),
+            'path': os.path.join('github.com', f'endaaman/{arg}')
+        }
+    return None
+
 
 class SubCommand():
     def register(self, p):
@@ -85,7 +92,7 @@ class CommandGet(SubCommand):
     def __call__(self, args):
         is_ssh = args.p
         dryrun = args.s
-        target = get_clone_target(args.arg1, is_ssh)
+        target = parse_clone_target(args.arg1, is_ssh)
         if not target:
             print(f'Invalid argument: {args.arg1}')
             return
