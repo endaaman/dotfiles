@@ -4,6 +4,5 @@ set -eux
 
 # setxkbmap -rules evdev -model us -layout us
 # setxkbmap -rules evdev -model jp106 -layout jp
-
 setxkbmap -option
 xmodmap ~/.Xmodmap
