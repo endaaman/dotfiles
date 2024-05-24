@@ -1,5 +1,5 @@
 # Define reload alias at least
-alias reload-zsh='exec zsh -l'
+alias reload-zsh='RELOADING=1 exec zsh -l'
 if [ -f ~/.zshrc.pre ]; then
   source ~/.zshrc.pre
 fi
@@ -245,9 +245,10 @@ else
 fi
 unset __conda_setup
 
-if [ -f "/opt/asdf-vm/asdf.sh" ]; then
-  . /opt/asdf-vm/asdf.sh
-fi
+# not working
+# if [ -f "/opt/asdf-vm/asdf.sh" ] && [ -z "$RELOADING" ]; then
+#   . /opt/asdf-vm/asdf.sh
+# fi
 
 ###* Function
 
