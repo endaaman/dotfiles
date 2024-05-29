@@ -1,7 +1,7 @@
 # vi: set ft=toml :
 [user]
   name = endaaman
-	email = ken@endaaman.me
+	email = ken@endaaman.com
 
 [include]
   path = ~/.gitconfig_local
