@@ -625,7 +625,8 @@ alias pf='pueue follow'
 
 # replacing
 if which exa &> /dev/null; then
-  alias l='exa -agbl --group-directories-first --time-style long-iso'
+  alias l='exa -gbl --group-directories-first --time-style long-iso'
+  alias la='exa -agbl --group-directories-first --time-style long-iso'
   alias ll='exa -agbl --group-directories-first --time-style long-iso -T -L 2'
   alias lll='exa -agbl --group-directories-first --time-style long-iso -T -L 3'
 else
