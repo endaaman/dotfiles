@@ -1,8 +1,9 @@
 import re
 import os
 import pickle
-from glob import glob
+import math
 import itertools
+from glob import glob
 
 get_ipython().run_line_magic('precision', 5)
 get_ipython().run_line_magic('load_ext', 'autoreload')
@@ -16,6 +17,7 @@ try:
     import timm
     import torch
     from torch import nn
+    import torch.nn.functional as F
     import timm
 
     np.set_printoptions(precision=5, floatmode='fixed', suppress=True)
