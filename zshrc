@@ -168,7 +168,7 @@ export WINEARCH=win64
 
 export C=$(date '+%Y%m')
 export CD=~/tmp/$C
-if [ -n "$DISPLAY" ] && which xdotool &> /dev/null; then
+if [ -n "$TYM_ID" ] && which xdotool &> /dev/null; then
   export WINDOWID=$(xdotool getwindowfocus)
 fi
 
