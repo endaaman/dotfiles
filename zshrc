@@ -133,6 +133,11 @@ function my_prompt() {
   if [ -n "$VIRTUAL_ENV" ]; then
     local name=$(basename $VIRTUAL_ENV)
     python_mod="<%F{magent}$name%f> "
+  else
+    python_version=$(pyenv version | sed 's/ .*//')
+    if [ "$python_version" != "system" ]; then
+      python_mod="<%F{magenta}$python_version%f> "
+    fi
   fi
 
   echo "$pre$dirname $python_mod$symbol "
@@ -224,6 +229,12 @@ if [ -d ~/.poetry ]; then
   export PATH="$HOME/.poetry/bin:$PATH"
 fi
 
+if [ -d ~/.pyenv ]; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init -)"
+fi
+
 if which java &> /dev/null; then
   export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:/bin/java::")
 fi
@@ -231,7 +242,9 @@ fi
 if which virtualenvwrapper.sh &> /dev/null; then
   export WORKON_HOME=$HOME/.virtualenvs
   if ! which workon &> /dev/null && [ -z "$VIRTUAL_ENV" ]; then
-    source virtualenvwrapper.sh
+    if python -c "import virtualenvwrapper" &> /dev/null; then
+      source virtualenvwrapper.sh
+    fi
   fi
 fi
 
