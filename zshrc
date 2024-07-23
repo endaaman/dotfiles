@@ -133,7 +133,7 @@ function my_prompt() {
   if [ -n "$VIRTUAL_ENV" ]; then
     local name=$(basename $VIRTUAL_ENV)
     python_mod="<%F{magent}$name%f> "
-  else
+  elif which pyenv &> /dev/null; then
     python_version=$(pyenv version | sed 's/ .*//')
     if [ "$python_version" != "system" ]; then
       python_mod="<%F{magenta}$python_version%f> "
