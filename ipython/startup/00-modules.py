@@ -25,6 +25,8 @@ try:
 except ImportError as e:
     print(e)
 
+def count_parameters(model):
+    return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
 # %config IPCompleter.use_jedi = False
 # ipython profile create
