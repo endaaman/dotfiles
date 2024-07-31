@@ -34,7 +34,7 @@ Plug 'lambdalisue/fern.vim'
 Plug 'lambdalisue/fern-git-status.vim'
 
 Plug 'goerz/jupytext.vim'
-Plug 'hanschen/vim-ipython-cell'
+" Plug 'hanschen/vim-ipython-cell'
 Plug 'jpalardy/vim-slime'
 
 " Appearance
@@ -73,8 +73,9 @@ if has('nvim')
 
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'nvim-lua/plenary.nvim'
-  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.3' }
-  Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+  " Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
+  Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' }
   Plug 'windwp/nvim-ts-autotag'
   Plug 'AckslD/nvim-neoclip.lua'
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }

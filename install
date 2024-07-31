@@ -33,7 +33,7 @@ mkdir -p ~/.config/fontconfig
 mkdir -p ~/.config/systemd/user
 mkdir -p ~/.local/share/systemd/user/
 mkdir -p ~/.config/tym
-mkdir -p ~/.config/zellij
+# mkdir -p ~/.config/zellij
 mkdir -p ~/.go
 mkdir -p ~/.local/share/fonts
 mkdir -p ~/.ipython/profile_default/startup
@@ -58,13 +58,13 @@ ln -fs ~/dotfiles/tigrc ~/.tigrc
 ln -fs ~/dotfiles/pylintrc ~/.pylintrc
 ln -fs ~/dotfiles/condarc ~/.condarc
 ln -fs ~/dotfiles/systemd/* ~/.local/share/systemd/user/
-ln -fs ~/dotfiles/ipython/startup/* ~/.ipython/profile_default/startup
-ln -fs ~/dotfiles/zellij.kdl ~/.config/zellij/config.kdl
+# ln -fs ~/dotfiles/ipython/startup/* ~/.ipython/profile_default/startup
+# ln -fs ~/dotfiles/zellij.kdl ~/.config/zellij/config.kdl
 ln -fs ~/dotfiles/latexmkrc ~/.latexmkrc
 
 # GUI
 if $gui; then
-  ln -fs ~/dotfiles/ideavimrc ~/.ideavimrc
+  # ln -fs ~/dotfiles/ideavimrc ~/.ideavimrc
   ln -fs ~/dotfiles/fonts.conf ~/.config/fontconfig/fonts.conf
   ln -fsn ~/dotfiles/fonts ~/.local/share/fonts/dotfiles
 
@@ -73,8 +73,8 @@ if $gui; then
   ln -fs ~/dotfiles/tym/config.lua ~/.config/tym/config.lua
   ln -fs ~/dotfiles/tym/local.lua ~/.config/tym/local.lua
 
-  mkdir -p ~/.mpv
-  ln -fs ~/dotfiles/mpv.conf ~/.mpv/input.conf
+  # mkdir -p ~/.mpv
+  # ln -fs ~/dotfiles/mpv.conf ~/.mpv/input.conf
 
   mkdir -p ~/.config/environment.d
   ln -fs ~/dotfiles/env.conf ~/.config/environment.d/dotfiles.conf

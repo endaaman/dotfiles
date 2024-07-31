@@ -133,7 +133,7 @@ function my_prompt() {
   if [ -n "$VIRTUAL_ENV" ]; then
     local name=$(basename $VIRTUAL_ENV)
     python_mod="<%F{magent}$name%f> "
-  elif which pyenv &> /dev/null; then
+  elif command -v pyenv &> /dev/null; then
     python_version=$(pyenv version | sed 's/ .*//')
     if [ "$python_version" != "system" ]; then
       python_mod="<%F{magenta}$python_version%f> "
@@ -151,7 +151,7 @@ fi
 
 function my_rprompt() {
   local rprompt=''
-  if which git_super_status &> /dev/null; then
+  if command -v git_super_status &> /dev/null; then
     rprompt="$(git_super_status)"
   fi
   echo $rprompt
@@ -173,24 +173,24 @@ export WINEARCH=win64
 
 export C=$(date '+%Y%m')
 export CD=~/tmp/$C
-if [ -n "$TYM_ID" ] && which xdotool &> /dev/null; then
+if [ -n "$TYM_ID" ] && command -v xdotool &> /dev/null; then
   export WINDOWID=$(xdotool getwindowfocus)
 fi
 
 
 ###* CLI tools
 
-if which gh &> /dev/null; then
+if command -v gh &> /dev/null; then
   eval "$(gh completion -s zsh)"
 fi
 
 if [ -z "$IS_ROOT" ]; then
   # only non root
-  if [ which luarocks &> /dev/null; then
+  if [ command -v luarocks &> /dev/null; then
     eval "$(luarocks path)"
   fi
 
-  # if which pip &> /dev/null; then
+  # if command -v pip &> /dev/null; then
   #   eval "$(pip completion --zsh)"
   # fi
 fi
@@ -221,7 +221,7 @@ export PATH=$PATH:$GOPATH/bin
 export GO15VENDOREXPERIMENT=1
 export GO11MODULE=off
 
-if which pipenv &> /dev/null; then
+if command -v pipenv &> /dev/null; then
   eval "$(_PIPENV_COMPLETE=zsh_source pipenv)"
 fi
 
@@ -235,13 +235,13 @@ if [ -d ~/.pyenv ]; then
   eval "$(pyenv init -)"
 fi
 
-if which java &> /dev/null; then
+if command -v java &> /dev/null; then
   export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:/bin/java::")
 fi
 
-if which virtualenvwrapper.sh &> /dev/null; then
+if command -v virtualenvwrapper.sh &> /dev/null; then
   export WORKON_HOME=$HOME/.virtualenvs
-  if ! which workon &> /dev/null && [ -z "$VIRTUAL_ENV" ]; then
+  if ! command -v workon &> /dev/null && [ -z "$VIRTUAL_ENV" ]; then
     # source virtualenvwrapper.sh
     if python -c "import virtualenvwrapper" &> /dev/null; then
       source virtualenvwrapper.sh
@@ -638,7 +638,7 @@ alias pa='pueue add'
 alias pf='pueue follow'
 
 # replacing
-if which exa &> /dev/null; then
+if command -v exa >/dev/null 2>&1; then
   alias l='exa -gbl --group-directories-first --time-style long-iso'
   alias la='exa -agbl --group-directories-first --time-style long-iso'
   alias ll='exa -agbl --group-directories-first --time-style long-iso -T -L 2'
@@ -647,12 +647,16 @@ else
   alias ll='ls -ahlF --color=auto --group-directories-first --time-style="+%m-%d %H:%M"'
   alias l=ll
 fi
-if which trash-put &> /dev/null; then
+if command -v trash-put >/dev/null 2>&1; then
   alias rm='trash-put'
   compdef _rm trash-put
 fi
-if which colordiff &> /dev/null; then
+if command -v colordiff >/dev/null 2>&1; then
   alias diff='colordiff'
+fi
+
+if command -v doas >/dev/null 2>&1; then
+  alias sudo='doas'
 fi
 
 ###* operations
@@ -694,6 +698,6 @@ if [ -f ~/.zshrc.post ]; then
   source ~/.zshrc.post
 fi
 
-if [ -n "$PROFILING" ] && which zprof > /dev/null; then
+if [ -n "$PROFILING" ] && command -v zprof > /dev/null; then
   zprof | less
 fi
