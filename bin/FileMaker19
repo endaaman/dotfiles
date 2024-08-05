@@ -1,7 +1,9 @@
 #!/usr/bin/bash
 
-export WINEARCH=win64
-export WINEPREFIX="$HOME/.wineprefixes/patho2"
 export LANG=ja_JP.utf-8
+export WINEARCH=win64
+if [ -z "${WINEPREFIX}" ]; then
+  export WINEPREFIX=$WINE_FM19
+fi
 
 wine "$WINEPREFIX/drive_c/Program Files/FileMaker/FileMaker Pro 19/FileMaker Pro.exe" $1
