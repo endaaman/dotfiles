@@ -655,9 +655,9 @@ if command -v colordiff >/dev/null 2>&1; then
   alias diff='colordiff'
 fi
 
-if command -v doas >/dev/null 2>&1; then
-  alias sudo='doas'
-fi
+# if command -v doas >/dev/null 2>&1; then
+#   alias sudo='doas'
+# fi
 
 ###* operations
 
