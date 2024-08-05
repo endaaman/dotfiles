@@ -1,8 +1,8 @@
 #!/usr/bin/bash
 
 export WINEARCH=win64
-if [ -z ${WINEPREFIX} ]; then
-  export WINEPREFIX=~/.wine
+if [ -z "${WINEPREFIX}" ]; then
+  export WINEPREFIX=$WINE_NDPVIEW
 fi
 
 if [ -n "$1" ]; then
