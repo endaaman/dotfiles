@@ -134,6 +134,7 @@ packaging==24.0
 pandas==2.2.2
 pandocfilters==1.5.1
 parso==0.8.4
+patsy==0.5.6
 pexpect==4.9.0
 pillow==10.3.0
 platformdirs==4.2.2
@@ -180,6 +181,7 @@ soupsieve==2.5
 SQLAlchemy==2.0.29
 sqlparse==0.5.0
 stack-data==0.6.3
+statsmodels==0.14.2
 sympy==1.12
 tensorboard==2.16.2
 tensorboard-data-server==0.7.2
