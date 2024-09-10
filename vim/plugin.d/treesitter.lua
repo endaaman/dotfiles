@@ -17,6 +17,8 @@ ts.setup {
     },
   },
   ensure_installed = {
+    "javascript",
+    "typescript",
     "tsx",
     "toml",
     "fish",
