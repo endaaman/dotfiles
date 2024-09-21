@@ -1,6 +1,6 @@
 ###* Environment
 
-export PATH=~/.bin:~/.local/bin:/snap/bin:$PATH
+export PATH=~/.bin:~/.local/bin:~/dotfiles/bin:/snap/bin:$PATH
 export HISTFILE=$HOME/.zsh_history
 export HISTSIZE=100000
 export SAVEHIST=100000
