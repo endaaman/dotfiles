@@ -30,6 +30,7 @@ ts.setup {
     "html",
     "lua",
     "python",
+    "svelte",
   },
   autotag = {
     enable = true,
