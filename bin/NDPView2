@@ -2,7 +2,7 @@
 
 export WINEARCH=win64
 if [ -z "${WINEPREFIX}" ]; then
-  export WINEPREFIX=$WINE_NDPVIEW
+  export WINEPREFIX="$HOME/.wine"
 fi
 
 if [ -n "$1" ]; then
