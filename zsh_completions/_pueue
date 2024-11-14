@@ -160,9 +160,19 @@ _pueue() {
             '1: :__pueue_done_task_ids'
           ;;
 
-        (remove)
+        (remove|rm)
           _arguments -C \
             '1: :__pueue_queued_task_ids' \
+            {-h,--help}'[Print help]'
+          ;;
+
+        (edit)
+          _arguments -C \
+            '1: :__pueue_queued_task_ids' \
+            {-c,--command}"[Edit the task's command]::" \
+            {-p,--path}"[Edit the task's path]::" \
+            {-l,--label}"[Edit the task's label]::" \
+            {-o,--priority}"[Edit the task's priority]::" \
             {-h,--help}'[Print help]'
           ;;
       esac
