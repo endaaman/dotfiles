@@ -15,7 +15,6 @@ asttokens==2.4.1
 astunparse==1.6.3
 async-lru==2.0.4
 attrs==23.2.0
-autopep8==2.0.4
 Babel==2.15.0
 beautifulsoup4==4.12.3
 bleach==6.1.0
