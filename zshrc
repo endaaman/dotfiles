@@ -274,20 +274,27 @@ if [ -d ~/.poetry ]; then
 fi
 
 if [ -d ~/.pyenv ]; then
-    export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-fi
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
 
-pyenv() {
-  unset -f pyenv
   if command -v pyenv &> /dev/null; then
     eval "$(command pyenv init -)"
     if [ -d "${PYENV_ROOT}/plugins/pyenv-virtualenv" ]; then
       eval "$(command pyenv virtualenv-init -)"
     fi
   fi
-  pyenv "$@"
-}
+fi
+
+# pyenv() {
+#   unset -f pyenv
+#   if command -v pyenv &> /dev/null; then
+#     eval "$(command pyenv init -)"
+#     if [ -d "${PYENV_ROOT}/plugins/pyenv-virtualenv" ]; then
+#       eval "$(command pyenv virtualenv-init -)"
+#     fi
+#   fi
+#   pyenv "$@"
+# }
 
 if [ -d ~/.local/bin ] && [ -f ~/.local/bin/mise ]; then
   eval "$(~/.local/bin/mise activate zsh)"
