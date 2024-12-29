@@ -45,8 +45,10 @@ if [ -f ~/.local/share/zinit/zinit.git/zinit.zsh -a -z "$IS_ROOT" ]; then
     esc/conda-zsh-completion \
     endaaman/lxd-completion-zsh \
     as"completion"  pick"_tsp" endaaman/task-spooler-completion-zsh \
-    endaaman/zsh-git-prompt \
-    from"gh-r" as"program" junegunn/fzf
+    from"gh-r" as"program" junegunn/fzf \
+    romkatv/gitstatus
+
+  gitstatus_stop 'MY' && gitstatus_start 'MY'
 fi
 
 
@@ -150,9 +152,23 @@ else
 fi
 
 function my_rprompt() {
+  # local rprompt=''
+  # if command -v git_super_status &> /dev/null; then
+  #   rprompt="$(git_super_status)"
+  # fi
+  # echo $rprompt
   local rprompt=''
-  if command -v git_super_status &> /dev/null; then
-    rprompt="$(git_super_status)"
+  if gitstatus_query MY && [ "$GITSTATUS" -eq 0 ]; then
+    rprompt="%F{blue}[${VCS_STATUS_LOCAL_BRANCH}]%f"
+    if [ "$VCS_STATUS_HAS_STAGED" -ne 0 ] || [ "$VCS_STATUS_HAS_UNSTAGED" -ne 0 ]; then
+      rprompt+='%F{yellow}*%f'
+    fi
+    if [ "$VCS_STATUS_COMMITS_AHEAD" -ne 0 ]; then
+      rprompt+='%F{green}↑%f'
+    fi
+    if [ "$VCS_STATUS_COMMITS_BEHIND" -ne 0 ]; then
+      rprompt+='%F{red}↓%f'
+    fi
   fi
   echo $rprompt
 }
@@ -261,16 +277,61 @@ if [ -d ~/.pyenv ]; then
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
 fi
+
 pyenv() {
-    unset -f pyenv
-    if command -v pyenv &> /dev/null; then
-        eval "$(command pyenv init -)"
-        if [ -d "${PYENV_ROOT}/plugins/pyenv-virtualenv" ]; then
-            eval "$(command pyenv virtualenv-init -)"
-        fi
+  unset -f pyenv
+  if command -v pyenv &> /dev/null; then
+    eval "$(command pyenv init -)"
+    if [ -d "${PYENV_ROOT}/plugins/pyenv-virtualenv" ]; then
+      eval "$(command pyenv virtualenv-init -)"
     fi
-    pyenv "$@"
+  fi
+  pyenv "$@"
 }
+
+if [ -d ~/.local/bin ] && [ -f ~/.local/bin/mise ]; then
+  eval "$(~/.local/bin/mise activate zsh)"
+  # do; mise plugin install usage
+  # eval "$(~/.local/bin/mise completion zsh)"
+  # fpath=(~/.local/share/mise/completions $fpath)
+  # autoload -Uz compinit && compinit
+
+  export MISE_VENV_HOME="$HOME/.venvs"
+
+  vworkon() {
+    local venv_name=$1
+    if [ -z "$venv_name" ]; then
+        echo "Usage: workon <venv_name>"
+        return 1
+    fi
+
+    local venv_path="$MISE_VENV_HOME/$venv_name"
+    if [ ! -d "$venv_path" ]; then
+        echo "Virtual environment '$venv_name' does not exist"
+        echo "Available environments:"
+        ls -1 $MISE_VENV_HOME
+        return 1
+    fi
+    source "$venv_path/bin/activate"
+}
+
+  vmkvenv() {
+    local venv_name=$1
+    local python_version=${2:-"3.12"}  # デフォルトバージョン
+    if [ -z "$venv_name" ]; then
+      echo "Usage: vmk <venv_name> [python_version]"
+      return 1
+    fi
+    # venvディレクトリがなければ作成
+    mkdir -p $MISE_VENV_HOME
+    # Pythonのパスを直接取得して実行
+    local python_path=$(mise which python@$python_version)
+    $python_path -m venv "$MISE_VENV_HOME/$venv_name"
+    # 作成したvenvをアクティベート
+    vworkon $venv_name
+  }
+fi
+
 
 if command -v java &> /dev/null; then
   export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:/bin/java::")
