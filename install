@@ -38,6 +38,7 @@ mkdir -p ~/.config/tym
 mkdir -p ~/.go
 mkdir -p ~/.local/share/fonts
 mkdir -p ~/.ipython/profile_default/startup
+mkdir -p ~/.jupyter
 mkdir -p ~/.zsh
 mkdir -p ~/src
 
@@ -62,6 +63,7 @@ ln -fs ~/dotfiles/systemd/* ~/.local/share/systemd/user/
 # ln -fs ~/dotfiles/ipython/startup/* ~/.ipython/profile_default/startup
 # ln -fs ~/dotfiles/zellij.kdl ~/.config/zellij/config.kdl
 ln -fs ~/dotfiles/latexmkrc ~/.latexmkrc
+ln -fs ~/dotfiles/misc/jupyter_lab_config.py ~/.jupyter/
 
 # GUI
 if $gui; then
