@@ -97,7 +97,7 @@ unsetopt list_beep
 autoload -Uz add-zsh-hock
 autoload -Uz chpwd_recent_dirs
 autoload -Uz colors; colors
-autoload -Uz compinit; compinit
+autoload -Uz compinit; compinit -u
 autoload -Uz promptinit; promptinit
 autoload -Uz zmv
 autoload -Uz edit-command-line
