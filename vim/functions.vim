@@ -66,6 +66,7 @@ function! SearchByRegister() abort
   endif
 endfunction
 
+" Not used
 function! PickExecutable(pathspecs) abort
   for pathspec in filter(a:pathspecs, '!empty(v:val)')
     for path in reverse(glob(pathspec, 0, 1))
@@ -74,6 +75,23 @@ function! PickExecutable(pathspecs) abort
       endif
     endfor
   endfor
+  return ''
+endfunction
+
+function! FindPythonWithPynvim() abort
+  " Check current python
+  let l:path_python = substitute(system('which python3'), '\n', '', 'g')
+  if executable(l:path_python) && system(l:path_python . ' -c "import pynvim; print(1)" 2>/dev/null') =~ '1'
+    return l:path_python
+  endif
+
+  " search system python
+  for l:path in ['/usr/local/bin/python3', '/usr/bin/python3', '/bin/python3']
+    if executable(l:path)
+      return l:path
+    endif
+  endfor
+
   return ''
 endfunction
 

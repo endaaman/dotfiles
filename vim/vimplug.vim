@@ -37,6 +37,10 @@ Plug 'goerz/jupytext.vim'
 " Plug 'hanschen/vim-ipython-cell'
 Plug 'jpalardy/vim-slime'
 
+" Plug 'dccsillag/magma-nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'benlubas/molten-nvim'
+Plug '3rd/image.nvim'
+
 " Appearance
 Plug 'cocopon/iceberg.vim'
 " Plug 'chriskempson/base16-vim'

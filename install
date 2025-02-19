@@ -18,6 +18,7 @@ gui=false
 node=false
 zinit=false
 vimplug=false
+pyenv=false
 
 for i in "$@" ; do
   case "$i" in
@@ -76,6 +77,8 @@ if $gui; then
   ln -fs ~/dotfiles/tym/config.lua ~/.config/tym/config.lua
   ln -fs ~/dotfiles/tym/local.lua ~/.config/tym/local.lua
 
+  ln -fs ~/dotfiles/kitty.conf ~/.config/kitty/kitty.conf
+
   # mkdir -p ~/.mpv
   # ln -fs ~/dotfiles/mpv.conf ~/.mpv/input.conf
 
@@ -112,8 +115,12 @@ fi
 
 if $pyenv; then
   echo -e "${CYAN}Installing pyenv${NC}"
-  git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-  git clone https://github.com/pyenv/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+  if [ ! -d ~/.pyenv ]; then
+    git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+    git clone https://github.com/pyenv/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+  else
+    echo -e "${CYAN}pyenv is already installed.${NC}"
+  fi
 fi
 
 
