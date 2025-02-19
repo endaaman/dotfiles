@@ -13,6 +13,11 @@ lspconfig.jedi_language_server.setup {
     vim.keymap.set('n', '<C-o>', vim.lsp.buf.hover, opts)
     vim.keymap.set('n', '<space>C', vim.lsp.buf.code_action, opts)
     vim.keymap.set('n', '<space>M', vim.lsp.buf.rename, opts)
+
+    vim.keymap.set('n', '<C-f>', vim.diagnostic.goto_next)
+    vim.keymap.set('n', '<C-b>', vim.diagnostic.goto_prev)
+
+    vim.o.completeopt = 'menu,menuone,noselect'
   end
 }
 
@@ -23,4 +28,30 @@ vim.diagnostic.config({
   underline = true,
   update_in_insert = false,
   severity_sort = true,
+})
+
+local cmp = require('cmp')
+
+cmp.setup({
+  snippet = {
+    expand = function(args)
+    end,
+  },
+  mapping = {
+    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+    ['<Tab>'] = cmp.mapping.select_next_item(),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    }),
+  },
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'buffer' },
+    { name = 'path' },
+  },
 })

@@ -29,7 +29,8 @@ Plug 'Julian/vim-textobj-variable-segment'
 Plug 'lambdalisue/fern.vim'
 Plug 'lambdalisue/fern-git-status.vim'
 
-Plug 'goerz/jupytext.vim'
+Plug 'GCBallesteros/jupytext.nvim'
+" Plug 'goerz/jupytext.vim'
 " Plug 'hanschen/vim-ipython-cell'
 
 " Appearance
@@ -65,6 +66,8 @@ if has('nvim')
   Plug 'EdenEast/nightfox.nvim'
 
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
   Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
@@ -80,6 +83,9 @@ if has('nvim')
   Plug 'neovim/nvim-lspconfig'
   Plug 'jmbuhr/otter.nvim',
   Plug 'hrsh7th/nvim-cmp',
+  Plug 'hrsh7th/cmp-nvim-lsp'
+  Plug 'hrsh7th/cmp-buffer'
+  Plug 'hrsh7th/cmp-path'
 
   " Plug 'dccsillag/magma-nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'benlubas/molten-nvim', { 'do': ':UpdateRemotePlugins' }

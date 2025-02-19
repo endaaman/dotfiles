@@ -8,7 +8,7 @@ augroup EN
   autocmd!
 augroup END
 
-if $TERM =~# '256color' && !exists('g:rich')
+if $TERM =~# '256color' || $TERM == 'xterm-kitty'  && !exists('g:rich')
   let g:rich = 1
 endif
 
