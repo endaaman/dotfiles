@@ -18,8 +18,8 @@ vim.keymap.set('n', '<Space>m', builtin.marks, {})
 -- vim.keymap.set('n', '<Space>f', builtin.git_files, {})
 vim.keymap.set('n', '<Space>d', builtin.git_status, {})
 vim.keymap.set('n', '<Space>r', builtin.registers, {})
-vim.keymap.set('n', '<Space>l', '<CMD>Telescope coc workspace_symbols<CR>', {})
-vim.keymap.set('n', '<Space>k', '<CMD>Telescope coc references_used<CR>', {})
+-- vim.keymap.set('n', '<Space>l', '<CMD>Telescope coc workspace_symbols<CR>', {})
+-- vim.keymap.set('n', '<Space>k', '<CMD>Telescope coc references_used<CR>', {})
 
 vim.keymap.set('n', '<Space>W', function()
   builtin.live_grep({ default_text=vim.fn.expand('<cword>') })
@@ -116,11 +116,11 @@ telescope.setup{
   },
 
   extensions = {
-    coc = {
-        -- theme = 'ivy',
-        -- always use Telescope locations to preview definitions/declarations/implementations etc
-        prefer_locations = true,
-    },
+    -- coc = {
+    --     -- theme = 'ivy',
+    --     -- always use Telescope locations to preview definitions/declarations/implementations etc
+    --     prefer_locations = true,
+    -- },
     fzf = {
       fuzzy = true,                    -- false will only do exact matching
       override_generic_sorter = true,  -- override the generic sorter
@@ -131,5 +131,5 @@ telescope.setup{
   },
 }
 
-telescope.load_extension('coc')
+-- telescope.load_extension('coc')
 telescope.load_extension('fzf')

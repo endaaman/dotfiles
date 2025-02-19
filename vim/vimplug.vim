@@ -1,16 +1,13 @@
 call plug#begin()
 
+
 " Common
-" Plug 'tani/vim-jetpack', {'opt': 1} "bootstrap
 Plug 'editorconfig/editorconfig-vim'
-" Plug 'sheerun/vim-polyglot'
 Plug 'rhysd/conflict-marker.vim'
-" Plug 'rking/ag.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'gregsexton/MatchTag'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
-" Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-commentary'
 Plug 'PeterRincker/vim-argumentative'
 Plug 'vim-scripts/sudo.vim'
@@ -28,22 +25,15 @@ Plug 'thinca/vim-textobj-between'
 Plug 'vimtaku/vim-textobj-keyvalue'
 Plug 'sgur/vim-textobj-parameter'
 Plug 'Julian/vim-textobj-variable-segment'
-" Plug 'junegunn/vim-easy-align'
 
 Plug 'lambdalisue/fern.vim'
 Plug 'lambdalisue/fern-git-status.vim'
 
 Plug 'goerz/jupytext.vim'
 " Plug 'hanschen/vim-ipython-cell'
-Plug 'jpalardy/vim-slime'
-
-" Plug 'dccsillag/magma-nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'benlubas/molten-nvim'
-Plug '3rd/image.nvim'
 
 " Appearance
 Plug 'cocopon/iceberg.vim'
-" Plug 'chriskempson/base16-vim'
 Plug 'jacoborus/tender.vim'
 Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'arcticicestudio/nord-vim'
@@ -52,7 +42,6 @@ Plug 'ayu-theme/ayu-vim'
 
 " Languages
 Plug 'cespare/vim-toml', {'ft': 'toml'}
-" Plug 'gabrielelana/vim-markdown', {'ft': 'markdown'}
 Plug 'akhaku/vim-java-unused-imports', {'ft': 'java'}
 Plug 'digitaltoad/vim-pug', {'ft': ['pug', 'vue']}
 Plug 'posva/vim-vue', {'ft': 'vue'}
@@ -78,17 +67,24 @@ if has('nvim')
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
-  " Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-  " Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' }
-  " Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
   Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
   Plug 'windwp/nvim-ts-autotag'
   Plug 'AckslD/nvim-neoclip.lua'
-  Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-  Plug 'fannheyward/telescope-coc.nvim'
+
   Plug 'numToStr/Comment.nvim'
   Plug 'JoosepAlviste/nvim-ts-context-commentstring'
-  " Plug 'neovim/nvim-lspconfig'
+
+  " Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+  " Plug 'fannheyward/telescope-coc.nvim'
+
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'jmbuhr/otter.nvim',
+  Plug 'hrsh7th/nvim-cmp',
+
+  " Plug 'dccsillag/magma-nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'benlubas/molten-nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug '3rd/image.nvim'
+  Plug 'quarto-dev/quarto-nvim'
 endif
 
 

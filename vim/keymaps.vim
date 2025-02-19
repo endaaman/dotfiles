@@ -149,3 +149,9 @@ tnoremap <Esc> <C-\><C-n>
 tnoremap <C-Esc> <Esc>
 " tnoremap <C-c> <C-\><C-n>
 " tnoremap <Tab> <C-\><C-Tab><C-w>w
+
+augroup QuickfixMapping
+  autocmd!
+  autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
+  autocmd FileType qf nnoremap <buffer> o <C-w><CR>
+augroup END

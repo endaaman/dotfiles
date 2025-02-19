@@ -176,6 +176,11 @@ function! RegisterPrefix(key) abort
 endfunction
 
 function! EscapeHook() abort
+  for win in range(1, winnr('$'))
+    if getwinvar(win, '&buftype') == 'nofile' || getwinvar(win, '&previewwindow')
+      execute win . 'windo close'
+    endif
+  endfor
   set nopaste
 endfunction
 

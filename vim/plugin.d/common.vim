@@ -41,3 +41,5 @@ let g:echodoc#enable_at_startup = 1
 " let g:echodoc#enable_force_overwrite = 1
 
 let g:vim_textobj_parameter_mapping = 'v'
+
+let g:fugitive_no_maps = 1
