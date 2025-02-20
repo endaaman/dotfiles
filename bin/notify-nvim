@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# 全てのnvimサーバーに通知を送信
+for nvim_server in /tmp/nvim*/0; do
+  if [ -e "$nvim_server" ]; then
+    nvim --server "$nvim_server" --remote-send "<C-\\><C-n>:lua vim.notify('tmux window changed', vim.log.levels.INFO)<CR>"
+    echo 1
+  fi
+done

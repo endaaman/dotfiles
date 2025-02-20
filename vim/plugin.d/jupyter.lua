@@ -6,10 +6,12 @@ require("jupytext").setup({
 --
 -- vim.g.jupytext_enable = 1
 
-require("image").setup({
+local image = require("image")
+image.setup({
   processor = "magick_cli",
   clear_in_normal_mode = true,
   window_overlap_clear_enabled = true,
+  editor_only_render_when_focused = true,
   tmux_show_only_in_active_window = true,
 })
 
