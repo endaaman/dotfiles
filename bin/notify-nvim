@@ -1,9 +1,11 @@
 #!/bin/bash
 
-# 全てのnvimサーバーに通知を送信
-for nvim_server in /tmp/nvim*/0; do
+for nvim_server in /tmp/nvim.*/*/0; do
   if [ -e "$nvim_server" ]; then
+    # 画像をクリアするコマンドを送信
+    # nvim --server "$nvim_server" --remote-send "<C-\\><C-n>:lua require('image').clear_all()<CR>"
     nvim --server "$nvim_server" --remote-send "<C-\\><C-n>:lua vim.notify('tmux window changed', vim.log.levels.INFO)<CR>"
-    echo 1
+    # nvim --server "$nvim_server" --remote-send "<C-\\><C-n>:lua vim.notify('tmux window changed at '..os.date('%H:%M:%S'), vim.log.levels.INFO)<CR>"
+    true
   fi
 done

@@ -75,3 +75,6 @@ endif
 set secure
 
 doautocmd User MyVimrcLoaded
+
+
+lua require('custom.tmux_hooks')
