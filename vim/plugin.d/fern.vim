@@ -43,10 +43,11 @@ function! s:init_fern() abort
 
   nmap <buffer> o <Plug>(fern-my-open-close-expand-collapse)
   nmap <buffer> O <Plug>(fern-my-open-expand-collapse)
-  nmap <buffer> <C-m> <Plug>(fern-action-open)<C-w>p:<C-u>quit<CR>
+  nmap <buffer> <C-m> <Plug>(fern-action-open)<Plug>(fern-close-drawer)
   nmap <buffer> x <Plug>(fern-action-collapse)
   nmap <buffer> C <Plug>(fern-action-enter)
-  nmap <buffer> t <Plug>(fern-action-open:tabedit)
+  " nmap <buffer> t <Plug>(fern-action-open:tabedit)
+  nmap <buffer> t <Plug>(fern-action-open:tabedit)gT:<C-u>FernDo close -drawer -stay<CR>gt
   nmap <buffer> T <Plug>(fern-action-open:tabedit)gT
   nmap <buffer> i <Plug>(fern-action-open:split)
   nmap <buffer> s <Plug>(fern-action-open:vsplit)
