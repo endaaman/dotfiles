@@ -1,0 +1,173 @@
+#compdef pueue
+
+
+__pueue_commands() {
+  local -a _c
+  _c=(
+    'add:Enqueue a task for execution.'
+    'remove:Remove tasks from the list. Running or paused tasks need to be killed first'
+    'switch:Switches the queue position of two commands. Only works on queued and stashed commands'
+    "stash:Stashed tasks won't be automatically started. You have to enqueue them or start them by hand"
+    "enqueue:Enqueue stashed tasks. They'll be handled normally afterwards"
+    'start:Resume operation of specific tasks or groups of tasks.'
+    'restart:Restart failed or successful task(s).'
+    'pause:Either pause running tasks or specific groups of tasks.'
+    'kill:Kill specific running tasks or whole task groups..'
+    "send:Send something to a task. Useful for sending confirmations such as 'y\n'"
+    'edit:Edit the command, path, label, or priority of a stashed or queued task.'
+    'group:Use this to add or remove groups.'
+    'status:Display the current status of all tasks'
+    'format-status:Accept a list or map of JSON pueue tasks via stdin and display it just like "pueue status".'
+    'log:Display the log output of finished tasks.'
+    'follow:Follow the output of a currently running task. This command works like "tail -f"'
+    'wait:Wait until tasks are finished.'
+    'clean:Remove all finished tasks from the list'
+    'reset:Kill all tasks, clean up afterwards and reset EVERYTHING!'
+    "shutdown:Remotely shut down the daemon. Should only be used if the daemon isn't started by a service manager"
+    "parallel:Set the amount of allowed parallel tasks"
+    'completions:Generates shell completion files. This can be ignored during normal operations'
+    'help:Print this message or the help of the given subcommand(s)'
+  )
+  _describe -t commands 'Commands' _c
+}
+
+__pueue_global_flags() {
+  local -a _l=(
+    {-v,-vv,-vvv--verbose}':Verbose mode (-v, -vv, -vvv)'
+    {--color}':Colorize the output; auto enables color output when connected to a tty [default: auto] [possible values: auto, never, always]'
+    {-c,--config}:'If provided, Pueue only uses this config file. This path can also be set via the "PUEUE_CONFIG_PATH" environment variable. The commandline option overwrites the environment variable!'
+    {-p,--profile}':The name of the profile that should be loaded from your config file'
+    {-h,--help}':Print help'
+    {-V,--version}':Print version'
+  )
+  _describe -o -t global_options 'global option' _l
+}
+
+__pueue_groups () {
+  local -a _l=(${(@f)"$(pueue status --json | jq -r '.groups | keys[]')"})
+  _describe -t groups 'Groups' _l
+}
+
+__pueue_running_task_ids () {
+  local -a _l=(${(@f)"$(pueue status --json | jq -r '.tasks | map(select(.status == "Running")) | map((.id|tostring) + ":" + .command)[]')"})
+  _describe -t running 'Running' _l
+}
+
+__pueue_queued_task_ids () {
+  local -a _l=(${(@f)"$(pueue status --json | jq -r '.tasks | map(select(.status == "Queued")) | map((.id|tostring) + ":" + .command)[]')"})
+  _describe -t queued 'Queued' _l
+}
+
+__pueue_killed_task_ids () {
+  local -a _l=(${(@f)"$(pueue status --json | jq -r '.tasks | map(select(.status | type == "object" and .Done == "Killed")) | map((.id|tostring) + ":" + .command)[]')"})
+  _describe -t killed 'Killed' _l
+}
+
+__pueue_succeeded_task_ids () {
+  local -a _l=(${(@f)"$(pueue status --json | jq -r '.tasks | map(select(.status | type == "object" and .Done == "Success")) | map((.id|tostring) + ":" + .command)[]')"})
+  _describe -t succeeded 'Succeeded' _l
+}
+
+__pueue_failed_task_ids () {
+  local -a _l=(${(@f)"$(pueue status --json | jq -r '.tasks | map(select(.status | type == "object" and (.Done | type == "object" and has("Failed")))) | map((.id|tostring) + ":" + .command)[]')"})
+  _describe -t failed 'Failed' _l
+}
+
+# __pueue_done_task_ids () {
+#   local -a _l=(${(@f)"$(pueue status --json | jq -r '.tasks | map(select(.status | type == "object" and .Done)) | map((.id|tostring) + ":" + .command)[]')"})
+#   _describe -t failed 'Done' _l
+# }
+
+__pueue_done_task_ids () {
+  _alternative \
+    'failed:Failed:__pueue_failed_task_ids' \
+    'succeeded:Succeeded:__pueue_succeeded_task_ids' \
+    'killded:Killed:__pueue_killed_task_ids' \
+}
+
+# __pueue_all_task_ids () {
+#   local -a _l=("${(@f)$(pueue status --json | jq -r '.tasks | map((.id|tostring) + ":" + .command)[]')}")
+#   _describe -t all_tasks 'All task ids' _l
+# }
+
+__pueue_all_task_ids () {
+  _alternative \
+    'running:Running:__pueue_running_task_ids' \
+    'failed:Failed:__pueue_failed_task_ids' \
+    'succeeded:Succeeded:__pueue_succeeded_task_ids' \
+}
+
+
+_pueue() {
+  local context curcontext=$curcontext state line
+  local selected_container
+  declare -A opt_args
+
+  _arguments -C \
+    '1: :__pueue_commands' \
+    '*:: :->args'
+  case $state in
+    (args)
+      case $words[1] in
+        (add)
+          if [[ "${words[CURRENT-1]}" == "--" ]]; then
+            # _path_commands
+            # _cmdambivalent
+            _normal
+          else
+            _arguments -C \
+              '*:: :_normal' \
+              {-w,--working-directory=}'[Specify current working directory]:dir:_directories' \
+              {-e,--escape}'[Escape any special shell characters (" ", "&", "!", etc.). Beware: This implicitly disables nearly all shell specific syntax ("&&", "&>")]' \
+              {-i,--immediate}'[Immediately start the task]' \
+              {-s,--stashed}'[Create the task in Stashed state. Useful to avoid immediate execution if the queue is empty]' \
+              {-d,--delay}'[Prevents the task from being enqueued until <delay> elapses. See "enqueue" for accepted formats]::' \
+              {-g,--group:}'[Assign the task to a group. Groups kind of act as separate queues.]:groups:__pueue_groups' \
+              {-a,--after}'[Start the task once all specified tasks have successfully finished.]::' \
+              {-o,--priority}'[Start this task with a higher priority. The higher the number, the faster it will be processed]::' \
+              {-l,--label}'[Add some information for yourself. This string will be shown in the "status" table.]::' \
+              {-p,--print-task-id}'[Only return the task id instead of a text. This is useful when working with dependencies]' \
+              {-h,--help}'[Print help]'
+          fi
+        ;;
+
+        (follow)
+          _arguments -C \
+            '1: :__pueue_all_task_ids' \
+            {-l,--lines}'[Only print the last X lines of the output before following]'\
+            {-h,--help}'[Print help]'
+        ;;
+
+        (kill)
+          _arguments -C \
+            '1: :__pueue_running_task_ids' \
+            {-g,--group}'[Kill all running tasks in a group. This also pauses the group]:groups:__pueue_groups' \
+            {-a,--all}'[Kill all running tasks across ALL groups. This also pauses all groups]' \
+            {-s,--signal}'Send a UNIX signal instead of simply killing the process.::' \
+            {-h,--help}'[Print help]'
+        ;;
+
+        (clean)
+          _arguments -C \
+            '1: :__pueue_done_task_ids' \
+            {-s,--successful-only}'[Only clean tasks that finished successfully]' \
+            {-g,--group}'[Kill all running tasks in a group. This also pauses the group]:groups:__pueue_groups' \
+            {-h,--help}'[Print help]'
+          ;;
+
+        (restart)
+          _arguments -C \
+            '1: :__pueue_done_task_ids'
+          ;;
+
+        (remove)
+          _arguments -C \
+            '1: :__pueue_queued_task_ids' \
+            {-h,--help}'[Print help]'
+          ;;
+      esac
+    ;;
+  esac
+}
+
+compdef _pueue pueue
