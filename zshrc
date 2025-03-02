@@ -46,7 +46,8 @@ if [ -f ~/.local/share/zinit/zinit.git/zinit.zsh -a -z "$IS_ROOT" ]; then
     endaaman/lxd-completion-zsh \
     as"completion"  pick"_tsp" endaaman/task-spooler-completion-zsh \
     from"gh-r" as"program" junegunn/fzf \
-    romkatv/gitstatus
+    romkatv/gitstatus \
+    Tarrasch/zsh-autoenv
 
   gitstatus_stop 'MY' && gitstatus_start 'MY'
 fi

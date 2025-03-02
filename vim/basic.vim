@@ -69,6 +69,19 @@ else
   set clipboard=unnamedplus
 endif
 
+let g:clipboard = {
+  \ 'name': 'xsel',
+  \ 'copy': {
+  \   '+': ['xsel', '--nodetach', '-i', '-b'],
+  \   '*': ['xsel', '--nodetach', '-i', '-p'],
+  \ },
+  \ 'paste': {
+  \   '+': ['xsel', '-o', '-b'],
+  \   '*': ['xsel', '-o', '-p'],
+  \ },
+  \ 'cache_enabled': 1,
+  \ }
+
 if !has('gui_running') && exists('&termguicolors') && $COLORTERM ==# 'truecolor'
   if !has('nvim')
     let &t_8f = "\e[38;2;%lu;%lu;%lum"

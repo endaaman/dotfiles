@@ -1,7 +1,6 @@
--- LSP設定
 local lspconfig = require('lspconfig')
+local root_pattern = require('lspconfig.util').root_pattern
 
--- Jedi言語サーバーの設定
 lspconfig.jedi_language_server.setup {
   capabilities = vim.lsp.protocol.make_client_capabilities(),
   on_attach = function(client, bufnr)
@@ -18,7 +17,15 @@ lspconfig.jedi_language_server.setup {
     vim.keymap.set('n', '<C-b>', vim.diagnostic.goto_prev)
 
     vim.o.completeopt = 'menu,menuone,noselect'
-  end
+  end,
+  root_dir = root_pattern('pyproject.toml', '.git'),
+  -- root_dir = function(fname)
+  --   -- provide root dir
+  --   return vim.fn.getcwd()
+  -- end,
+  -- cmd_env = {
+  --   PYTHONPATH = vim.fn.getcwd()
+  -- },
 }
 
 -- LSP診断表示の設定（オプション）
@@ -33,6 +40,8 @@ vim.diagnostic.config({
 local cmp = require('cmp')
 
 cmp.setup({
+  root_markers = { 'pyproject.toml', '.git' },
+  search_from_root = true,
   snippet = {
     expand = function(args)
     end,
@@ -52,6 +61,14 @@ cmp.setup({
   sources = {
     { name = 'nvim_lsp' },
     { name = 'buffer' },
-    { name = 'path' },
+    {
+      name = 'path',
+      option = {
+        get_cwd = function()
+          -- プロジェクトルートを取得する関数
+          return vim.fn.systemlist('git rev-parse --show-toplevel')[1]
+        end
+      }
+    }
   },
 })
