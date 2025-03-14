@@ -49,34 +49,29 @@ __pueue_groups () {
 }
 
 __pueue_running_task_ids () {
-  local -a _l=(${(@f)"$(pueue status --json | jq -r '.tasks | map(select(.status == "Running")) | map((.id|tostring) + ":" + .command)[]')"})
+  local -a _l=(${(@f)"$(pueue status --json | jq -r '.tasks | to_entries | map(select(has("value") and (.value.status | keys | .[0] == "Running")) | (.key + ":" + .value.command))[]')"})
   _describe -t running 'Running' _l
 }
 
 __pueue_queued_task_ids () {
-  local -a _l=(${(@f)"$(pueue status --json | jq -r '.tasks | map(select(.status == "Queued")) | map((.id|tostring) + ":" + .command)[]')"})
+  local -a _l=(${(@f)"$(pueue status --json | jq -r '.tasks | to_entries | map(select(.value.status | keys | .[0] == "Queued")) | map(.key + ":" + .value.command)[]')"})
   _describe -t queued 'Queued' _l
 }
 
 __pueue_killed_task_ids () {
-  local -a _l=(${(@f)"$(pueue status --json | jq -r '.tasks | map(select(.status | type == "object" and .Done == "Killed")) | map((.id|tostring) + ":" + .command)[]')"})
+  local -a _l=(${(@f)"$(pueue status --json | jq -r '.tasks | to_entries | map(select(.value.status.Done != null and .value.status.Done.result == "Killed")) | map(.key + ":" + .value.command)[]')"})
   _describe -t killed 'Killed' _l
 }
 
 __pueue_succeeded_task_ids () {
-  local -a _l=(${(@f)"$(pueue status --json | jq -r '.tasks | map(select(.status | type == "object" and .Done == "Success")) | map((.id|tostring) + ":" + .command)[]')"})
+  local -a _l=(${(@f)"$(pueue status --json | jq -r '.tasks | to_entries | map(select(.value.status.Done != null and .value.status.Done.result == "Success")) | map(.key + ":" + .value.command)[]')"})
   _describe -t succeeded 'Succeeded' _l
 }
 
 __pueue_failed_task_ids () {
-  local -a _l=(${(@f)"$(pueue status --json | jq -r '.tasks | map(select(.status | type == "object" and (.Done | type == "object" and has("Failed")))) | map((.id|tostring) + ":" + .command)[]')"})
+  local -a _l=(${(@f)"$(pueue status --json | jq -r '.tasks | to_entries | map(select((.value.status.Done != null) and (.value.status.Done.result | type == "object") and (.value.status.Done.result.Failed != null))) | map(.key + ":" + .value.command)[]')"})
   _describe -t failed 'Failed' _l
 }
-
-# __pueue_done_task_ids () {
-#   local -a _l=(${(@f)"$(pueue status --json | jq -r '.tasks | map(select(.status | type == "object" and .Done)) | map((.id|tostring) + ":" + .command)[]')"})
-#   _describe -t failed 'Done' _l
-# }
 
 __pueue_done_task_ids () {
   _alternative \
@@ -85,16 +80,12 @@ __pueue_done_task_ids () {
     'killded:Killed:__pueue_killed_task_ids' \
 }
 
-# __pueue_all_task_ids () {
-#   local -a _l=("${(@f)$(pueue status --json | jq -r '.tasks | map((.id|tostring) + ":" + .command)[]')}")
-#   _describe -t all_tasks 'All task ids' _l
-# }
-
-__pueue_all_task_ids () {
+__pueue_started_task_ids () {
   _alternative \
     'running:Running:__pueue_running_task_ids' \
     'failed:Failed:__pueue_failed_task_ids' \
     'succeeded:Succeeded:__pueue_succeeded_task_ids' \
+    'killded:Killed:__pueue_killed_task_ids' \
 }
 
 
@@ -133,7 +124,7 @@ _pueue() {
 
         (follow)
           _arguments -C \
-            '1: :__pueue_all_task_ids' \
+            '1: :__pueue_started_task_ids' \
             {-l,--lines}'[Only print the last X lines of the output before following]'\
             {-h,--help}'[Print help]'
         ;;
@@ -160,7 +151,7 @@ _pueue() {
             '1: :__pueue_done_task_ids'
           ;;
 
-        (remove)
+        (remove|rm)
           _arguments -C \
             '1: :__pueue_queued_task_ids' \
             {-h,--help}'[Print help]'
