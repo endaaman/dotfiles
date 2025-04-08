@@ -399,7 +399,7 @@ function remove-empty-dirs() {
 function mkdir-current() {
   remove-empty-dirs -s ~/tmp
   mkdir -p $CD
-  ln -fsn "$(basename $CD)" current
+  ln -fsn "$(basename $CD)" ~/tmp/current
 }
 
 
