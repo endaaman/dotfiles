@@ -218,9 +218,7 @@ export CD=~/tmp/$C
 if [ -n "$TYM_ID" ] && command -v xdotool &> /dev/null; then
   export WINDOWID=$(xdotool getwindowfocus)
 fi
-
-
-
+export XKB_CONFIG_ROOT="$HOME/.xkb"
 
 
 ###* CLI tools

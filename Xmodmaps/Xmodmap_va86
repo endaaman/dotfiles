@@ -9,15 +9,16 @@ keysym Alt_R = Henkan_Mode
 remove shift = Shift_R
 keysym Shift_R = Muhenkan
 
-! swap left with right for Overwatch
-! keysym Control_L = Control_R
+! 47: Insert
+keycode 118 = Home
+! 119: Delete
+keycode 119 = End
+
 
 ! 9: Escape
 keycode 9 = grave asciitilde
 ! 47: ;
 keycode 47 = colon semicolon
 
-! 47: Insert
-keycode 118 = Home
-! 119: Delete
-keycode 119 = End
+! swap left with right for Overwatch
+! keysym Control_L = Control_R
