@@ -19,16 +19,22 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 
 require('lazy').setup({
-  { 'editorconfig/editorconfig-vim' },
-  { 'jiangmiao/auto-pairs' },
-  { 'gregsexton/MatchTag' },
-  { 'tpope/vim-surround' },
-  { 'tpope/vim-commentary' },
-  { 'Yggdroot/indentLine' },
-  { 'airblade/vim-gitgutter' },
-  { 'simeji/winresizer' },
-  { 'kana/vim-textobj-user' },
+  'editorconfig/editorconfig-vim',
+  'jiangmiao/auto-pairs',
+  'gregsexton/MatchTag',
+  'tpope/vim-surround',
+  -- 'tpope/vim-commentary',
+  'numToStr/Comment.nvim',
+  'Yggdroot/indentLine',
+  'airblade/vim-gitgutter',
+  'itchyny/vim-cursorword',
+  'simeji/winresizer',
+  'kana/vim-textobj-user',
+
   { 'sgur/vim-textobj-parameter', dependencies = { 'kana/vim-textobj-user' } },
-  { 'lambdalisue/fern.vim', config = function() require('plugins.fern') end },
-  { 'lambdalisue/fern-git-status.vim', dependencies = { 'lambdalisue/fern.vim' } },
+  require('plugins.telescope'),
+  require('plugins.fern'),
+  require('plugins.appearance'),
+  require('plugins.treesitter'),
+  require('plugins.completion'),
 })
