@@ -17,21 +17,36 @@ vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
+vim.g.indentLine_char = ''
+-- vim.g.indentLine_char = '¦'
+vim.g.indentLine_setConceal = 1
+vim.g.indentLine_fileTypeExclude = {'nerdtree', 'markdown', 'fern'}
+
+vim.g.vim_textobj_parameter_mapping = 'a'
+vim.g.winresizer_start_key = '<Space>R'
+-- autocmd EN BufWritePost * :GitGutter
 
 require('lazy').setup({
-  'editorconfig/editorconfig-vim',
-  'jiangmiao/auto-pairs',
-  'gregsexton/MatchTag',
-  'tpope/vim-surround',
-  -- 'tpope/vim-commentary',
-  'numToStr/Comment.nvim',
-  'Yggdroot/indentLine',
-  'airblade/vim-gitgutter',
-  'itchyny/vim-cursorword',
-  'simeji/winresizer',
-  'kana/vim-textobj-user',
-
+  { 'editorconfig/editorconfig-vim' },
+  { 'jiangmiao/auto-pairs' },
+  { 'gregsexton/MatchTag' },
+  { 'tpope/vim-surround' },
+  { 'numToStr/Comment.nvim' },
+  { 'Yggdroot/indentLine' },
+  { 'simeji/winresizer' },
+  { 'kana/vim-textobj-user' },
   { 'sgur/vim-textobj-parameter', dependencies = { 'kana/vim-textobj-user' } },
+  -- 'itchyny/vim-cursorword',
+  -- 'tpope/vim-commentary',
+
+  {
+    'airblade/vim-gitgutter',
+    config=function()
+      vim.keymap.set('n', '<C-k>', ':<C-u>GitGutterPrevHunk<CR>')
+      vim.keymap.set('n', '<C-j>', ':<C-u>GitGutterNextHunk<CR>')
+    end
+  },
+
   require('plugins.telescope'),
   require('plugins.fern'),
   require('plugins.appearance'),

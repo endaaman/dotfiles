@@ -47,11 +47,11 @@ function config()
       end,
     },
     mapping = {
+      ['<C-o>'] = cmp.mapping.complete(),
       ['<S-Tab>'] = cmp.mapping.select_prev_item(),
       ['<Tab>'] = cmp.mapping.select_next_item(),
       ['<C-d>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
       ['<C-e>'] = cmp.mapping.close(),
       ['<CR>'] = cmp.mapping.confirm({
         behavior = cmp.ConfirmBehavior.Replace,
@@ -65,7 +65,6 @@ function config()
         name = 'path',
         option = {
           get_cwd = function()
-            -- プロジェクトルートを取得する関数
             return vim.fn.systemlist('git rev-parse --show-toplevel')[1]
           end
         }
@@ -75,11 +74,11 @@ function config()
 end
 
 return {
-  'neovim/nvim-lspconfig',
-  -- 'jmbuhr/otter.nvim',
+  { 'neovim/nvim-lspconfig', config=config},
   'hrsh7th/nvim-cmp',
   'hrsh7th/cmp-nvim-lsp',
   'hrsh7th/cmp-buffer',
   'hrsh7th/cmp-path',
   'hrsh7th/cmp-cmdline',
+  -- 'jmbuhr/otter.nvim',
 }

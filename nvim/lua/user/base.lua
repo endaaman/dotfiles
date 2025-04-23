@@ -113,6 +113,10 @@ vim.api.nvim_create_autocmd('BufEnter', {
   group = 'NoConcealing',
   pattern = '*',
   callback = function()
+    local excludes = {'fern', 'help', 'nerdtree', 'fugitive', 'tagbar', 'nvimtree'}
+    if vim.tbl_contains(excludes, vim.bo.filetype) then
+      return
+    end
     vim.opt_local.conceallevel = 0
   end
 })
