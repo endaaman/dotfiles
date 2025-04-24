@@ -22,9 +22,9 @@ local function config()
         nmap <buffer><silent><expr>
           \ <Plug>(fern-my-open-close-expand-collapse)
           \ fern#smart#leaf(
-          \   '\<Plug>(fern-action-open)\<Bar>:<C-u>FernDo close -drawer -stay<CR>',
-          \   '\<Plug>(fern-action-expand)',
-          \   '\<Plug>(fern-action-collapse)',
+          \   "\<Plug>(fern-action-open)\<Bar>:<C-u>FernDo close -drawer -stay<CR>",
+          \   "\<Plug>(fern-action-expand)",
+          \   "\<Plug>(fern-action-collapse)",
           \ )
       ]])
 

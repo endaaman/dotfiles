@@ -38,6 +38,10 @@ require('lazy').setup({
   { 'sgur/vim-textobj-parameter', dependencies = { 'kana/vim-textobj-user' } },
   -- 'itchyny/vim-cursorword',
   -- 'tpope/vim-commentary',
+  { 'endaaman/vim-case-master', config = function()
+    vim.keymap.set('n', '<C-e>', ':<C-u>CaseMasterRotateCase<CR>')
+    vim.keymap.set('v', '<C-e>', ':<C-u>CaseMasterRotateCaseVisual<CR>')
+  end},
 
   {
     'airblade/vim-gitgutter',

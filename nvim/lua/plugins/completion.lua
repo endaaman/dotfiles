@@ -19,10 +19,7 @@ local function config()
   local root_pattern = require('lspconfig.util').root_pattern
 
   local on_attach = function(client, bufnr)
-    -- vim.keymap.set('n', '<space>K', vim.lsp.buf.definition)
-    -- vim.keymap.set('n', '<space>K', function()
-    --   vim.lsp.buf.definition({on_list = on_list})
-    -- end)
+    vim.keymap.set('n', '<space>k', vim.lsp.buf.definition)
     vim.keymap.set('n', '<space>K', definition_in_tab)
     vim.keymap.set('n', '<space>I', vim.lsp.buf.references)
     vim.keymap.set('n', '<C-o>', vim.lsp.buf.hover)
