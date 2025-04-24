@@ -1,32 +1,71 @@
 
-function config()
+local function definition_in_tab()
+  local function on_list(options)
+    vim.fn.setqflist({}, ' ', options)
+    local item = options.items[1]
+    if item then
+      local current_filename = vim.fn.expand('%:p')
+      if current_filename ~= item.filename then
+        vim.cmd('tab drop ' .. item.filename)
+      end
+      vim.api.nvim_win_set_cursor(0, {item.lnum, item.col - 1})
+    end
+  end
+  vim.lsp.buf.definition({on_list = on_list})
+end
+
+local function config()
   local lspconfig = require('lspconfig')
   local root_pattern = require('lspconfig.util').root_pattern
 
+  local on_attach = function(client, bufnr)
+    -- vim.keymap.set('n', '<space>K', vim.lsp.buf.definition)
+    -- vim.keymap.set('n', '<space>K', function()
+    --   vim.lsp.buf.definition({on_list = on_list})
+    -- end)
+    vim.keymap.set('n', '<space>K', definition_in_tab)
+    vim.keymap.set('n', '<space>I', vim.lsp.buf.references)
+    vim.keymap.set('n', '<C-o>', vim.lsp.buf.hover)
+    vim.keymap.set('n', '<space>C', vim.lsp.buf.code_action)
+    vim.keymap.set('n', '<space>M', vim.lsp.buf.rename)
+
+    vim.keymap.set('n', '<C-f>', function() vim.diagnostic.jump({count = 1, float = true}) end)
+    vim.keymap.set('n', '<C-b>', function() vim.diagnostic.jump({count = -1, float = true}) end)
+
+    vim.o.completeopt = 'menu,menuone,noselect'
+  end
+
   lspconfig.jedi_language_server.setup {
     capabilities = vim.lsp.protocol.make_client_capabilities(),
-    on_attach = function(client, bufnr)
-      local opts = { noremap = true, silent = true, buffer = bufnr }
-      vim.keymap.set('n', '<space>K', vim.lsp.buf.definition, opts)
-      -- vim.keymap.set('n', '<space>I', vim.lsp.buf.references, opts)
-      vim.keymap.set('n', '<space>I', require('telescope.builtin').lsp_references, {})
-      vim.keymap.set('n', '<C-o>', vim.lsp.buf.hover, opts)
-      vim.keymap.set('n', '<space>C', vim.lsp.buf.code_action, opts)
-      vim.keymap.set('n', '<space>M', vim.lsp.buf.rename, opts)
-
-      vim.keymap.set('n', '<C-f>', vim.diagnostic.goto_next)
-      vim.keymap.set('n', '<C-b>', vim.diagnostic.goto_prev)
-
-      vim.o.completeopt = 'menu,menuone,noselect'
-    end,
+    on_attach = on_attach,
     root_dir = root_pattern('pyproject.toml', '.git'),
-    -- root_dir = function(fname)
-    --   -- provide root dir
-    --   return vim.fn.getcwd()
-    -- end,
-    -- cmd_env = {
-    --   PYTHONPATH = vim.fn.getcwd()
-    -- },
+  }
+
+  lspconfig.lua_ls.setup {
+    capabilities = vim.lsp.protocol.make_client_capabilities(),
+    on_attach = on_attach,
+    settings = {
+      Lua = {
+        runtime = {
+          version = 'LuaJIT',
+        },
+        diagnostics = {
+          globals = {'vim'},
+          disable = {
+            'unused-local',
+            'undefined-field',
+            'duplicate-set-field',
+          }
+        },
+        workspace = {
+          library = vim.api.nvim_get_runtime_file('', true),
+          checkThirdParty = false,
+        },
+        telemetry = {
+          enable = false,
+        },
+      },
+    },
   }
 
   vim.diagnostic.config({

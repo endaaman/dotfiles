@@ -7,12 +7,12 @@ vim.g['fern#disable_default_mappings'] = 1
 vim.g['fern#renderer'] = 'nerdfont'
 vim.g['fern_git_status#disable_submodules'] = 1
 
-function config()
+local function config()
   vim.api.nvim_set_keymap('n', '<C-g>', ':<C-u>Fern . -drawer -width=40 -toggle -reveal=%<CR>', { noremap = true, silent = true })
   vim.api.nvim_set_keymap('n', '<Space><C-g>', ':<C-u>Fern %:h -drawer -width=40 -toggle -reveal=%<CR>', { noremap = true, silent = true })
 
-  vim.api.nvim_create_autocmd("FileType", {
-    pattern = "fern",
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'fern',
     callback = function()
       vim.opt_local.number = false
       vim.opt_local.cursorcolumn = false
@@ -22,9 +22,9 @@ function config()
         nmap <buffer><silent><expr>
           \ <Plug>(fern-my-open-close-expand-collapse)
           \ fern#smart#leaf(
-          \   "\<Plug>(fern-action-open)\<Bar>:<C-u>FernDo close -drawer -stay<CR>",
-          \   "\<Plug>(fern-action-expand)",
-          \   "\<Plug>(fern-action-collapse)",
+          \   '\<Plug>(fern-action-open)\<Bar>:<C-u>FernDo close -drawer -stay<CR>',
+          \   '\<Plug>(fern-action-expand)',
+          \   '\<Plug>(fern-action-collapse)',
           \ )
       ]])
 

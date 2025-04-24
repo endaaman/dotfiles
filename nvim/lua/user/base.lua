@@ -67,7 +67,7 @@ end
 -- Global variables
 vim.g.netrw_home = vim.fn.stdpath('data')
 vim.g.vim_indent_cont = vim.opt.shiftwidth:get()
-vim.g.tex_conceal = ""
+vim.g.tex_conceal = ''
 vim.g.vim_json_conceal = 0
 
 vim.g.clipboard = {

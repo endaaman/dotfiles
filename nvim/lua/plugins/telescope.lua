@@ -1,5 +1,5 @@
 
-function config()
+local function config()
   local telescope = require('telescope')
   local actions = require('telescope.actions')
   local make_entry = require "telescope.make_entry"
@@ -9,51 +9,24 @@ function config()
   local sorters = require('telescope.sorters')
   local pickers = require('telescope.pickers')
   local finders = require('telescope.finders')
+  local utils = require('telescope.utils')
   local conf = require('telescope.config').values
 
-  vim.keymap.set('n', '<Space><Space>', builtin.resume, {})
-  vim.keymap.set('n', '<Space>b', builtin.buffers, {})
-  vim.keymap.set('n', '<Space>o', builtin.oldfiles, {})
-  vim.keymap.set('n', '<Space>h', builtin.help_tags, {})
-  vim.keymap.set('n', '<Space>g', builtin.live_grep, {})
-  vim.keymap.set('n', '<Space>m', builtin.marks, {})
-  -- vim.keymap.set('n', '<Space>f', builtin.git_files, {})
-  vim.keymap.set('n', '<Space>d', builtin.git_status, {})
-  vim.keymap.set('n', '<Space>r', builtin.registers, {})
-  -- vim.keymap.set('n', '<Space>l', '<CMD>Telescope coc workspace_symbols<CR>', {})
-  -- vim.keymap.set('n', '<Space>k', '<CMD>Telescope coc references_used<CR>', {})
 
-  vim.keymap.set('n', '<Space>W', function()
-    builtin.live_grep({ default_text=vim.fn.expand('<cword>') })
-  end, {})
-
-  vim.keymap.set('n', '<Space>G', function()
-    local reg = vim.fn.getreg('+')
-    local first = reg:gmatch("[^\r\n]+")()
-    builtin.live_grep({ default_text=first })
-  end, {})
-
-  vim.keymap.set('n', '<Space>f', function()
-    local ok = pcall(builtin.git_files)
-    if not ok then
-      builtin.find_files()
-    end
-  end, {})
-
-  function clipboard(opts)
+  local function clipboard(opts)
     local cmd
     if 1 == vim.fn.executable 'copyq' then
       cmd = { 'copyq', 'tab', 'clipboard', 'read' }
     elseif 1 == vim.fn.executable 'qdbus' then
-      cmd = { 'qdbus', 'org.kde.klipper', '/klipper', 'org.kde.klipper.klipper.getClipboardHistoryMenu' }
-      -- qdbus org.kde.klipper /klipper org.kde.klipper.klipper.getClipboardHistoryItem 0
+      cmd = { 'qdbus', 'org.kde.klipper', '/klipper', 'org.kde.klipper.klipper.getclipboardhistorymenu' }
+      -- qdbus org.kde.klipper /klipper org.kde.klipper.klipper.getclipboardhistoryitem 0
     else
       return 1
     end
 
     pickers
       .new(opts, {
-        prompt_title = "Klipper",
+        prompt_title = "klipper",
         finder = finders.new_oneshot_job(
           cmd,
           opts
@@ -78,7 +51,38 @@ function config()
       :find()
   end
 
+  --* Keymaps
+  vim.keymap.set('n', '<Space><Space>', builtin.resume, {})
+  vim.keymap.set('n', '<Space>l', builtin.buffers, {})
+  vim.keymap.set('n', '<Space>o', builtin.oldfiles, {})
+  vim.keymap.set('n', '<Space>h', builtin.help_tags, {})
+  vim.keymap.set('n', '<Space>g', builtin.live_grep, {})
+  vim.keymap.set('n', '<Space>m', builtin.marks, {})
+  -- vim.keymap.set('n', '<Space>f', builtin.git_files, {})
+  vim.keymap.set('n', '<Space>d', builtin.git_status, {})
+  vim.keymap.set('n', '<Space>r', builtin.registers, {})
+  vim.keymap.set('n', '<Space>:', builtin.commands, {})
+  -- vim.keymap.set('n', '<Space>l', '<CMD>Telescope coc workspace_symbols<CR>', {})
+  -- vim.keymap.set('n', '<Space>k', '<CMD>Telescope coc references_used<CR>', {})
+
+  --* Custom actions
   vim.keymap.set('n', '<Space>c', clipboard, {})
+  vim.keymap.set('n', '<Space>W', function()
+    builtin.live_grep({ default_text=vim.fn.expand('<cword>') })
+  end, {})
+
+  vim.keymap.set('n', '<Space>G', function()
+    local reg = vim.fn.getreg('+')
+    local first = reg:gmatch("[^\r\n]+")()
+    builtin.live_grep({ default_text=first })
+  end, {})
+
+  vim.keymap.set('n', '<Space>f', function()
+    local ok = pcall(builtin.git_files)
+    if not ok then
+      builtin.find_files()
+    end
+  end, {})
 
 
   local default_maps = {
@@ -93,6 +97,10 @@ function config()
       ['<Esc>'] = actions.close,
       ['<C-j>'] = actions.git_staging_toggle,
       ['<Del>'] = actions.remove_selection,
+      ['<C-u>'] = function(prompt_bufnr)
+        local picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
+        picker:set_prompt("")
+      end,
     },
   }
 
@@ -134,13 +142,20 @@ function config()
   }
 
   -- telescope.load_extension('coc')
-  -- telescope.load_extension('fzf')
+  telescope.load_extension('fzf')
 end
 
 
 return {
-  'nvim-telescope/telescope.nvim',
-  tag = '0.1.8',
-  dependencies = { 'nvim-lua/plenary.nvim' },
-  config = config,
+  {
+    'nvim-telescope/telescope-fzf-native.nvim',
+    build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 && cmake --build build --config Release',
+    -- build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
+  },
+  {
+    'nvim-telescope/telescope.nvim',
+    tag = '0.1.8',
+    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-fzf-native.nvim' },
+    config = config,
+  }
 }

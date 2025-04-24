@@ -153,3 +153,14 @@ vim.keymap.set('v', 'R', 'c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>')
 vim.keymap.set('v', '/', '"zy:<C-u>let @/=@z|set hlsearch<CR>')
 vim.keymap.set('v', 'H', '^')
 vim.keymap.set('v', 'L', '$')
+
+
+vim.keymap.set('i', '<C-d>', '<Del>')
+
+vim.keymap.set('c', '<C-p>', '<Up>')
+vim.keymap.set('c', '<C-n>', '<Down>')
+vim.keymap.set('c', '<C-a>', '<Home>')
+vim.keymap.set('c', '<C-e>', '<End>')
+vim.keymap.set('c', '<C-f>', '<Right>')
+vim.keymap.set('c', '<C-b>', '<Left>')
+vim.keymap.set('c', '<C-d>', '<Delete>')
