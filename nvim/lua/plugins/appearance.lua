@@ -16,15 +16,28 @@ return {
   'nvim-tree/nvim-web-devicons',
   'tinted-theming/tinted-vim',
   {
+    'RRethy/base16-nvim',
+    config = function()
+      -- vim.cmd.colorscheme 'base16-tomorrow-night'
+    end
+  },
+  {
     'cocopon/iceberg.vim',
     config=function()
-      vim.cmd.colorscheme 'iceberg'
+      -- vim.cmd.colorscheme 'iceberg'
+    end,
+  },
+  {
+    'oahlen/iceberg.nvim',
+    config=function()
+      vim.cmd.colorscheme 'iceberg-dark'
     end,
   },
   {
     'nvim-lualine/lualine.nvim',
     dependencies = {
       'nvim-tree/nvim-web-devicons',
+      -- 'RRethy/base16-nvim',
     },
     config = function()
       local theme = require('lualine.themes.iceberg_dark')

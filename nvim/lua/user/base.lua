@@ -14,7 +14,7 @@ vim.opt.directory = vim.fn.stdpath('cache') .. '/swap'
 vim.opt.backupdir = vim.fn.stdpath('state') .. '/backup'
 vim.opt.undodir = vim.fn.stdpath('state') .. '/undo'
 vim.opt.completeopt:remove('preview')
-vim.opt.conceallevel = 0
+vim.opt.conceallevel = 1
 vim.opt.cursorcolumn = true
 vim.opt.cursorline = true
 vim.opt.expandtab = true
@@ -113,10 +113,16 @@ vim.api.nvim_create_autocmd('BufEnter', {
   group = 'NoConcealing',
   pattern = '*',
   callback = function()
-    local excludes = {'fern', 'help', 'nerdtree', 'fugitive', 'tagbar', 'nvimtree'}
-    if vim.tbl_contains(excludes, vim.bo.filetype) then
+    if vim.tbl_contains(
+      { 'fern', 'help', 'nerdtree', 'fugitive', 'tagbar', 'nvimtree'},
+      vim.bo.filetype)
+    then
       return
     end
-    vim.opt_local.conceallevel = 0
+    if vim.tbl_contains({'markdown', }, vim.bo.filetype) then
+      vim.opt_local.conceallevel = 0
+      return
+    end
+    vim.opt_local.conceallevel = 1
   end
 })
