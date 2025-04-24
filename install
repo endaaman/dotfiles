@@ -50,12 +50,9 @@ ln -fs ~/dotfiles/gitconfig ~/.gitconfig
 ln -fs ~/dotfiles/gitignore_global ~/.gitignore_global
 ln -fs ~/dotfiles/zshrc ~/.zshrc
 ln -fs ~/dotfiles/zshenv ~/.zshenv
-ln -fs ~/dotfiles/zsh_completions ~/.zsh/completion
 # ln -fs ~/dotfiles/bashrc ~/.bashrc
 ln -fs ~/dotfiles/tmux.conf ~/.tmux.conf
 ln -fs ~/dotfiles/vimrc ~/.vimrc
-ln -fsn ~/dotfiles/vim ~/.vim
-ln -fsn ~/dotfiles/nvim ~/.config/nvim
 ln -fs ~/dotfiles/editorconfig ~/.editorconfig
 ln -fs ~/dotfiles/tigrc ~/.tigrc
 ln -fs ~/dotfiles/pylintrc ~/.pylintrc
@@ -65,6 +62,9 @@ ln -fs ~/dotfiles/systemd/* ~/.local/share/systemd/user/
 # ln -fs ~/dotfiles/zellij.kdl ~/.config/zellij/config.kdl
 ln -fs ~/dotfiles/latexmkrc ~/.latexmkrc
 ln -fs ~/dotfiles/misc/jupyter_lab_config.py ~/.jupyter/
+ln -fsn ~/dotfiles/zsh_completions ~/.zsh/completion
+ln -fsn ~/dotfiles/vim ~/.vim
+ln -fsn ~/dotfiles/nvim ~/.config/nvim
 
 # GUI
 if $gui; then
