@@ -55,7 +55,7 @@ ln -fs ~/dotfiles/zsh_completions ~/.zsh/completion
 ln -fs ~/dotfiles/tmux.conf ~/.tmux.conf
 ln -fs ~/dotfiles/vimrc ~/.vimrc
 ln -fsn ~/dotfiles/vim ~/.vim
-ln -fsn ~/dotfiles/vim ~/.config/nvim
+ln -fsn ~/dotfiles/nvim ~/.config/nvim
 ln -fs ~/dotfiles/editorconfig ~/.editorconfig
 ln -fs ~/dotfiles/tigrc ~/.tigrc
 ln -fs ~/dotfiles/pylintrc ~/.pylintrc
@@ -106,11 +106,6 @@ if $zinit; then
   echo -e "${CYAN}Installing zinit${NC}"
   mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
   git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git"
-fi
-
-if $vimplug; then
-  echo -e "${CYAN}Installing vimplug${NC}"
-  sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 fi
 
 if $pyenv; then
