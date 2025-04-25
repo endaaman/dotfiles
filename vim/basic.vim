@@ -5,6 +5,10 @@ set all&
 execute 'set columns=' . s:columns
 execute 'set lines=' . s:lines
 
+syntax enable
+filetype plugin on
+filetype indent on
+
 set autoindent
 set background=dark
 set backspace=indent,eol,start
@@ -140,3 +144,6 @@ autocmd EN BufRead,BufNewFile fonts.conf setlocal ft=xml
 if has('nvim')
   autocmd TermOpen * startinsert
 endif
+
+let g:netrw_banner = 0        " バナーを非表示
+let g:netrw_liststyle = 3     " ツリー表示
