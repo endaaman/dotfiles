@@ -21,12 +21,12 @@ return {
       -- vim.cmd.colorscheme 'base16-tomorrow-night'
     end
   },
-  {
-    'cocopon/iceberg.vim',
-    config=function()
-      -- vim.cmd.colorscheme 'iceberg'
-    end,
-  },
+  -- {
+  --   'cocopon/iceberg.vim',
+  --   config=function()
+  --     vim.cmd.colorscheme 'iceberg'
+  --   end,
+  -- },
   {
     'oahlen/iceberg.nvim',
     config=function()
