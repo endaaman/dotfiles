@@ -47,7 +47,7 @@ local function config()
           version = 'LuaJIT',
         },
         diagnostics = {
-          globals = {'vim'},
+          lobals = {'vim'},
           disable = {
             'unused-local',
             'undefined-field',
@@ -83,14 +83,14 @@ local function config()
       end,
     },
     mapping = {
-      ['<C-o>'] = cmp.mapping.complete(),
+      ['<C-space>'] = cmp.mapping.complete(),
       ['<S-Tab>'] = cmp.mapping.select_prev_item(),
       ['<Tab>'] = cmp.mapping.select_next_item(),
       ['<C-d>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
       ['<C-e>'] = cmp.mapping.close(),
       ['<CR>'] = cmp.mapping.confirm({
-        behavior = cmp.ConfirmBehavior.Replace,
+        -- behavior = cmp.ConfirmBehavior.Replace,
         select = true,
       }),
     },

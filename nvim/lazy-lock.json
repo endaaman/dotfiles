@@ -1,7 +1,7 @@
 {
   "Comment.nvim": { "branch": "master", "commit": "e30b7f2008e52442154b66f7c519bfd2f1e32acb" },
   "MatchTag": { "branch": "master", "commit": "f190ed0744a02197a87f25c2f6c1e108d2aaf650" },
-  "auto-pairs": { "branch": "master", "commit": "39f06b873a8449af8ff6a3eee716d3da14d63a76" },
+  "autoclose.nvim": { "branch": "main", "commit": "b2077aa2c83df7ebc19b2a20a3a0654b24ae9c8f" },
   "avante.nvim": { "branch": "main", "commit": "f9aa75459d403d9e963ef2647c9791e0dfc9e5f9" },
   "base16-nvim": { "branch": "master", "commit": "965160025d0facbe9caa863e5beef2a7a488e9d1" },
   "cmp-buffer": { "branch": "main", "commit": "b74fab3656eea9de20a9b8116afa3cfc4ec09657" },

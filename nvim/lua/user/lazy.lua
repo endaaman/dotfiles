@@ -26,15 +26,22 @@ vim.g.vim_textobj_parameter_mapping = 'a'
 vim.g.winresizer_start_key = '<Space>R'
 -- autocmd EN BufWritePost * :GitGutter
 
+
+
 require('lazy').setup({
   { 'editorconfig/editorconfig-vim' },
-  { 'jiangmiao/auto-pairs' },
   { 'gregsexton/MatchTag' },
   { 'numToStr/Comment.nvim' },
   { 'Yggdroot/indentLine' },
   { 'simeji/winresizer' },
   { 'kana/vim-textobj-user' },
   { 'sgur/vim-textobj-parameter', dependencies = { 'kana/vim-textobj-user' } },
+  {
+    'm4xshen/autoclose.nvim',
+    config = function()
+      require('autoclose').setup()
+    end
+  },
   {
     'kylechui/nvim-surround',
     config = function()
@@ -48,7 +55,6 @@ require('lazy').setup({
       local augend = require('dial.augend')
       require('dial.config').augends:register_group{
         default = {
-          -- uppercase hex number (0x1A1A, 0xEEFE, etc.)
           augend.constant.new{
             elements = {'and', 'or'},
             word = true,
@@ -105,5 +111,5 @@ require('lazy').setup({
   require('plugins.appearance'),
   require('plugins.treesitter'),
   require('plugins.completion'),
-  require('plugins.avante'),
+  require('plugins.copilot'),
 })
