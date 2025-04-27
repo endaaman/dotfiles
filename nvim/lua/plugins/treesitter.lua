@@ -8,10 +8,10 @@ local function config()
     auto_install = true,
     ensure_installed = {
       'javascript', 'typescript', 'tsx',
-      'css', 'html', 'scss', 'svelte',
+      'css', 'html', 'scss', 'svelte', 'markdown',
       'json', 'yaml', 'toml',
       'python', 'lua', 'php', 'swift',
-      'fish', 'vim', 'bash'
+      'fish', 'vim', 'bash',
     },
     ignore_install = {},
     modules = {},
@@ -44,6 +44,6 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     config=config,
-    build = ":TSUpdate",
+    build = ':TSUpdate',
   },
 }

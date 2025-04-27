@@ -36,12 +36,44 @@ require('lazy').setup({
   { 'simeji/winresizer' },
   { 'kana/vim-textobj-user' },
   { 'sgur/vim-textobj-parameter', dependencies = { 'kana/vim-textobj-user' } },
-  -- 'itchyny/vim-cursorword',
-  -- 'tpope/vim-commentary',
+  {
+    'monaqa/dial.nvim',
+    dependencies= { 'nvim-lua/plenary.nvim' },
+    config = function()
+      local augend = require('dial.augend')
+      -- require('dial.config').augends:register_group{
+      --   default = {
+      --     -- uppercase hex number (0x1A1A, 0xEEFE, etc.)
+      --     augend.constant.new{
+      --       elements = {'and', 'or'},
+      --       word = true,
+      --       cyclic = true,
+      --     },
+      --     augend.constant.new{
+      --       elements = {'&&', '||'},
+      --       word = false,
+      --       cyclic = true,
+      --     },
+      --     augend.constant.new{
+      --       elements = {'true', 'false'},
+      --       word = true,
+      --       cyclic = true,
+      --     },
+      --     augend.constant.new{
+      --       elements = {'True', 'False'},
+      --       word = true,
+      --       cyclic = true,
+      --     },
+      --   },
+      -- }
+    end
+  },
   { 'endaaman/vim-case-master', config = function()
     vim.keymap.set('n', '<C-e>', ':<C-u>CaseMasterRotateCase<CR>')
     vim.keymap.set('v', '<C-e>', ':<C-u>CaseMasterRotateCaseVisual<CR>')
   end},
+  -- 'itchyny/vim-cursorword',
+  -- 'tpope/vim-commentary',
 
   {
     'airblade/vim-gitgutter',
@@ -56,4 +88,5 @@ require('lazy').setup({
   require('plugins.appearance'),
   require('plugins.treesitter'),
   require('plugins.completion'),
+  require('plugins.avante'),
 })
