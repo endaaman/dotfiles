@@ -30,12 +30,17 @@ require('lazy').setup({
   { 'editorconfig/editorconfig-vim' },
   { 'jiangmiao/auto-pairs' },
   { 'gregsexton/MatchTag' },
-  { 'tpope/vim-surround' },
   { 'numToStr/Comment.nvim' },
   { 'Yggdroot/indentLine' },
   { 'simeji/winresizer' },
   { 'kana/vim-textobj-user' },
   { 'sgur/vim-textobj-parameter', dependencies = { 'kana/vim-textobj-user' } },
+  {
+    'kylechui/nvim-surround',
+    config = function()
+      require('nvim-surround').setup{}
+    end
+  },
   {
     'monaqa/dial.nvim',
     dependencies= { 'nvim-lua/plenary.nvim' },
@@ -83,8 +88,9 @@ require('lazy').setup({
     vim.keymap.set('n', '<C-e>', ':<C-u>CaseMasterRotateCase<CR>')
     vim.keymap.set('v', '<C-e>', ':<C-u>CaseMasterRotateCaseVisual<CR>')
   end},
-  -- 'itchyny/vim-cursorword',
-  -- 'tpope/vim-commentary',
+  -- { 'itchyny/vim-cursorword' },
+  -- { 'tpope/vim-commentary' },
+  -- { 'tpope/vim-surround' },
 
   {
     'airblade/vim-gitgutter',
