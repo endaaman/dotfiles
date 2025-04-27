@@ -41,31 +41,42 @@ require('lazy').setup({
     dependencies= { 'nvim-lua/plenary.nvim' },
     config = function()
       local augend = require('dial.augend')
-      -- require('dial.config').augends:register_group{
-      --   default = {
-      --     -- uppercase hex number (0x1A1A, 0xEEFE, etc.)
-      --     augend.constant.new{
-      --       elements = {'and', 'or'},
-      --       word = true,
-      --       cyclic = true,
-      --     },
-      --     augend.constant.new{
-      --       elements = {'&&', '||'},
-      --       word = false,
-      --       cyclic = true,
-      --     },
-      --     augend.constant.new{
-      --       elements = {'true', 'false'},
-      --       word = true,
-      --       cyclic = true,
-      --     },
-      --     augend.constant.new{
-      --       elements = {'True', 'False'},
-      --       word = true,
-      --       cyclic = true,
-      --     },
-      --   },
-      -- }
+      require('dial.config').augends:register_group{
+        default = {
+          -- uppercase hex number (0x1A1A, 0xEEFE, etc.)
+          augend.constant.new{
+            elements = {'and', 'or'},
+            word = true,
+            cyclic = true,
+          },
+          augend.constant.new{
+            elements = {'&&', '||'},
+            word = false,
+            cyclic = true,
+          },
+          augend.constant.new{
+            elements = {'true', 'false'},
+            word = true,
+            cyclic = true,
+          },
+          augend.constant.new{
+            elements = {'True', 'False'},
+            word = true,
+            cyclic = true,
+          },
+        },
+      }
+      local dial_increment = function()
+        require("dial.map").manipulate("increment", "normal")
+      end
+      local dial_decrement = function()
+        require("dial.map").manipulate("decrement", "normal")
+      end
+
+      vim.keymap.set("n", ">", dial_increment)
+      vim.keymap.set("n", "<S-Up>", dial_increment)
+      vim.keymap.set("n", "<", dial_decrement)
+      vim.keymap.set("n", "<S-Down>", dial_decrement)
     end
   },
   { 'endaaman/vim-case-master', config = function()
