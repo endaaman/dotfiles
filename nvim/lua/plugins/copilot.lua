@@ -1,8 +1,57 @@
 return {
   {
+    'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
+    event = 'InsertEnter',
+    cond = function()
+      return vim.env.ENDAAMAN_ENABLE_COPILOT
+    end,
+    config = function()
+      require('copilot').setup({
+        suggestion = {
+          enabled = true,
+          auto_trigger = false,
+          -- keymap = {
+          --   accept = '<CR>',
+          --   next = '<C-j>',
+          --   prev = '<C-b>',
+          --   dismiss = '<Esc>',
+          -- }
+        }
+      })
+      local suggestion = require('copilot.suggestion')
+      vim.keymap.set('i', '<C-f>', function()
+        suggestion.next()
+      end)
+      vim.keymap.set('i', '<C-b>', function()
+        suggestion.prev()
+      end)
+
+      vim.keymap.set('i', '<Tab>', function()
+        if suggestion.is_visible() then
+          suggestion.accept_line()
+          return ''
+        end
+        return vim.api.nvim_replace_termcodes('<Tab>', true, false, true)
+      end, { expr=true })
+
+      vim.keymap.set('i', '<C-j>', function()
+        if suggestion.is_visible() then
+          suggestion.accept()
+          return ''
+        end
+        return vim.api.nvim_replace_termcodes('<C-j>', true, false, true)
+      end, { expr=true })
+
+    end,
+  },
+  {
     'yetone/avante.nvim',
     lazy = true,
     event = 'VeryLazy',
+    cond = function()
+      return vim.env.ENDAAMAN_ENABLE_COPILOT
+    end,
     version = false, -- Never set this value to "*"! Never!
     opts = {
 
@@ -42,51 +91,7 @@ return {
       'hrsh7th/nvim-cmp',                   -- autocompletion for avante commands and mentions
       'ibhagwan/fzf-lua',                   -- for file_selector provider fzf
       'nvim-tree/nvim-web-devicons',        -- or echasnovski/mini.icons
-
-      {
-        'zbirenbaum/copilot.lua',
-        cmd = 'Copilot',
-        event = 'InsertEnter',
-        config = function()
-          require('copilot').setup({
-            suggestion = {
-              enabled = true,
-              auto_trigger = false,
-              -- keymap = {
-              --   accept = '<CR>',
-              --   next = '<C-j>',
-              --   prev = '<C-b>',
-              --   dismiss = '<Esc>',
-              -- }
-            }
-          })
-          local suggestion = require('copilot.suggestion')
-          vim.keymap.set('i', '<C-f>', function()
-            suggestion.next()
-          end)
-          vim.keymap.set('i', '<C-b>', function()
-            suggestion.prev()
-          end)
-
-          vim.keymap.set('i', '<Tab>', function()
-            if suggestion.is_visible() then
-              suggestion.accept_line()
-              return ''
-            end
-            return vim.api.nvim_replace_termcodes('<Tab>', true, false, true)
-          end, { expr=true })
-
-          vim.keymap.set('i', '<C-j>', function()
-            if suggestion.is_visible() then
-              suggestion.accept()
-              return ''
-            end
-            return vim.api.nvim_replace_termcodes('<C-j>', true, false, true)
-          end, { expr=true })
-
-        end,
-      },
-
+      'zbirenbaum/copilot.lua',
       {
         'HakonHarnes/img-clip.nvim',
         event = 'VeryLazy',
