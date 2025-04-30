@@ -32,10 +32,29 @@ require('lazy').setup({
   { 'editorconfig/editorconfig-vim' },
   { 'gregsexton/MatchTag' },
   { 'numToStr/Comment.nvim' },
-  { 'Yggdroot/indentLine' },
+  -- { 'Yggdroot/indentLine' },
   { 'simeji/winresizer' },
   { 'kana/vim-textobj-user' },
   { 'sgur/vim-textobj-parameter', dependencies = { 'kana/vim-textobj-user' } },
+  {
+    'shellRaining/hlchunk.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = function()
+      require("hlchunk").setup({
+        chunk = {
+          enable = false,
+          style = "#81A1C1",
+        },
+        indent = {
+          enable = true,
+        },
+        line_num = {
+          enable = true,
+          style = "#81A1C1",
+        },
+      })
+    end,
+  },
   {
     'm4xshen/autoclose.nvim',
     config = function()
@@ -55,6 +74,11 @@ require('lazy').setup({
       local augend = require('dial.augend')
       require('dial.config').augends:register_group{
         default = {
+          augend.integer.alias.decimal,
+          augend.integer.alias.hex,
+          augend.date.alias["%Y/%m/%d"],
+          augend.date.alias["%Y-%m-%d"],
+          augend.constant.alias.bool,
           augend.constant.new{
             elements = {'and', 'or'},
             word = true,
@@ -66,11 +90,6 @@ require('lazy').setup({
             cyclic = true,
           },
           augend.constant.new{
-            elements = {'true', 'false'},
-            word = true,
-            cyclic = true,
-          },
-          augend.constant.new{
             elements = {'True', 'False'},
             word = true,
             cyclic = true,
@@ -78,16 +97,16 @@ require('lazy').setup({
         },
       }
       local dial_increment = function()
-        require("dial.map").manipulate("increment", "normal")
+        require('dial.map').manipulate('increment', 'normal')
       end
       local dial_decrement = function()
-        require("dial.map").manipulate("decrement", "normal")
+        require('dial.map').manipulate('decrement', 'normal')
       end
 
-      vim.keymap.set("n", ">", dial_increment)
-      vim.keymap.set("n", "<S-Up>", dial_increment)
-      vim.keymap.set("n", "<", dial_decrement)
-      vim.keymap.set("n", "<S-Down>", dial_decrement)
+      vim.keymap.set('n', '>', dial_increment)
+      vim.keymap.set('n', '<S-Up>', dial_increment)
+      vim.keymap.set('n', '<', dial_decrement)
+      vim.keymap.set('n', '<S-Down>', dial_decrement)
     end
   },
   { 'endaaman/vim-case-master', config = function()
