@@ -60,7 +60,7 @@ let g:tex_conceal = ""
 
 if has('nvim')
   let g:python3_host_prog = FindPythonWithPynvim()
-  let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
+  "let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
   " au TermOpen * if &buftype == 'terminal' | :set nolist | endif
   " au TermClose * set list
 else
