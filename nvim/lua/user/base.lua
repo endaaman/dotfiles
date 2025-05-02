@@ -1,5 +1,15 @@
 vim.opt.encoding = 'utf-8'
 
+local function command_exists(cmd)
+  local handle = io.popen('which ' .. cmd .. ' 2>/dev/null')
+  if not handle then
+    return false
+  end
+  local result = handle:read('*a')
+  handle:close()
+  return result ~= ''
+end
+
 local columns = vim.opt.columns:get()
 local lines = vim.opt.lines:get()
 vim.cmd('set all&')
@@ -54,7 +64,6 @@ vim.opt.wildmenu = true
 vim.opt.wrap = true
 vim.opt.write = true
 
-vim.opt.clipboard = 'unnamedplus'
 vim.opt.showbreak = '↳'
 vim.opt.listchars = 'tab:\\ ,trail:-,eol:↲,extends:»,precedes:«,nbsp:%'
 
@@ -70,18 +79,22 @@ vim.g.vim_indent_cont = vim.opt.shiftwidth:get()
 vim.g.tex_conceal = ''
 vim.g.vim_json_conceal = 0
 
-vim.g.clipboard = {
-  name = 'xsel',
-  copy = {
-    ['+'] = {'xsel', '--nodetach', '-i', '-b'},
-    ['*'] = {'xsel', '--nodetach', '-i', '-p'},
-  },
-  paste = {
-    ['+'] = {'xsel', '-o', '-b'},
-    ['*'] = {'xsel', '-o', '-p'},
-  },
-  cache_enabled = 1,
-}
+
+vim.opt.clipboard = 'unnamedplus'
+if vim.fn.executable('xsel') == 1 then
+  vim.g.clipboard = {
+    name = 'xsel',
+    copy = {
+      ['+'] = {'xsel', '--nodetach', '-i', '-b'},
+      ['*'] = {'xsel', '--nodetach', '-i', '-p'},
+    },
+    paste = {
+      ['+'] = {'xsel', '-o', '-b'},
+      ['*'] = {'xsel', '-o', '-p'},
+    },
+    cache_enabled = 1,
+  }
+end
 
 local cursor_group = vim.api.nvim_create_augroup('CursorSettings', { clear = true })
 vim.api.nvim_create_autocmd('InsertLeave', {
