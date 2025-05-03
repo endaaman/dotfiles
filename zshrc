@@ -159,7 +159,7 @@ function my_rprompt() {
   # fi
   # echo $rprompt
   local rprompt=''
-  if gitstatus_query MY && [ "$GITSTATUS" -eq 0 ]; then
+  if command -v gitstatus_query &> /dev/null && if gitstatus_query MY && [ "$GITSTATUS" -eq 0 ]; then
     rprompt="%F{blue}[${VCS_STATUS_LOCAL_BRANCH}]%f"
     if [ "$VCS_STATUS_HAS_STAGED" -ne 0 ] || [ "$VCS_STATUS_HAS_UNSTAGED" -ne 0 ]; then
       rprompt+='%F{yellow}*%f'
