@@ -32,7 +32,7 @@ require('lazy').setup({
   { 'editorconfig/editorconfig-vim' },
   { 'gregsexton/MatchTag' },
   { 'numToStr/Comment.nvim' },
-  -- { 'Yggdroot/indentLine' },
+  { 'tpope/vim-sleuth' },
   { 'simeji/winresizer' },
   { 'kana/vim-textobj-user' },
   { 'sgur/vim-textobj-parameter', dependencies = { 'kana/vim-textobj-user' } },
@@ -113,6 +113,7 @@ require('lazy').setup({
     vim.keymap.set('n', '<C-e>', ':<C-u>CaseMasterRotateCase<CR>')
     vim.keymap.set('v', '<C-e>', ':<C-u>CaseMasterRotateCaseVisual<CR>')
   end},
+  -- { 'Yggdroot/indentLine' },
   -- { 'itchyny/vim-cursorword' },
   -- { 'tpope/vim-commentary' },
   -- { 'tpope/vim-surround' },
