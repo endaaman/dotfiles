@@ -45,7 +45,6 @@ set smarttab
 set softtabstop=2
 set switchbuf=usetab
 set tabstop=2
-set termguicolors
 set timeout timeoutlen=1000 ttimeoutlen=50
 set undodir=~/.cache/vim
 set undofile
@@ -57,15 +56,6 @@ set write
 let g:netrw_home = '~/.cache/vim'
 let g:vim_indent_cont = &shiftwidth
 let g:tex_conceal = ""
-
-if has('nvim')
-  let g:python3_host_prog = FindPythonWithPynvim()
-  "let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
-  " au TermOpen * if &buftype == 'terminal' | :set nolist | endif
-  " au TermClose * set list
-else
-  " set pyxversion=3
-endif
 
 if has('win32') || has('win64') || has('mac')
   set clipboard=unnamed
@@ -92,6 +82,8 @@ if !has('gui_running') && exists('&termguicolors') && $COLORTERM ==# 'truecolor'
     let &t_8b = "\e[48;2;%lu;%lu;%lum"
   endif
   set termguicolors
+else
+   set t_Co=256
 endif
 
 if has('gui_running')

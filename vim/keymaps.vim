@@ -142,8 +142,8 @@ noremap gB B
 nnoremap mm mA
 nnoremap M 'A
 
-tnoremap <Esc> <C-\><C-n>
-tnoremap <C-Esc> <Esc>
+" tnoremap <Esc> <C-\><C-n>
+" tnoremap <C-Esc> <Esc>
 " tnoremap <C-c> <C-\><C-n>
 " tnoremap <Tab> <C-\><C-Tab><C-w>w
 
