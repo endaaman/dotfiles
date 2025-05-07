@@ -1,12 +1,6 @@
 let g:mapleader = ','
 
-nnoremap <silent> <Esc> <Esc>:<C-u>call EscapeHook()<CR>
-
 noremap <Space>j J
-" noremap <Spac>K
-" noremap <Space>k
-" nmap <Space>kd <Plug>(go-to-def)
-" nmap <Space>kD <Plug>(go-to-def-tab)
 noremap <Space>i :<C-u>vs<CR>
 noremap <Space>- :<C-u>sp<CR>
 noremap <Space>e :<C-u>e!<CR>
@@ -14,8 +8,6 @@ noremap <Space><C-l> <C-l>
 nnoremap <S-Left> :tabm -1<CR>
 nnoremap <S-Right> :tabm +1<CR>
 noremap <Space>q :<C-u>:q!<CR>
-" nnoremap <Space>l <nop>
-" nnoremap <Space>h <nop>
 nnoremap <expr> <Space>/ SearchByRegister()
 
 noremap j gj
@@ -47,7 +39,6 @@ nnoremap # #zz
 nnoremap o o<Esc>
 nnoremap O O<Esc>
 nnoremap p p`]
-nnoremap M :<C-u>call AutoMarkrement()<CR>
 nnoremap <S-Down> <C-x>
 nnoremap <S-Up> <C-a>
 nnoremap - <C-x>
