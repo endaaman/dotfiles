@@ -52,6 +52,7 @@ set updatetime=1000
 set wildmenu
 set wrap
 set write
+set nopaste
 
 let g:netrw_home = '~/.cache/vim'
 let g:vim_indent_cont = &shiftwidth
@@ -104,18 +105,9 @@ autocmd EN ColorScheme * highlight LineNr guibg=NONE ctermbg=NONE
 autocmd EN ColorScheme * highlight EndOfBuffer guibg=NONE ctermbg=NONE
 
 autocmd EN InsertLeave * set cursorline | set cursorcolumn
-autocmd EN InsertEnter * set nocursorline | set nocursorcolumn
+autocmd EN InsertEnter * set nocursorline | set nocursorcolumn | set paste
 " autocmd EN CursorHold * call ShiftRegister()
 autocmd EN InsertLeave * set nopaste
-
-
-highlight default TrailingSpaces ctermbg=green guibg=green
-autocmd EN ColorScheme * highlight default TrailingSpaces ctermbg=green guibg=green
-let s:match_trailing_spaces_ignores = ['defx', 'qf', 'nerdtree', 'TelescopePrompt', 'TelescopeResults',]
-autocmd EN BufEnter,InsertEnter,InsertLeave,FileType * call MatchTrailingSpaces(0, s:match_trailing_spaces_ignores)
-" autocmd EN BufWinLeave * call clearmatches()
-" autocmd EN BufWritePre * call TrimTrailingSpaces()
-" autocmd EN BufWritePre * call TrimTrailingTabs()
 
 autocmd EN BufReadPost,FileType * call LoadFtConfig()
 autocmd EN BufRead,BufNewFile *.json.jbuilder setlocal ft=ruby
