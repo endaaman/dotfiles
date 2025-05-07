@@ -1,7 +1,3 @@
-if has('vim_starting')
-  mapclear
-endif
-
 let g:mapleader = ','
 
 nnoremap <silent> <Esc> <Esc>:<C-u>call EscapeHook()<CR>
@@ -15,9 +11,6 @@ noremap <Space>i :<C-u>vs<CR>
 noremap <Space>- :<C-u>sp<CR>
 noremap <Space>e :<C-u>e!<CR>
 noremap <Space><C-l> <C-l>
-noremap <Space>T :<C-u>terminal<CR>
-noremap <Space>t <C-w>v<C-w>w:<C-u>terminal<CR>
-noremap <Space><C-p> <C-w>v<C-w>w:<C-u>terminal ipython<CR><C-\><C-n><C-w>p
 nnoremap <S-Left> :tabm -1<CR>
 nnoremap <S-Right> :tabm +1<CR>
 noremap <Space>q :<C-u>:q!<CR>
@@ -95,32 +88,8 @@ vnoremap H ^
 vnoremap L $
 " vnoremap E "zy:<C-u><C-r>z<CR>
 
-function! ExecuteSelection() abort
-  if visualmode() != 'v'
-    return
-  endif
-  let [l:row_start, l:start] = getpos("'<")[1:2]
-  let [l:row_end, l:end] = getpos("'>")[1:2]
-  let l:lines = getline(row_start, row_end)
-  for l:line in l:lines
-    execute l:line
-  endfor
-endfunction
-
-vnoremap <silent> <Space>e :<C-u>call ExecuteSelection()<CR>
-
-
-noremap <silent> <expr> y RegisterPrefix('y')
-noremap <silent> <expr> d RegisterPrefix('d')
-noremap <silent> <expr> c RegisterPrefix('c')
-noremap <silent> <expr> Y RegisterPrefix('Y')
-noremap <silent> <expr> D RegisterPrefix('D')
-noremap <silent> <expr> C RegisterPrefix('C')
-nnoremap <silent> <expr> yy RegisterPrefix('yy')
-nnoremap <silent> <expr> dd RegisterPrefix('dd')
-nnoremap <silent> <expr> <C-m> RegisterPrefix('yy')
-vnoremap <silent> <expr> <C-m> RegisterPrefix('y')
-onoremap <silent> <expr> <C-m> RegisterPrefix('y')
+nnoremap <C-m> yy
+vnoremap <C-m> y<Esc>
 
 inoremap <C-d> <Del>
 

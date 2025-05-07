@@ -79,8 +79,8 @@ if executable('xsel')
 endif
 
 if !has('gui_running') && exists('&termguicolors') && $COLORTERM ==# 'truecolor'
-  let &t_8f = "\e[38;2;%lu;%lu;%lum"
-  let &t_8b = "\e[48;2;%lu;%lu;%lum"
+  "let &t_8f = "\e[38;2;%lu;%lu;%lum"
+  "let &t_8b = "\e[48;2;%lu;%lu;%lum"
   set showbreak=↳
   set listchars=tab:>-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
   set termguicolors
@@ -117,7 +117,6 @@ autocmd EN BufEnter,InsertEnter,InsertLeave,FileType * call MatchTrailingSpaces(
 " autocmd EN BufWritePre * call TrimTrailingSpaces()
 " autocmd EN BufWritePre * call TrimTrailingTabs()
 
-autocmd EN User MyVimrcLoaded call LoadLocalVimConfig()
 autocmd EN BufReadPost,FileType * call LoadFtConfig()
 autocmd EN BufRead,BufNewFile *.json.jbuilder setlocal ft=ruby
 autocmd EN BufRead,BufNewFile Schemafile setlocal ft=ruby
@@ -126,10 +125,6 @@ autocmd EN BufRead,BufNewFile *.ejs setlocal ft=ejs
 autocmd EN BufRead,BufNewFile *.vue setlocal ft=vue
 autocmd EN BufRead,BufNewFile *.kdl setlocal ft=kdl
 autocmd EN BufRead,BufNewFile fonts.conf setlocal ft=xml
-
-if has('nvim')
-  autocmd TermOpen * startinsert
-endif
 
 let g:netrw_banner = 0        " バナーを非表示
 let g:netrw_liststyle = 3     " ツリー表示

@@ -184,13 +184,6 @@ function! EscapeHook() abort
   set nopaste
 endfunction
 
-function! LoadLocalVimConfig() abort
-  if getcwd() == expand('~')
-    return
-  endif
-  call SafeExec(getcwd() . '/.vim/init.vim')
-endfunction
-
 function! LoadFtConfig() abort
   let l:base_path = expand('<sfile>:p:h')
   call SafeExec(l:base_path . '/ft/default.vim')
