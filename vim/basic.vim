@@ -63,27 +63,30 @@ else
   set clipboard=unnamedplus
 endif
 
-let g:clipboard = {
-  \ 'name': 'xsel',
-  \ 'copy': {
-  \   '+': ['xsel', '--nodetach', '-i', '-b'],
-  \   '*': ['xsel', '--nodetach', '-i', '-p'],
-  \ },
-  \ 'paste': {
-  \   '+': ['xsel', '-o', '-b'],
-  \   '*': ['xsel', '-o', '-p'],
-  \ },
-  \ 'cache_enabled': 1,
-  \ }
+if executable('xsel')
+  let g:clipboard = {
+    \ 'name': 'xsel',
+    \ 'copy': {
+    \   '+': ['xsel', '--nodetach', '-i', '-b'],
+    \   '*': ['xsel', '--nodetach', '-i', '-p'],
+    \ },
+    \ 'paste': {
+    \   '+': ['xsel', '-o', '-b'],
+    \   '*': ['xsel', '-o', '-p'],
+    \ },
+    \ 'cache_enabled': 1,
+    \ }
+endif
 
 if !has('gui_running') && exists('&termguicolors') && $COLORTERM ==# 'truecolor'
-  if !has('nvim')
-    let &t_8f = "\e[38;2;%lu;%lu;%lum"
-    let &t_8b = "\e[48;2;%lu;%lu;%lum"
-  endif
+  let &t_8f = "\e[38;2;%lu;%lu;%lum"
+  let &t_8b = "\e[48;2;%lu;%lu;%lum"
+  set showbreak=↳
+  set listchars=tab:>-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
   set termguicolors
 else
-   set t_Co=256
+  set t_Co=256
+  set listchars=tab:\\ ,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
 endif
 
 if has('gui_running')
@@ -91,15 +94,6 @@ if has('gui_running')
   set guifont=Monospace\ 10
   autocmd EN VimEnter * set lines=40
   autocmd EN VimEnter * set columns=120
-endif
-
-if get(g:, 'rich')
-  set showbreak=↳
-  if has('gui_running')
-    set listchars=tab:>-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
-  else
-    set listchars=tab:\\ ,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
-  endif
 endif
 
 autocmd EN ColorScheme * highlight Normal guibg=NONE ctermbg=NONE
