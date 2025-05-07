@@ -116,12 +116,40 @@ return {
         },
       },
       {
-        -- Make sure to set this up properly if you have lazy=true
         'MeanderingProgrammer/render-markdown.nvim',
-        opts = {
-          file_types = { 'markdown', 'Avante' },
-        },
-        ft = { 'markdown', 'Avante' },
+        -- opts = {
+        --   file_types = { 'markdown', 'Avante' },
+        -- },
+        -- ft = { 'markdown', 'Avante' },
+
+        ft = { 'Avante' },
+        config = function(_, opts)
+          local render_markdown = require('render-markdown')
+          render_markdown.setup(opts)
+
+          -- Add command to manually toggle markdown rendering
+          vim.api.nvim_create_user_command('ToggleMarkdownRender', function()
+            -- Check if current buffer is markdown
+            if vim.bo.filetype == 'markdown' then
+              -- Toggle rendering for current buffer
+              if vim.b.markdown_render_enabled then
+                render_markdown.disable_for_buffer()
+                vim.b.markdown_render_enabled = false
+                print('Markdown rendering disabled')
+              else
+                render_markdown.enable_for_buffer()
+                vim.b.markdown_render_enabled = true
+                print('Markdown rendering enabled')
+              end
+            else
+              print('Not a markdown buffer')
+            end
+          end, {})
+
+          -- Optional: Add keybinding for the toggle command
+          vim.keymap.set('n', '<leader>mr', ':ToggleMarkdownRender<CR>',
+            { noremap = true, silent = true, desc = "Toggle Markdown Rendering" })
+        end,
       },
     },
   }
