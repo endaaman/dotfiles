@@ -109,7 +109,6 @@ autocmd EN InsertEnter * set nocursorline | set nocursorcolumn | set paste
 " autocmd EN CursorHold * call ShiftRegister()
 autocmd EN InsertLeave * set nopaste
 
-autocmd EN BufReadPost,FileType * call LoadFtConfig()
 autocmd EN BufRead,BufNewFile *.json.jbuilder setlocal ft=ruby
 autocmd EN BufRead,BufNewFile Schemafile setlocal ft=ruby
 autocmd EN BufRead,BufNewFile /etc/nginx/* setlocal ft=nginx
