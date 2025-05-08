@@ -4,9 +4,11 @@
 return {
   {
     'zbirenbaum/copilot.lua',
+    lazy = true,
     cmd = 'Copilot',
     event = 'InsertEnter',
-    cond = function()
+    -- cond = function()
+    enabled = function()
       return vim.env.ENDAAMAN_ENABLE_COPILOT
     end,
     opts = {
@@ -56,7 +58,8 @@ return {
     'yetone/avante.nvim',
     lazy = true,
     event = 'VeryLazy',
-    cond = function()
+    -- cond = function()
+    enabled = function()
       return vim.env.ENDAAMAN_ENABLE_COPILOT
     end,
     version = false, -- Never set this value to "*"! Never!
