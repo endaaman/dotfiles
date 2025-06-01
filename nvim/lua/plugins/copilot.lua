@@ -1,4 +1,4 @@
-local enabled = vim.env.ENDAAMAN_ENABLE_COPILOT
+local enabled = vim.env.ENDAAMAN_ENABLE_COPILOT == 1
 
 
 return {
@@ -116,7 +116,6 @@ return {
     enabled = enabled,
     version = false, -- Never set this value to "*"! Never!
     opts = {
-
       -- provider = "openai",
       -- openai = {
       --   endpoint = "https://api.openai.com/v1",
