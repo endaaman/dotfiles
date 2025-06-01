@@ -113,7 +113,7 @@ return {
     'yetone/avante.nvim',
     lazy = true,
     event = 'VeryLazy',
-    enabled = enabled,
+    cond = function() return enabled end,
     version = false, -- Never set this value to "*"! Never!
     opts = {
       -- provider = "openai",
