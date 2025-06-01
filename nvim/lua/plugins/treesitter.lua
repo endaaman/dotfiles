@@ -47,6 +47,6 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     config=config,
-    build = ':TSUpdate',
+    build = vim.fn.executable('tree-sitter') == 1 and ':TSUpdate' or nil,
   },
 }
