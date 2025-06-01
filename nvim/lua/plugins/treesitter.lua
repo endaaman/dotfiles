@@ -40,13 +40,17 @@ local function config()
   -- require('ts_context_commentstring').setup {}
 end
 
+local enabled = vim.fn.executable('tree-sitter') == 1
+
 return {
   {
     'nvim-treesitter/nvim-treesitter-context',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    enabled = enabled,
   },
   {
     'nvim-treesitter/nvim-treesitter',
-    config=config,
-    build = vim.fn.executable('tree-sitter') == 1 and ':TSUpdate' or nil,
+    config = config,
+    enabled = enabled,
   },
 }

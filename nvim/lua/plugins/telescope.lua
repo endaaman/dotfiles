@@ -142,21 +142,27 @@ local function config()
   }
 
   -- telescope.load_extension('coc')
-  telescope.load_extension('fzf')
+  -- telescope.load_extension('fzf')
 end
 
 
 return {
   {
     'nvim-telescope/telescope-fzf-native.nvim',
-    -- build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 && cmake --build build --config Release',
+    enabled = vim.fn.executable('cmake') == 1,
+    build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 && cmake --build build --config Release',
     -- build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
-    build = vim.fn.executable('cmake') == 1 and 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 && cmake --build build --config Release' or nil,
+    -- build = vim.fn.executable('cmake') == 1 and 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 && cmake --build build --config Release' or nil,
+    --
+    dependencies = { 'nvim-telescope/telescope.nvim' },
+    config = function()
+      require('telescope').load_extension('fzf')
+    end,
   },
   {
     'nvim-telescope/telescope.nvim',
     tag = '0.1.8',
-    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-fzf-native.nvim' },
+    dependencies = { 'nvim-lua/plenary.nvim', },
     config = config,
   }
 }

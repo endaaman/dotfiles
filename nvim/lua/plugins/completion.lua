@@ -32,38 +32,42 @@ local function config()
     vim.o.completeopt = 'menu,menuone,noselect'
   end
 
-  lspconfig.jedi_language_server.setup {
-    capabilities = vim.lsp.protocol.make_client_capabilities(),
-    on_attach = on_attach,
-    root_dir = root_pattern('pyproject.toml', '.git'),
-  }
+  if vim.fn.executable('lua-language-server') == 1 then
+    lspconfig.jedi_language_server.setup {
+      capabilities = vim.lsp.protocol.make_client_capabilities(),
+      on_attach = on_attach,
+      root_dir = root_pattern('pyproject.toml', '.git'),
+    }
+  end
 
-  lspconfig.lua_ls.setup {
-    capabilities = vim.lsp.protocol.make_client_capabilities(),
-    on_attach = on_attach,
-    settings = {
-      Lua = {
-        runtime = {
-          version = 'LuaJIT',
-        },
-        diagnostics = {
-          lobals = {'vim'},
-          disable = {
-            'unused-local',
-            'undefined-field',
-            'duplicate-set-field',
-          }
-        },
-        workspace = {
-          library = vim.api.nvim_get_runtime_file('', true),
-          checkThirdParty = false,
-        },
-        telemetry = {
-          enable = false,
+  if vim.fn.executable('jedi-language-server') == 1 then
+    lspconfig.lua_ls.setup {
+      capabilities = vim.lsp.protocol.make_client_capabilities(),
+      on_attach = on_attach,
+      settings = {
+        Lua = {
+          runtime = {
+            version = 'LuaJIT',
+          },
+          diagnostics = {
+            lobals = {'vim'},
+            disable = {
+              'unused-local',
+              'undefined-field',
+              'duplicate-set-field',
+            }
+          },
+          workspace = {
+            library = vim.api.nvim_get_runtime_file('', true),
+            checkThirdParty = false,
+          },
+          telemetry = {
+            enable = false,
+          },
         },
       },
-    },
-  }
+    }
+  end
 
   vim.diagnostic.config({
     virtual_text = true,
