@@ -1,4 +1,4 @@
-local enabled = vim.env.ENDAAMAN_ENABLE_COPILOT == 1
+local enabled = vim.env.ENDAAMAN_ENABLE_COPILOT
 
 
 return {
