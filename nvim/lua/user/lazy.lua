@@ -34,6 +34,7 @@ require('lazy').setup({
   { 'numToStr/Comment.nvim' },
   { 'tpope/vim-sleuth' },
   { 'simeji/winresizer' },
+  { 'Yggdroot/indentLine' },
   { 'kana/vim-textobj-user' },
   { 'sgur/vim-textobj-parameter', dependencies = { 'kana/vim-textobj-user' } },
   {
@@ -46,7 +47,7 @@ require('lazy').setup({
           style = "#81A1C1",
         },
         indent = {
-          enable = true,
+          enable = false,
         },
         line_num = {
           enable = true,
@@ -113,7 +114,6 @@ require('lazy').setup({
     vim.keymap.set('n', '<C-e>', ':<C-u>CaseMasterRotateCase<CR>')
     vim.keymap.set('v', '<C-e>', ':<C-u>CaseMasterRotateCaseVisual<CR>')
   end},
-  -- { 'Yggdroot/indentLine' },
   -- { 'itchyny/vim-cursorword' },
   -- { 'tpope/vim-commentary' },
   -- { 'tpope/vim-surround' },
