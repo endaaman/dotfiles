@@ -27,3 +27,5 @@ out/
 mlruns
 .directory
 .virtual_documents
+
+.claude
