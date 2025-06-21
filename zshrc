@@ -44,6 +44,7 @@ if [ -f ~/.local/share/zinit/zinit.git/zinit.zsh -a -z "$IS_ROOT" ]; then
     zsh-users/zsh-syntax-highlighting \
     esc/conda-zsh-completion \
     endaaman/lxd-completion-zsh \
+    endaaman/zsh-git-prompt \
     as"completion"  pick"_tsp" endaaman/task-spooler-completion-zsh \
     from"gh-r" as"program" junegunn/fzf \
     romkatv/gitstatus \
@@ -135,6 +136,9 @@ function my_prompt() {
 
   if [ -n "$VIRTUAL_ENV" ]; then
     local name=$(basename $VIRTUAL_ENV)
+    if [ $name = '.venv' ]; then
+      name=$(basename $(dirname $VIRTUAL_ENV))
+    fi
     python_mod="<%F{magent}$name%f> "
   elif command -v pyenv &> /dev/null; then
     python_version=$(pyenv version | sed 's/ .*//')
@@ -153,24 +157,24 @@ else
 fi
 
 function my_rprompt() {
-  # local rprompt=''
-  # if command -v git_super_status &> /dev/null; then
-  #   rprompt="$(git_super_status)"
-  # fi
-  # echo $rprompt
   local rprompt=''
-  if command -v gitstatus_query &> /dev/null && if gitstatus_query MY && [ "$GITSTATUS" -eq 0 ]; then
-    rprompt="%F{blue}[${VCS_STATUS_LOCAL_BRANCH}]%f"
-    if [ "$VCS_STATUS_HAS_STAGED" -ne 0 ] || [ "$VCS_STATUS_HAS_UNSTAGED" -ne 0 ]; then
-      rprompt+='%F{yellow}*%f'
-    fi
-    if [ "$VCS_STATUS_COMMITS_AHEAD" -ne 0 ]; then
-      rprompt+='%F{green}↑%f'
-    fi
-    if [ "$VCS_STATUS_COMMITS_BEHIND" -ne 0 ]; then
-      rprompt+='%F{red}↓%f'
-    fi
+  if command -v git_super_status &> /dev/null; then
+    rprompt="$(git_super_status)"
   fi
+
+  # if command -v gitstatus_query &> /dev/null && if gitstatus_query MY && [ "$GITSTATUS" -eq 0 ]; then
+  #   rprompt="%F{blue}[${VCS_STATUS_LOCAL_BRANCH}]%f"
+  #   if [ "$VCS_STATUS_HAS_STAGED" -ne 0 ] || [ "$VCS_STATUS_HAS_UNSTAGED" -ne 0 ]; then
+  #     rprompt+='%F{yellow}*%f'
+  #   fi
+  #   if [ "$VCS_STATUS_COMMITS_AHEAD" -ne 0 ]; then
+  #     rprompt+='%F{green}↑%f'
+  #   fi
+  #   if [ "$VCS_STATUS_COMMITS_BEHIND" -ne 0 ]; then
+  #     rprompt+='%F{red}↓%f'
+  #   fi
+  # fi
+
   echo $rprompt
 }
 
@@ -301,41 +305,6 @@ if [ -d ~/.local/bin ] && [ -f ~/.local/bin/mise ]; then
   # eval "$(~/.local/bin/mise completion zsh)"
   # fpath=(~/.local/share/mise/completions $fpath)
   # autoload -Uz compinit && compinit
-
-  export MISE_VENV_HOME="$HOME/.venvs"
-
-  vworkon() {
-    local venv_name=$1
-    if [ -z "$venv_name" ]; then
-        echo "Usage: workon <venv_name>"
-        return 1
-    fi
-
-    local venv_path="$MISE_VENV_HOME/$venv_name"
-    if [ ! -d "$venv_path" ]; then
-        echo "Virtual environment '$venv_name' does not exist"
-        echo "Available environments:"
-        ls -1 $MISE_VENV_HOME
-        return 1
-    fi
-    source "$venv_path/bin/activate"
-}
-
-  vmkvenv() {
-    local venv_name=$1
-    local python_version=${2:-"3.12"}  # デフォルトバージョン
-    if [ -z "$venv_name" ]; then
-      echo "Usage: vmk <venv_name> [python_version]"
-      return 1
-    fi
-    # venvディレクトリがなければ作成
-    mkdir -p $MISE_VENV_HOME
-    # Pythonのパスを直接取得して実行
-    local python_path=$(mise which python@$python_version)
-    $python_path -m venv "$MISE_VENV_HOME/$venv_name"
-    # 作成したvenvをアクティベート
-    vworkon $venv_name
-  }
 fi
 
 
