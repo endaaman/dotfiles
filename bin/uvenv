@@ -1,0 +1,203 @@
+#!/usr/bin/env python3
+"""
+uvenv - UV Environment Manager
+A simple tool to manage UV environments with activate and list functionality.
+"""
+
+import argparse
+import sys
+import tomllib
+from pathlib import Path
+
+
+UVENVS_HOME = Path.home() / ".uvenvs"
+
+
+def get_project_info(project_path):
+    """Extract basic info from pyproject.toml"""
+    toml_path = project_path / "pyproject.toml"
+
+    if not toml_path.exists():
+        return {
+            'name': project_path.name,
+            'version': '[uninitialized]',
+            'python_version': '[uninitialized]',
+            'dependencies': '[uninitialized]',
+            'status': 'uninitialized'
+        }
+
+    try:
+        with open(toml_path, 'rb') as f:
+            data = tomllib.load(f)
+    except tomllib.TOMLDecodeError:
+        return {
+            'name': project_path.name,
+            'version': '[parse error]',
+            'python_version': '[parse error]',
+            'dependencies': '[parse error]',
+            'status': 'parse_error'
+        }
+    except (OSError, IOError):
+        return {
+            'name': project_path.name,
+            'version': '[read error]',
+            'python_version': '[read error]',
+            'dependencies': '[read error]',
+            'status': 'read_error'
+        }
+
+    project = data.get('project', {})
+
+    # 各フィールドの存在チェック
+    name = project.get('name')
+    if name is None:
+        name = '[no name]'
+
+    version = project.get('version')
+    if version is None:
+        version = '[no version]'
+
+    python_version = project.get('requires-python')
+    if python_version is None:
+        python_version = '[no python req]'
+
+    dependencies = project.get('dependencies')
+    if dependencies is None:
+        dep_count = '[no deps field]'
+    else:
+        dep_count = len(dependencies)
+
+    return {
+        'name': name,
+        'version': version,
+        'python_version': python_version,
+        'dependencies': dep_count,
+        'status': 'ok'
+    }
+
+
+def cmd_activate(args):
+    """Activate an environment"""
+    import os
+    import subprocess
+
+    env_name = args.name
+    env_path = UVENVS_HOME / env_name
+
+    if not env_path.exists():
+        print(f"Environment '{env_name}' not found", file=sys.stderr)
+        print(f"Available environments:", file=sys.stderr)
+        cmd_list(argparse.Namespace())
+        sys.exit(1)
+
+    # Change to the environment directory
+    try:
+        os.chdir(env_path)
+    except OSError as e:
+        print(f"Failed to change directory to {env_path}: {e}", file=sys.stderr)
+        sys.exit(1)
+
+    # Check if virtual environment exists
+    venv_activate = env_path / ".venv" / "bin" / "activate"
+    if not venv_activate.exists():
+        print(f"Virtual environment not found in {env_path}")
+        print("Run 'uv sync' to create the virtual environment")
+        sys.exit(1)
+
+    # Start a new shell with the environment activated
+    shell = os.environ.get('SHELL', '/bin/bash')
+    activate_cmd = f"source {venv_activate}"
+
+    # Set environment variable to indicate current uvenv
+    env = os.environ.copy()
+    env['UVENV_CURRENT'] = env_name
+    env['PS1'] = f"(uv:{env_name}) {env.get('PS1', '$ ')}"
+
+    try:
+        subprocess.run([shell, '-c', f'{activate_cmd} && exec {shell}'], env=env)
+    except KeyboardInterrupt:
+        pass
+    except OSError as e:
+        print(f"Failed to start shell: {e}", file=sys.stderr)
+        sys.exit(1)
+
+
+def cmd_list(args):
+    """List available environments with project info"""
+    if not UVENVS_HOME.exists():
+        print(f"No environments found in {UVENVS_HOME}")
+        return
+
+    env_dirs = [d for d in UVENVS_HOME.iterdir() if d.is_dir()]
+
+    if not env_dirs:
+        print("No environments found")
+        return
+
+    print("Available environments:")
+    print()
+
+    for env_dir in sorted(env_dirs):
+        info = get_project_info(env_dir)
+        venv_exists = (env_dir / ".venv" / "bin" / "activate").exists()
+        status_symbol = "✓" if venv_exists else "○"
+
+        # Add status indicators for different states
+        if info['status'] == 'uninitialized':
+            status_symbol = "△"  # triangle for uninitialized
+        elif info['status'] in ['parse_error', 'read_error']:
+            status_symbol = "✗"  # X for errors
+
+        print(f"  {status_symbol} {env_dir.name}")
+        print(f"      Project: {info['name']} v{info['version']}")
+        print(f"      Python:  {info['python_version']}")
+        print(f"      Deps:    {info['dependencies']} packages")
+
+        # Show status explanation for non-ok states
+        if info['status'] == 'uninitialized':
+            print(f"      Status:  No pyproject.toml (uninitialized)")
+        elif info['status'] == 'parse_error':
+            print(f"      Status:  TOML parse error")
+        elif info['status'] == 'read_error':
+            print(f"      Status:  File read error")
+        elif not venv_exists:
+            print(f"      Status:  Virtual environment not created")
+
+        print()
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        prog='uvenv',
+        description='Manage UV environments'
+    )
+
+    subparsers = parser.add_subparsers(dest='command', help='Commands')
+
+    # activate command
+    activate_parser = subparsers.add_parser(
+        'activate',
+        help='Activate environment (starts new shell)'
+    )
+    activate_parser.add_argument('name', help='Environment name')
+
+    # list command
+    list_parser = subparsers.add_parser(
+        'list',
+        help='List available environments'
+    )
+
+    args = parser.parse_args()
+
+    if not args.command:
+        parser.print_help()
+        sys.exit(1)
+
+    if args.command == 'activate':
+        cmd_activate(args)
+    elif args.command == 'list':
+        cmd_list(args)
+
+
+if __name__ == "__main__":
+    main()
