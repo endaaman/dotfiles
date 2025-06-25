@@ -1,3 +1,41 @@
 #!/bin/bash
 
-sleep 1; xset dpms force off
+# 1秒待機
+sleep 1
+
+# Waylandセッションの確認
+if [ "$XDG_SESSION_TYPE" != "wayland" ]; then
+    echo "Error: Not running under Wayland session"
+    exit 1
+fi
+
+# デスクトップ環境/コンポジタの検出と適切なコマンドの実行
+if [ -n "$SWAYSOCK" ]; then
+    # Sway
+    swaymsg "output * dpms off"
+elif [ "$XDG_CURRENT_DESKTOP" = "GNOME" ] || [ "$XDG_CURRENT_DESKTOP" = "ubuntu:GNOME" ]; then
+    # GNOME Wayland
+    gdbus call --session \
+        --dest org.gnome.ScreenSaver \
+        --object-path /org/gnome/ScreenSaver \
+        --method org.gnome.ScreenSaver.SetActive true
+elif [ "$XDG_CURRENT_DESKTOP" = "KDE" ] || [ "$XDG_SESSION_DESKTOP" = "plasmawayland" ]; then
+    # KDE Plasma Wayland
+    qdbus org.kde.kglobalaccel /component/org_kde_powerdevil invokeShortcut "Turn Off Screen"
+elif [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
+    # Hyprland
+    hyprctl dispatch dpms off
+elif [ "$XDG_CURRENT_DESKTOP" = "river" ]; then
+    # River
+    riverctl set-option output * dpms off
+elif command -v wlr-randr &> /dev/null; then
+    # wlrootsベースのコンポジタ用フォールバック
+    # 全ての出力を取得してオフにする
+    wlr-randr | grep -E "^[^ ]" | while read -r output; do
+        wlr-randr --output "${output%% *}" --off
+    done
+else
+    echo "Error: Unsupported Wayland compositor or required tools not found"
+    echo "Detected environment: XDG_CURRENT_DESKTOP=$XDG_CURRENT_DESKTOP"
+    exit 1
+fi
