@@ -64,6 +64,7 @@ else
   set clipboard=unnamedplus
 endif
 
+
 if executable('xsel')
   let g:clipboard = {
     \ 'name': 'xsel',
