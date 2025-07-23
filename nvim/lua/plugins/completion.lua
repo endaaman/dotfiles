@@ -1,4 +1,3 @@
-
 local function definition_in_tab()
   local function on_list(options)
     vim.fn.setqflist({}, ' ', options)
@@ -17,6 +16,7 @@ end
 local function config()
   local lspconfig = require('lspconfig')
   local root_pattern = require('lspconfig.util').root_pattern
+  local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
   local on_attach = function(client, bufnr)
     vim.keymap.set('n', '<space>k', vim.lsp.buf.definition)
@@ -69,6 +69,44 @@ local function config()
     }
   end
 
+  if vim.fn.executable('gopls') == 1 then
+    lspconfig.gopls.setup {
+      capabilities = vim.lsp.protocol.make_client_capabilities(),
+      on_attach = on_attach,
+      root_dir = root_pattern('go.mod', '.git'),
+      settings = {
+        gopls = {
+          analyses = {
+            unusedparams = true,
+          },
+          staticcheck = true,
+        },
+      },
+    }
+  end
+
+  if vim.fn.executable('typescript-language-server') == 1 then
+    lspconfig.ts_ls.setup {
+      capabilities = vim.lsp.protocol.make_client_capabilities(),
+      on_attach = on_attach,
+      root_dir = root_pattern('package.json', 'tsconfig.json', '.git'),
+    }
+  end
+
+  if vim.fn.executable('emmet-ls') == 1 then
+    lspconfig.emmet_ls.setup({
+      capabilities = capabilities,
+      filetypes = { 'html', 'svelte', 'vue', 'javascriptreact', 'typescriptreact' },
+      init_options = {
+        html = {
+          options = {
+            ["bem.enabled"] = true,
+          },
+        },
+      }
+    })
+  end
+
   vim.diagnostic.config({
     virtual_text = true,
     signs = true,
@@ -100,6 +138,7 @@ local function config()
     },
     sources = {
       { name = 'nvim_lsp' },
+      { name = 'html' },
       { name = 'buffer' },
       {
         name = 'path',

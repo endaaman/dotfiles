@@ -29,14 +29,13 @@ local function config()
         'python',
       },
     },
-
-    autotag = {
-      enable = true,
-    },
   })
+
 
   local parser_config = require 'nvim-treesitter.parsers'.get_parser_configs()
   parser_config.tsx.filetype_to_parsername = { 'javascript', 'typescript.tsx' }
+
+  require('nvim-ts-autotag').setup()
   -- require('ts_context_commentstring').setup {}
 end
 
@@ -44,13 +43,17 @@ local enabled = vim.fn.executable('tree-sitter') == 1
 
 return {
   {
+    'nvim-treesitter/nvim-treesitter',
+    config = config,
+    enabled = enabled,
+  },
+  {
     'nvim-treesitter/nvim-treesitter-context',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     enabled = enabled,
   },
   {
-    'nvim-treesitter/nvim-treesitter',
-    config = config,
-    enabled = enabled,
+    'windwp/nvim-ts-autotag',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
 }
