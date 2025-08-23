@@ -81,7 +81,22 @@ vim.g.vim_json_conceal = 0
 
 
 vim.opt.clipboard = 'unnamedplus'
-if vim.fn.executable('xsel') == 1 then
+
+-- Set clipboard based on environment and available executables
+if vim.env.XDG_SESSION_TYPE == 'wayland' and vim.fn.executable('wl-copy') == 1 and vim.fn.executable('wl-paste') == 1 then
+  vim.g.clipboard = {
+    name = 'wl-clipboard',
+    copy = {
+      ['+'] = {'wl-copy'},
+      ['*'] = {'wl-copy', '--primary'},
+    },
+    paste = {
+      ['+'] = {'wl-paste', '--no-newline'},
+      ['*'] = {'wl-paste', '--no-newline', '--primary'},
+    },
+    cache_enabled = 1,
+  }
+elseif vim.fn.executable('xsel') == 1 then
   vim.g.clipboard = {
     name = 'xsel',
     copy = {

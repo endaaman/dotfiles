@@ -65,7 +65,21 @@ else
 endif
 
 
-if executable('xsel')
+" Set clipboard based on environment and available executables
+if $XDG_SESSION_TYPE ==# 'wayland' && executable('wl-copy') && executable('wl-paste')
+  let g:clipboard = {
+    \ 'name': 'wl-clipboard',
+    \ 'copy': {
+    \   '+': ['wl-copy'],
+    \   '*': ['wl-copy', '--primary'],
+    \ },
+    \ 'paste': {
+    \   '+': ['wl-paste', '--no-newline'],
+    \   '*': ['wl-paste', '--no-newline', '--primary'],
+    \ },
+    \ 'cache_enabled': 1,
+    \ }
+elseif executable('xsel')
   let g:clipboard = {
     \ 'name': 'xsel',
     \ 'copy': {
