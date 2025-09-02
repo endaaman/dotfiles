@@ -81,6 +81,7 @@ vnoremap L $
 
 nnoremap <C-m> yy
 vnoremap <C-m> y<Esc>
+vnoremap <CR> y<Esc>
 
 inoremap <C-d> <Del>
 
