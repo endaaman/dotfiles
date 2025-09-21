@@ -1,15 +1,5 @@
 vim.opt.encoding = 'utf-8'
 
-local function command_exists(cmd)
-  local handle = io.popen('which ' .. cmd .. ' 2>/dev/null')
-  if not handle then
-    return false
-  end
-  local result = handle:read('*a')
-  handle:close()
-  return result ~= ''
-end
-
 local columns = vim.opt.columns:get()
 local lines = vim.opt.lines:get()
 vim.cmd('set all&')
@@ -82,7 +72,6 @@ vim.g.vim_json_conceal = 0
 
 vim.opt.clipboard = 'unnamedplus'
 
--- Set clipboard based on environment and available executables
 if vim.env.XDG_SESSION_TYPE == 'wayland' and vim.fn.executable('wl-copy') == 1 and vim.fn.executable('wl-paste') == 1 then
   vim.g.clipboard = {
     name = 'wl-clipboard',
@@ -154,3 +143,42 @@ vim.api.nvim_create_autocmd('BufEnter', {
     vim.opt_local.conceallevel = 1
   end
 })
+
+vim.o.tabline = '%!v:lua.MyTabLine()'
+vim.o.showtabline = 2
+
+--- MyTabLine
+-- activeなタブはCWDからの相対パスを表示
+-- inactiveなタブはファイル名のみ表示
+function MyTabLine()
+  local s = ''
+  local current_tab = vim.fn.tabpagenr()
+
+  for i = 1, vim.fn.tabpagenr('$') do
+    -- タブ番号
+    s = s .. '%' .. i .. 'T'
+    s = s .. (i == current_tab and '%#TabLineSel#' or '%#TabLine#')
+    s = s .. ' ' .. i .. ':'
+
+    -- ファイル名を取得
+    local bufnr = vim.fn.tabpagebuflist(i)[vim.fn.tabpagewinnr(i)]
+    local file = vim.fn.bufname(bufnr)
+
+    if file:match('^fern://') then
+      file = 'fern'
+    elseif i == current_tab then
+      -- アクティブタブは相対パス
+      local cwd = vim.fn.getcwd()
+      file = vim.fn.fnamemodify(file, ':~:.')  -- cwdからの相対パス
+    else
+      -- 非アクティブタブはファイル名のみ
+      file = vim.fn.fnamemodify(file, ':t')
+    end
+
+    s = s .. (file ~= '' and file or '[No Name]')
+    s = s .. ' '
+  end
+
+  s = s .. '%#TabLineFill#%T'
+  return s
+end
