@@ -30,6 +30,10 @@ local function config()
     vim.keymap.set('n', '<C-b>', function() vim.diagnostic.jump({count = -1, float = true}) end)
 
     vim.o.completeopt = 'menu,menuone,noselect'
+
+    if vim.bo.filetype == 'javascript' then
+      vim.diagnostic.enable(false)
+    end
   end
 
   if vim.fn.executable('lua-language-server') == 1 then
@@ -87,9 +91,17 @@ local function config()
 
   if vim.fn.executable('typescript-language-server') == 1 then
     lspconfig.ts_ls.setup {
+      -- filetypes = { "typescript", },
       capabilities = vim.lsp.protocol.make_client_capabilities(),
       on_attach = on_attach,
       root_dir = root_pattern('package.json', 'tsconfig.json', '.git'),
+    }
+  end
+
+  if vim.fn.executable('svelteserver') == 1 then
+    lspconfig.svelte.setup {
+      capabilities = vim.lsp.protocol.make_client_capabilities(),
+      on_attach = on_attach,
     }
   end
 
