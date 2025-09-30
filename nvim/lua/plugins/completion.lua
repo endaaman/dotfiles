@@ -102,6 +102,7 @@ local function config()
     lspconfig.svelte.setup {
       capabilities = vim.lsp.protocol.make_client_capabilities(),
       on_attach = on_attach,
+      root_dir = lspconfig.util.root_pattern('svelte.config.js', 'package.json')
     }
   end
 
