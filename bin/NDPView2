@@ -5,11 +5,15 @@ if [ -z "${WINEPREFIX}" ]; then
   export WINEPREFIX="$HOME/Wines/ndp"
 fi
 
+if [ -z "${WINEEXEC}" ]; then
+  export WINEEXEC=wine
+fi
+
 if [ -n "$1" ]; then
   p=$(winepath -w "$1")
 else
   p=""
 fi
 
-# zenity --info --title=title --text="$p" --no-markup
-wine $WINEPREFIX/drive_c/Program\ Files/Hamamatsu/NDP.view\ 2/NDPView2.exe $p
+zenity --info --title="$WINEPREFIX" --text="$WINEEXEC $p" --no-markup
+$WINEEXEC $WINEPREFIX/drive_c/Program\ Files/Hamamatsu/NDP.view\ 2/NDPView2.exe "$p"

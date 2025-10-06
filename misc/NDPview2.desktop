@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=NDP.view 2(Wine)
+Exec=env WINEEXEC="/usr/share/steam/compatibilitytools.d/proton-ge-custom/files/bin/wine" WINEPREFIX="/home/ken/Wines/ndp" /home/ken/dotfiles/bin/NDPView2 %f
+Type=Application
+StartupNotify=true
+Icon=53E8_NDPView2.0
+StartupWMClass=ndpview2.exe
+MimeType=application/x-ndpi;
+Categories=Graphics;Viewer;
