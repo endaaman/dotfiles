@@ -15,5 +15,5 @@ else
   p=""
 fi
 
-zenity --info --title="$WINEPREFIX" --text="$WINEEXEC $p" --no-markup
+# zenity --info --title="$WINEPREFIX" --text="$WINEEXEC $p" --no-markup
 $WINEEXEC $WINEPREFIX/drive_c/Program\ Files/Hamamatsu/NDP.view\ 2/NDPView2.exe "$p"
