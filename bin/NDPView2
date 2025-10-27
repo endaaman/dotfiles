@@ -8,7 +8,7 @@ fi
 if [ -n "$1" ]; then
   p=$(winepath -w "$1")
 else
-  P=""
+  p=""
 fi
 
 # zenity --info --title=title --text="$p" --no-markup

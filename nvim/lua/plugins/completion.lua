@@ -102,7 +102,19 @@ local function config()
     lspconfig.svelte.setup {
       capabilities = vim.lsp.protocol.make_client_capabilities(),
       on_attach = on_attach,
-      root_dir = lspconfig.util.root_pattern('svelte.config.js', 'package.json')
+      root_dir = lspconfig.util.root_pattern('svelte.config.js', 'package.json'),
+      settings = {
+        svelte = {
+          plugin = {
+            svelte = {
+              compilerWarnings = {
+                -- a11yの警告をすべて無視
+                ["a11y-*"] = "ignore",
+              }
+            }
+          }
+        }
+      }
     }
   end
 
