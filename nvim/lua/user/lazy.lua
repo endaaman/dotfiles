@@ -17,10 +17,11 @@ vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
-vim.g.indentLine_char = ''
--- vim.g.indentLine_char = '¦'
-vim.g.indentLine_setConceal = 1
-vim.g.indentLine_fileTypeExclude = {'nerdtree', 'markdown', 'fern'}
+
+-- vim.g.indentLine_char = ''
+-- -- vim.g.indentLine_char = '¦'
+-- vim.g.indentLine_setConceal = 0
+-- vim.g.indentLine_fileTypeExclude = {'nerdtree', 'markdown', 'fern', 'json', 'jsonc'}
 
 vim.g.vim_textobj_parameter_mapping = 'a'
 vim.g.winresizer_start_key = '<Space>R'
@@ -39,7 +40,7 @@ require('lazy').setup({
   { 'numToStr/Comment.nvim' },
   { 'tpope/vim-sleuth' },
   { 'simeji/winresizer' },
-  { 'Yggdroot/indentLine' },
+  -- { 'Yggdroot/indentLine' },
   { 'kana/vim-textobj-user' },
   { 'sgur/vim-textobj-parameter', dependencies = { 'kana/vim-textobj-user' } },
   {
@@ -52,7 +53,11 @@ require('lazy').setup({
           style = "#81A1C1",
         },
         indent = {
-          enable = false,
+          enable = true,
+          chars = { "▏" },
+          style = {
+            vim.api.nvim_get_hl(0, { name = "Whitespace" }),
+          },
         },
         line_num = {
           enable = true,

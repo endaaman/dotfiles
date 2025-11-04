@@ -136,7 +136,7 @@ vim.api.nvim_create_autocmd('BufEnter', {
     then
       return
     end
-    if vim.tbl_contains({'markdown', }, vim.bo.filetype) then
+    if vim.tbl_contains({'markdown', 'json', 'jsonc'}, vim.bo.filetype) then
       vim.opt_local.conceallevel = 0
       return
     end
