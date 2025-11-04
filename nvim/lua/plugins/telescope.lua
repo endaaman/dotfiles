@@ -53,7 +53,7 @@ local function config()
 
   --* Keymaps
   vim.keymap.set('n', '<Space><Space>', builtin.resume, {})
-  vim.keymap.set('n', '<Space>l', builtin.buffers, {})
+  vim.keymap.set('n', '<Space>b', builtin.buffers, {})
   vim.keymap.set('n', '<Space>o', builtin.oldfiles, {})
   vim.keymap.set('n', '<Space>h', builtin.help_tags, {})
   vim.keymap.set('n', '<Space>g', builtin.live_grep, {})
@@ -62,7 +62,18 @@ local function config()
   vim.keymap.set('n', '<Space>d', builtin.git_status, {})
   vim.keymap.set('n', '<Space>r', builtin.registers, {})
   vim.keymap.set('n', '<Space>:', builtin.commands, {})
-  -- vim.keymap.set('n', '<Space>l', '<CMD>Telescope coc workspace_symbols<CR>', {})
+  vim.keymap.set('n', '<Space>l', function()
+    require('telescope').extensions.file_browser.file_browser({
+      path = vim.fn.expand('%:p:h'),
+      select_buffer = true,
+    })
+  end, {})
+  vim.keymap.set('n', '<Space>L', function()
+    require('telescope').extensions.file_browser.file_browser({
+      path = vim.fn.getcwd(),
+      select_buffer = true,
+    })
+  end, {})
   -- vim.keymap.set('n', '<Space>k', '<CMD>Telescope coc references_used<CR>', {})
 
   --* Custom actions
@@ -137,12 +148,19 @@ local function config()
         override_file_sorter = true,     -- override the file sorter
         case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
                                          -- the default case_mode is "smart_case"
+      },
+      file_browser = {
+        hide_parent_dir = false,  -- Show ".." to navigate to parent directory
+        grouped = true,           -- Group directories first, then files
+        display_stat = false,
+        cwd_to_path = false,
       }
     },
   }
 
   -- telescope.load_extension('coc')
   -- telescope.load_extension('fzf')
+  telescope.load_extension('file_browser')
 end
 
 
@@ -164,5 +182,9 @@ return {
     tag = '0.1.8',
     dependencies = { 'nvim-lua/plenary.nvim', },
     config = config,
-  }
+  },
+  {
+    'nvim-telescope/telescope-file-browser.nvim',
+    dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' }
+  },
 }
