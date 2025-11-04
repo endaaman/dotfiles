@@ -14,8 +14,6 @@ local function definition_in_tab()
 end
 
 local function config()
-  local lspconfig = require('lspconfig')
-  local root_pattern = require('lspconfig.util').root_pattern
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
   local on_attach = function(client, bufnr)
@@ -36,16 +34,24 @@ local function config()
     end
   end
 
-  if vim.fn.executable('lua-language-server') == 1 then
-    lspconfig.jedi_language_server.setup {
+  -- Python LSP (jedi-language-server)
+  if vim.fn.executable('jedi-language-server') == 1 then
+    vim.lsp.config.jedi_language_server = {
+      cmd = { 'jedi-language-server' },
+      filetypes = { 'python' },
+      root_markers = { 'pyproject.toml', '.git' },
       capabilities = vim.lsp.protocol.make_client_capabilities(),
       on_attach = on_attach,
-      root_dir = root_pattern('pyproject.toml', '.git'),
     }
+    vim.lsp.enable('jedi_language_server')
   end
 
-  if vim.fn.executable('jedi-language-server') == 1 then
-    lspconfig.lua_ls.setup {
+  -- Lua LSP (lua-language-server)
+  if vim.fn.executable('lua-language-server') == 1 then
+    vim.lsp.config.lua_ls = {
+      cmd = { 'lua-language-server' },
+      filetypes = { 'lua' },
+      root_markers = { '.luarc.json', '.luarc.jsonc', '.luacheckrc', '.stylua.toml', 'stylua.toml', 'selene.toml', 'selene.yml', '.git' },
       capabilities = vim.lsp.protocol.make_client_capabilities(),
       on_attach = on_attach,
       settings = {
@@ -54,7 +60,7 @@ local function config()
             version = 'LuaJIT',
           },
           diagnostics = {
-            lobals = {'vim'},
+            globals = {'vim'},
             disable = {
               'unused-local',
               'undefined-field',
@@ -71,13 +77,17 @@ local function config()
         },
       },
     }
+    vim.lsp.enable('lua_ls')
   end
 
+  -- Go LSP (gopls)
   if vim.fn.executable('gopls') == 1 then
-    lspconfig.gopls.setup {
+    vim.lsp.config.gopls = {
+      cmd = { 'gopls' },
+      filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+      root_markers = { 'go.mod', '.git' },
       capabilities = vim.lsp.protocol.make_client_capabilities(),
       on_attach = on_attach,
-      root_dir = root_pattern('go.mod', '.git'),
       settings = {
         gopls = {
           analyses = {
@@ -87,22 +97,29 @@ local function config()
         },
       },
     }
+    vim.lsp.enable('gopls')
   end
 
+  -- TypeScript LSP (typescript-language-server)
   if vim.fn.executable('typescript-language-server') == 1 then
-    lspconfig.ts_ls.setup {
-      -- filetypes = { "typescript", },
+    vim.lsp.config.ts_ls = {
+      cmd = { 'typescript-language-server', '--stdio' },
+      filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
+      root_markers = { 'package.json', 'tsconfig.json', '.git' },
       capabilities = vim.lsp.protocol.make_client_capabilities(),
       on_attach = on_attach,
-      root_dir = root_pattern('package.json', 'tsconfig.json', '.git'),
     }
+    vim.lsp.enable('ts_ls')
   end
 
+  -- Svelte LSP (svelteserver)
   if vim.fn.executable('svelteserver') == 1 then
-    lspconfig.svelte.setup {
+    vim.lsp.config.svelte = {
+      cmd = { 'svelteserver', '--stdio' },
+      filetypes = { 'svelte' },
+      root_markers = { 'svelte.config.js', 'package.json' },
       capabilities = vim.lsp.protocol.make_client_capabilities(),
       on_attach = on_attach,
-      root_dir = lspconfig.util.root_pattern('svelte.config.js', 'package.json'),
       settings = {
         svelte = {
           plugin = {
@@ -116,12 +133,17 @@ local function config()
         }
       }
     }
+    vim.lsp.enable('svelte')
   end
 
+  -- Emmet LSP (emmet-ls)
   if vim.fn.executable('emmet-ls') == 1 then
-    lspconfig.emmet_ls.setup({
-      capabilities = capabilities,
+    vim.lsp.config.emmet_ls = {
+      cmd = { 'emmet-ls', '--stdio' },
       filetypes = { 'html', 'svelte', 'vue', 'javascriptreact', 'typescriptreact' },
+      root_markers = { '.git' },
+      capabilities = capabilities,
+      on_attach = on_attach,
       init_options = {
         html = {
           options = {
@@ -129,7 +151,8 @@ local function config()
           },
         },
       }
-    })
+    }
+    vim.lsp.enable('emmet_ls')
   end
 
   vim.diagnostic.config({
