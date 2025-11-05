@@ -13,6 +13,29 @@ local function config()
   local conf = require('telescope.config').values
 
 
+  local function show_commit_files(commit_hash)
+    pickers.new({}, {
+      prompt_title = string.format("Files changed in %s", commit_hash:sub(1, 7)),
+      finder = finders.new_oneshot_job(
+        { 'git', 'diff-tree', '--no-commit-id', '--name-only', '-r', commit_hash },
+        {}
+      ),
+      sorter = conf.generic_sorter({}),
+      attach_mappings = function(prompt_bufnr, map)
+        actions.select_default:replace(function()
+          local selection = action_state.get_selected_entry()
+          if selection == nil then
+            utils.__warn_no_selection("show_commit_files")
+            return
+          end
+          actions.close(prompt_bufnr)
+          vim.cmd('edit ' .. selection.value)
+        end)
+        return true
+      end,
+    }):find()
+  end
+
   local function clipboard(opts)
     local cmd
     if 1 == vim.fn.executable 'copyq' then
@@ -95,6 +118,23 @@ local function config()
     end
   end, {})
 
+  vim.keymap.set('n', '<Space><C-l>', function()
+    builtin.git_commits({
+      attach_mappings = function(prompt_bufnr, map)
+        actions.select_default:replace(function()
+          local selection = action_state.get_selected_entry()
+          if selection == nil then
+            utils.__warn_no_selection("git_commits")
+            return
+          end
+          actions.close(prompt_bufnr)
+          -- git_commits stores the commit hash in selection.value
+          show_commit_files(selection.value)
+        end)
+        return true
+      end,
+    })
+  end, {})
 
   local default_maps = {
     n = {
