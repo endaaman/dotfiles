@@ -146,12 +146,12 @@ local function config()
       ['<Tab>'] = actions.move_selection_next,
       ['<S-Tab>'] = actions.move_selection_previous,
       ['<Esc>'] = actions.close,
-      ['<C-j>'] = actions.git_staging_toggle,
       ['<Del>'] = actions.remove_selection,
-      ['<C-u>'] = function(prompt_bufnr)
-        local picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
-        picker:set_prompt("")
-      end,
+      -- ['<C-j>'] = actions.git_staging_toggle,
+      -- ['<C-u>'] = function(prompt_bufnr)
+      --   local picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
+      --   picker:set_prompt("")
+      -- end,
     },
   }
 
