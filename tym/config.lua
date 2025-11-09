@@ -100,17 +100,17 @@ tym.set_keymaps({
   ['<Ctrl><Shift>Tab'] = remap('<Ctrl>p'),
 })
 
-tym.set_hooks({
-  scroll = function(dx, dy, x, y)
-    if tym.check_mod_state('<Ctrl>') then
-      update_scale(dy < 0 and 10 or -10)
-      return true
-    end
-    if tym.check_mod_state('<Shift>') then
-      update_alpha(dy < 0 and 0.05 or -0.05)
-      return true
-    end
-  end
-})
+-- tym.set_hooks({
+--   scroll = function(dx, dy, x, y)
+--     if tym.check_mod_state('<Ctrl>') then
+--       update_scale(dy < 0 and 10 or -10)
+--       return true
+--     end
+--     if tym.check_mod_state('<Shift>') then
+--       update_alpha(dy < 0 and 0.05 or -0.05)
+--       return true
+--     end
+--   end
+-- })
 
 safe_dofile(home .. '/.config/tym/local.lua')
