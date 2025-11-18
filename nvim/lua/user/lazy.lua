@@ -190,5 +190,5 @@ require('lazy').setup({
   require('plugins.appearance'),
   require('plugins.treesitter'),
   require('plugins.completion'),
-  require('plugins.copilot'),
+  -- require('plugins.avante'),
 })
