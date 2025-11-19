@@ -141,12 +141,14 @@ local function config()
       ['<Tab>'] = actions.move_selection_next,
       ['<S-Tab>'] = actions.move_selection_previous,
       ['<Del>'] = actions.remove_selection,
+      ['<C-t>'] = actions.select_tab,
     },
     i = {
       ['<Tab>'] = actions.move_selection_next,
       ['<S-Tab>'] = actions.move_selection_previous,
       ['<Esc>'] = actions.close,
       ['<Del>'] = actions.remove_selection,
+      ['<C-t>'] = actions.select_tab,
       -- ['<C-j>'] = actions.git_staging_toggle,
       -- ['<C-u>'] = function(prompt_bufnr)
       --   local picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
@@ -194,6 +196,14 @@ local function config()
         grouped = true,           -- Group directories first, then files
         display_stat = false,
         cwd_to_path = false,
+        mappings = {
+          ["i"] = {
+            ["<C-t>"] = actions.select_tab,
+          },
+          ["n"] = {
+            ["<C-t>"] = actions.select_tab,
+          },
+        },
       }
     },
   }

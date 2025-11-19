@@ -54,6 +54,7 @@ require('lazy').setup({
         },
         indent = {
           enable = true,
+          use_treesitter = false,
           chars = { "▏" },
           style = {
             vim.api.nvim_get_hl(0, { name = "Whitespace" }),
@@ -61,6 +62,7 @@ require('lazy').setup({
         },
         line_num = {
           enable = true,
+          use_treesitter = false,
           style = "#81A1C1",
         },
       })
