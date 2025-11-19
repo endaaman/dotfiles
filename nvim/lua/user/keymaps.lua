@@ -68,7 +68,7 @@ end
 vim.keymap.set({ 'n', 'v' }, '<Space>j', 'J')
 vim.keymap.set({ 'n', 'v' }, '<Space>i', ':<C-u>vs<CR>')
 vim.keymap.set({ 'n', 'v' }, '<Space>-', ':<C-u>sp<CR>')
-vim.keymap.set({ 'n', 'v' }, '<Space>e', ':<C-u>e!<CR>')
+vim.keymap.set({ 'n', 'v' }, '<Space>e', ':<C-u>e!<CR><C-l>')
 vim.keymap.set({ 'n', 'v' }, '<Space><C-l>', '<C-l>')
 vim.keymap.set({ 'n', 'v' }, '<Space>T', ':<C-u>terminal<CR>')
 vim.keymap.set({ 'n', 'v' }, '<Space>t', '<C-w>v<C-w>w:<C-u>terminal<CR>')
