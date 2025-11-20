@@ -1,0 +1,47 @@
+#!/usr/bin/bash
+# ~/bin/bottles-run
+# 汎用Bottles実行ラッパー（パス変換対応）
+
+# 環境変数から設定を取得（デフォルト値付き）
+BOTTLE_NAME="${BOTTLE:-}"
+PROGRAM="${PROGRAM:-}"
+USE_PATH_CONVERT="${BOTTLES_CONVERT:-1}"  # デフォルトで変換有効
+
+# Usage:
+# PROGRAM='NDPView2' BOTTLE='ndp' bottles-run ~/a.ndpi
+
+# 環境変数が設定されていない場合はエラー
+if [ -z "$BOTTLE_NAME" ] || [ -z "$PROGRAM" ]; then
+    echo "Error: BOTTLE and BOTTLES_PROGRAM must be set" >&2
+    echo "Usage: BOTTLE=bottle_name BOTTLES_PROGRAM=program_name $0 [file]" >&2
+    exit 1
+fi
+
+export WINEPREFIX="${HOME}/Bottles/${BOTTLE_NAME}"
+
+# ファイル引数の処理
+if [ -n "$1" ]; then
+    RUNNER=$(grep "Runner:" "$WINEPREFIX/bottle.yml" 2>/dev/null | awk '{print $2}')
+
+    echo "$WINEPREFIX/bottle.yml" 2>/dev/null
+    echo RUNNER: $RUNNER
+    echo PREFIX: $WINEPREFIX
+
+    if [ -n "$RUNNER" ]; then
+        WINEPATH_CMD="$HOME/.local/share/bottles/runners/$RUNNER/bin/winepath"
+        echo WINEPATH_CMD: $WINEPATH_CMD
+        if [ -f "$WINEPATH_CMD" ]; then
+            WINE_PATH=$("$WINEPATH_CMD" -w "$1" 2>/dev/null)
+            if [ -n "$WINE_PATH" ]; then
+                ESCAPED_PATH=$(echo "$WINE_PATH" | sed 's/\\/\\\\/g')
+                echo WINE_PATH: $WINE_PATH
+                echo ESCAPED_PATH: $ESCAPED_PATH
+                bottles-cli run -p "$PROGRAM" -b "$BOTTLE_NAME" -- $ESCAPED_PATH
+                # bottles-cli run -p "$PROGRAM" -b "$BOTTLE_NAME" -- $1
+                exit 0
+            fi
+        fi
+    fi
+fi
+
+bottles-cli run -p "$PROGRAM" -b "$BOTTLE_NAME"
