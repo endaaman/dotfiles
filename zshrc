@@ -420,14 +420,13 @@ function touch-ipynb() {
 }
 
 function trash-takeback() {
-  target=$(trash-list | fzf | cut -d' ' -f3)
+  target=$(trash-list 2>/dev/null | fzf | cut -d' ' -f3)
   if [[ -z "$target" ]]; then
     echo "no item to takeback"
     return 1
   fi
   print 0 | trash-restore $target
 }
-
 
 ###* Widget
 
