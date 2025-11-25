@@ -44,30 +44,35 @@ require('lazy').setup({
   { 'kana/vim-textobj-user' },
   { 'sgur/vim-textobj-parameter', dependencies = { 'kana/vim-textobj-user' } },
   {
-    'shellRaining/hlchunk.nvim',
-    event = { 'BufReadPre', 'BufNewFile' },
-    config = function()
-      require("hlchunk").setup({
-        chunk = {
-          enable = false,
-          style = "#81A1C1",
-        },
-        indent = {
-          enable = true,
-          use_treesitter = false,
-          chars = { "▏" },
-          style = {
-            vim.api.nvim_get_hl(0, { name = "Whitespace" }),
-          },
-        },
-        line_num = {
-          enable = true,
-          use_treesitter = false,
-          style = "#81A1C1",
-        },
-      })
-    end,
+      "lukas-reineke/indent-blankline.nvim",
+      main = "ibl",
+      opts = {},
   },
+  -- {
+  --   'shellRaining/hlchunk.nvim',
+  --   event = { 'BufReadPre', 'BufNewFile' },
+  --   config = function()
+  --     require("hlchunk").setup({
+  --       chunk = {
+  --         enable = false,
+  --         style = "#81A1C1",
+  --       },
+  --       indent = {
+  --         enable = true,
+  --         use_treesitter = false,
+  --         chars = { "▏" },
+  --         style = {
+  --           vim.api.nvim_get_hl(0, { name = "Whitespace" }),
+  --         },
+  --       },
+  --       line_num = {
+  --         enable = true,
+  --         use_treesitter = false,
+  --         style = "#81A1C1",
+  --       },
+  --     })
+  --   end,
+  -- },
   {
     'm4xshen/autoclose.nvim',
     config = function()
