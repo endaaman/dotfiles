@@ -43,6 +43,7 @@ require('lazy').setup({
   -- { 'Yggdroot/indentLine' },
   { 'kana/vim-textobj-user' },
   { 'sgur/vim-textobj-parameter', dependencies = { 'kana/vim-textobj-user' } },
+  {'akinsho/git-conflict.nvim', version = "*", config = true},
   {
       "lukas-reineke/indent-blankline.nvim",
       main = "ibl",
