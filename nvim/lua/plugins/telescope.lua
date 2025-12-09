@@ -162,6 +162,17 @@ local function config()
       -- generic_sorter = sorters.get_fzy_sorter,
       -- file_sorter = sorters.get_fzy_sorter,
       -- file_sorter = sorters.get_generic_fuzzy_sorter,
+      vimgrep_arguments = {
+        'rg',
+        '--color=never',
+        '--no-heading',
+        '--with-filename',
+        '--line-number',
+        '--column',
+        '--smart-case',
+        '--hidden',              -- 隠しファイル/ディレクトリを含める
+        '--glob', '!.git/',      -- .git は除外
+      },
       sorting_strategy = 'ascending',
       layout_config = {
         prompt_position="top",
