@@ -673,27 +673,40 @@ bindkey $prefix'^k' edit-command-line
 
 ###* Alias
 
-alias ssudo='\sudo'
-alias sudo='sudo -E '
+# GLOBAL ALIAS
+alias -g s='systemctl'
+# replacing
+if command -v exa >/dev/null 2>&1; then
+  alias -g l='exa -gbl --group-directories-first --time-style long-iso'
+  alias -g la='exa -agbl --group-directories-first --time-style long-iso'
+  alias -g ll='exa -agbl --group-directories-first --time-style long-iso -T -L 2'
+  alias -g lll='exa -agbl --group-directories-first --time-style long-iso -T -L 3'
+else
+  alias -g ll='ls -ahlF --color=auto --group-directories-first --time-style="+%m-%d %H:%M"'
+  alias -g l=ll
+fi
+alias -g lf='ll | fzf'
+alias -g mv='mv -v'
+alias -g cp='cp -v'
+
+alias -g rename='rename -v'
+alias -g g='git'
+alias -g v='vim'
+alias -g vi='VIM_NO_PLUGS=1 vim'
+alias -g n='nvim'
+alias -g nano='nvim'
+alias -g ni='VIM_NO_PLUGS=0 nvim'
+
+# LOCAL ALIAS
 alias G='grep'
 alias F='fzf'
-alias lf='ll | fzf'
-alias mv='mv -v'
-alias cp='cp -v'
-alias rename='rename -v'
-alias g='git'
-alias v='vim'
-alias vi='VIM_NO_PLUGS=1 vim'
-alias n='nvim'
-alias nano='nvim'
-alias ni='VIM_NO_PLUGS=1 nvim'
+alias p='pueue'
+alias pa='pueue add'
+alias pf='pueue follow'
+alias c='claude --dangerously-skip-permissions'
 alias xo='xdg-open $@ &> /dev/null'
-alias s='systemctl'
 alias en='LANG=en_US.utf8'
 alias ja='LANG=ja_JP.utf-8'
-alias nr='npm run'
-alias pm='python manage.py'
-alias be='bundle exec'
 alias psp='ps aux | fzf'
 alias path="echo \$PATH | sed 's/:/\\n/g'"
 alias tap-production='export NODE_ENV=production; export RAILS_ENV=production'
@@ -701,24 +714,8 @@ alias untap-production='unset NODE_ENV; unset RAILS_ENV'
 alias mozc-config='env LANG=ja_JP.UTF-8 /usr/lib/mozc/mozc_tool --mode=config_dialog'
 alias inspect-pid='xprop _NET_WM_PID | cut -d " " -f 3 | xargs ps -fw'
 alias use-ms-font='export FONTCONFIG_FILE=$HOME/dotfiles/misc/fonts-ms.conf'
-alias gogetlegacy='GO111MODULE=off go get -u'
 alias reload-udev='sudo udevadm control --reload-rules && sudo udevadm trigger'
-alias mam='mamba'
 alias https='http --verify no'
-alias p='pueue'
-alias pa='pueue add'
-alias pf='pueue follow'
-
-# replacing
-if command -v exa >/dev/null 2>&1; then
-  alias l='exa -gbl --group-directories-first --time-style long-iso'
-  alias la='exa -agbl --group-directories-first --time-style long-iso'
-  alias ll='exa -agbl --group-directories-first --time-style long-iso -T -L 2'
-  alias lll='exa -agbl --group-directories-first --time-style long-iso -T -L 3'
-else
-  alias ll='ls -ahlF --color=auto --group-directories-first --time-style="+%m-%d %H:%M"'
-  alias l=ll
-fi
 if command -v trash-put >/dev/null 2>&1; then
   alias rm='trash-put'
   compdef _rm trash-put
@@ -726,10 +723,6 @@ fi
 if command -v colordiff >/dev/null 2>&1; then
   alias diff='colordiff'
 fi
-
-# if command -v doas >/dev/null 2>&1; then
-#   alias sudo='doas'
-# fi
 
 ###* operations
 
