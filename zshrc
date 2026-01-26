@@ -674,28 +674,28 @@ bindkey $prefix'^k' edit-command-line
 ###* Alias
 
 # GLOBAL ALIAS
-alias -g s='systemctl'
+alias sudo='sudo '
+alias s='systemctl'
 # replacing
 if command -v exa >/dev/null 2>&1; then
-  alias -g l='exa -gbl --group-directories-first --time-style long-iso'
-  alias -g la='exa -agbl --group-directories-first --time-style long-iso'
-  alias -g ll='exa -agbl --group-directories-first --time-style long-iso -T -L 2'
-  alias -g lll='exa -agbl --group-directories-first --time-style long-iso -T -L 3'
+  alias l='exa -gbl --group-directories-first --time-style long-iso'
+  alias la='exa -agbl --group-directories-first --time-style long-iso'
+  alias ll='exa -agbl --group-directories-first --time-style long-iso -T -L 2'
+  alias lll='exa -agbl --group-directories-first --time-style long-iso -T -L 3'
 else
-  alias -g ll='ls -ahlF --color=auto --group-directories-first --time-style="+%m-%d %H:%M"'
-  alias -g l=ll
+  alias ll='ls -ahlF --color=auto --group-directories-first --time-style="+%m-%d %H:%M"'
+  alias l=ll
 fi
-alias -g lf='ll | fzf'
-alias -g mv='mv -v'
-alias -g cp='cp -v'
-
-alias -g rename='rename -v'
-alias -g g='git'
-alias -g v='vim'
-alias -g vi='VIM_NO_PLUGS=1 vim'
-alias -g n='nvim'
-alias -g nano='nvim'
-alias -g ni='VIM_NO_PLUGS=0 nvim'
+alias lf='ll | fzf'
+alias mv='mv -v'
+alias cp='cp -v'
+alias rename='rename -v'
+alias g='git'
+alias v='vim'
+alias vi='vim'
+alias n='nvim'
+alias nano='nvim'
+alias ni='VIM_NO_PLUGS=0 nvim'
 
 # LOCAL ALIAS
 alias G='grep'
