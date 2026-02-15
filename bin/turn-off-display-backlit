@@ -3,13 +3,17 @@
 # 1秒待機
 sleep 1
 
-# Waylandセッションの確認
-if [ "$XDG_SESSION_TYPE" != "wayland" ]; then
-    echo "Error: Not running under Wayland session"
+# セッションタイプの確認
+if [ "$XDG_SESSION_TYPE" = "x11" ]; then
+    # X11セッション
+    xset dpms force off
+    exit 0
+elif [ "$XDG_SESSION_TYPE" != "wayland" ]; then
+    echo "Error: Unknown session type: $XDG_SESSION_TYPE"
     exit 1
 fi
 
-# デスクトップ環境/コンポジタの検出と適切なコマンドの実行
+# Wayland: デスクトップ環境/コンポジタの検出と適切なコマンドの実行
 if [ -n "$SWAYSOCK" ]; then
     # Sway
     swaymsg "output * dpms off"
