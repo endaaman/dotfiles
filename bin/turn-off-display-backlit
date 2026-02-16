@@ -25,7 +25,7 @@ elif [ "$XDG_CURRENT_DESKTOP" = "GNOME" ] || [ "$XDG_CURRENT_DESKTOP" = "ubuntu:
         --method org.gnome.ScreenSaver.SetActive true
 elif [ "$XDG_CURRENT_DESKTOP" = "KDE" ] || [ "$XDG_SESSION_DESKTOP" = "plasmawayland" ]; then
     # KDE Plasma Wayland
-    qdbus org.kde.kglobalaccel /component/org_kde_powerdevil invokeShortcut "Turn Off Screen"
+    qdbus6 org.kde.kglobalaccel /component/org_kde_powerdevil invokeShortcut "Turn Off Screen"
 elif [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
     # Hyprland
     hyprctl dispatch dpms off
