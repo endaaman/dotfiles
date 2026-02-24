@@ -9,5 +9,9 @@ ExecStart=/usr/bin/ssh-agent -D -a $SSH_AUTH_SOCK
 [Install]
 WantedBy=default.target
 
-# add bellow when login
-# export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
+# add below to ~/.ssh/config
+#   Host *
+#       AddKeysToAgent yes
+#
+# env.conf:
+#   SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
