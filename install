@@ -31,15 +31,11 @@ for i in "$@" ; do
 done
 
 mkdir -p ~/.cache/vim
-mkdir -p ~/.config/fontconfig
+mkdir -p ~/.config/fontconfig/conf.d
 mkdir -p ~/.config/systemd/user
-mkdir -p ~/.local/share/systemd/user/
+mkdir -p ~/.local/share/systemd/user
 mkdir -p ~/.config/tym
-# mkdir -p ~/.config/zellij
-mkdir -p ~/.go
 mkdir -p ~/.local/share/fonts
-mkdir -p ~/.ipython/profile_default/startup
-mkdir -p ~/.jupyter
 mkdir -p ~/.zsh
 mkdir -p ~/src
 
@@ -49,35 +45,41 @@ touch ~/.zshrc.pre
 ln -fs ~/dotfiles/gitconfig ~/.gitconfig
 ln -fs ~/dotfiles/gitignore_global ~/.gitignore_global
 ln -fs ~/dotfiles/zshrc ~/.zshrc
-ln -fs ~/dotfiles/zshenv ~/.zshenv
-# ln -fs ~/dotfiles/bashrc ~/.bashrc
 ln -fs ~/dotfiles/tmux.conf ~/.tmux.conf
 ln -fs ~/dotfiles/vimrc ~/.vimrc
 ln -fs ~/dotfiles/editorconfig ~/.editorconfig
 ln -fs ~/dotfiles/tigrc ~/.tigrc
 ln -fs ~/dotfiles/pylintrc ~/.pylintrc
-ln -fs ~/dotfiles/condarc ~/.condarc
-ln -fs ~/dotfiles/systemd/* ~/.local/share/systemd/user/
-# ln -fs ~/dotfiles/ipython/startup/* ~/.ipython/profile_default/startup
-# ln -fs ~/dotfiles/zellij.kdl ~/.config/zellij/config.kdl
+ln -fs ~/dotfiles/systemd/* ~/.local/share/systemd/user
+
 ln -fs ~/dotfiles/latexmkrc ~/.latexmkrc
-ln -fs ~/dotfiles/misc/jupyter_lab_config.py ~/.jupyter/
 ln -fsn ~/dotfiles/zsh_completions ~/.zsh/completion
 ln -fsn ~/dotfiles/vim ~/.vim
 ln -fsn ~/dotfiles/nvim ~/.config/nvim
 
+# mkdir -p ~/.go
+# mkdir -p ~/.config/zellij
+# ln -fs ~/dotfiles/zshenv ~/.zshenv
+# ln -fs ~/dotfiles/bashrc ~/.bashrc
+# ln -fs ~/dotfiles/condarc ~/.condarc
+# mkdir -p ~/.jupyter
+# ln -fs ~/dotfiles/misc/jupyter_lab_config.py ~/.jupyter/
+# mkdir -p ~/.ipython/profile_default/startup
+# ln -fs ~/dotfiles/ipython/startup/* ~/.ipython/profile_default/startup
+# ln -fs ~/dotfiles/zellij.kdl ~/.config/zellij/config.kdl
+
 # GUI
 if $gui; then
-  # ln -fs ~/dotfiles/ideavimrc ~/.ideavimrc
-  ln -fs ~/dotfiles/fonts.conf ~/.config/fontconfig/fonts.conf
+  ln -fs ~/dotfiles/fonts.conf ~/.config/fontconfig/conf.d/99-custom.conf
   ln -fsn ~/dotfiles/fonts ~/.local/share/fonts/dotfiles
-
-  mkdir -p ~/.wineprefixes
 
   ln -fs ~/dotfiles/tym/config.lua ~/.config/tym/config.lua
   ln -fs ~/dotfiles/tym/local.lua ~/.config/tym/local.lua
 
-  ln -fs ~/dotfiles/kitty.conf ~/.config/kitty/kitty.conf
+  # mkdir -p ~/.wineprefixes
+
+  # mkdir -p ~/.config/kitty
+  # ln -fs ~/dotfiles/kitty.conf ~/.config/kitty/kitty.conf
 
   # mkdir -p ~/.mpv
   # ln -fs ~/dotfiles/mpv.conf ~/.mpv/input.conf
