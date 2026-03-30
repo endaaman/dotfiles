@@ -31,11 +31,8 @@ for i in "$@" ; do
 done
 
 mkdir -p ~/.cache/vim
-mkdir -p ~/.config/fontconfig/conf.d
 mkdir -p ~/.config/systemd/user
 mkdir -p ~/.local/share/systemd/user
-mkdir -p ~/.config/tym
-mkdir -p ~/.local/share/fonts
 mkdir -p ~/.zsh
 mkdir -p ~/src
 
@@ -70,9 +67,13 @@ ln -fsn ~/dotfiles/nvim ~/.config/nvim
 
 # GUI
 if $gui; then
+  mkdir -p ~/.config/fontconfig/conf.d
   ln -fs ~/dotfiles/fonts.conf ~/.config/fontconfig/conf.d/99-custom.conf
+
+  mkdir -p ~/.local/share/fonts
   ln -fsn ~/dotfiles/fonts ~/.local/share/fonts/dotfiles
 
+  mkdir -p ~/.config/tym
   ln -fs ~/dotfiles/tym/config.lua ~/.config/tym/config.lua
   ln -fs ~/dotfiles/tym/local.lua ~/.config/tym/local.lua
 
