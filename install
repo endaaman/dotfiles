@@ -54,6 +54,9 @@ ln -fsn ~/dotfiles/zsh_completions ~/.zsh/completion
 ln -fsn ~/dotfiles/vim ~/.vim
 ln -fsn ~/dotfiles/nvim ~/.config/nvim
 
+mkdir -p ~/.claude
+ln -fs ~/dotfiles/claude/statusline.sh ~/.claude/statusline.sh
+
 # mkdir -p ~/.go
 # mkdir -p ~/.config/zellij
 # ln -fs ~/dotfiles/zshenv ~/.zshenv
