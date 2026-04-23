@@ -20,6 +20,8 @@ local function config()
       enable = true,
       disable = {
         'json',
+        'markdown',
+        'markdown_inline',
         -- 'python',
       },
     },
@@ -39,6 +41,13 @@ local function config()
   -- require('ts_context_commentstring').setup {}
 end
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.treesitter.stop()
+  end,
+})
+
 local enabled = vim.fn.executable('tree-sitter') == 1
 
 return {
@@ -47,11 +56,17 @@ return {
     config = config,
     enabled = enabled,
   },
-  {
-    'nvim-treesitter/nvim-treesitter-context',
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    enabled = enabled,
-  },
+  -- {
+  --   'nvim-treesitter/nvim-treesitter-context',
+  --   dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  --   enabled = enabled,
+  --   opts = {
+  --     enable = true,
+  --     on_attach = function(buf)
+  --       return vim.bo[buf].filetype ~= 'markdown'
+  --     end,
+  --   },
+  -- },
   {
     'windwp/nvim-ts-autotag',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
