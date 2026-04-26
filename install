@@ -57,6 +57,22 @@ ln -fsn ~/dotfiles/nvim ~/.config/nvim
 mkdir -p ~/.claude
 ln -fs ~/dotfiles/claude/statusline.sh ~/.claude/statusline.sh
 
+# Merge shared keys (statusLine, etc.) from dotfiles into ~/.claude/settings.json,
+# preserving machine-local keys (enabledPlugins, permissions, ...).
+if command -v jq &>/dev/null; then
+  claude_settings=~/.claude/settings.json
+  claude_fragment=~/dotfiles/claude/settings.json
+  tmp=$(mktemp)
+  if [ -f "$claude_settings" ]; then
+    jq -s '.[0] * .[1]' "$claude_settings" "$claude_fragment" > "$tmp" && mv "$tmp" "$claude_settings"
+  else
+    cp "$claude_fragment" "$claude_settings"
+  fi
+  rm -f "$tmp"
+else
+  echo "jq not found; skipping ~/.claude/settings.json merge"
+fi
+
 # mkdir -p ~/.go
 # mkdir -p ~/.config/zellij
 # ln -fs ~/dotfiles/zshenv ~/.zshenv
