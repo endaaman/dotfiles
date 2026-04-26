@@ -1,7 +1,7 @@
 # vi: set ft=toml :
 [user]
   name = endaaman
-	email = ken@endaaman.com
+  email = ken@endaaman.com
 
 [include]
   path = ~/.gitconfig_local
@@ -9,6 +9,7 @@
 [core]
   excludesfile = ~/.gitignore_global
   editor = $EDITOR -c \"set fenc=utf-8\"
+  quotePath = false
 
 [alias]
   a = add
