@@ -29,6 +29,10 @@ fi
 # DEFAUTL_PATH=$PATH
 # DOTFILES_PATH=$(realpath $(dirname "$0"))
 
+if ! command -v python &> /dev/null && command -v python3 &> /dev/null; then
+  python() { python3 "$@" }
+fi
+
 if [ -f ~/.local/share/zinit/zinit.git/zinit.zsh -a -z "$IS_ROOT" ]; then
   source ~/.local/share/zinit/zinit.git/zinit.zsh
   autoload -Uz _zinit
