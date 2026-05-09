@@ -217,6 +217,8 @@ export PATH="$PNPM_HOME:$PATH"
 
 export TF_CPP_MIN_LOG_LEVEL=3
 
+export SYSTEMD_LESS=FRXMK
+
 # export VTE_CJK_WIDTH=0
 # export XDG_CONFIG_HOME=~/.config
 export NO_AT_BRIDGE=1
