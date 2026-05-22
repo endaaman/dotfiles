@@ -144,11 +144,11 @@ function my_prompt() {
       name=$(basename $(dirname $VIRTUAL_ENV))
     fi
     python_mod="<%F{magent}$name%f> "
-  elif command -v pyenv &> /dev/null; then
-    python_version=$(pyenv version | sed 's/ .*//')
-    if [ "$python_version" != "system" ]; then
-      python_mod="<%F{magenta}$python_version%f> "
-    fi
+  # elif command -v pyenv &> /dev/null; then
+  #   python_version=$(pyenv version | sed 's/ .*//')
+  #   if [ "$python_version" != "system" ]; then
+  #     python_mod="<%F{magenta}$python_version%f> "
+  #   fi
   fi
 
   echo "$pre$dirname $python_mod$symbol "
