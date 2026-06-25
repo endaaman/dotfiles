@@ -683,11 +683,11 @@ bindkey $prefix'^k' edit-command-line
 alias sudo='sudo '
 alias s='systemctl'
 # replacing
-if command -v exa >/dev/null 2>&1; then
-  alias l='exa -gbl --group-directories-first --time-style long-iso'
-  alias la='exa -agbl --group-directories-first --time-style long-iso'
-  alias ll='exa -agbl --group-directories-first --time-style long-iso -T -L 2'
-  alias lll='exa -agbl --group-directories-first --time-style long-iso -T -L 3'
+if command -v eza >/dev/null 2>&1; then
+  alias l='eza -gbl --group-directories-first --time-style long-iso'
+  alias la='eza -agbl --group-directories-first --time-style long-iso'
+  alias ll='eza -agbl --group-directories-first --time-style long-iso -T -L 2'
+  alias lll='eza -agbl --group-directories-first --time-style long-iso -T -L 3'
 else
   alias ll='ls -ahlF --color=auto --group-directories-first --time-style="+%m-%d %H:%M"'
   alias l=ll
