@@ -1,0 +1,27 @@
+#!/bin/sh
+# nvim launcher
+#   通常        : 素の nvim（lazy プラグインあり）
+#   root (sudo n): 最小設定で起動し、cache/state/undo/shada を /root に逃がす
+#                  設定ファイルだけは呼び出したユーザのものを共有して読む
+# `sudo n` は zshrc の `alias sudo='sudo '` + `alias n=<このスクリプトの絶対パス>`
+# により絶対パスへ展開されるので secure_path に依存しない。
+
+if [ "$(id -u)" = 0 ]; then
+  # sudo を呼んだ元ユーザ（無ければ root 自身）の設定を読む
+  user="${SUDO_USER:-$(id -un)}"
+  home=$(getent passwd "$user" 2>/dev/null | cut -d: -f6)
+  home=${home:-$HOME}
+
+  # 書き込み先（root 配下）を用意
+  mkdir -p /root/.local/share /root/.local/state /root/.cache
+
+  exec env \
+    NVIM_MINIMAL=1 \
+    XDG_CONFIG_HOME="$home/.config" \
+    XDG_DATA_HOME=/root/.local/share \
+    XDG_STATE_HOME=/root/.local/state \
+    XDG_CACHE_HOME=/root/.cache \
+    nvim "$@"
+fi
+
+exec nvim "$@"

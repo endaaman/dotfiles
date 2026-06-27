@@ -699,9 +699,9 @@ alias rename='rename -v'
 alias g='git'
 alias v='vim'
 alias vi='vim'
-alias n='nvim'
+alias n="$HOME/dotfiles/bin/n"
 alias nano='nvim'
-alias ni='VIM_NO_PLUGS=0 nvim'
+alias ni='NVIM_MINIMAL=1 nvim'
 
 # LOCAL ALIAS
 alias G='grep'
