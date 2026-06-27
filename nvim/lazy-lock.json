@@ -16,7 +16,7 @@
   "glyph-palette.vim": { "branch": "master", "commit": "675f0ad64e2c4b823bffc1907d469deefaf6e3bd" },
   "iceberg.nvim": { "branch": "main", "commit": "15070f77066fce582f5fae09ce4faa080c33aefd" },
   "indent-blankline.nvim": { "branch": "master", "commit": "d28a3f70721c79e3c5f6693057ae929f3d9c0a03" },
-  "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },
+  "lazy.nvim": { "branch": "main", "commit": "85c7ff3711b730b4030d03144f6db6375044ae82" },
   "lualine.nvim": { "branch": "master", "commit": "131a558e13f9f28b15cd235557150ccb23f89286" },
   "nerdfont.vim": { "branch": "master", "commit": "cc50782ee9580fc70b659cf1ebd55229d94b37ab" },
   "nvim-cmp": { "branch": "main", "commit": "a1d504892f2bc56c2e79b65c6faded2fd21f3eca" },

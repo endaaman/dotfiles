@@ -120,7 +120,7 @@ function my_prompt() {
     else
       con=SSH
     fi
-    pre="%F{green}$con%f:%F{magenta}$(hostname)%f"
+    pre="%F{green}$con%f:%F{magenta}${HOST}%f"
   fi
 
   if [ -n "$IS_ROOT" ]; then
