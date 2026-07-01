@@ -106,6 +106,19 @@ if $gui; then
 
   mkdir -p ~/.config/environment.d
   ln -fs ~/dotfiles/env.conf ~/.config/environment.d/dotfiles.conf
+
+  if [ -d ~/Sync ]; then
+    ln -fs ~/dotfiles/syncthing/stignore ~/Sync/.stignore
+  fi
+  if [ -d ~/Obsidian ]; then
+    ln -fs ~/dotfiles/syncthing/stignore ~/Obsidian/.stignore
+  fi
+  if [ -d ~/Documents ]; then
+    ln -fs ~/dotfiles/syncthing/stignore ~/Documents/.stignore
+  fi
+  if [ -d ~/Inbox ]; then
+    ln -fs ~/dotfiles/syncthing/stignore ~/Inbox/.stignore
+  fi
 fi
 
 
