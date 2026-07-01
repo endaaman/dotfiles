@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+# wipe-junk.sh — Syncthing フォルダから NAS/OS 由来のゴミを掃除する
+#
+#   .@__thumb / @Recycle などは QNAP が生成し、無視ルールを入れる前に
+#   誤って同期配布されてしまったもの。実データではないので削除して良い。
+#
+# 使い方:
+#   ./wipe-junk.sh                 # dry-run: 消す対象を一覧するだけ（デフォルト）
+#   ./wipe-junk.sh -f              # 実削除（ゴミ箱へ / trash-cli が無ければ rm）
+#   ./wipe-junk.sh -f --rm         # 実削除（ゴミ箱を使わず完全削除）
+#   ./wipe-junk.sh -f ~/Sync ~/foo # 対象フォルダを明示指定
+#
+set -euo pipefail
+
+FORCE=0
+USE_RM=0
+ROOTS=()
+for a in "$@"; do
+  case "$a" in
+    -f|--force) FORCE=1 ;;
+    --rm)       USE_RM=1 ;;
+    -h|--help)  sed -n '2,12p' "$0"; exit 0 ;;
+    *)          ROOTS+=("$a") ;;
+  esac
+done
+# 対象フォルダ未指定ならデフォルト
+if [ "${#ROOTS[@]}" -eq 0 ]; then
+  ROOTS=("$HOME/Sync" "$HOME/Documents")
+fi
+
+# --- 削除して良い「明らかなゴミ」パターン --------------------------------
+# QNAP NAS システム / サムネ / キャッシュ（ファイル・ディレクトリ両方）
+QNAP=( '@Recently-Snapshot' '@Recycle' '@Transcode' '@__thumb'
+       '.@upload_cache' '.@__thumb' '.@*' '.qnap_quota' '.streams' '.locks' )
+# macOS
+MACOS=( '.DS_Store' '._*' '.Spotlight-V100' '.Trashes' '.fseventsd' )
+# Windows
+WIN=( 'Thumbs.db' 'desktop.ini' '$RECYCLE.BIN' )
+# 再生成される一時ファイル（エディタ/Office のロック・スワップ系のみ）
+#   ※ *.tmp *.temp *.crdownload *.part は「本物データが .tmp 等に化けている」
+#     ことがあり（例: 結婚写真が *.jpg.tmp で唯一の実体だった）誤爆するため
+#     このスクリプトの自動削除には含めない。手動で確認して消すこと。
+TMP=( '~*' '.~*' '*.swp' '*.swo' )
+
+PATTERNS=( "${QNAP[@]}" "${MACOS[@]}" "${WIN[@]}" "${TMP[@]}" )
+
+# find の -name 条件を組み立て
+build_expr() {
+  local first=1
+  for p in "${PATTERNS[@]}"; do
+    if [ "$first" -eq 1 ]; then first=0; else printf ' -o '; fi
+    printf -- '-name %q' "$p"
+  done
+}
+
+deleter() {
+  if [ "$USE_RM" -eq 1 ] || ! command -v trash-put >/dev/null 2>&1; then
+    rm -rf -- "$@"
+  else
+    trash-put -- "$@"
+  fi
+}
+
+total=0
+for root in "${ROOTS[@]}"; do
+  [ -d "$root" ] || { echo "skip (not a dir): $root" >&2; continue; }
+  echo "==== $root ===="
+  # マッチしたら中身ごと（ディレクトリは -prune で丸ごと）対象にする
+  mapfile -t hits < <(eval "find \"\$root\" \\( $(build_expr) \\) -prune -print" 2>/dev/null | sort)
+  if [ "${#hits[@]}" -eq 0 ]; then
+    echo "  (なし)"
+    continue
+  fi
+  for h in "${hits[@]}"; do
+    sz=$(du -sh "$h" 2>/dev/null | cut -f1)
+    printf "  %-7s %s\n" "$sz" "$h"
+  done
+  total=$((total + ${#hits[@]}))
+  if [ "$FORCE" -eq 1 ]; then
+    deleter "${hits[@]}"
+  fi
+done
+
+echo "----"
+if [ "$FORCE" -eq 1 ]; then
+  echo "削除しました: $total 件"
+else
+  echo "dry-run: $total 件が対象（実行するには -f を付ける）"
+fi
