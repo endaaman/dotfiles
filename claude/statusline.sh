@@ -18,6 +18,7 @@ output_tok=$(echo "$DATA" | jq -r '.context_window.total_output_tokens // 0')
 rl_5h=$(echo "$DATA" | jq -r '.rate_limits.five_hour.used_percentage // empty' 2>/dev/null || true)
 rl_5h_reset=$(echo "$DATA" | jq -r '.rate_limits.five_hour.resets_at // empty' 2>/dev/null || true)
 rl_7d=$(echo "$DATA" | jq -r '.rate_limits.seven_day.used_percentage // empty' 2>/dev/null || true)
+rl_7d_reset=$(echo "$DATA" | jq -r '.rate_limits.seven_day.resets_at // empty' 2>/dev/null || true)
 cwd=$(echo "$DATA" | jq -r '.cwd // .workspace.current_dir // ""')
 
 # ~ abbreviation
@@ -51,8 +52,13 @@ f() {
   else echo "$n"; fi
 }
 
-# Visible length
-vl() { printf '%b' "$1" | sed 's/\x1b\[[0-9;]*m//g' | wc -m; }
+# Visible length (display columns; Nerd Font glyphs render 2 cells wide)
+vl() {
+  local s; s=$(printf '%b' "$1" | sed 's/\x1b\[[0-9;]*m//g')
+  local chars; chars=$(printf '%s' "$s" | wc -m)
+  local wide; wide=$(printf '%s' "$s" | grep -oP '[\x{E000}-\x{F8FF}\x{F0000}-\x{FFFFD}\x{100000}-\x{10FFFD}]' | wc -l)
+  echo $(( chars + wide ))
+}
 
 # Format context size
 ctx_size=""
@@ -71,7 +77,11 @@ L+="  $(c "$p")$(pie "$p") ${p}%${R}  ${D}${R} $(f "$input_tok") ${D}${R} 
   L+="  ${D}5h${R}$(c "$q") ${q}%${R}"
   [[ -n "$rl_5h_reset" ]] && L+="${D} →$(date -d "@$rl_5h_reset" '+%H:%M')${R}"
 }
-[[ -n "$rl_7d" ]] && { q=${rl_7d%.*}; q=${q:-0}; L+="  ${D}7d${R}$(c "$q") ${q}%${R}"; }
+[[ -n "$rl_7d" ]] && {
+  q=${rl_7d%.*}; q=${q:-0}
+  L+="  ${D}7d${R}$(c "$q") ${q}%${R}"
+  [[ -n "$rl_7d_reset" ]] && L+="${D} →$(date -d "@$rl_7d_reset" '+%-m/%-d')${R}"
+}
 
 # Build right
 Ri="\033[36m  ${short_cwd}${R}"
