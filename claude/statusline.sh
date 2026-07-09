@@ -86,9 +86,9 @@ L+="  $(c "$p")$(pie "$p") ${p}%${R}  ${D}${R} $(f "$input_tok") ${D}${R} 
 # Build right
 Ri="\033[36m  ${short_cwd}${R}"
 
-# Right-align
+# Right-align (leave 1 column of safety margin so nothing gets truncated)
 w=$(tput cols 2>/dev/null || echo 120)
-pad=$(( w - $(vl "$L") - $(vl "$Ri") ))
+pad=$(( w - 1 - $(vl "$L") - $(vl "$Ri") ))
 (( pad < 2 )) && pad=2
 
 echo -e "${L}$(printf '%*s' "$pad" '')${Ri}"
