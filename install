@@ -119,6 +119,25 @@ if $gui; then
   if [ -d ~/Inbox ]; then
     ln -fs ~/dotfiles/syncthing/stignore ~/Inbox/.stignore
   fi
+
+  # Merge shared keys from dotfiles into each VSCode variant's user settings.json,
+  # preserving machine-local keys.
+  if command -v jq &>/dev/null; then
+    for vscode_dir in ~/.config/"Code - OSS" ~/.config/Code ~/.config/VSCodium; do
+      [ -d "$vscode_dir/User" ] || continue
+      vscode_settings="$vscode_dir/User/settings.json"
+      vscode_fragment=~/dotfiles/vscode/settings.json
+      tmp=$(mktemp)
+      if [ -f "$vscode_settings" ]; then
+        jq -s '.[0] * .[1]' "$vscode_settings" "$vscode_fragment" > "$tmp" && mv "$tmp" "$vscode_settings"
+      else
+        cp "$vscode_fragment" "$vscode_settings"
+      fi
+      rm -f "$tmp"
+    done
+  else
+    echo "jq not found; skipping vscode settings merge"
+  fi
 fi
 
 
