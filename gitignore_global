@@ -28,6 +28,6 @@ __pycache__/
 
 out/
 mlruns
-,/
+,*/
 .vim/
 

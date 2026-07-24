@@ -56,6 +56,7 @@ ln -fsn ~/dotfiles/nvim ~/.config/nvim
 
 mkdir -p ~/.claude
 ln -fs ~/dotfiles/claude/statusline.sh ~/.claude/statusline.sh
+ln -fs ~/dotfiles/claude/CLAUDE.md ~/.claude/CLAUDE.md
 
 # Merge shared keys (statusLine, etc.) from dotfiles into ~/.claude/settings.json,
 # preserving machine-local keys (enabledPlugins, permissions, ...).
