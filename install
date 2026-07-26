@@ -108,18 +108,19 @@ if $gui; then
   mkdir -p ~/.config/environment.d
   ln -fs ~/dotfiles/env.conf ~/.config/environment.d/dotfiles.conf
 
-  if [ -d ~/Sync ]; then
-    ln -fs ~/dotfiles/syncthing/stignore ~/Sync/.stignore
-  fi
-  if [ -d ~/Obsidian ]; then
-    ln -fs ~/dotfiles/syncthing/stignore ~/Obsidian/.stignore
-  fi
-  if [ -d ~/Documents ]; then
-    ln -fs ~/dotfiles/syncthing/stignore ~/Documents/.stignore
-  fi
-  if [ -d ~/Inbox ]; then
-    ln -fs ~/dotfiles/syncthing/stignore ~/Inbox/.stignore
-  fi
+  # Syncthing 2.x refuses symlinks for .stignore AND for #include targets
+  # (opened with O_NOFOLLOW), so copy the shared patterns instead of linking.
+  # .stignore-shared is itself synced by Syncthing, so updating it on one
+  # machine propagates the patterns to every device.
+  for st_dir in ~/Sync ~/Obsidian ~/Documents ~/Inbox; do
+    [ -d "$st_dir" ] || continue
+    rm -f "$st_dir/.stignore-shared"
+    cp ~/dotfiles/syncthing/stignore "$st_dir/.stignore-shared"
+    [ -L "$st_dir/.stignore" ] && rm -f "$st_dir/.stignore"
+    if ! grep -qxF '#include .stignore-shared' "$st_dir/.stignore" 2>/dev/null; then
+      printf '#include .stignore-shared\n' >> "$st_dir/.stignore"
+    fi
+  done
 
   # Merge shared keys from dotfiles into each VSCode variant's user settings.json,
   # preserving machine-local keys.
