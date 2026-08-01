@@ -140,6 +140,11 @@ if $gui; then
   else
     echo "jq not found; skipping vscode settings merge"
   fi
+
+  for vscode_dir in ~/.config/"Code - OSS" ~/.config/Code ~/.config/VSCodium; do
+    [ -d "$vscode_dir/User" ] || continue
+    ln -fs ~/dotfiles/vscode/keybindings.json "$vscode_dir/User/keybindings.json"
+  done
 fi
 
 

@@ -1,0 +1,65 @@
+#!/bin/bash
+# Serve a directory with live-reload, for previewing HTML in VSCode Simple Browser.
+# Usage: html-preview [--daemon] [dir] [port]
+# Then press Ctrl+Shift+V in an HTML file (see vscode/keybindings.json)
+# and pick the file — edits auto-reload on save.
+#
+# --daemon (used by the VSCode "html-preview" task): start in the background
+# and return once the port is up. Reuses a running server if it already
+# serves the same directory; restarts it if the directory changed.
+
+daemon=false
+if [ "$1" = "--daemon" ] || [ "$1" = "-d" ]; then
+  daemon=true
+  shift
+fi
+
+dir="$(cd "${1:-.}" && pwd)" || exit 1
+port="${2:-5500}"
+
+if ! command -v npx &> /dev/null; then
+  echo 'Please install node (npx not found)'
+  exit 1
+fi
+
+if ! $daemon; then
+  exec npx --yes live-server --port="$port" --no-browser "$dir"
+fi
+
+state="/tmp/html-preview-$port.state"  # "<pid> <dir>" of the running server
+
+# Reuse the running server if it serves the same directory
+if [ -f "$state" ]; then
+  read -r old_pid old_dir < "$state"
+  if kill -0 "$old_pid" 2>/dev/null; then
+    if [ "$old_dir" = "$dir" ]; then
+      echo "already serving $dir on port $port (pid $old_pid)"
+      exit 0
+    fi
+    # setsid made it a process-group leader; kill the group so the
+    # live-server child of the npx wrapper dies too, then wait for the
+    # port to be released before starting the new server.
+    kill -- "-$old_pid" 2>/dev/null
+    for _ in $(seq 50); do
+      (exec 3<>"/dev/tcp/127.0.0.1/$port") 2>/dev/null || break
+      exec 3>&-
+      sleep 0.1
+    done
+  fi
+fi
+
+setsid npx --yes live-server --port="$port" --no-browser "$dir" >/dev/null 2>&1 &
+pid=$!
+echo "$pid $dir" > "$state"
+
+# Wait until the server accepts connections (max ~10s)
+for _ in $(seq 100); do
+  if (exec 3<>"/dev/tcp/127.0.0.1/$port") 2>/dev/null; then
+    exec 3>&-
+    echo "serving $dir on http://127.0.0.1:$port/ (pid $pid)"
+    exit 0
+  fi
+  sleep 0.1
+done
+echo "server failed to start on port $port" >&2
+exit 1

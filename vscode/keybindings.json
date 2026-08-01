@@ -1,0 +1,34 @@
+// Symlinked to each VSCode variant's User/keybindings.json by ~/dotfiles/install gui
+[
+    // HTML live preview: Ctrl+Shift+V starts the server (html-preview --daemon)
+    // in the file's directory, then opens Simple Browser (auto-reloads on save).
+    // newWithCwd/sendSequence resolve ${fileDirname} at keypress time (tasks
+    // resolve it too late — after Simple Browser has stolen the active editor).
+    // On a cold start the browser may open before the server is up (white
+    // page): press Ctrl+Shift+V again to reload.
+    {
+        "key": "ctrl+shift+v",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                {
+                    "command": "workbench.action.terminal.newWithCwd",
+                    "args": {
+                        "cwd": "${fileDirname}"
+                    }
+                },
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "html-preview --daemon . && exit\u000d"
+                    }
+                },
+                {
+                    "command": "simpleBrowser.show",
+                    "args": "http://127.0.0.1:5500/"
+                }
+            ]
+        },
+        "when": "editorLangId == 'html'"
+    }
+]
