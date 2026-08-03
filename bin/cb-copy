@@ -1,12 +1,37 @@
 #!/bin/bash
+# クリップボードへコピー。引数があればそれを、なければ標準入力を使う
+#
+# 優先順位:
+#   1. Wayland      → wl-copy
+#   2. ローカル X   → xsel  (`:0` 形式のときだけ。SSH の X11 forwarding は当てにしない)
+#   3. tmux         → tmux load-buffer -w  (set-clipboard 経由で OSC 52 が飛ぶ)
+#   4. それ以外     → OSC 52 を端末へ直接送る
+# 3, 4 は DISPLAY 不要なので、SSH 越しでも手元のマシンのクリップボードに入る
 
-if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
-  wl-copy "$@"
+set -uo pipefail
+
+if [ $# -gt 0 ]; then
+  data=$(printf "%s" "$@")
 else
-  # xselは標準入力を期待するので、引数を標準入力に渡す
-  if [ $# -gt 0 ]; then
-    printf "%s" "$@" | xsel --clipboard --input
-  else
-    xsel --clipboard --input
-  fi
+  data=$(cat)
+fi
+
+# DISPLAY がローカルの X サーバを指しているか (`:0`, `:1.0` など)
+is_local_display() {
+  [[ "${DISPLAY:-}" =~ ^:[0-9] ]]
+}
+
+if [ -n "${WAYLAND_DISPLAY:-}" ] && command -v wl-copy > /dev/null; then
+  printf "%s" "$data" | wl-copy
+elif is_local_display && command -v xsel > /dev/null; then
+  printf "%s" "$data" | xsel --clipboard --input
+elif [ -n "${TMUX:-}" ]; then
+  # 固定名 `cb` に入れる。番号付きバッファを毎回増やすと
+  # tmux 自身の copy-pipe のバッファと二重に溜まっていくため
+  printf "%s" "$data" | tmux load-buffer -w -b cb -
+elif [ -w /dev/tty ]; then
+  printf '\033]52;c;%s\a' "$(printf "%s" "$data" | base64 | tr -d '\n')" > /dev/tty
+else
+  echo "cb-copy: no clipboard backend available" >&2
+  exit 1
 fi

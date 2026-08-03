@@ -72,7 +72,12 @@ vim.g.vim_json_conceal = 0
 
 vim.opt.clipboard = 'unnamedplus'
 
-if vim.env.XDG_SESSION_TYPE == 'wayland' and vim.fn.executable('wl-copy') == 1 and vim.fn.executable('wl-paste') == 1 then
+-- DISPLAY がローカルの X サーバ (`:0` 等) を指しているときだけ xsel を使う。
+-- SSH の X11 forwarding (`localhost:10.0`) は接続が変わると死ぬので当てにしない
+local local_display = (vim.env.DISPLAY or ''):match('^:%d')
+
+if vim.env.WAYLAND_DISPLAY and vim.env.WAYLAND_DISPLAY ~= ''
+    and vim.fn.executable('wl-copy') == 1 and vim.fn.executable('wl-paste') == 1 then
   vim.g.clipboard = {
     name = 'wl-clipboard',
     copy = {
@@ -85,7 +90,7 @@ if vim.env.XDG_SESSION_TYPE == 'wayland' and vim.fn.executable('wl-copy') == 1 a
     },
     cache_enabled = 1,
   }
-elseif vim.fn.executable('xsel') == 1 then
+elseif local_display and vim.fn.executable('xsel') == 1 then
   vim.g.clipboard = {
     name = 'xsel',
     copy = {
@@ -95,6 +100,25 @@ elseif vim.fn.executable('xsel') == 1 then
     paste = {
       ['+'] = {'xsel', '-o', '-b'},
       ['*'] = {'xsel', '-o', '-p'},
+    },
+    cache_enabled = 1,
+  }
+else
+  -- リモート (SSH/tmux) では OSC 52 で端末経由 = 手元のマシンのクリップボードへ。
+  -- paste は端末への問い合わせが返らない場合にハングするので、無名レジスタで代用する
+  local osc52 = require('vim.ui.clipboard.osc52')
+  local function paste_from_reg()
+    return vim.split(vim.fn.getreg('"') or '', '\n')
+  end
+  vim.g.clipboard = {
+    name = 'osc52',
+    copy = {
+      ['+'] = osc52.copy('+'),
+      ['*'] = osc52.copy('*'),
+    },
+    paste = {
+      ['+'] = paste_from_reg,
+      ['*'] = paste_from_reg,
     },
     cache_enabled = 1,
   }

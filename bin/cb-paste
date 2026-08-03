@@ -1,7 +1,21 @@
 #!/bin/bash
+# クリップボードから貼り付け。cb-copy と同じ優先順位で backend を選ぶ
+#
+# OSC 52 の読み出しは応答しない端末でハングするので使わない。
+# リモートでは tmux のバッファ (cb-copy や tmux 側のコピーで入る) を代わりに読む
 
-if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+set -uo pipefail
+
+# DISPLAY がローカルの X サーバを指しているか (`:0`, `:1.0` など)
+is_local_display() {
+  [[ "${DISPLAY:-}" =~ ^:[0-9] ]]
+}
+
+if [ -n "${WAYLAND_DISPLAY:-}" ] && command -v wl-paste > /dev/null; then
   wl-paste "$@"
-else
+elif is_local_display && command -v xsel > /dev/null; then
   xsel --clipboard --output "$@"
+elif [ -n "${TMUX:-}" ]; then
+  # cb-copy が書く `cb` を優先し、無ければ tmux の最新バッファ
+  tmux save-buffer -b cb - 2> /dev/null || tmux save-buffer - 2> /dev/null
 fi
