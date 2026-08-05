@@ -2,11 +2,16 @@
 # クリップボードへコピー。引数があればそれを、なければ標準入力を使う
 #
 # 優先順位:
-#   1. Wayland      → wl-copy
-#   2. ローカル X   → xsel  (`:0` 形式のときだけ。SSH の X11 forwarding は当てにしない)
-#   3. tmux         → tmux load-buffer -w  (set-clipboard 経由で OSC 52 が飛ぶ)
-#   4. それ以外     → OSC 52 を端末へ直接送る
-# 3, 4 は DISPLAY 不要なので、SSH 越しでも手元のマシンのクリップボードに入る
+#   1. Wayland          → wl-copy
+#   2. 到達可能な X     → xsel
+#      ssh -Y の forwarded display (`localhost:10.0`) も含む。手元の端末が
+#      OSC 52 を実装していない場合 (tym/VTE 等) はこれが唯一の経路になる
+#   3. tmux             → tmux load-buffer -w  (set-clipboard 経由で OSC 52)
+#   4. それ以外         → OSC 52 を端末へ直接送る
+#
+# tmux 内なら DISPLAY は常にセッションの環境から取り直す。再アタッチで
+# forwarded display の番号が変わってもペインの環境変数は更新されないため。
+# tmux バッファ `cb` には成否によらず入れる (cb-paste / paste-buffer 用)
 
 set -uo pipefail
 
@@ -16,22 +21,35 @@ else
   data=$(cat)
 fi
 
-# DISPLAY がローカルの X サーバを指しているか (`:0`, `:1.0` など)
-is_local_display() {
-  [[ "${DISPLAY:-}" =~ ^:[0-9] ]]
-}
+if [ -n "${TMUX:-}" ]; then
+  for var in DISPLAY XAUTHORITY; do
+    line=$(tmux show-environment "$var" 2> /dev/null)
+    case "$line" in
+      "$var"=*) export "$var=${line#*=}" ;;
+    esac
+  done
+fi
+
+copied=
 
 if [ -n "${WAYLAND_DISPLAY:-}" ] && command -v wl-copy > /dev/null; then
-  printf "%s" "$data" | wl-copy
-elif is_local_display && command -v xsel > /dev/null; then
-  printf "%s" "$data" | xsel --clipboard --input
-elif [ -n "${TMUX:-}" ]; then
-  # 固定名 `cb` に入れる。番号付きバッファを毎回増やすと
-  # tmux 自身の copy-pipe のバッファと二重に溜まっていくため
+  printf "%s" "$data" | wl-copy && copied=wayland
+elif [ -n "${DISPLAY:-}" ] && command -v xsel > /dev/null; then
+  # 死んだ forwarded display だと応答待ちで刺さるので timeout を噛ませる。
+  # xsel は fork して selection を保持し続けるが、親はすぐ抜けるので待たない
+  printf "%s" "$data" | timeout 2 xsel --clipboard --input && copied=x11
+fi
+
+if [ -n "${TMUX:-}" ]; then
   printf "%s" "$data" | tmux load-buffer -w -b cb -
-elif [ -w /dev/tty ]; then
-  printf '\033]52;c;%s\a' "$(printf "%s" "$data" | base64 | tr -d '\n')" > /dev/tty
-else
-  echo "cb-copy: no clipboard backend available" >&2
-  exit 1
+  copied=${copied:-tmux}
+fi
+
+if [ -z "$copied" ]; then
+  if [ -w /dev/tty ]; then
+    printf '\033]52;c;%s\a' "$(printf "%s" "$data" | base64 | tr -d '\n')" > /dev/tty
+  else
+    echo "cb-copy: no clipboard backend available" >&2
+    exit 1
+  fi
 fi

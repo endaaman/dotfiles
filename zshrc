@@ -100,7 +100,7 @@ unsetopt list_beep
 
 ###* autoload
 
-autoload -Uz add-zsh-hock
+autoload -Uz add-zsh-hook
 autoload -Uz chpwd_recent_dirs
 autoload -Uz colors; colors
 autoload -Uz compinit; compinit -u
@@ -758,6 +758,18 @@ zstyle ':completion:*:warnings' format 'No matches for: %d'
 # disable C-q C-s
 stty stop undef
 stty start undef
+
+# tmux に再アタッチすると ssh -Y の forwarded display の番号が変わりうるが、
+# 既存ペインの環境変数は更新されないので、プロンプトごとに拾い直す
+function _sync-tmux-env() {
+  [[ -n $TMUX ]] || return
+  local var line
+  for var in DISPLAY XAUTHORITY SSH_AUTH_SOCK SSH_CONNECTION; do
+    line=$(tmux show-environment $var 2> /dev/null) || continue
+    [[ $line == $var=* ]] && export $var="${line#*=}"
+  done
+}
+add-zsh-hook precmd _sync-tmux-env
 
 DIRSTACKSIZE=100
 HISTSIZE=100000

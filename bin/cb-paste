@@ -2,20 +2,32 @@
 # クリップボードから貼り付け。cb-copy と同じ優先順位で backend を選ぶ
 #
 # OSC 52 の読み出しは応答しない端末でハングするので使わない。
-# リモートでは tmux のバッファ (cb-copy や tmux 側のコピーで入る) を代わりに読む
+# X が取れないときは tmux のバッファ (cb-copy や tmux 側のコピーで入る) を読む
 
 set -uo pipefail
 
-# DISPLAY がローカルの X サーバを指しているか (`:0`, `:1.0` など)
-is_local_display() {
-  [[ "${DISPLAY:-}" =~ ^:[0-9] ]]
-}
+if [ -n "${TMUX:-}" ]; then
+  for var in DISPLAY XAUTHORITY; do
+    line=$(tmux show-environment "$var" 2> /dev/null)
+    case "$line" in
+      "$var"=*) export "$var=${line#*=}" ;;
+    esac
+  done
+fi
 
 if [ -n "${WAYLAND_DISPLAY:-}" ] && command -v wl-paste > /dev/null; then
   wl-paste "$@"
-elif is_local_display && command -v xsel > /dev/null; then
-  xsel --clipboard --output "$@"
-elif [ -n "${TMUX:-}" ]; then
+  exit $?
+fi
+
+if [ -n "${DISPLAY:-}" ] && command -v xsel > /dev/null; then
+  if out=$(timeout 2 xsel --clipboard --output "$@" 2> /dev/null); then
+    printf "%s" "$out"
+    exit 0
+  fi
+fi
+
+if [ -n "${TMUX:-}" ]; then
   # cb-copy が書く `cb` を優先し、無ければ tmux の最新バッファ
   tmux save-buffer -b cb - 2> /dev/null || tmux save-buffer - 2> /dev/null
 fi
