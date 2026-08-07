@@ -1,190 +1,359 @@
 #!/bin/bash
+set -euo pipefail
 
-if [ ${EUID:-${UID}} = 0 ]; then
-  read -p "You are now a ROOT USER. OK to install? (y/N): " yn
-  case "$yn" in [yY]*) ;; *) echo "abort." ; exit ;; esac
-fi
-
-if ! command -v git &> /dev/null
-then
-  echo 'Please install git'
-  exit 1
-fi
+# ~/dotfiles 自体が ~/src/github.com/endaaman/dotfiles への symlink。
+# $HOME 側のリンク先を短く安定させるため、実パスには解決しない (意図的)。
+DOTFILES=~/dotfiles
 
 CYAN='\033[0;34m'
 NC='\033[0m'
 
+# ---------------------------------------------------------------- 出力
+# stdout … 機械可読な TSV (状態 \t 対象 \t 詳細)
+# stderr … 人間向けのログとサマリ
+#   例: ./install --dry-run | awk -F'\t' '$1=="new"'
+
+declare -A TALLY=()
+# dry-run 中に ensure_file が「作るはず」だったもの。これを覚えておかないと
+# 後続の link が src 無しと誤報する (本番実行なら成功するのに missing が立つ)。
+declare -A PENDING=()
+
+log()  { printf '%b\n' "$*" >&2; }
+emit() {
+  printf '%s\t%s\t%s\n' "$1" "$2" "${3-}"
+  TALLY[$1]=$(( ${TALLY[$1]:-0} + 1 ))
+}
+
+summary() {
+  local k out=''
+  for k in ok new relink conflict missing skip; do
+    out+="$k:${TALLY[$k]:-0} "
+  done
+  log "${CYAN}${out}${NC}"
+  if [ "${TALLY[missing]:-0}" -gt 0 ] || [ "${TALLY[conflict]:-0}" -gt 0 ]; then
+    log "${CYAN}missing/conflict があります。上の TSV を確認してください${NC}"
+  fi
+}
+
+# ---------------------------------------------------------------- 中核
+
+# link <src> <dst>
+#   張る前に dst の現状を見て分類する。-f で黙って上書きしないのが要点。
+#     ok       … 既に正しい symlink
+#     new      … dst が無い → 新規作成
+#     relink   … 別の場所を指す symlink → 張り替え
+#     conflict … 実体 (通常ファイル/ディレクトリ) がある → 触らない
+#     missing  … src が存在しない → 張らない (リンク切れを作らない)
+link() {
+  local src=$1 dst=$2 cur st
+
+  if [ ! -e "$src" ] && [ -z "${PENDING[$src]:-}" ]; then
+    emit missing "$dst" "src が無い: $src"
+    return
+  fi
+
+  if [ -L "$dst" ]; then
+    cur=$(readlink "$dst")
+    if [ "$cur" = "$src" ]; then
+      emit ok "$dst"
+      return
+    fi
+    st=relink
+  elif [ -e "$dst" ]; then
+    emit conflict "$dst" "実体があるので触らない"
+    return
+  else
+    st=new
+  fi
+
+  if ! $DRY_RUN; then
+    mkdir -p "$(dirname "$dst")"
+    # 常に -n。dst が既存のディレクトリ symlink のとき、-n が無いと
+    # 「その中に」リンクを作ってしまう。
+    ln -fsn "$src" "$dst"
+  fi
+  emit "$st" "$dst" "$src"
+}
+
+# ensure_file <path>
+#   空ファイルを保証する。無くても実害は無いが、放置すると link() の
+#   missing が常時1件出て、本物の missing が埋もれるため。
+ensure_file() {
+  local f=$1
+  if [ -e "$f" ]; then
+    emit ok "$f"
+    return
+  fi
+  if $DRY_RUN; then
+    PENDING["$f"]=1
+  else
+    mkdir -p "$(dirname "$f")"
+    touch "$f"
+  fi
+  emit new "$f" "空ファイルを作成"
+}
+
+# ensure_dir <path>...
+ensure_dir() {
+  local d
+  for d in "$@"; do
+    $DRY_RUN || mkdir -p "$d"
+  done
+}
+
+# merge_json <生成先> <dotfiles 側 fragment>
+#   dotfiles の共有キーを、マシン固有キーを保ったままマージする。
+#   (~/.claude/settings.json の permissions / enabledPlugins などを消さない)
+merge_json() {
+  local target=$1 fragment=$2 tmp
+  if ! command -v jq &>/dev/null; then
+    emit skip "$target" "jq が無い"
+    return
+  fi
+  if [ ! -f "$fragment" ]; then
+    emit missing "$target" "fragment が無い: $fragment"
+    return
+  fi
+  if $DRY_RUN; then
+    emit ok "$target" "merge (dry-run)"
+    return
+  fi
+  ensure_dir "$(dirname "$target")"
+  if [ -f "$target" ]; then
+    tmp=$(mktemp)
+    if jq -s '.[0] * .[1]' "$target" "$fragment" >"$tmp"; then
+      mv "$tmp" "$target"
+      emit ok "$target" "merged"
+    else
+      rm -f "$tmp"
+      emit conflict "$target" "jq マージ失敗 (元のまま)"
+    fi
+  else
+    cp "$fragment" "$target"
+    emit new "$target" "fragment をコピー"
+  fi
+}
+
+# ---------------------------------------------------------------- データ
+
+# グループ  dotfiles からの相対パス  リンク先
+links() {
+  cat <<EOF
+base  gitconfig             $HOME/.gitconfig
+base  gitignore_global      $HOME/.gitignore_global
+base  zshrc                 $HOME/.zshrc
+base  tmux.conf             $HOME/.tmux.conf
+base  vimrc                 $HOME/.vimrc
+base  editorconfig          $HOME/.editorconfig
+base  tigrc                 $HOME/.tigrc
+base  pylintrc              $HOME/.pylintrc
+base  latexmkrc             $HOME/.latexmkrc
+base  zsh_completions       $HOME/.zsh/completion
+base  vim                   $HOME/.vim
+base  nvim                  $HOME/.config/nvim
+base  claude/statusline.sh  $HOME/.claude/statusline.sh
+base  claude/CLAUDE.md      $HOME/.claude/CLAUDE.md
+base  mise/config.toml      $HOME/.config/mise/config.toml
+base  uvenvs                $HOME/.uvenvs
+gui   fonts.conf            $HOME/.config/fontconfig/conf.d/99-custom.conf
+gui   fonts                 $HOME/.local/share/fonts/dotfiles
+gui   env.conf              $HOME/.config/environment.d/dotfiles.conf
+gui   tym/config.lua        $HOME/.config/tym/config.lua
+gui   tym/local.lua         $HOME/.config/tym/local.lua
+EOF
+}
+
+# symlink の src 側として空ファイルを保証するもの (dotfiles 内)
+src_files() {
+  cat <<EOF
+$DOTFILES/tym/local.lua
+EOF
+}
+
+# $HOME 側で存在だけ要るもの (zshrc / gitconfig から読まれる)
+home_files() {
+  cat <<EOF
+$HOME/.gitconfig_local
+$HOME/.zshrc.pre
+EOF
+}
+
+# リンク先の親以外に必要なディレクトリ
+extra_dirs() {
+  cat <<EOF
+$HOME/.cache/vim
+$HOME/.config/systemd/user
+$HOME/.local/share/systemd/user
+$HOME/src
+EOF
+}
+
+VSCODE_DIRS=(
+  "$HOME/.config/Code - OSS"
+  "$HOME/.config/Code"
+  "$HOME/.config/VSCodium"
+)
+
+SYNCTHING_DIRS=(
+  "$HOME/Sync"
+  "$HOME/Obsidian"
+  "$HOME/Documents"
+  "$HOME/Inbox"
+)
+
+# project-mapping は閉域構成・知財状況・取引先名を含むので public な本 repo に
+# 置かない。実体は Syncthing 配下。CLAUDE.md が @ で読むのでここで繋ぐ。
+# (移設したらこのパスを直す)
+CLAUDE_MAPPING=$HOME/Sync/Private/claude/project-mapping.md
+
+# ---------------------------------------------------------------- 引数
+
+DRY_RUN=false
 gui=false
+mise=false
 node=false
 zinit=false
-vimplug=false
-pyenv=false
 
-for i in "$@" ; do
-  case "$i" in
-    'gui'     ) gui=true ;;
-    'node'    ) node=true ;;
-    'zinit'   ) zinit=true ;;
-    'vimplug' ) vimplug=true ;;
-    'pyenv'   ) pyenv=true ;;
+usage() {
+  cat >&2 <<'EOF'
+usage: ./install [--dry-run] [gui] [mise] [zinit] [node]
+
+  --dry-run   何も変更せず、何が起きるかだけ出力する
+  gui         フォント / tym / VSCode / Syncthing の設定も入れる
+  mise        mise をセットアップ/更新する (ランタイム管理)
+  zinit       zinit をセットアップする
+  node        nodebrew をセットアップする (非推奨 — mise へ移行済み)
+
+stdout は TSV (状態 \t 対象 \t 詳細)。状態は ok/new/relink/conflict/missing/skip。
+  ./install --dry-run | awk -F'\t' '$1=="new"'      新しく張られるものだけ
+  ./install           | awk -F'\t' '$1!="ok"'       変化したものだけ
+EOF
+}
+
+for arg in "$@"; do
+  case "$arg" in
+    --dry-run     ) DRY_RUN=true ;;
+    -h|--help     ) usage; exit 0 ;;
+    gui           ) gui=true ;;
+    mise          ) mise=true ;;
+    node          ) node=true ;;
+    zinit         ) zinit=true ;;
+    *             ) log "unknown argument: $arg"; usage; exit 1 ;;
   esac
 done
 
-mkdir -p ~/.cache/vim
-mkdir -p ~/.config/systemd/user
-mkdir -p ~/.local/share/systemd/user
-mkdir -p ~/.zsh
-mkdir -p ~/src
+enabled() {
+  case "$1" in
+    base ) return 0 ;;
+    gui  ) $gui ;;
+    *    ) return 1 ;;
+  esac
+}
 
-touch ~/.gitconfig_local
-touch ~/.zshrc.pre
+# ---------------------------------------------------------------- 事前チェック
 
-ln -fs ~/dotfiles/gitconfig ~/.gitconfig
-ln -fs ~/dotfiles/gitignore_global ~/.gitignore_global
-ln -fs ~/dotfiles/zshrc ~/.zshrc
-ln -fs ~/dotfiles/tmux.conf ~/.tmux.conf
-ln -fs ~/dotfiles/vimrc ~/.vimrc
-ln -fs ~/dotfiles/editorconfig ~/.editorconfig
-ln -fs ~/dotfiles/tigrc ~/.tigrc
-ln -fs ~/dotfiles/pylintrc ~/.pylintrc
-ln -fs ~/dotfiles/systemd/* ~/.local/share/systemd/user
-
-ln -fs ~/dotfiles/latexmkrc ~/.latexmkrc
-ln -fsn ~/dotfiles/zsh_completions ~/.zsh/completion
-ln -fsn ~/dotfiles/vim ~/.vim
-ln -fsn ~/dotfiles/nvim ~/.config/nvim
-
-mkdir -p ~/.claude
-ln -fs ~/dotfiles/claude/statusline.sh ~/.claude/statusline.sh
-ln -fs ~/dotfiles/claude/CLAUDE.md ~/.claude/CLAUDE.md
-
-claude_mapping=~/Sync/Private/claude/project-mapping.md
-if [ -f "$claude_mapping" ]; then
-  ln -fs "$claude_mapping" ~/.claude/project-mapping.md
-else
-  echo "project-mapping.md not found at $claude_mapping; skipping link"
+if [ "${EUID:-${UID}}" = 0 ]; then
+  read -rp "You are now a ROOT USER. OK to install? (y/N): " yn
+  case "$yn" in [yY]*) ;; *) log "abort." ; exit ;; esac
 fi
 
-# Merge shared keys (statusLine, etc.) from dotfiles into ~/.claude/settings.json,
-# preserving machine-local keys (enabledPlugins, permissions, ...).
-if command -v jq &>/dev/null; then
-  claude_settings=~/.claude/settings.json
-  claude_fragment=~/dotfiles/claude/settings.json
-  tmp=$(mktemp)
-  if [ -f "$claude_settings" ]; then
-    jq -s '.[0] * .[1]' "$claude_settings" "$claude_fragment" > "$tmp" && mv "$tmp" "$claude_settings"
-  else
-    cp "$claude_fragment" "$claude_settings"
-  fi
-  rm -f "$tmp"
-else
-  echo "jq not found; skipping ~/.claude/settings.json merge"
+if ! command -v git &>/dev/null; then
+  log 'Please install git'
+  exit 1
 fi
 
-# mkdir -p ~/.go
-# mkdir -p ~/.config/zellij
-# ln -fs ~/dotfiles/zshenv ~/.zshenv
-# ln -fs ~/dotfiles/bashrc ~/.bashrc
-# ln -fs ~/dotfiles/condarc ~/.condarc
-# mkdir -p ~/.jupyter
-# ln -fs ~/dotfiles/misc/jupyter_lab_config.py ~/.jupyter/
-# mkdir -p ~/.ipython/profile_default/startup
-# ln -fs ~/dotfiles/ipython/startup/* ~/.ipython/profile_default/startup
-# ln -fs ~/dotfiles/zellij.kdl ~/.config/zellij/config.kdl
+if $DRY_RUN; then log "${CYAN}--dry-run: 何も変更しません${NC}"; fi
 
-# GUI
+# ---------------------------------------------------------------- 実行
+
+while read -r d; do
+  [ -n "$d" ] && ensure_dir "$d"
+done < <(extra_dirs)
+
+while read -r f; do
+  [ -n "$f" ] && ensure_file "$f"
+done < <(src_files)
+
+while read -r f; do
+  [ -n "$f" ] && ensure_file "$f"
+done < <(home_files)
+
+while read -r group src dst; do
+  [ -n "${group:-}" ] || continue
+  case "$group" in \#*) continue ;; esac
+  enabled "$group" || continue
+  link "$DOTFILES/$src" "$dst"
+done < <(links)
+
+# systemd unit は 1ファイル 1リンク (glob をそのまま ln に渡すと状態が取れない)
+for f in "$DOTFILES"/systemd/*; do
+  [ -e "$f" ] || continue
+  link "$f" "$HOME/.local/share/systemd/user/$(basename "$f")"
+done
+
+link "$CLAUDE_MAPPING" "$HOME/.claude/project-mapping.md"
+
+merge_json "$HOME/.claude/settings.json" "$DOTFILES/claude/settings.json"
+
 if $gui; then
-  mkdir -p ~/.config/fontconfig/conf.d
-  ln -fs ~/dotfiles/fonts.conf ~/.config/fontconfig/conf.d/99-custom.conf
-
-  mkdir -p ~/.local/share/fonts
-  ln -fsn ~/dotfiles/fonts ~/.local/share/fonts/dotfiles
-
-  mkdir -p ~/.config/tym
-  ln -fs ~/dotfiles/tym/config.lua ~/.config/tym/config.lua
-  ln -fs ~/dotfiles/tym/local.lua ~/.config/tym/local.lua
-
-  # mkdir -p ~/.wineprefixes
-
-  # mkdir -p ~/.config/kitty
-  # ln -fs ~/dotfiles/kitty.conf ~/.config/kitty/kitty.conf
-
-  # mkdir -p ~/.mpv
-  # ln -fs ~/dotfiles/mpv.conf ~/.mpv/input.conf
-
-  mkdir -p ~/.config/environment.d
-  ln -fs ~/dotfiles/env.conf ~/.config/environment.d/dotfiles.conf
-
-  # Syncthing 2.x refuses symlinks for .stignore AND for #include targets
-  # (opened with O_NOFOLLOW), so copy the shared patterns instead of linking.
-  # .stignore-shared is itself synced by Syncthing, so updating it on one
-  # machine propagates the patterns to every device.
-  for st_dir in ~/Sync ~/Obsidian ~/Documents ~/Inbox; do
-    [ -d "$st_dir" ] || continue
-    rm -f "$st_dir/.stignore-shared"
-    cp ~/dotfiles/syncthing/stignore "$st_dir/.stignore-shared"
-    [ -L "$st_dir/.stignore" ] && rm -f "$st_dir/.stignore"
-    if ! grep -qxF '#include .stignore-shared' "$st_dir/.stignore" 2>/dev/null; then
-      printf '#include .stignore-shared\n' >> "$st_dir/.stignore"
-    fi
+  for vscode_dir in "${VSCODE_DIRS[@]}"; do
+    [ -d "$vscode_dir/User" ] || continue
+    merge_json "$vscode_dir/User/settings.json" "$DOTFILES/vscode/settings.json"
+    link "$DOTFILES/vscode/keybindings.json" "$vscode_dir/User/keybindings.json"
   done
 
-  # Merge shared keys from dotfiles into each VSCode variant's user settings.json,
-  # preserving machine-local keys.
-  if command -v jq &>/dev/null; then
-    for vscode_dir in ~/.config/"Code - OSS" ~/.config/Code ~/.config/VSCodium; do
-      [ -d "$vscode_dir/User" ] || continue
-      vscode_settings="$vscode_dir/User/settings.json"
-      vscode_fragment=~/dotfiles/vscode/settings.json
-      tmp=$(mktemp)
-      if [ -f "$vscode_settings" ]; then
-        jq -s '.[0] * .[1]' "$vscode_settings" "$vscode_fragment" > "$tmp" && mv "$tmp" "$vscode_settings"
-      else
-        cp "$vscode_fragment" "$vscode_settings"
-      fi
-      rm -f "$tmp"
-    done
-  else
-    echo "jq not found; skipping vscode settings merge"
-  fi
-
-  for vscode_dir in ~/.config/"Code - OSS" ~/.config/Code ~/.config/VSCodium; do
-    [ -d "$vscode_dir/User" ] || continue
-    ln -fs ~/dotfiles/vscode/keybindings.json "$vscode_dir/User/keybindings.json"
+  # Syncthing 2.x は .stignore と #include 先の symlink を拒否する
+  # (O_NOFOLLOW で開く) ため、リンクではなくコピーで配る。
+  # .stignore-shared 自体も Syncthing が同期するので、1台で更新すれば全台に伝播する。
+  for st_dir in "${SYNCTHING_DIRS[@]}"; do
+    [ -d "$st_dir" ] || continue
+    if $DRY_RUN; then
+      emit ok "$st_dir/.stignore-shared" "copy (dry-run)"
+      continue
+    fi
+    rm -f "$st_dir/.stignore-shared"
+    cp "$DOTFILES/syncthing/stignore" "$st_dir/.stignore-shared"
+    if [ -L "$st_dir/.stignore" ]; then rm -f "$st_dir/.stignore"; fi
+    if ! grep -qxF '#include .stignore-shared' "$st_dir/.stignore" 2>/dev/null; then
+      printf '#include .stignore-shared\n' >>"$st_dir/.stignore"
+    fi
+    emit ok "$st_dir/.stignore-shared" "copied"
   done
 fi
 
+# ---------------------------------------------------------------- bootstrap
 
-if $node; then
-  if [ ! -d ~/.nodebrew ]; then
-    echo
-    echo -e "${CYAN}Installing nodebrew${NC}"
-    curl -L git.io/nodebrew | perl - setup
-    # node_version=16
-    # echo -e "${CYAN}Installing node.js ${node_version}${NC}"
-    # ~/.nodebrew/nodebrew install-binary ${node_version}
+# mise は zshrc が ~/.local/bin/mise を直接見ているので、標準インストーラの
+# 置き場 (~/.local/bin) に合わせる。pacman 版 (extra/mise) を入れると
+# 二重管理になるので混ぜないこと。
+if $mise && ! $DRY_RUN; then
+  if [ ! -x ~/.local/bin/mise ]; then
+    log "${CYAN}Installing mise${NC}"
+    curl -fsSL https://mise.run | sh
   else
-    echo -e "${CYAN}Updating nodebrew${NC}"
+    log "${CYAN}Updating mise ($(~/.local/bin/mise --version 2>/dev/null | head -1))${NC}"
+    ~/.local/bin/mise self-update -y
+  fi
+fi
+
+# 非推奨: nodebrew。mise へ移行中のため新規マシンでは使わない。
+if $node && ! $DRY_RUN; then
+  log "${CYAN}警告: nodebrew は非推奨です (mise へ移行中)${NC}"
+  if [ ! -d ~/.nodebrew ]; then
+    log "${CYAN}Installing nodebrew${NC}"
+    curl -L git.io/nodebrew | perl - setup
+  else
+    log "${CYAN}Updating nodebrew${NC}"
     ~/.nodebrew/nodebrew selfupdate
   fi
 fi
 
-
-if $zinit; then
-  echo -e "${CYAN}Installing zinit${NC}"
+if $zinit && ! $DRY_RUN; then
+  log "${CYAN}Installing zinit${NC}"
   mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
   git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git"
 fi
 
-if $pyenv; then
-  echo -e "${CYAN}Installing pyenv${NC}"
-  if [ ! -d ~/.pyenv ]; then
-    git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-    git clone https://github.com/pyenv/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
-  else
-    echo -e "${CYAN}pyenv is already installed.${NC}"
-  fi
-fi
 
-
-echo -e "${CYAN}Done.${NC}"
+summary
+log "${CYAN}Done.${NC}"
