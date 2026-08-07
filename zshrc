@@ -295,6 +295,54 @@ if command -v virtualenvwrapper.sh &> /dev/null; then
   fi
 fi
 
+###* uvenv - 名前付きグローバル uv 環境 (~/.uvenvs)
+###* pyenv-virtualenv の `pyenv activate <name>` 相当。
+###* activate/deactivate は現シェルを書き換えるので関数側で処理し、
+###* それ以外は dotfiles/bin/uvenv (python) に委譲する。
+uvenv() {
+  case "$1" in
+    activate)
+      if [ -z "$2" ]; then
+        echo "usage: uvenv activate <name>" >&2
+        command uvenv list
+        return 1
+      fi
+      local vdir
+      vdir=$(command uvenv path "$2") || return 1
+      if [ -n "$VIRTUAL_ENV" ]; then
+        deactivate
+      fi
+      source "$vdir/bin/activate"
+      ;;
+    deactivate)
+      if [ -z "$VIRTUAL_ENV" ]; then
+        echo "uvenv: activate されていません" >&2
+        return 1
+      fi
+      deactivate
+      ;;
+    *)
+      command uvenv "$@"
+      ;;
+  esac
+}
+
+_uvenv() {
+  local -a cmds envs
+  cmds=(activate deactivate list ls new add sync run rm names path)
+  if (( CURRENT == 2 )); then
+    compadd -- $cmds
+  elif (( CURRENT == 3 )); then
+    case "${words[2]}" in
+      activate|add|sync|run|rm|remove|path)
+        envs=(${(f)"$(command uvenv names 2>/dev/null)"})
+        compadd -- $envs
+        ;;
+    esac
+  fi
+}
+compdef _uvenv uvenv
+
 __conda_setup="$("$CONDA_BASE/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
   eval "$__conda_setup"

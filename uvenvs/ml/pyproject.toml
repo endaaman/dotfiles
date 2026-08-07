@@ -30,5 +30,6 @@ dependencies = [
     "umap-learn>=0.5.7",
 ]
 
-[tool.uv]
-project-environment = ".ml"
+# project-environment は設定しない。
+# 既定の .venv を使う (uvenv/zshrc のプロンプトが .venv → 親ディレクトリ名 "ml"
+# を拾う作りなので、これで <ml> と表示される)。
