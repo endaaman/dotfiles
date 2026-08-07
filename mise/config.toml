@@ -1,0 +1,20 @@
+# mise global config (dotfiles 管理 → ~/.config/mise/config.toml)
+
+[settings]
+# プロジェクトの .node-version を読ませる。
+# mise の既定では idiomatic version file は全ツール無効 (enable_tools = []) で、
+# これを入れないと .node-version があっても
+#   "Plugin node does not have a version set"
+# となり自動で切り替わらない。
+#
+# python を入れていないのは意図的:
+#   .python-version は uv が生成・管理しており (nucllei / VLM / tt など)、
+#   mise にも持たせると二重管理になる。python は uv に任せる。
+idiomatic_version_file_enable_tools = ["node"]
+
+# [tools] でグローバル固定はしない。
+# 書くとシステムの node (pacman 版) より優先されるため、
+# バージョンはプロジェクト側の .node-version で指定する運用にする。
+#
+#   [tools]
+#   node = "24"

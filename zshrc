@@ -253,16 +253,8 @@ if [ -d ~/.cargo ]; then
   export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 fi
 
-if [ -d ~/.nodebrew ]; then
-  export PATH=~/.nodebrew/current/bin:$PATH
-  nodebrew use 24 1>/dev/null
-  fpath+=~/.nodebrew/completions/zsh
-fi
-
-###* nvm is too slow
-# if [ -d ~/.nvm ]; then
-#   source ~/.nvm/nvm.sh
-# fi
+###* node は mise で管理する (nodebrew / nvm は廃止)
+###* バージョンはプロジェクトの .node-version → mise activate で自動適用
 
 if [ -d ~/.config/composer/vendor/bin ]; then
   export PATH=$PATH:$HOME/.config/composer/vendor/bin
