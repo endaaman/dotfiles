@@ -40,7 +40,7 @@ help:
 	@echo 'make gui        + フォント / tym / VSCode / Syncthing'
 	@echo 'make mise       + mise (インストール/自己更新)'
 	@echo 'make zinit      + zinit'
-	@echo 'make all        gui mise zinit'
+	@echo 'make all        gui mise zinit (未導入なら入れる / 導入済みなら更新する)'
 	@echo ''
 	@echo 'make check      変更せず全状態を出す (--dry-run)'
 	@echo 'make diff       ok 以外だけ (new/relink/conflict/missing)'
