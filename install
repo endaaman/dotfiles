@@ -349,9 +349,16 @@ if $node && ! $DRY_RUN; then
 fi
 
 if $zinit && ! $DRY_RUN; then
-  log "${CYAN}Installing zinit${NC}"
-  mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-  git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git"
+  zinit_dir=$HOME/.local/share/zinit
+  mkdir -p "$zinit_dir"
+  command chmod g-rwX "$zinit_dir"
+  if [ ! -d "$zinit_dir/zinit.git" ]; then
+    log "${CYAN}Installing zinit${NC}"
+    git clone https://github.com/zdharma-continuum/zinit "$zinit_dir/zinit.git"
+  else
+    log "${CYAN}Updating zinit${NC}"
+    git -C "$zinit_dir/zinit.git" pull --ff-only
+  fi
 fi
 
 
