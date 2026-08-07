@@ -58,6 +58,13 @@ mkdir -p ~/.claude
 ln -fs ~/dotfiles/claude/statusline.sh ~/.claude/statusline.sh
 ln -fs ~/dotfiles/claude/CLAUDE.md ~/.claude/CLAUDE.md
 
+claude_mapping=~/Sync/Private/claude/project-mapping.md
+if [ -f "$claude_mapping" ]; then
+  ln -fs "$claude_mapping" ~/.claude/project-mapping.md
+else
+  echo "project-mapping.md not found at $claude_mapping; skipping link"
+fi
+
 # Merge shared keys (statusLine, etc.) from dotfiles into ~/.claude/settings.json,
 # preserving machine-local keys (enabledPlugins, permissions, ...).
 if command -v jq &>/dev/null; then
