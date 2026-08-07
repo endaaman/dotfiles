@@ -143,12 +143,7 @@ function my_prompt() {
     if [ $name = '.venv' ]; then
       name=$(basename $(dirname $VIRTUAL_ENV))
     fi
-    python_mod="<%F{magent}$name%f> "
-  # elif command -v pyenv &> /dev/null; then
-  #   python_version=$(pyenv version | sed 's/ .*//')
-  #   if [ "$python_version" != "system" ]; then
-  #     python_mod="<%F{magenta}$python_version%f> "
-  #   fi
+    python_mod="<%F{magenta}$name%f> "
   fi
 
   echo "$pre$dirname $python_mod$symbol "
@@ -273,28 +268,9 @@ if [ -d ~/.poetry ]; then
   export PATH="$HOME/.poetry/bin:$PATH"
 fi
 
-if [ -d ~/.pyenv ]; then
-  export PYENV_ROOT="$HOME/.pyenv"
-  export PATH="$PYENV_ROOT/bin:$PATH"
-
-  if command -v pyenv &> /dev/null; then
-    eval "$(command pyenv init -)"
-    if [ -d "${PYENV_ROOT}/plugins/pyenv-virtualenv" ]; then
-      eval "$(command pyenv virtualenv-init -)"
-    fi
-  fi
-fi
-
-# pyenv() {
-#   unset -f pyenv
-#   if command -v pyenv &> /dev/null; then
-#     eval "$(command pyenv init -)"
-#     if [ -d "${PYENV_ROOT}/plugins/pyenv-virtualenv" ]; then
-#       eval "$(command pyenv virtualenv-init -)"
-#     fi
-#   fi
-#   pyenv "$@"
-# }
+###* python は uv で管理する (pyenv は廃止)
+###*   プロジェクト … uv (.python-version / pyproject.toml)
+###*   名前付きのグローバル環境 … uvenv activate <name>  (下の uvenv() 参照)
 
 if [ -d ~/.local/bin ] && [ -f ~/.local/bin/mise ]; then
   eval "$(~/.local/bin/mise activate zsh)"
