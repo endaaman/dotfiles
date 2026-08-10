@@ -1,4 +1,5 @@
 {
   "markdown.marp.html": "all",
-  "window.dialogStyle": "custom"
+  "window.dialogStyle": "custom",
+  "security.workspace.trust.enabled": false
 }
