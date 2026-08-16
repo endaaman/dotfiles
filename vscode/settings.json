@@ -1,5 +1,8 @@
 {
   "markdown.marp.html": "all",
+  "workbench.editorAssociations": {
+    "*.pdf": "pdf.preview"
+  },
   "window.dialogStyle": "custom",
   "security.workspace.trust.enabled": false
 }
