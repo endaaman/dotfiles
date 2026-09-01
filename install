@@ -153,6 +153,8 @@ base  vim                   $HOME/.vim
 base  nvim                  $HOME/.config/nvim
 base  claude/statusline.sh  $HOME/.claude/statusline.sh
 base  claude/CLAUDE.md      $HOME/.claude/CLAUDE.md
+base  claude/skills/grill-me  $HOME/.claude/skills/grill-me
+base  claude/skills/grill-with-docs  $HOME/.claude/skills/grill-with-docs
 base  mise/config.toml      $HOME/.config/mise/config.toml
 base  uvenvs                $HOME/.uvenvs
 gui   fonts.conf            $HOME/.config/fontconfig/conf.d/99-custom.conf
