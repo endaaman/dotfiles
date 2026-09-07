@@ -15,6 +15,19 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- lazy.nvim の performance.rtp.reset は rtp を作り直すが、その際の libdir 推測が
+-- `<progpath>/../lib{,64}/nvim` 固定なので、Debian/Ubuntu の multiarch
+-- (/usr/lib/x86_64-linux-gnu/nvim) に置かれた同梱 treesitter parser が rtp から落ちる。
+-- 結果 lua/vim/markdown などの parser が見つからず ftplugin/lua.lua の
+-- vim.treesitter.start() が E5113 で落ちる。reset 前の rtp から parser/ を持つ
+-- ディレクトリを拾って performance.rtp.paths で戻す。
+local parser_rtp = {}
+for _, dir in ipairs(vim.opt.rtp:get()) do
+  if vim.uv.fs_stat(dir .. '/parser') then
+    table.insert(parser_rtp, dir)
+  end
+end
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 
@@ -199,4 +212,6 @@ require('lazy').setup({
   require('plugins.treesitter'),
   require('plugins.completion'),
   -- require('plugins.avante'),
+}, {
+  performance = { rtp = { paths = parser_rtp } },
 })

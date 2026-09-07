@@ -273,6 +273,10 @@ fi
 ###*   名前付きのグローバル環境 … uvenv activate <name>  (下の uvenv() 参照)
 
 if [ -d ~/.local/bin ] && [ -f ~/.local/bin/mise ]; then
+  # dotfiles 配下は常に信頼する。mise は cwd から遡って mise/config.toml も設定として
+  # 拾うため、~/dotfiles に居るだけで mise/config.toml が「未信頼」警告を出す。
+  # trust 状態はマシンローカルの state なので、新しいマシンでも黙るよう env で渡す。
+  export MISE_TRUSTED_CONFIG_PATHS=~/dotfiles
   eval "$(~/.local/bin/mise activate zsh)"
   # do; mise plugin install usage
   # eval "$(~/.local/bin/mise completion zsh)"
