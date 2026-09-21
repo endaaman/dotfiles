@@ -73,15 +73,30 @@ ken は後から方向修正する。事前確認が要るのは、どちらに�
 ## tmux 規約
 
 各プロジェクトは専用の tmux session を持ち、開発サーバーはそこで動かす。session / window 名と
-起動コマンドは各 repo の CLAUDE.md が持つ。
+起動コマンドは各 repo の CLAUDE.md が持つ。**session も window も、既にあるものを使う** ——
+これがこの規約の前提であって、Claude が勝手に増やすものではない。
 
+- **何かを起こす前に、今の状態を見る。** 自分が今どこに居るか（`$TMUX` の有無、
+  `tmux display-message -p '#S:#I'`）、どの session があって ken がどれに attach しているか
+  （`tmux list-sessions -F '#S attached=#{session_attached}'`）、その session の window
+  （`tmux list-windows -t <session> -F '#I: #W (#{pane_current_command})'`）。見ないまま作らない。
+- **まず今居る session を使う。** 作業に対応する session が既にあるならそれ、無いなら自分が
+  attach している session が現場。名前が実態と合っていない（既定名の `0` のまま等）なら
+  `tmux rename-session` で実態に合わせる —— **新しく立てるのではなく、今ある方に名前を付ける**。
+  rename も新設も ken に断ってからやる。
+- **session / window を勝手に新設しない。** 目的の session が無ければ、まず各 repo の
+  `/setup-tmux`（冪等なので毎回叩いてよい）。それでも新設が要ると判断したら、**作る前に ken に
+  言う**。用途が同じ session を名前違いで並べるのが最悪で（ken が `0` で作業しているのに別名
+  session を立てる等）、ken が見ていない場所でプロセスが動き、ログも操作履歴もそこに埋もれる。
 - **開発サーバーを Claude Code 内部の shell で起動しない**（foreground / background とも。
-  ken がログを見られないため）。必ず担当 window で起動する。
-- **作業開始時・環境を移動してきたときは各 repo の `/setup-tmux`**。冪等なので毎回叩いてよい。
-- window の状態は `tmux list-windows -t <session> -F '#I: #W (#{pane_current_command})'`。
-- サーバーログは `tmux capture-pane -p -t <session>:<window>` で読む。
+  ken がログを見られないため）。必ず担当 window で起動する。**ken が attach していない session も
+  「ログを見られない場所」に含まれる** —— 新しい session を立ててそこで動かすのは、内部 shell で
+  動かすのと同じ失敗。
+- サーバーログは `tmux capture-pane -p -t <session>:<window>` で読む（折り返しを繋げるなら `-J`）。
 - **サーバーが前面に居る window にスクリプトはキーを送らない**（コンパイルエラーで止まって
   いるのを踏み潰さないため）。ログを読んで直してから `--restart-*`。
+- **後始末は自分でやる。** 作ってしまった session / window は自分で畳む。ただし片付けを成果の
+  ように報告しない —— 作った時点で既に散らかしている。
 
 ## 見た目・UX の確認
 
