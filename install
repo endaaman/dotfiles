@@ -213,18 +213,20 @@ CLAUDE_MAPPING=$HOME/Sync/Private/claude/project-mapping.md
 DRY_RUN=false
 gui=false
 mise=false
-node=false
+tools=false
 zinit=false
 
 usage() {
   cat >&2 <<'EOF'
-usage: ./install [--dry-run] [gui] [mise] [zinit] [node]
+usage: ./install [--dry-run] [gui] [mise] [tools] [zinit]
 
   --dry-run   何も変更せず、何が起きるかだけ出力する
   gui         フォント / tym / VSCode / Syncthing の設定も入れる
-  mise        mise をセットアップ/更新する (ランタイム管理)
+  mise        mise をセットアップ/更新し、mise/config.toml のランタイム (node) を入れる
+  tools       uvtools.txt の Python CLI を uv tool install で入れる/更新する
   zinit       zinit をセットアップする
-  node        nodebrew をセットアップする (非推奨 — mise へ移行済み)
+
+パッケージをどの経路で入れるかの方針は docs/packages.md。
 
 stdout は TSV (状態 \t 対象 \t 詳細)。状態は ok/new/relink/conflict/missing/skip。
   ./install --dry-run | awk -F'\t' '$1=="new"'      新しく張られるものだけ
@@ -238,7 +240,7 @@ for arg in "$@"; do
     -h|--help     ) usage; exit 0 ;;
     gui           ) gui=true ;;
     mise          ) mise=true ;;
-    node          ) node=true ;;
+    tools         ) tools=true ;;
     zinit         ) zinit=true ;;
     *             ) log "unknown argument: $arg"; usage; exit 1 ;;
   esac
@@ -336,17 +338,25 @@ if $mise && ! $DRY_RUN; then
     log "${CYAN}Updating mise ($(~/.local/bin/mise --version 2>/dev/null | head -1))${NC}"
     ~/.local/bin/mise self-update -y
   fi
+  # config.toml (このスクリプトが張った symlink) に書いたランタイムを入れる。
+  # 冪等: 入っていれば何もしない。
+  MISE_TRUSTED_CONFIG_PATHS=$DOTFILES ~/.local/bin/mise install -y
 fi
 
-# 非推奨: nodebrew。mise へ移行中のため新規マシンでは使わない。
-if $node && ! $DRY_RUN; then
-  log "${CYAN}警告: nodebrew は非推奨です (mise へ移行中)${NC}"
-  if [ ! -d ~/.nodebrew ]; then
-    log "${CYAN}Installing nodebrew${NC}"
-    curl -L git.io/nodebrew | perl - setup
+# Python 製の CLI ツール。方針は docs/packages.md:
+#   ディストリ (pacman/apt) にあるものはそちら → 無いものだけ uv tool install。
+# pipx は使わない (venv がシステム Python を直接指すので、ディストリの Python が
+# 上がると interpreter 切れで全滅する。uv tool は uv 管理の Python を使う)。
+if $tools && ! $DRY_RUN; then
+  if ! command -v uv &>/dev/null; then
+    log "${CYAN}uv が無いので tools をスキップ (pacman -S uv / apt install uv)${NC}"
   else
-    log "${CYAN}Updating nodebrew${NC}"
-    ~/.nodebrew/nodebrew selfupdate
+    while read -r pkg; do
+      case "$pkg" in ''|\#*) continue ;; esac
+      log "${CYAN}uv tool install $pkg${NC}"
+      uv tool install "$pkg"
+    done < "$DOTFILES/uvtools.txt"
+    uv tool upgrade --all
   fi
 fi
 

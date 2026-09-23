@@ -1,0 +1,4 @@
+# ./install tools で `uv tool install` するもの (1行1パッケージ、uv の指定子そのまま)。
+# ここに書くのは「ディストリ (pacman/apt) に無い」Python 製 CLI だけ。
+# あるものはディストリで入れる (docs/packages.md)。
+jupytext

@@ -271,6 +271,7 @@ fi
 ###* python は uv で管理する (pyenv は廃止)
 ###*   プロジェクト … uv (.python-version / pyproject.toml)
 ###*   名前付きのグローバル環境 … uvenv activate <name>  (下の uvenv() 参照)
+###*   ディストリに無い Python 製 CLI … uv tool install (pipx は廃止、docs/packages.md)
 
 if [ -d ~/.local/bin ] && [ -f ~/.local/bin/mise ]; then
   # dotfiles 配下は常に信頼する。mise は cwd から遡って mise/config.toml も設定として
