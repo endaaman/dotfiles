@@ -30,3 +30,9 @@ idiomatic_version_file_enable_tools = ["node"]
 # プロジェクト配下では .node-version が上書きするので、これは
 # 「指定が無いときの落とし所」でしかない。
 node = "24"
+
+# pnpm も major 固定（"latest" にしない）。pnpm には LTS が無いので最新 major を明示して追う。
+# major で挙動が変わる（10 でビルドスクリプトの既定拒否、12 でそれがエラーに、等）ので、
+# 上げるときは各 repo の package.json の "packageManager": "pnpm@12.x"（CI の pnpm/action-setup も
+# これを読む）と pnpm-workspace.yaml の allowBuilds をいっしょに見る。ここは指定が無いディレクトリでの落とし所。
+pnpm = "12"
