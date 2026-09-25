@@ -1,0 +1,11 @@
+[Unit]
+Description=Network outage logger (netmon)
+After=network-online.target
+
+[Service]
+ExecStart=%h/dotfiles/bin/netmon run
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

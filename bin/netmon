@@ -1,0 +1,218 @@
+#!/usr/bin/env python3
+"""回線の瞬断を 1 秒刻みで記録し、あとから断を一覧する。
+
+  netmon run                 計測 (systemd --user の netmon.service から起動)
+  netmon report [--days N]   断の一覧 (既定: 直近 7 日)
+  netmon tail               直近の記録を表示
+
+記録: ~/.local/state/netmon/YYYY-MM-DD.tsv (成功は応答 ms, 失敗は FAIL)
+追加の計測先: ~/.config/netmon/targets に `名前 ホスト` を 1 行ずつ
+  (自宅のグローバル IP や ISP の中継点はここに書く。dotfiles は public なので入れない)
+"""
+import argparse
+import concurrent.futures as cf
+import datetime as dt
+import os
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+STATE = Path(os.environ.get('XDG_STATE_HOME', Path.home() / '.local/state')) / 'netmon'
+CONFIG = Path(os.environ.get('XDG_CONFIG_HOME', Path.home() / '.config')) / 'netmon/targets'
+
+# 名前が dns_ で始まるものは dig、それ以外は ping。ホストが空の dns_ はシステムのリゾルバ
+DEFAULT_TARGETS = [
+    ('v4', '1.1.1.1'),
+    ('v4g', '8.8.8.8'),
+    ('v6', '2001:4860:4860::8888'),
+    ('dns_sys', ''),
+    ('dns_cf', '1.1.1.1'),
+]
+
+
+def default_route():
+    out = subprocess.run(['ip', 'route', 'show', 'default'], capture_output=True, text=True).stdout.split()
+    gw = out[out.index('via') + 1] if 'via' in out else None
+    dev = out[out.index('dev') + 1] if 'dev' in out else None
+    return gw, dev
+
+
+def load_targets():
+    gw, dev = default_route()
+    targets = [('gw', gw)] if gw else []
+    if CONFIG.exists():
+        for line in CONFIG.read_text().splitlines():
+            parts = line.split('#', 1)[0].split()
+            if len(parts) == 2:
+                targets.append(tuple(parts))
+    targets += DEFAULT_TARGETS
+    return targets, dev
+
+
+def command(name, host):
+    if name.startswith('dns_'):
+        return ['dig', '+short', '+tries=1', '+time=2', 'www.google.com'] + ([f'@{host}'] if host else [])
+    return ['ping', '-6' if ':' in host else '-4', '-c1', '-W1', host]
+
+
+def probe(cmd):
+    t = time.monotonic()
+    try:
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=3)
+    except subprocess.TimeoutExpired:
+        return 'FAIL'
+    ok = r.returncode == 0 and bool(r.stdout.strip())
+    if cmd[0] == 'ping':
+        ok = ok and ' 1 received' in r.stdout
+    return str(int((time.monotonic() - t) * 1000)) if ok else 'FAIL'
+
+
+def read_stat(dev, name):
+    try:
+        return Path(f'/sys/class/net/{dev}/{name}').read_text().strip()
+    except OSError:
+        return '-'
+
+
+def cmd_run(_args):
+    STATE.mkdir(parents=True, exist_ok=True)
+    targets, dev = load_targets()
+    cmds = [command(n, h) for n, h in targets]
+    header = '\t'.join(['time', 'carrier', 'rx_dropped', 'rx_missed'] + [n for n, _ in targets])
+    current = None
+    f = None
+    with cf.ThreadPoolExecutor(len(cmds)) as ex:
+        while True:
+            t0 = time.monotonic()
+            results = list(ex.map(probe, cmds))
+            now = dt.datetime.now()
+            path = STATE / f'{now:%Y-%m-%d}.tsv'
+            if path != current:
+                if f:
+                    f.close()
+                fresh = not path.exists()
+                f = open(path, 'a', buffering=1)
+                # 再起動で計測先が変わることがあるので、起動のたびにヘッダを書く
+                if fresh or current is None:
+                    f.write(header + '\n')
+                current = path
+            stats = [read_stat(dev, 'carrier'), read_stat(dev, 'statistics/rx_dropped'),
+                     read_stat(dev, 'statistics/rx_missed_errors')]
+            f.write('\t'.join([f'{now:%H:%M:%S}'] + stats + results) + '\n')
+            time.sleep(max(0, 1 - (time.monotonic() - t0)))
+
+
+def iter_rows(days):
+    today = dt.date.today()
+    for i in range(days - 1, -1, -1):
+        day = today - dt.timedelta(days=i)
+        path = STATE / f'{day}.tsv'
+        if not path.exists():
+            continue
+        cols = None
+        for line in path.read_text().splitlines():
+            fields = line.split('\t')
+            if fields[0] == 'time':
+                cols = fields
+                continue
+            if cols and len(fields) == len(cols):
+                ts = dt.datetime.combine(day, dt.time.fromisoformat(fields[0]))
+                yield ts, dict(zip(cols, fields))
+
+
+def classify(row):
+    """その秒の状態を、どこで途切れているかで分類する。None は正常"""
+    def failed(prefix):
+        keys = [k for k in row if k == prefix or k.startswith(prefix)]
+        return bool(keys) and all(row[k] == 'FAIL' for k in keys)
+    if row.get('carrier') == '0':
+        return 'PC リンク断'
+    if row.get('gw') == 'FAIL':
+        return 'LAN 断 (ルーターまで不通)'
+    v4, v6 = failed('v4'), failed('v6')
+    if v4 and v6:
+        return '外部 全断 (v4+v6)'
+    if v4:
+        return '外部 IPv4 断'
+    if v6:
+        return '外部 IPv6 断'
+    if failed('dns_'):
+        return 'DNS 断'
+    return None
+
+
+def cmd_report(args):
+    episodes = []  # [start, end, kind, samples]
+    prev_ts = None
+    for ts, row in iter_rows(args.days):
+        kind = classify(row)
+        # 3 秒以上記録が空いたら (停止・スリープ) 別の断として扱う
+        gap = prev_ts is None or (ts - prev_ts).total_seconds() > 3
+        prev_ts = ts
+        if kind is None:
+            continue
+        last = episodes[-1] if episodes else None
+        if last and not gap and (ts - last[1]).total_seconds() <= 5:
+            last[1] = ts
+            # 一連の断は、いちばん手前で途切れていた分類で代表させる
+            if order(kind) < order(last[2]):
+                last[2] = kind
+            last[3] += 1
+        else:
+            episodes.append([ts, ts, kind, 1])
+
+    episodes = [e for e in episodes if (e[1] - e[0]).total_seconds() + 1 >= args.min]
+    if not episodes:
+        print(f'直近 {args.days} 日: 断なし')
+        return
+    print(f'直近 {args.days} 日: {len(episodes)} 件 ({args.min} 秒以上続いたもの)\n')
+    for start, end, kind, _ in episodes:
+        dur = int((end - start).total_seconds()) + 1
+        print(f'{start:%m/%d %a %H:%M:%S}  {dur:>4}s  {kind}')
+    print('\n日別:')
+    per_day = {}
+    for start, *_ in episodes:
+        per_day[start.date()] = per_day.get(start.date(), 0) + 1
+    for day, n in sorted(per_day.items()):
+        print(f'  {day:%m/%d %a}  {n}')
+
+
+ORDER = ['PC リンク断', 'LAN 断 (ルーターまで不通)', '外部 全断 (v4+v6)', '外部 IPv4 断', '外部 IPv6 断', 'DNS 断']
+
+
+def order(kind):
+    return ORDER.index(kind)
+
+
+def cmd_tail(args):
+    rows = list(iter_rows(1))[-args.n:]
+    if not rows:
+        print('記録なし')
+        return
+    cols = list(rows[0][1])
+    print('\t'.join(cols))
+    for _, row in rows:
+        print('\t'.join(row[c] for c in cols))
+
+
+def main():
+    p = argparse.ArgumentParser(prog='netmon', description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    sub = p.add_subparsers(dest='cmd', required=True)
+    sub.add_parser('run').set_defaults(func=cmd_run)
+    r = sub.add_parser('report')
+    r.add_argument('--days', type=int, default=7)
+    r.add_argument('--min', type=int, default=2, help='この秒数以上失敗が続いたものだけ出す')
+    r.set_defaults(func=cmd_report)
+    t = sub.add_parser('tail')
+    t.add_argument('-n', type=int, default=20)
+    t.set_defaults(func=cmd_tail)
+    args = p.parse_args()
+    args.func(args)
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except KeyboardInterrupt:
+        sys.exit(130)
