@@ -295,6 +295,12 @@ for f in "$DOTFILES"/systemd/*; do
   link "$f" "$HOME/.local/share/systemd/user/$(basename "$f")"
 done
 
+# Ubuntu の gnupg は gpg-agent-ssh.socket を sockets.target に有効化した状態で配り、
+# socket が listen した時点で `systemctl --user set-environment SSH_AUTH_SOCK=...gnupg/S.gpg-agent.ssh`
+# を実行して environment.d の値を上書きする (鍵利用のたびに pinentry-gnome3 が出る)。
+# mask (= /dev/null への symlink) で止める。disable だと preset で復活するので mask。
+link /dev/null "$HOME/.config/systemd/user/gpg-agent-ssh.socket"
+
 link "$CLAUDE_MAPPING" "$HOME/.claude/project-mapping.md"
 
 merge_json "$HOME/.claude/settings.json" "$DOTFILES/claude/settings.json"
