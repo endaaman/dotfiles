@@ -44,7 +44,8 @@ vim.opt.smarttab = true
 vim.opt.softtabstop = 2
 vim.opt.switchbuf = 'usetab'
 vim.opt.tabstop = 2
-vim.opt.termguicolors = true
+-- ENDAAMAN_LEGACY=1（Tera Term などの古いターミナル）では 256 色で描く
+vim.opt.termguicolors = vim.env.ENDAAMAN_LEGACY ~= '1'
 vim.opt.timeout = true
 vim.opt.timeoutlen = 1000
 vim.opt.ttimeoutlen = 50

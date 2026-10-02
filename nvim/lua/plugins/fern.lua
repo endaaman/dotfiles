@@ -4,7 +4,10 @@ local hide_dirs = '^\\%(\\.git\\|node_modules\\|__pycache__\\)$'
 local hide_files = '\\%(\\.byebug\\|\\.ruby-\\)\\+'
 vim.g['fern#default_exclude'] = hide_dirs .. '\\|' .. hide_files
 vim.g['fern#disable_default_mappings'] = 1
-vim.g['fern#renderer'] = 'nerdfont'
+-- ENDAAMAN_LEGACY=1 では Nerd Font が無いので既定のレンダラ
+if vim.env.ENDAAMAN_LEGACY ~= '1' then
+  vim.g['fern#renderer'] = 'nerdfont'
+end
 vim.g['fern_git_status#disable_submodules'] = 1
 
 local function config()

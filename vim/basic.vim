@@ -94,7 +94,7 @@ elseif executable('xsel')
     \ }
 endif
 
-if !has('gui_running') && exists('&termguicolors') && $COLORTERM ==# 'truecolor'
+if !has('gui_running') && exists('&termguicolors') && $COLORTERM ==# 'truecolor' && $ENDAAMAN_LEGACY !=# '1'
   "let &t_8f = "\e[38;2;%lu;%lu;%lum"
   "let &t_8b = "\e[48;2;%lu;%lu;%lum"
   set showbreak=↳

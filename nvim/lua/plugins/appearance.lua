@@ -12,8 +12,12 @@ local fern_extension = {
 
 vim.g.tinted_colorspace = 256
 
+-- ENDAAMAN_LEGACY=1: truecolor も Nerd Font も無いターミナル向け。
+-- iceberg.nvim は gui の色しか持たないので、256 色の定義がある本家 iceberg.vim に切り替える
+local legacy = vim.env.ENDAAMAN_LEGACY == '1'
+
 return {
-  'nvim-tree/nvim-web-devicons',
+  { 'nvim-tree/nvim-web-devicons', enabled = not legacy },
   'tinted-theming/tinted-vim',
   {
     'RRethy/base16-nvim',
@@ -21,14 +25,16 @@ return {
       -- vim.cmd.colorscheme 'base16-tomorrow-night'
     end
   },
-  -- {
-  --   'cocopon/iceberg.vim',
-  --   config=function()
-  --     vim.cmd.colorscheme 'iceberg'
-  --   end,
-  -- },
+  {
+    'cocopon/iceberg.vim',
+    enabled = legacy,
+    config=function()
+      vim.cmd.colorscheme 'iceberg'
+    end,
+  },
   {
     'oahlen/iceberg.nvim',
+    enabled = not legacy,
     config=function()
       vim.cmd.colorscheme 'iceberg-dark'
     end,
@@ -45,7 +51,7 @@ return {
 
       require('lualine').setup({
         options = {
-          icons_enabled = true,
+          icons_enabled = not legacy,
           -- theme = 'jellybeans',
           theme = theme,
           -- theme = 'iceberg_dark',
@@ -54,8 +60,8 @@ return {
           -- section_separators   = { left = '', right = ''},
           -- section_separators   =  { left = '', right = '' },
           -- component_separators =  { left = '', right = '' },
-          section_separators   = { left= '', right= '' },
-          component_separators = { left= '', right= '' },
+          section_separators   = legacy and { left = '', right = '' } or { left= '', right= '' },
+          component_separators = legacy and { left = '|', right = '|' } or { left= '', right= '' },
         },
         extensions = {
           fern_extension,

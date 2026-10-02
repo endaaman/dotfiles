@@ -206,6 +206,7 @@ local function config()
         hide_parent_dir = false,  -- Show ".." to navigate to parent directory
         grouped = true,           -- Group directories first, then files
         display_stat = false,
+        disable_devicons = vim.env.ENDAAMAN_LEGACY == '1',  -- フォルダアイコンは devicons と別に出る
         cwd_to_path = false,
         mappings = {
           ["i"] = {
