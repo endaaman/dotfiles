@@ -99,10 +99,17 @@ ken は後から方向修正する。事前確認が要るのは、どちらに�
   `tmux display-message -p '#S:#I'`）、どの session があって ken がどれに attach しているか
   （`tmux list-sessions -F '#S attached=#{session_attached}'`）、その session の window
   （`tmux list-windows -t <session> -F '#I: #W (#{pane_current_command})'`）。見ないまま作らない。
-- **まず今居る session を使う。** 作業に対応する session が既にあるならそれ、無いなら自分が
-  attach している session が現場。名前が実態と合っていない（既定名の `0` のまま等）なら
-  `tmux rename-session` で実態に合わせる —— **新しく立てるのではなく、今ある方に名前を付ける**。
-  rename も新設も ken に断ってからやる。
+- **現場は「自分が今居る session」= ken が attach して見ている session。** repo の規約名
+  （`nuc` 等）の session が別にあっても、ken が attach していないならそこは現場ではない ——
+  **名前が合っている方ではなく、ken が居る方を使う**（ken 指摘 2026-10-02: ken は `0` に居たのに、
+  attach されていない `nuc` で dev サーバーを起動した）。
+  - 今居る session の名前が規約と違う（既定名の `0` のまま等）なら、**今居る方を規約名にする**:
+    規約名の session が別に残っていれば、その window を
+    `tmux move-window -d -s <規約名>:<window> -t <今居る session>:` で今居る方へ移し
+    （プロセスは止まらない。空になった session は消える）、
+    `tmux rename-session -t <今居る session> <規約名>` する。repo の規約名への rename は断らずやってよい。
+  - 規約名の session に ken が attach していて、自分だけ別 session に居る場合は、ken が居る方を使う。
+  - 規約に無い名前を付ける・session を新設するのは ken に断ってから。
 - **session / window を勝手に新設しない。** 目的の session が無ければ、まず各 repo の
   `/setup-tmux`（冪等なので毎回叩いてよい）。それでも新設が要ると判断したら、**作る前に ken に
   言う**。用途が同じ session を名前違いで並べるのが最悪で（ken が `0` で作業しているのに別名
