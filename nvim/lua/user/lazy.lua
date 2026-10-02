@@ -211,7 +211,6 @@ require('lazy').setup({
   require('plugins.appearance'),
   require('plugins.treesitter'),
   require('plugins.completion'),
-  -- require('plugins.avante'),
 }, {
   performance = { rtp = { paths = parser_rtp } },
 })
