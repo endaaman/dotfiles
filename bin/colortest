@@ -1,0 +1,113 @@
+#!/bin/bash
+#
+# ターミナルの色・文字装飾の対応を目視で確かめる
+#
+#   colortest [env|16|256|true|attr ...]   引数なしで全部
+#
+# 見方:
+#   16   … 下段（90-97 / 100-107）が上段と同じ色か無色なら 8 色しか出ない
+#   256  … 16-255 が上の 16 色の繰り返しや無色なら 256 色は出ない
+#   true … 帯が滑らかなら 24bit、段々なら 256 色に丸められている
+#   attr … 出ない装飾は素の文字になる
+
+show_env() {
+  echo '== env'
+  printf '  %-16s %s\n' \
+    TERM "${TERM:-(unset)}" \
+    COLORTERM "${COLORTERM:-(unset)}" \
+    'tput colors' "$(tput colors 2>/dev/null || echo '?')" \
+    TMUX "${TMUX:+yes}" \
+    ENDAAMAN_LEGACY "${ENDAAMAN_LEGACY:-(unset)}"
+  echo
+}
+
+show_16() {
+  local names=(black red green yellow blue magenta cyan white)
+  local i
+  echo '== 16 colors'
+  printf '  %-8s' ''; for i in {0..7}; do printf '%-9s' "${names[$i]}"; done; echo
+  printf '  %-8s' 'fg 3x'; for i in {0..7}; do printf '\e[3%dm%-9s\e[0m' $i "3$i"; done; echo
+  printf '  %-8s' 'fg 9x'; for i in {0..7}; do printf '\e[9%dm%-9s\e[0m' $i "9$i"; done; echo
+  printf '  %-8s' 'bold 3x'; for i in {0..7}; do printf '\e[1;3%dm%-9s\e[0m' $i "1;3$i"; done; echo
+  printf '  %-8s' 'bg 4x'; for i in {0..7}; do printf '\e[4%dm%-8s\e[0m ' $i " 4$i"; done; echo
+  printf '  %-8s' 'bg 10x'; for i in {0..7}; do printf '\e[10%dm%-8s\e[0m ' $i " 10$i"; done; echo
+  echo
+}
+
+show_256() {
+  local n row col
+  echo '== 256 colors (38;5 / 48;5)'
+  printf '  '; for n in {0..15}; do printf '\e[48;5;%dm%4d\e[0m' $n $n; done; echo
+  echo
+  # 16-231: 6x6x6 のキューブ。6 行 x 36 列
+  for row in {0..5}; do
+    printf '  '
+    for col in {0..35}; do
+      n=$((16 + row * 36 + col))
+      printf '\e[48;5;%dm \e[0m' $n
+    done
+    printf '  %d-%d\n' $((16 + row * 36)) $((16 + row * 36 + 35))
+  done
+  echo
+  printf '  '; for n in {232..255}; do printf '\e[48;5;%dm  \e[0m' $n; done; echo '  232-255'
+  printf '  '; for n in 196 202 208 214 220 226 46 51 21 93 201; do printf '\e[38;5;%dm%4d\e[0m' $n $n; done; echo '  (fg)'
+  echo
+}
+
+show_true() {
+  local i r g b w=72 slash='/\'
+  echo '== truecolor (38;2 / 48;2)'
+  for ch in r g b; do
+    printf '  '
+    for ((i = 0; i < w; i++)); do
+      local v=$((i * 255 / (w - 1)))
+      case $ch in
+        r) r=$v g=0 b=0 ;;
+        g) r=0 g=$v b=0 ;;
+        b) r=0 g=0 b=$v ;;
+      esac
+      printf '\e[48;2;%d;%d;%dm \e[0m' $r $g $b
+    done
+    echo " $ch"
+  done
+  printf '  '
+  for ((i = 0; i < w; i++)); do
+    # 色相を一周させる
+    local h=$((i * 1530 / w)) x
+    x=$((h % 255))
+    case $((h / 255)) in
+      0) r=255 g=$x b=0 ;;
+      1) r=$((255 - x)) g=255 b=0 ;;
+      2) r=0 g=255 b=$x ;;
+      3) r=0 g=$((255 - x)) b=255 ;;
+      4) r=$x g=0 b=255 ;;
+      *) r=255 g=0 b=$((255 - x)) ;;
+    esac
+    printf '\e[48;2;%d;%d;%dm\e[38;2;%d;%d;%dm%s\e[0m' $r $g $b $((255 - r)) $((255 - g)) $((255 - b)) "${slash:i%2:1}"
+  done
+  echo ' hue'
+  echo
+}
+
+show_attr() {
+  echo '== attributes'
+  printf '  \e[1m%-14s\e[0m \e[2m%-14s\e[0m \e[3m%-14s\e[0m \e[4m%-14s\e[0m\n' 'bold (1)' 'dim (2)' 'italic (3)' 'underline (4)'
+  printf '  \e[4:3m%-14s\e[0m \e[21m%-14s\e[0m \e[5m%-14s\e[0m \e[7m%-14s\e[0m\n' 'undercurl (4:3)' 'dbl under (21)' 'blink (5)' 'reverse (7)'
+  printf '  \e[9m%-14s\e[0m \e[53m%-14s\e[0m \e[8m%-14s\e[0m%s\n' 'strike (9)' 'overline (53)' 'hidden (8)' '<- hidden'
+  printf '  \e[4:3m\e[58;5;196m%-14s\e[0m \e[1;3;4;31m%-14s\e[0m\n' 'red undercurl' 'bold+it+ul+red'
+  echo
+}
+
+sections=("$@")
+[ ${#sections[@]} -eq 0 ] && sections=(env 16 256 true attr)
+
+for s in "${sections[@]}"; do
+  case $s in
+    env) show_env ;;
+    16) show_16 ;;
+    256) show_256 ;;
+    true) show_true ;;
+    attr) show_attr ;;
+    *) echo "Usage: $(basename "$0") [env|16|256|true|attr ...]" >&2; exit 1 ;;
+  esac
+done
