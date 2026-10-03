@@ -162,6 +162,7 @@ gui   fonts                 $HOME/.local/share/fonts/dotfiles
 gui   env.conf              $HOME/.config/environment.d/dotfiles.conf
 gui   tym/config.lua        $HOME/.config/tym/config.lua
 gui   tym/local.lua         $HOME/.config/tym/local.lua
+gui   applications/code-oss.desktop  $HOME/.local/share/applications/code-oss.desktop
 EOF
 }
 
@@ -306,6 +307,16 @@ link "$CLAUDE_MAPPING" "$HOME/.claude/project-mapping.md"
 merge_json "$HOME/.claude/settings.json" "$DOTFILES/claude/settings.json"
 
 if $gui; then
+  # 同名のシステム登録を上書きし、Code OSS をテキスト/フォルダの候補に加える。
+  if ! command -v update-desktop-database &>/dev/null; then
+    emit skip "$HOME/.local/share/applications" "update-desktop-database が無い"
+  elif $DRY_RUN; then
+    emit ok "$HOME/.local/share/applications" "update-desktop-database (dry-run)"
+  else
+    update-desktop-database "$HOME/.local/share/applications"
+    emit ok "$HOME/.local/share/applications" "desktop database updated"
+  fi
+
   for vscode_dir in "${VSCODE_DIRS[@]}"; do
     [ -d "$vscode_dir/User" ] || continue
     merge_json "$vscode_dir/User/settings.json" "$DOTFILES/vscode/settings.json"
