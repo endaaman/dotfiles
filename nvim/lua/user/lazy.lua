@@ -212,5 +212,8 @@ require('lazy').setup({
   require('plugins.treesitter'),
   require('plugins.completion'),
 }, {
+  -- ENDAAMAN_OFFLINE=1 の機 (閉域など) では欠けたプラグインを取りに行かない。
+  -- ~/.local/share/nvim/lazy/ ごと持ち込む前提 (lazy.nvim 本体があれば上の clone も走らない)
+  install = { missing = vim.env.ENDAAMAN_OFFLINE == nil },
   performance = { rtp = { paths = parser_rtp } },
 })
