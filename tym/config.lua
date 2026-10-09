@@ -33,6 +33,8 @@ tym.set_config({
   silent = true,
   title = 'tym',
   cjk_width = 'narrow',
+  -- ssh 先の tmux / cb-copy からクリップボードを書けるようにする（VTE は OSC 52 を解釈しないので tym の termprop 経由）
+  osc_clipboard = true,
   font = 'Monospace 14',
   width = 140,
   height = 40,

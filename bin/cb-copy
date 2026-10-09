@@ -7,7 +7,7 @@
 #      ssh -Y の forwarded display (`localhost:10.0`) も含む。手元の端末が
 #      OSC 52 を実装していない場合 (tym/VTE 等) はこれが唯一の経路になる
 #   3. tmux             → tmux load-buffer -w  (set-clipboard 経由で OSC 52)
-#   4. それ以外         → OSC 52 を端末へ直接送る
+#   4. それ以外         → OSC 52（と tym 向けの termprop）を端末へ直接送る
 #
 # tmux 内なら DISPLAY は常にセッションの環境から取り直す。再アタッチで
 # forwarded display の番号が変わってもペインの環境変数は更新されないため。
@@ -47,7 +47,9 @@ fi
 
 if [ -z "$copied" ]; then
   if [ -w /dev/tty ]; then
-    printf '\033]52;c;%s\a' "$(printf "%s" "$data" | base64 | tr -d '\n')" > /dev/tty
+    # OSC 52 と、それを解釈しない tym（VTE）向けの termprop を両方出す。tym 側は ST 終端必須・上限 2048 バイト
+    b64=$(printf "%s" "$data" | base64 | tr -d '\n')
+    printf '\033]52;c;%s\a\033]666;vte.ext.tym.clipboard=%s\033\\' "$b64" "$b64" > /dev/tty
   else
     echo "cb-copy: no clipboard backend available" >&2
     exit 1
