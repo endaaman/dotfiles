@@ -153,8 +153,8 @@ view_actual_size=Meta+0
 view_zoom_in=Meta+=; Meta++
 view_zoom_out=Meta+-
 
-[tym-zsh.desktop][Global Shortcuts]
+[kitty-zsh.desktop][Global Shortcuts]
 _launch=Meta+Z
 
-[tym.desktop][Global Shortcuts]
+[kitty.desktop][Global Shortcuts]
 _launch=Meta+T
