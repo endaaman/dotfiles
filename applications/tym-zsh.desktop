@@ -1,0 +1,12 @@
+[Desktop Entry]
+Categories=System;TerminalEmulator;
+Comment=A tiny terminal for minimalists
+Exec=tym -e zsh
+GenericName=Terminal
+Icon=utilities-terminal
+Name=tym(zsh)
+StartupNotify=true
+Terminal=false
+TryExec=tym
+Type=Application
+X-GNOME-SingleWindow=false

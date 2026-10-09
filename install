@@ -164,6 +164,8 @@ gui   tym/config.lua        $HOME/.config/tym/config.lua
 gui   tym/local.lua         $HOME/.config/tym/local.lua
 gui   kitty.conf            $HOME/.config/kitty/kitty.conf
 gui   applications/code-oss.desktop  $HOME/.local/share/applications/code-oss.desktop
+gui   applications/kitty-zsh.desktop  $HOME/.local/share/applications/kitty-zsh.desktop
+gui   applications/tym-zsh.desktop  $HOME/.local/share/applications/tym-zsh.desktop
 EOF
 }
 
