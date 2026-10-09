@@ -8,7 +8,7 @@
 #   ./wipe-junk.sh                 # dry-run: 消す対象を一覧するだけ（デフォルト）
 #   ./wipe-junk.sh -f              # 実削除（ゴミ箱へ / trash-cli が無ければ rm）
 #   ./wipe-junk.sh -f --rm         # 実削除（ゴミ箱を使わず完全削除）
-#   ./wipe-junk.sh -f ~/Sync ~/foo # 対象フォルダを明示指定
+#   ./wipe-junk.sh -f ~/Documents ~/foo # 対象フォルダを明示指定
 #
 set -euo pipefail
 
@@ -25,7 +25,7 @@ for a in "$@"; do
 done
 # 対象フォルダ未指定ならデフォルト
 if [ "${#ROOTS[@]}" -eq 0 ]; then
-  ROOTS=("$HOME/Sync" "$HOME/Documents")
+  ROOTS=("$HOME/Documents")
 fi
 
 # --- 削除して良い「明らかなゴミ」パターン --------------------------------

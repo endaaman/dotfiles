@@ -201,16 +201,15 @@ VSCODE_DIRS=(
 )
 
 SYNCTHING_DIRS=(
-  "$HOME/Sync"
   "$HOME/Obsidian"
   "$HOME/Documents"
   "$HOME/Inbox"
 )
 
 # project-mapping は閉域構成・知財状況・取引先名を含むので public な本 repo に
-# 置かない。実体は Syncthing 配下 (~/Sync も ~/Documents も同期されるが Sync に置く)。
+# 置かない。実体は Syncthing で同期している ~/Documents 配下に置く。
 # CLAUDE.md が @ で読むのでここで繋ぐ。
-CLAUDE_MAPPING=$HOME/Sync/Private/claude/project-mapping.md
+CLAUDE_MAPPING=$HOME/Documents/Private/claude/project-mapping.md
 
 # ---------------------------------------------------------------- 引数
 
