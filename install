@@ -162,6 +162,7 @@ gui   fonts                 $HOME/.local/share/fonts/dotfiles
 gui   env.conf              $HOME/.config/environment.d/dotfiles.conf
 gui   tym/config.lua        $HOME/.config/tym/config.lua
 gui   tym/local.lua         $HOME/.config/tym/local.lua
+gui   kitty.conf            $HOME/.config/kitty/kitty.conf
 gui   applications/code-oss.desktop  $HOME/.local/share/applications/code-oss.desktop
 EOF
 }
