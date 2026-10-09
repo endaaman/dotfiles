@@ -140,6 +140,7 @@ merge_json() {
 links() {
   cat <<EOF
 base  gitconfig             $HOME/.gitconfig
+base  ssh_config            $HOME/.ssh/config
 base  gitignore_global      $HOME/.gitignore_global
 base  zshrc                 $HOME/.zshrc
 base  tmux.conf             $HOME/.tmux.conf

@@ -1,8 +1,17 @@
 # Define reload alias at least
 alias reload-zsh='RELOADING=1 exec zsh -l'
+_ssh_auth_sock_orig=${SSH_AUTH_SOCK:-}
 if [ -f ~/.zshrc.pre ]; then
   source ~/.zshrc.pre
 fi
+# .zshrc.pre は gpg-agent に横取りされないよう SSH_AUTH_SOCK を手元の ssh-agent に上書きしている。
+# ssh で入ってきて sshd が転送した ssh-agent を受け取っていたときだけ、そちらに戻す（sget などが手元の鍵を使う）
+case $_ssh_auth_sock_orig in
+  */.ssh/agent/s.*.sshd.*|/tmp/ssh-*/agent.*)
+    [[ -n $SSH_CONNECTION && -S $_ssh_auth_sock_orig ]] && export SSH_AUTH_SOCK=$_ssh_auth_sock_orig
+    ;;
+esac
+unset _ssh_auth_sock_orig
 alias r=reload-zsh
 function _reload-zsh() {
   BUFFER='reload-zsh'

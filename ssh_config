@@ -1,0 +1,13 @@
+# 全マシン共通の ssh 設定（install が ~/.ssh/config へ symlink する）。
+# public repo なのでホスト名・IP・ユーザーは書かない。マシンごとの設定は ~/.ssh/config.local に書く。
+# ssh は先に出てきた値が勝つので、先頭で読んでローカルの設定を優先する（無ければ何もしない）
+Include ~/.ssh/config.local
+
+# 自分のサーバーにだけ ssh-agent を転送する。ssh 先で sget が手元へ送り返すのに使う。
+# 転送している間は ssh 先の root も手元の鍵で署名させられるので * にはしない。
+# IP で直接入ったときは転送されない（sget は使えない）
+Host enda-* prism-*
+  ForwardAgent yes
+
+Host *
+  AddKeysToAgent yes

@@ -4,7 +4,8 @@
 #   sget <file>...
 #
 # 接続元は $SSH_CONNECTION の IP。tmux に再アタッチした後も zshrc がプロンプトごとに取り直している。
-# 手元への認証は、手元から転送してきた ssh-agent を使う（ssh -A / ForwardAgent yes でつなぐこと）。
+# 手元への認証は、手元から転送してきた ssh-agent を使う。dotfiles の ssh_config が enda-* prism-* にだけ
+# ForwardAgent yes を付けている。IP で入ったときなどは ssh -A でつなぐこと。
 # 手元のユーザー名は ssh 先からは分からないので $SGET_USER（既定 ken）
 
 set -uo pipefail
@@ -20,7 +21,7 @@ origin=${SSH_CONNECTION%% *}
   exit 1
 }
 ssh-add -l > /dev/null 2>&1 || {
-  echo 'sget: 手元の ssh-agent が転送されていません。ssh -A でつなぎ直してください' >&2
+  echo 'sget: 手元の ssh-agent が転送されていません。ssh -A でつなぎ直してください（enda-* prism-* の名前で入れば自動）' >&2
   exit 1
 }
 # IPv6 は rsync の宛先で [] が要る
