@@ -1,0 +1,21 @@
+#!/bin/bash
+# ssh の接続先を fzf で 1 つ選んで標準出力に出す（user@host）。選ばなければ終了コード 1。
+# sput と kitty の my_ssh_shell / my_ssh_tmux が使う。
+#
+# 一覧は $SSH_HOSTS_FILE（既定 ~/Documents/dev/ssh-hosts）に 1 行 1 件、上から順に並べる。
+# ホスト名や IP を含むので public な dotfiles には置かない（~/Documents は Syncthing で全マシンに同期）
+
+set -uo pipefail
+
+hosts=${SSH_HOSTS_FILE:-$HOME/Documents/dev/ssh-hosts}
+[ -r "$hosts" ] || {
+  echo "ssh-pick: 接続先の一覧がありません: $hosts" >&2
+  exit 1
+}
+
+# KDE から起動した kitty などには zshrc の環境変数が無い
+export FZF_DEFAULT_OPTS_FILE=${FZF_DEFAULT_OPTS_FILE:-$HOME/dotfiles/fzfrc}
+fzf=$(command -v fzf || echo "$HOME/.local/share/zinit/plugins/junegunn---fzf/fzf")
+
+sed -e 's/#.*//' -e 's/[[:space:]]*$//' -e '/^$/d' "$hosts" |
+  "$fzf" --no-multi --prompt="${1:-ssh}> "

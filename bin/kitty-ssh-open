@@ -1,0 +1,25 @@
+#!/bin/bash
+# 接続先を選んで、新しい kitty のウィンドウで ssh する。
+#
+#   kitty-ssh-open shell   … ssh するだけ
+#   kitty-ssh-open tmux    … ssh 先で tmux new -As0（あれば attach）
+#
+# kitty.conf から `launch --type=overlay --allow-remote-control <this> <mode>` で呼ぶ。
+# 接続先は bin/ssh-pick（fzf）で選ぶ。sget が手元へ送り返せるよう ssh-agent を転送する（-A）
+
+set -uo pipefail
+
+mode=${1:?usage: kitty-ssh-open shell|tmux}
+
+host=$(~/dotfiles/bin/ssh-pick "$mode") || exit 0
+
+case "$mode" in
+  shell) cmd=(ssh -A "$host") ;;
+  tmux) cmd=(ssh -A -t "$host" tmux new -As0) ;;
+  *)
+    echo "kitty-ssh-open: 不明なモード: $mode" >&2
+    exit 1
+    ;;
+esac
+
+kitty @ launch --type=os-window --cwd="$HOME" "${cmd[@]}" > /dev/null

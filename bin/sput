@@ -1,0 +1,21 @@
+#!/bin/bash
+# 手元のファイルを ssh 先の /tmp/ へ送る。接続先は bin/ssh-pick（fzf）で選ぶ。対になるのは sget。
+#
+#   sput <file>...
+#
+# rsync なので大きいファイルやディレクトリも送れ、途中で切れたらもう一度実行すれば続きから再開する
+
+set -uo pipefail
+
+[ $# -gt 0 ] || {
+  echo 'usage: sput <file>...' >&2
+  exit 1
+}
+
+host=$(~/dotfiles/bin/ssh-pick sput) || exit 1
+
+rsync -aP --partial -- "$@" "$host:/tmp/" || exit 1
+
+for f in "$@"; do
+  echo "$host:/tmp/$(basename "$f")"
+done

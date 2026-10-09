@@ -1,0 +1,35 @@
+#!/bin/bash
+# ssh 先で実行して、ファイルを接続元（手元）の /tmp/ へ送り返す。対になるのは sput。
+#
+#   sget <file>...
+#
+# 接続元は $SSH_CONNECTION の IP。tmux に再アタッチした後も zshrc がプロンプトごとに取り直している。
+# 手元への認証は、手元から転送してきた ssh-agent を使う（ssh -A / ForwardAgent yes でつなぐこと）。
+# 手元のユーザー名は ssh 先からは分からないので $SGET_USER（既定 ken）
+
+set -uo pipefail
+
+[ $# -gt 0 ] || {
+  echo 'usage: sget <file>...' >&2
+  exit 1
+}
+
+origin=${SSH_CONNECTION%% *}
+[ -n "${SSH_CONNECTION:-}" ] && [ -n "$origin" ] || {
+  echo 'sget: ssh でつないだ先で実行してください（$SSH_CONNECTION がありません）' >&2
+  exit 1
+}
+ssh-add -l > /dev/null 2>&1 || {
+  echo 'sget: 手元の ssh-agent が転送されていません。ssh -A でつなぎ直してください' >&2
+  exit 1
+}
+# IPv6 は rsync の宛先で [] が要る
+case "$origin" in *:*) origin="[$origin]" ;; esac
+
+dest=${SGET_USER:-ken}@$origin
+rsync -aP --partial -e 'ssh -o BatchMode=yes -o StrictHostKeyChecking=accept-new' -- "$@" "$dest:/tmp/" ||
+  exit 1
+
+for f in "$@"; do
+  echo "→ 手元の /tmp/$(basename "$f")"
+done
