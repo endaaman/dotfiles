@@ -1,0 +1,46 @@
+#!/bin/bash
+# 手元のファイルを選んで ssh 先の ~/Downloads/ へ送り、送った先のパスを ssh のウィンドウへ貼る。
+#
+# kitty.conf から `launch --type=overlay --allow-remote-control <this>` で呼ぶ。
+# ssh しているウィンドウの上に overlay として開き、親（state:overlay_parent）の ssh の接続先へ送る。
+# 転送は端末を通さず rsync（別の ssh 接続）で行うので、大きいファイルも送れる。途中で切れたら
+# もう一度送れば続きから再開する（--partial）
+
+set -uo pipefail
+
+parent=state:overlay_parent
+
+pause() {
+  echo
+  read -rsn1 -p 'キーを押すと閉じます'
+}
+
+mapfile -t target < <(~/dotfiles/bin/kitty-ssh-target "$parent")
+if [ ${#target[@]} -eq 0 ]; then
+  echo 'このウィンドウでは ssh していません（手元の tmux の中から ssh している場合も同じ）'
+  pause
+  exit 1
+fi
+dest=${target[-1]}
+opts=("${target[@]:0:${#target[@]}-1}")
+
+mapfile -t files < <(kitten choose-files --mode files --output-format text "$HOME")
+[ ${#files[@]} -gt 0 ] || exit 0
+
+echo "→ $dest:~/Downloads/"
+rhome=$(ssh -o BatchMode=yes -o ConnectTimeout=5 "${target[@]}" 'mkdir -p ~/Downloads && printf %s "$HOME"') || {
+  echo "$dest に接続できませんでした"
+  pause
+  exit 1
+}
+
+if ! rsync -aP --partial -e "ssh ${opts[*]}" -- "${files[@]}" "$dest:Downloads/"; then
+  pause
+  exit 1
+fi
+
+sent=()
+for f in "${files[@]}"; do
+  sent+=("$(printf '%q' "$rhome/Downloads/$(basename "$f")")")
+done
+kitty @ send-text --match "$parent" --bracketed-paste auto "${sent[*]}"

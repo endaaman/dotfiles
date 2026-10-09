@@ -1,0 +1,43 @@
+#!/bin/bash
+# kitty のウィンドウで前面にいる ssh の接続先を、ssh にそのまま渡せる引数として 1 行 1 つで出す。
+# ssh が前面にいなければ何も出さずに終了コード 1。
+#
+# 引数のうち接続に要るもの（-l -p -i -J -F -o と接続先）だけを残す。
+# -L/-R/-D などの転送やリモートコマンドは、二重に張ったり実行したりしないよう捨てる。
+# 手元の tmux の中から ssh している場合、kitty からは tmux しか見えないので「ssh 無し」になる
+#
+# KITTY_LISTEN_ON（launch --allow-remote-control で渡る）が要る
+
+set -uo pipefail
+
+# 対象ウィンドウは kitty の --match 式で渡す（id:<window-id> や、overlay から親を指す state:overlay_parent）
+match=${1:?usage: kitty-ssh-target <kitty-match>}
+
+argv=$(kitty @ ls --match "$match" |
+  jq -c '[.[].tabs[].windows[].foreground_processes[] | select(.cmdline[0] | test("(^|/)ssh$"))] | last | .cmdline // empty')
+[ -n "$argv" ] || exit 1
+
+mapfile -t args < <(jq -r '.[1:][]' <<< "$argv")
+keep=()
+i=0
+while [ $i -lt ${#args[@]} ]; do
+  a=${args[$i]}
+  case "$a" in
+    -[lpiJFo])
+      keep+=("$a" "${args[$((i + 1))]}")
+      i=$((i + 2))
+      continue
+      ;;
+    -[lpiJFo]?*) keep+=("$a") ;;
+    -[BbcDEeILmOPQRSWw]) i=$((i + 1)) ;;
+    -*) ;;
+    *)
+      printf '%s\n' "${keep[@]}" "$a"
+      exit 0
+      ;;
+  esac
+  i=$((i + 1))
+done
+
+echo "kitty-ssh-target: ssh の接続先を読み取れませんでした: $argv" >&2
+exit 1

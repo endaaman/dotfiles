@@ -5,10 +5,9 @@
 # kitty.conf から `launch --type=background --allow-remote-control <this> @active-kitty-window-id`
 # で呼ぶ。KITTY_LISTEN_ON にこの起動専用の操作口が入るので、kitty 全体の遠隔操作は要らない。
 #
-# 送り先はウィンドウの前面プロセスで決める:
+# 送り先はウィンドウの前面プロセスで決める（bin/kitty-ssh-target）:
 #   ssh が前面 → その ssh と同じ接続先の /tmp/kitty-paste/ へ送る
 #   それ以外   → 手元の /tmp/kitty-paste/ に置く
-# 手元の tmux の中から ssh している場合、kitty からは tmux しか見えないので手元扱いになる
 
 set -uo pipefail
 
@@ -33,42 +32,13 @@ else
   fail 'クリップボードを読む手段がありません（wl-paste / xclip）'
 fi
 
-# 前面プロセスの argv（JSON 配列）。ssh が複数あれば最後のもの
-argv=$(kitty @ ls --match "id:$win" |
-  jq -c '[.[].tabs[].windows[].foreground_processes[] | select(.cmdline[0] | test("(^|/)ssh$"))] | last | .cmdline // empty')
-
-if [ -z "$argv" ]; then
+if mapfile -t target < <(~/dotfiles/bin/kitty-ssh-target "id:$win") && [ ${#target[@]} -gt 0 ]; then
+  ssh -o BatchMode=yes -o ConnectTimeout=5 "${target[@]}" \
+    "mkdir -p $dir && cat > $dir/$name" < "$img" ||
+    fail "${target[-1]} へ送れませんでした"
+else
   mkdir -p "$dir"
   cp "$img" "$dir/$name" || fail "保存に失敗しました: $dir/$name"
-else
-  # ssh の引数から接続に要るもの（-l -p -i -J -F -o と接続先）だけを拾う。
-  # -L/-R/-D などの転送やリモートコマンドは、二重に張ったり実行したりしないよう捨てる
-  mapfile -t args < <(jq -r '.[1:][]' <<< "$argv")
-  keep=()
-  dest=
-  i=0
-  while [ $i -lt ${#args[@]} ]; do
-    a=${args[$i]}
-    case "$a" in
-      -[lpiJFo])
-        keep+=("$a" "${args[$((i + 1))]}")
-        i=$((i + 2))
-        continue
-        ;;
-      -[lpiJFo]?*) keep+=("$a") ;;
-      -[BbcDEeILmOPQRSWw]) i=$((i + 1)) ;;
-      -*) ;;
-      *)
-        dest=$a
-        break
-        ;;
-    esac
-    i=$((i + 1))
-  done
-  [ -n "$dest" ] || fail "ssh の接続先を読み取れませんでした: $argv"
-  ssh -o BatchMode=yes -o ConnectTimeout=5 "${keep[@]}" "$dest" \
-    "mkdir -p $dir && cat > $dir/$name" < "$img" ||
-    fail "$dest へ送れませんでした"
 fi
 
 kitty @ send-text --match "id:$win" --bracketed-paste auto "$dir/$name"
