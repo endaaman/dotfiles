@@ -200,7 +200,8 @@ fi
 export FCEDIT="$EDITOR"
 export VISUAL="$EDITOR"
 export SUDO_EDITOR="$EDITOR"
-export FZF_DEFAULT_OPTS='--height 50% --reverse --border --bind "tab:down,btab:up,ctrl-j:toggle+down,ctrl-k:toggle" --exact --cycle --no-sort --multi'
+# fzf の既定オプションは ~/dotfiles/fzfrc に置く（kitty の自作パレット kitty_palette.py も同じものを読む）
+export FZF_DEFAULT_OPTS_FILE=~/dotfiles/fzfrc
 export OCAMLPARAM="_,bin-annot=1"
 export OPAMKEEPBUILDDIR=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1

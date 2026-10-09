@@ -1,0 +1,3 @@
+--height 50% --reverse --border
+--bind "tab:down,btab:up,ctrl-j:toggle+down,ctrl-k:toggle"
+--exact --cycle --no-sort --multi

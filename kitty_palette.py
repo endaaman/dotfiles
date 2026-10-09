@@ -2,8 +2,8 @@
 #
 # kitty.conf から `map ctrl+shift+p kitten ~/dotfiles/kitty_palette.py` で呼ぶ。
 # 一覧は kitty.conf から作る: `action_alias my_xxx ...` の直前の 1 行コメントを説明として出す。
-# 選択は fzf（PATH に無ければ zinit の置き場所も見る）。選んだ action は overlay を閉じてから
-# 元のウィンドウに対して実行する（組み込みの command_palette と同じやり方）
+# 選択は fzf（PATH に無ければ zinit の置き場所も見る）。キー操作などは zsh と同じ ~/dotfiles/fzfrc を使う。
+# 選んだ action は overlay を閉じてから元のウィンドウに対して実行する（組み込みの command_palette と同じやり方）
 
 import os
 import re
@@ -17,6 +17,8 @@ from kitty.constants import config_dir
 from kitty.fast_data_types import add_timer, get_boss
 
 FZF_FALLBACKS = ['~/.local/share/zinit/plugins/junegunn---fzf/fzf']
+# KDE から起動した kitty には zshrc の環境変数が無いので、ここで指す
+FZF_OPTS_FILE = '~/dotfiles/fzfrc'
 
 
 def collect() -> list[tuple[str, str]]:
@@ -54,9 +56,11 @@ def main(args: list[str]) -> str:
 
     fzf = find_fzf()
     if fzf:
+        env = dict(os.environ)
+        env.setdefault('FZF_DEFAULT_OPTS_FILE', os.path.expanduser(FZF_OPTS_FILE))
         r = subprocess.run(
-            [fzf, '--no-sort', '--layout=reverse', '--prompt=my> ', '--nth=..'],
-            input='\n'.join(lines), stdout=subprocess.PIPE, text=True)
+            [fzf, '--no-multi', '--prompt=my> '],
+            input='\n'.join(lines), stdout=subprocess.PIPE, text=True, env=env)
         chosen = r.stdout.strip()
     else:
         for i, line in enumerate(lines, 1):
