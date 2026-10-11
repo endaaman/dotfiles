@@ -740,7 +740,17 @@ alias F='fzf'
 alias p='pueue'
 alias pa='pueue add'
 alias pf='pueue follow'
-alias c='claude --dangerously-skip-permissions'
+# Claude Code の画像を tmux 内で表示する
+# 1. cargo install --git https://github.com/gergesh/kitty-tmux
+# 2. ~/.claude/settings.json に "env": {"CLAUDE_CODE_ENABLE_FUNCTION_HOOKS": "1"}
+# 3. Claude Code 内で:
+#    /plugin marketplace add AbysmalBiscuit/claude-mod-images
+#    /plugin install images@claude-mod-images
+if (( $+commands[kitty-tmux] )); then
+  alias c='CLAUDE_CODE_FORCE_TERMINAL_IMAGES=1 kitty-tmux claude --dangerously-skip-permissions'
+else
+  alias c='claude --dangerously-skip-permissions'
+fi
 alias xo='xdg-open $@ &> /dev/null'
 alias en='LANG=en_US.utf8'
 alias ja='LANG=ja_JP.utf-8'
