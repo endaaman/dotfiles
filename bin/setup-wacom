@@ -2,39 +2,91 @@
 
 set -euo pipefail
 
-DEVICE_NAME="Wacom Intuos S 2 Pen"
-DEFAULT_OUTPUT="DP-1"
+# KDE Plasma / Wayland用。再起動や接続し直し後も同じ設定に戻す。
+# Usage: setup-wacom [output-name]  (default: DP-1 = 左の2560x1440画面)
+#
+# 2026-10: 以前の「ペンを置いた位置から相対移動する」操作に合わせ、
+# tabletToolIsRelativeをtrueにした。絶対座標の基準位置を変更したわけではない。
+# KDE側で相対移動へ変換するため、以前と感度の感触が違う場合は別途調整する。
+# osu!側はRaw Input ON / Map absolute OFFを組み合わせる。
+# このスクリプトはosu!の設定や感度、タブレットの入力範囲を変更しない。
+# 相対移動ではoutputNameだけでカーソルを画面内へ閉じ込めることはできない。
+# 必要ならosu!のConfine mouse cursorを使用する（ウィンドウ表示ならAlways）。
+
+# 設定先の既定値。検出された名前と完全一致するものにだけ適用する。
+readonly DEFAULT_TABLET="Wacom Intuos S 2 Pen"
+readonly DEFAULT_OUTPUT="DP-1"
 
 output="${1:-$DEFAULT_OUTPUT}"
 
 base_path="/org/kde/KWin/InputDevice"
+interface="org.kde.KWin.InputDevice"
+
+# 接続・有効化されている画面を検出する。画面構成自体は変更しない。
+outputs_json=$(kscreen-doctor -j)
+echo "Detected displays:"
+jq -r '.outputs[] | select(.connected) | "  \(.name) (enabled: \(.enabled))"' <<< "$outputs_json"
+if ! jq -e --arg name "$output" \
+    'any(.outputs[]; .name == $name and .connected and .enabled)' \
+    <<< "$outputs_json" >/dev/null; then
+    echo "Error: display '$output' is not connected and enabled" >&2
+    exit 1
+fi
 
 # List event nodes via DBus introspection
 nodes=$(qdbus6 org.kde.KWin "$base_path" org.freedesktop.DBus.Introspectable.Introspect 2>/dev/null \
     | grep -oP 'node name="\Kevent[^"]+')
 
 event_node=""
+matches=0
+echo "Detected tablets:"
 for node in $nodes; do
+    is_tablet=$(qdbus6 org.kde.KWin "$base_path/$node" \
+        org.freedesktop.DBus.Properties.Get "$interface" tabletTool 2>/dev/null || true)
+    [[ "$is_tablet" == "true" ]] || continue
+
     name=$(qdbus6 org.kde.KWin "$base_path/$node" \
-        org.freedesktop.DBus.Properties.Get "org.kde.KWin.InputDevice" name 2>/dev/null || true)
-    if [[ "$name" == "$DEVICE_NAME" ]]; then
+        org.freedesktop.DBus.Properties.Get "$interface" name 2>/dev/null || true)
+    echo "  $name ($node)"
+    if [[ "$name" == "$DEFAULT_TABLET" ]]; then
         event_node="$node"
-        break
+        matches=$((matches + 1))
     fi
 done
 
 if [[ -z "$event_node" ]]; then
-    echo "Error: '$DEVICE_NAME' not found" >&2
+    echo "Error: default tablet '$DEFAULT_TABLET' not found" >&2
+    exit 1
+fi
+if (( matches > 1 )); then
+    echo "Error: multiple tablets named '$DEFAULT_TABLET'; target is ambiguous" >&2
     exit 1
 fi
 
 dbus_path="$base_path/$event_node"
 
-echo "Device: $DEVICE_NAME ($event_node)"
+set_property() {
+    qdbus6 org.kde.KWin "$dbus_path" \
+        org.freedesktop.DBus.Properties.Set "$interface" "$1" "$2"
+}
+
+get_property() {
+    qdbus6 org.kde.KWin "$dbus_path" \
+        org.freedesktop.DBus.Properties.Get "$interface" "$1"
+}
+
+echo "Device: $DEFAULT_TABLET ($event_node)"
 echo "Mapping to: $output"
 
-qdbus6 org.kde.KWin "$dbus_path" \
-    org.freedesktop.DBus.Properties.Set \
-    "org.kde.KWin.InputDevice" outputName "$output"
+# event番号は起動・接続ごとに変わるので、上で名前から検索している。
+set_property outputName "$output"
+set_property mapToWorkspace false
+set_property tabletToolIsRelative true
+# 調査時のKDE側の加速設定は0。osu!側の感度とは別の値。
+set_property pointerAcceleration 0
+
+for property in outputName mapToWorkspace tabletToolIsRelative pointerAcceleration; do
+    echo "$property: $(get_property "$property")"
+done
 
 echo "Done"
