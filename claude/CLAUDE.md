@@ -37,6 +37,12 @@ global gitignore (`,*/`) で ignore 済み。Claude Code はこれらを前提�
 - `,links` の中身は他プロジェクトの参照なので、書き方や実装パターンを調べる材料として読んでよい
 - `,` 配下は書き捨て前提。ここのスクリプトやメモを正式な成果物と混同しない
 - これらを git にコミットしない（ignore 済み）
+- **`,` 配下は Syncthing でも ignore 済み**（`~/Sync` / `~/Documents` の `.stignore-shared` に `,*`）
+- **`~/Documents`（Obsidian vault）の中から `~/src` へ symlink を張らない。** Obsidian は `,` 始まりも
+  含めて symlink を辿って索引するので、repo（node_modules 込み）へのリンクが1本あるだけで起動が激重になる
+  （2026-10-08、nucllei へのリンクで "Loading cache" が終わらなかった）。vault 自身を指すリンクも二重索引に
+  なるので避ける。`~/Sync` の小さな資料フォルダへのリンクは可。コードと結びたいときは向きを逆にして
+  `~/src/<repo>/,links/` から `~/Documents/...` へ張る
 
 ## 作業の進め方
 
