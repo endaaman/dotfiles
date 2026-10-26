@@ -1,71 +1,175 @@
 #!/usr/bin/env python3
-"""回線の瞬断を 1 秒刻みで記録し、あとから断を一覧する。
+"""回線の瞬断を 1 秒刻みで区間ごとに記録し、あとからどこで切れたかを一覧する。
 
   netmon run                 計測 (systemd --user の netmon.service から起動)
-  netmon report [--days N]   断の一覧 (既定: 直近 7 日)
-  netmon tail               直近の記録を表示
+  netmon report [--days N]   区間ごとの応答と、断の一覧 (既定: 直近 7 日)
+  netmon tail                直近の記録を表示
 
-記録: ~/.local/state/netmon/YYYY-MM-DD.tsv (成功は応答 ms, 失敗は FAIL)
+記録: ~/.local/state/netmon/YYYY-MM-DD.tsv (成功は応答 ms, 応答なしは FAIL。到達不能などが
+  返ってきたときはその中身: U<ICMP type>/<code>@<返した相手> や EHOSTUNREACH)
+列 (経路の手前から):
+  carrier          PC の NIC のリンク (0 ならケーブルかスイッチ側で切れている)
+  rx/tx_bytes      通信量。自分の大きな通信で回線が詰まっていないかを見る
+  gw               既定ゲートウェイへの ping
+  h2, h3, ...      経路上の N 番目のルーター。tracepath と同じく TTL を絞った UDP を投げて
+                   ICMP time exceeded を待つ。ICMP echo を外へ通さないネットワーク (大学など)
+                   でも返ってくる。経路は起動時と日付が変わったときに調べ、応答した hop だけ測る
+  v4_*, v6_*       外部への TCP 接続 (ping は落とされることがあるので使わない)
+  dns_*            名前解決 (dig)。ホストが空のものはシステムのリゾルバ
 追加の計測先: ~/.config/netmon/targets に `名前 ホスト` を 1 行ずつ
-  (自宅のグローバル IP や ISP の中継点はここに書く。dotfiles は public なので入れない)
+  ホストが ip:port / [ip6]:port なら TCP 接続、名前が dns_ で始まれば dig、それ以外は ping。
+  外部として扱うものは名前を v4_ / v6_ で始める。ping は gw の次の区間として扱う
+  (自宅のグローバル IP などはここに書く。dotfiles は public なので入れない)
 """
 import argparse
 import concurrent.futures as cf
 import datetime as dt
+import errno
 import os
+import re
+import select
+import socket
+import statistics
 import subprocess
 import sys
 import time
+from collections import Counter
 from pathlib import Path
 
 STATE = Path(os.environ.get('XDG_STATE_HOME', Path.home() / '.local/state')) / 'netmon'
 CONFIG = Path(os.environ.get('XDG_CONFIG_HOME', Path.home() / '.config')) / 'netmon/targets'
 
-# 名前が dns_ で始まるものは dig、それ以外は ping。ホストが空の dns_ はシステムのリゾルバ
-DEFAULT_TARGETS = [
-    ('v4', '1.1.1.1'),
-    ('v4g', '8.8.8.8'),
-    ('v6', '2001:4860:4860::8888'),
-    ('dns_sys', ''),
-    ('dns_cf', '1.1.1.1'),
-]
+TIMEOUT = 1.0
+# 経路を調べる宛先。8.8.8.8 は丸ごと塞いでいるネットワークがあるので使わない
+TRACE_DST = '1.1.1.1'
+EXTERNAL = [('v4_cf', 'tcp', ('1.1.1.1', 443)), ('v4_q9', 'tcp', ('9.9.9.9', 443))]
+EXTERNAL_V6 = [('v6_cf', 'tcp', ('2606:4700:4700::1111', 443))]
+DNS = [('dns_sys', 'dns', ''), ('dns_cf', 'dns', '1.1.1.1')]
+STATS = [('carrier', 'carrier'), ('rx_bytes', 'statistics/rx_bytes'), ('tx_bytes', 'statistics/tx_bytes'),
+         ('rx_dropped', 'statistics/rx_dropped'), ('rx_missed', 'statistics/rx_missed_errors')]
+IP_RECVERR = getattr(socket, 'IP_RECVERR', 11)
+SO_EE_ORIGIN_ICMP = 2
+ICMP_TIME_EXCEEDED = 11
 
 
-def default_route():
-    out = subprocess.run(['ip', 'route', 'show', 'default'], capture_output=True, text=True).stdout.split()
+def default_route(v6=False):
+    out = subprocess.run(['ip'] + (['-6'] if v6 else []) + ['route', 'show', 'default'],
+                         capture_output=True, text=True).stdout.split()
     gw = out[out.index('via') + 1] if 'via' in out else None
     dev = out[out.index('dev') + 1] if 'dev' in out else None
     return gw, dev
 
 
+def ttl_probe(dst, ttl):
+    """TTL を絞った UDP を dst へ投げ、途中のルーターが返す ICMP を待つ。(ms, 返した相手, type, code) か None"""
+    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+        s.setsockopt(socket.IPPROTO_IP, socket.IP_TTL, ttl)
+        s.setsockopt(socket.IPPROTO_IP, IP_RECVERR, 1)
+        s.connect((dst, 33434 + ttl))
+        p = select.poll()
+        p.register(s, select.POLLERR)
+        t = time.monotonic()
+        s.send(b'netmon')
+        if not p.poll(TIMEOUT * 1000):
+            return None
+        ms = (time.monotonic() - t) * 1000
+        _, anc, _, _ = s.recvmsg(64, 512, socket.MSG_ERRQUEUE)
+        for level, typ, data in anc:
+            # struct sock_extended_err (16 byte) の後ろに、ICMP を返した相手の sockaddr_in が続く
+            if level == socket.IPPROTO_IP and typ == IP_RECVERR and data[4] == SO_EE_ORIGIN_ICMP:
+                return ms, socket.inet_ntoa(data[20:24]), data[5], data[6]
+    return None
+
+
+def tcp_probe(host, port):
+    t = time.monotonic()
+    socket.create_connection((host, port), timeout=TIMEOUT).close()
+    return (time.monotonic() - t) * 1000
+
+
+def ping_probe(host):
+    r = subprocess.run(['ping', '-6' if ':' in host else '-4', '-c1', '-W1', host],
+                       capture_output=True, text=True, timeout=3)
+    # 外から測るとプロセス起動の分が乗るので、ping 自身が出す値を使う
+    m = re.search(r'time=([\d.]+)', r.stdout)
+    return float(m[1]) if r.returncode == 0 and m else None
+
+
+def dns_probe(server):
+    r = subprocess.run(['dig', '+tries=1', '+time=1', '+noall', '+answer', '+stats', 'www.google.com']
+                       + ([f'@{server}'] if server else []), capture_output=True, text=True, timeout=3)
+    m = re.search(r'Query time: (\d+) msec', r.stdout)
+    answered = any(line and not line.startswith(';') for line in r.stdout.splitlines())
+    return float(m[1]) if r.returncode == 0 and m and answered else None
+
+
+def probe(target):
+    _, kind, arg = target
+    try:
+        if kind == 'ttl':
+            r = ttl_probe(*arg)
+            # time exceeded 以外 (到達不能など) は、どこが何を返したかを残す
+            if r and r[2] != ICMP_TIME_EXCEEDED and not (r[1] == arg[0] and r[2:] == (3, 3)):
+                return f'U{r[2]}/{r[3]}@{r[1]}'
+            ms = r and r[0]
+        elif kind == 'tcp':
+            ms = tcp_probe(*arg)
+        elif kind == 'dns':
+            ms = dns_probe(arg)
+        else:
+            ms = ping_probe(arg)
+    except subprocess.TimeoutExpired:
+        ms = None
+    except OSError as e:
+        # タイムアウトは応答なし。それ以外は到達不能などが返ってきている
+        return errno.errorcode.get(e.errno, 'FAIL')
+    return 'FAIL' if ms is None else f'{ms:.1f}'
+
+
+def discover(dst, max_ttl=16):
+    """経路上で応答するルーターを {ttl: ip} で返す。ttl 1 は gw なので別に測る"""
+    ttls = range(2, max_ttl + 1)
+    hops = {}
+    with cf.ThreadPoolExecutor(len(ttls)) as ex:
+        # ルーターは ICMP を間引くことがあるので何度か投げる
+        for _ in range(3):
+            for ttl, r in zip(ttls, ex.map(lambda t: probe_quiet(dst, t), ttls)):
+                if r:
+                    hops.setdefault(ttl, r[1])
+    # 宛先そのものが返したら、そこから先は外部の計測で見る
+    reached = [t for t, ip in hops.items() if ip == dst]
+    return {t: ip for t, ip in sorted(hops.items()) if not reached or t < min(reached)}
+
+
+def probe_quiet(dst, ttl):
+    try:
+        return ttl_probe(dst, ttl)
+    except OSError:
+        return None
+
+
+def parse_target(name, host):
+    if name.startswith('dns_'):
+        return name, 'dns', host
+    m = re.fullmatch(r'\[(.+)\]:(\d+)|([^:]+):(\d+)', host)
+    if m:
+        return name, 'tcp', (m[1] or m[3], int(m[2] or m[4]))
+    return name, 'ping', host
+
+
 def load_targets():
     gw, dev = default_route()
-    targets = [('gw', gw)] if gw else []
+    targets = [('gw', 'ping', gw)] if gw else []
     if CONFIG.exists():
         for line in CONFIG.read_text().splitlines():
             parts = line.split('#', 1)[0].split()
             if len(parts) == 2:
-                targets.append(tuple(parts))
-    targets += DEFAULT_TARGETS
-    return targets, dev
-
-
-def command(name, host):
-    if name.startswith('dns_'):
-        return ['dig', '+short', '+tries=1', '+time=2', 'www.google.com'] + ([f'@{host}'] if host else [])
-    return ['ping', '-6' if ':' in host else '-4', '-c1', '-W1', host]
-
-
-def probe(cmd):
-    t = time.monotonic()
-    try:
-        r = subprocess.run(cmd, capture_output=True, text=True, timeout=3)
-    except subprocess.TimeoutExpired:
-        return 'FAIL'
-    ok = r.returncode == 0 and bool(r.stdout.strip())
-    if cmd[0] == 'ping':
-        ok = ok and ' 1 received' in r.stdout
-    return str(int((time.monotonic() - t) * 1000)) if ok else 'FAIL'
+                targets.append(parse_target(*parts))
+    hops = discover(TRACE_DST) if gw else {}
+    targets += [(f'h{t}', 'ttl', (TRACE_DST, t)) for t in hops]
+    targets += EXTERNAL + (EXTERNAL_V6 if default_route(v6=True)[1] else []) + DNS
+    route = {'gw': gw, **{f'h{t}': ip for t, ip in hops.items()}}
+    return targets, dev, route
 
 
 def read_stat(dev, name):
@@ -77,33 +181,34 @@ def read_stat(dev, name):
 
 def cmd_run(_args):
     STATE.mkdir(parents=True, exist_ok=True)
-    targets, dev = load_targets()
-    cmds = [command(n, h) for n, h in targets]
-    header = '\t'.join(['time', 'carrier', 'rx_dropped', 'rx_missed'] + [n for n, _ in targets])
-    current = None
-    f = None
-    with cf.ThreadPoolExecutor(len(cmds)) as ex:
+    current = f = None
+    route = {}
+    planned = 0
+    with cf.ThreadPoolExecutor(32) as ex:
         while True:
             t0 = time.monotonic()
-            results = list(ex.map(probe, cmds))
+            path = STATE / f'{dt.datetime.now():%Y-%m-%d}.tsv'
+            # 経路は日付が変わるたびに調べ直す。回線が落ちていて hop が取れなかったときは 5 分おきに
+            if path != current or (len(route) <= 1 and t0 - planned > 300):
+                targets, dev, route = load_targets()
+                planned = t0
+                if path != current:
+                    if f:
+                        f.close()
+                    f = open(path, 'a', buffering=1)
+                    current = path
+                # 計測先が変わることがあるので、調べ直すたびに経路とヘッダを書く
+                f.write('# route ' + ' '.join(f'{k}={v}' for k, v in route.items()) + '\n')
+                f.write('\t'.join(['time'] + [n for n, _ in STATS] + [n for n, *_ in targets]) + '\n')
             now = dt.datetime.now()
-            path = STATE / f'{now:%Y-%m-%d}.tsv'
-            if path != current:
-                if f:
-                    f.close()
-                fresh = not path.exists()
-                f = open(path, 'a', buffering=1)
-                # 再起動で計測先が変わることがあるので、起動のたびにヘッダを書く
-                if fresh or current is None:
-                    f.write(header + '\n')
-                current = path
-            stats = [read_stat(dev, 'carrier'), read_stat(dev, 'statistics/rx_dropped'),
-                     read_stat(dev, 'statistics/rx_missed_errors')]
+            stats = [read_stat(dev, s) for _, s in STATS]
+            results = list(ex.map(probe, targets))
             f.write('\t'.join([f'{now:%H:%M:%S}'] + stats + results) + '\n')
             time.sleep(max(0, 1 - (time.monotonic() - t0)))
 
 
 def iter_rows(days):
+    """(時刻, {列: 値}, {区間: 応答元 IP}) を古い順に"""
     today = dt.date.today()
     for i in range(days - 1, -1, -1):
         day = today - dt.timedelta(days=i)
@@ -111,78 +216,166 @@ def iter_rows(days):
         if not path.exists():
             continue
         cols = None
+        route = {}
         for line in path.read_text().splitlines():
+            if line.startswith('# route '):
+                route = dict(kv.split('=', 1) for kv in line[8:].split())
+                continue
             fields = line.split('\t')
             if fields[0] == 'time':
                 cols = fields
                 continue
             if cols and len(fields) == len(cols):
                 ts = dt.datetime.combine(day, dt.time.fromisoformat(fields[0]))
-                yield ts, dict(zip(cols, fields))
+                yield ts, dict(zip(cols, fields)), route
 
 
-def classify(row):
-    """その秒の状態を、どこで途切れているかで分類する。None は正常"""
-    def failed(prefix):
-        keys = [k for k in row if k == prefix or k.startswith(prefix)]
-        return bool(keys) and all(row[k] == 'FAIL' for k in keys)
+STAT_COLS = {'time'} | {n for n, _ in STATS}
+
+
+def ok(v):
+    try:
+        float(v)
+        return True
+    except ValueError:
+        return False
+
+
+def is_path(col):
+    return col not in STAT_COLS and not col.startswith(('v4_', 'v6_', 'dns_'))
+
+
+def classify(row, route, healthy, slow):
+    """その秒の状態を、どこで途切れているかで分類する。(手前ほど小さい順位, 説明) か None"""
+    def cols(prefix):
+        return [k for k in row if k.startswith(prefix)]
+
+    def all_fail(keys):
+        return bool(keys) and not any(ok(row[k]) for k in keys)
+
+    # 普段から返さない hop (ICMP を間引くルーター) は切れた場所の判定に使わない
+    path = [k for k in row if is_path(k) and k in healthy]
+    v4, v6 = cols('v4_'), cols('v6_')
     if row.get('carrier') == '0':
-        return 'PC リンク断'
-    if row.get('gw') == 'FAIL':
-        return 'LAN 断 (ルーターまで不通)'
-    v4, v6 = failed('v4'), failed('v6')
-    if v4 and v6:
-        return '外部 全断 (v4+v6)'
-    if v4:
-        return '外部 IPv4 断'
-    if v6:
-        return '外部 IPv6 断'
-    if failed('dns_'):
-        return 'DNS 断'
+        return 0, 'PC の NIC がリンク断'
+    if all_fail(v4):
+        if v6 and not all_fail(v6):
+            return 90, '外部 IPv4 だけ断 (IPv6 は通る)'
+        # 経路を手前から見て、そこから先が全部返ってこない最初の区間で切れている
+        for i, k in enumerate(path):
+            if all_fail(path[i:]):
+                where = f'{k} ({route[k]})' if k in route else k
+                return 1 + i, f'{where} から先が不通'
+        return 80, '外部だけ不通 (経路上のルーターは応答)'
+    if all_fail(v6):
+        return 91, '外部 IPv6 断'
+    if all_fail(cols('dns_')):
+        return 92, 'DNS 断'
+    if not all(ok(row[k]) for k in v4 + v6):
+        return 93, '外部 一部ロス'
+    if v4 and min(float(row[k]) for k in v4) > slow:
+        for k in path:
+            if ok(row[k]) and float(row[k]) > slow:
+                return 94, f'遅延 ({k} から >{slow}ms)'
+        return 95, f'遅延 (外部 >{slow}ms)'
     return None
 
 
+def rate(rows, i, j):
+    """rows[i] から rows[j] までの平均 (下り, 上り) Mbps"""
+    (t0, a, _), (t1, b, _) = rows[i], rows[j]
+    sec = (t1 - t0).total_seconds()
+    try:
+        rx, tx = (int(b[k]) - int(a[k]) for k in ('rx_bytes', 'tx_bytes'))
+    except (KeyError, ValueError):
+        return None
+    if sec <= 0 or rx < 0 or tx < 0:
+        return None
+    return rx * 8 / sec / 1e6, tx * 8 / sec / 1e6
+
+
+def throughput(rows, start, end, before=5):
+    """断の直前 before 秒から断の終わりまでの 下り/上り の平均と、1 秒ごとの下りの最大"""
+    i, j = max(0, start - before), max(end, start + 1)
+    j = min(j, len(rows) - 1)
+    avg = rate(rows, i, j)
+    if not avg:
+        return f'{"-":>18}'
+    peak = max((r[0] for r in (rate(rows, k, k + 1) for k in range(i, j)) if r), default=avg[0])
+    return f'{avg[0]:6.0f}({peak:4.0f})/{avg[1]:<5.0f}'
+
+
+def print_segments(rows):
+    seen, good, ms = Counter(), Counter(), {}
+    for _, row, _ in rows:
+        for k, v in row.items():
+            if k in STAT_COLS:
+                continue
+            seen[k] += 1
+            if ok(v):
+                good[k] += 1
+                ms.setdefault(k, []).append(float(v))
+    route = rows[-1][2]
+    print(f'区間ごとの応答 ({len(rows)} 秒分、ms):')
+    # 全角は 2 桁ぶん食うので、見出しは桁を数えて書く
+    print(f'  {"":8}応答元{"":10}   応答率   中央値      p99')
+    for k in seen:
+        v = ms.get(k, [])
+        med = f'{statistics.median(v):.1f}' if v else '-'
+        p99 = f'{statistics.quantiles(v, n=100)[98]:.1f}' if len(v) >= 2 else '-'
+        print(f'  {k:8}{route.get(k, ""):16}{good[k] / seen[k] * 100:8.3f}%{med:>9}{p99:>9}')
+    print()
+    return {k for k in seen if good[k] / seen[k] >= 0.5}
+
+
 def cmd_report(args):
-    episodes = []  # [start, end, kind, samples]
+    rows = list(iter_rows(args.days))
+    if not rows:
+        print(f'直近 {args.days} 日: 記録なし')
+        return
+    healthy = print_segments(rows)
+
+    episodes = []  # [開始 index, 終了 index, (順位, 説明), 失敗回数, 返ってきたエラー]
     prev_ts = None
-    for ts, row in iter_rows(args.days):
-        kind = classify(row)
+    for i, (ts, row, route) in enumerate(rows):
+        kind = classify(row, route, healthy, args.slow)
         # 3 秒以上記録が空いたら (停止・スリープ) 別の断として扱う
         gap = prev_ts is None or (ts - prev_ts).total_seconds() > 3
         prev_ts = ts
         if kind is None:
             continue
+        fails = Counter(k for k, v in row.items() if k not in STAT_COLS and not ok(v))
+        errors = Counter(v for k, v in row.items() if k not in STAT_COLS and not ok(v) and v != 'FAIL')
         last = episodes[-1] if episodes else None
-        if last and not gap and (ts - last[1]).total_seconds() <= 5:
-            last[1] = ts
+        if last and not gap and (ts - rows[last[1]][0]).total_seconds() <= 5:
+            last[1] = i
             # 一連の断は、いちばん手前で途切れていた分類で代表させる
-            if order(kind) < order(last[2]):
-                last[2] = kind
-            last[3] += 1
+            last[2] = min(last[2], kind)
+            last[3] += fails
+            last[4] += errors
         else:
-            episodes.append([ts, ts, kind, 1])
+            episodes.append([i, i, kind, fails, errors])
 
-    episodes = [e for e in episodes if (e[1] - e[0]).total_seconds() + 1 >= args.min]
+    def duration(e):
+        return int((rows[e[1]][0] - rows[e[0]][0]).total_seconds()) + 1
+
+    episodes = [e for e in episodes if duration(e) >= args.min]
     if not episodes:
         print(f'直近 {args.days} 日: 断なし')
         return
-    print(f'直近 {args.days} 日: {len(episodes)} 件 ({args.min} 秒以上続いたもの)\n')
-    for start, end, kind, _ in episodes:
-        dur = int((end - start).total_seconds()) + 1
-        print(f'{start:%m/%d %a %H:%M:%S}  {dur:>4}s  {kind}')
+    print(f'直近 {args.days} 日: {len(episodes)} 件 ({args.min} 秒以上続いたもの)')
+    print('  通信量は断の直前 5 秒から終わりまでの 下り(1 秒の最大)/上り Mbps。NIC のリンク速度近くまで')
+    print('  出ていたら、自分の通信 (NFS など) で詰まっている。[] は 区間:失敗した秒数\n')
+    for e in episodes:
+        start = rows[e[0]][0]
+        detail = ' '.join(f'{k}:{n}' for k, n in e[3].items())
+        print(f'{start:%m/%d %a %H:%M:%S}  {duration(e):>4}s  {throughput(rows, e[0], e[1])}  {e[2][1]}  [{detail}]')
+        if e[4]:
+            print(f'{"":30}返ってきたエラー: ' + ' '.join(f'{v}×{n}' for v, n in e[4].most_common()))
     print('\n日別:')
-    per_day = {}
-    for start, *_ in episodes:
-        per_day[start.date()] = per_day.get(start.date(), 0) + 1
+    per_day = Counter(rows[e[0]][0].date() for e in episodes)
     for day, n in sorted(per_day.items()):
         print(f'  {day:%m/%d %a}  {n}')
-
-
-ORDER = ['PC リンク断', 'LAN 断 (ルーターまで不通)', '外部 全断 (v4+v6)', '外部 IPv4 断', '外部 IPv6 断', 'DNS 断']
-
-
-def order(kind):
-    return ORDER.index(kind)
 
 
 def cmd_tail(args):
@@ -190,10 +383,10 @@ def cmd_tail(args):
     if not rows:
         print('記録なし')
         return
-    cols = list(rows[0][1])
+    cols = list(rows[-1][1])
     print('\t'.join(cols))
-    for _, row in rows:
-        print('\t'.join(row[c] for c in cols))
+    for _, row, _ in rows:
+        print('\t'.join(row.get(c, '') for c in cols))
 
 
 def main():
@@ -202,7 +395,8 @@ def main():
     sub.add_parser('run').set_defaults(func=cmd_run)
     r = sub.add_parser('report')
     r.add_argument('--days', type=int, default=7)
-    r.add_argument('--min', type=int, default=2, help='この秒数以上失敗が続いたものだけ出す')
+    r.add_argument('--min', type=int, default=2, help='この秒数以上続いたものだけ出す')
+    r.add_argument('--slow', type=int, default=300, help='外部への応答がこの ms を超えたら遅延とみなす')
     r.set_defaults(func=cmd_report)
     t = sub.add_parser('tail')
     t.add_argument('-n', type=int, default=20)
