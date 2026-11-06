@@ -1,0 +1,10 @@
+[Unit]
+Description=Merge Syncthing conflict copies every minute (syncthing-merge)
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=1min
+AccuracySec=5s
+
+[Install]
+WantedBy=timers.target

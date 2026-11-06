@@ -1,0 +1,673 @@
+#!/usr/bin/env python3
+"""Syncthing の conflict コピー (*.sync-conflict-*) を、git と同じ 3-way マージで本体に取り込む。
+
+  syncthing-merge run [--dry-run]   スナップショットを取り、conflict コピーをマージする
+                                    (systemd --user の syncthing-merge.timer から毎分起動)
+  syncthing-merge status            設定と、いま run したら何をするか (何も変えない)
+  syncthing-merge log [-n N]        これまでのマージと、バックアップの場所
+
+設定: $SYNCTHING_MERGE_CONFIG (既定 ~/Documents/dev/syncthing-merge/config.toml)
+  実行ホスト・対象フォルダ・拡張子・除外・union で書き戻すファイル。ホスト名やファイル名を含むので
+  public な dotfiles には置かない。dotfiles は全台に入るので、hostname が config の host と
+  違えば何もしない (2 台が同時にマージすると、互いの書き戻しがまた衝突する)
+状態: $SYNCTHING_MERGE_STATE (既定 ~/.local/share/syncthing-merge)。同期されるフォルダの中に
+  .git を作ると Syncthing で配られて壊れるので、外に置く
+  <name>.git              影の git (--work-tree=<フォルダ>)。対象のファイルだけを毎回 commit する
+  backup/<時刻>/<name>/   マージで書き換える前の本体と conflict コピー
+マージ: Syncthing は共通祖先を残さないので、base は影の git の過去の版から推定する。
+  手元の系列 (影の git の最新に近い側) でない方は、どこかの版から枝分かれしている。その版は
+  そちらに最も近い (差がそちらの変更だけになる) ので、それを base にする。同点なら古い方。
+  クリーンなら本体に書き戻して conflict コピーを消す。衝突したら、union に合うファイルは
+  両方の行を残して書き戻し、それ以外は conflict コピーを残して手で直してもらう
+"""
+import argparse
+import datetime as dt
+import difflib
+import fcntl
+import fnmatch
+import json
+import os
+import re
+import shutil
+import socket
+import stat
+import subprocess
+import sys
+import tempfile
+import time
+from dataclasses import dataclass
+from pathlib import Path
+
+try:
+    import tomllib
+except ImportError:  # Python < 3.11。実行ホストでなければ host の行さえ読めれば足りる
+    tomllib = None
+
+HOME = Path.home()
+CONFIG = Path(os.environ.get('SYNCTHING_MERGE_CONFIG')
+              or HOME / 'Documents/dev/syncthing-merge/config.toml').expanduser()
+STATE = Path(os.environ.get('SYNCTHING_MERGE_STATE')
+             or Path(os.environ.get('XDG_DATA_HOME') or HOME / '.local/share') / 'syncthing-merge').expanduser()
+
+# Syncthing の命名: <拡張子を除いた名前>.sync-conflict-<YYYYMMDD-HHMMSS>-<最後に変更したデバイスの短縮 ID><拡張子>
+CONFLICT = re.compile(r'(?P<stem>.+)\.sync-conflict-(?P<stamp>\d{8}-\d{6})-(?P<dev>[A-Z0-9]*)(?P<ext>\.[^.]+)?')
+# 設定に書かなくても除くもの: Syncthing の管理用と作業中のファイル、別の git repo
+ALWAYS_EXCLUDE = ['.stfolder/', '.stversions/', '.git/', '.syncthing.*', '~syncthing~*', '*.tmp']
+SETTLE = 30
+MAX_VERSIONS = 500
+# 書き戻しの一時ファイル。*.tmp は .stignore で同期されず、. 始まりは Obsidian が拾わない
+TMP_NAME = '.syncthing-merge-{}.tmp'
+GIT_ENV = {k: v for k, v in os.environ.items() if not k.startswith('GIT_')} | {
+    # ~/.gitconfig (autocrlf, hooksPath, gpgsign など) を影の git に効かせない
+    'GIT_CONFIG_GLOBAL': os.devnull, 'GIT_CONFIG_NOSYSTEM': '1', 'GIT_TERMINAL_PROMPT': '0',
+    'GIT_AUTHOR_NAME': 'syncthing-merge', 'GIT_AUTHOR_EMAIL': 'syncthing-merge@localhost',
+    'GIT_COMMITTER_NAME': 'syncthing-merge', 'GIT_COMMITTER_EMAIL': 'syncthing-merge@localhost',
+}
+
+
+class ConfigError(Exception):
+    pass
+
+
+class GitError(Exception):
+    pass
+
+
+class Raced(Exception):
+    pass
+
+
+@dataclass
+class Folder:
+    root: Path
+    name: str
+    exts: frozenset
+    exclude: list
+    union: list
+
+
+@dataclass
+class Copy:
+    rel: str    # conflict コピーのフォルダからの相対パス
+    main: str   # 本体の相対パス
+    stamp: str  # YYYYMMDD-HHMMSS (conflict を作った時刻)
+
+
+def is_this_host(host):
+    h = socket.gethostname()
+    return host in (h, h.split('.')[0])
+
+
+def slug(root):
+    try:
+        rel = root.relative_to(HOME)
+    except ValueError:
+        rel = root
+    return re.sub(r'[^\w.-]+', '-', str(rel)).strip('-.') or 'root'
+
+
+def load_config():
+    """(host, settle 秒, [Folder])。config が無ければ None"""
+    try:
+        text = CONFIG.read_bytes()
+    except FileNotFoundError:
+        return None
+    if tomllib is None:
+        m = re.search(rb'^\s*host\s*=\s*"([^"]*)"', text, re.M)
+        if m and not is_this_host(m[1].decode()):
+            return m[1].decode(), SETTLE, []
+        raise ConfigError('Python 3.11 以上 (tomllib) が要る')
+    try:
+        cfg = tomllib.loads(text.decode())
+    except (UnicodeDecodeError, tomllib.TOMLDecodeError) as e:
+        raise ConfigError(e)
+    if not isinstance(cfg.get('host'), str):
+        raise ConfigError('host が無い')
+    folders = []
+    for f in cfg.get('folder', []):
+        if 'path' not in f:
+            raise ConfigError('[[folder]] に path が無い')
+        # フォルダに書いていなければ最上位の値を使う
+        f = {k: cfg[k] for k in ('extensions', 'exclude', 'union') if k in cfg} | f
+        root = Path(f['path']).expanduser()
+        folders.append(Folder(root, f.get('name') or slug(root),
+                              frozenset(e.lower().lstrip('.') for e in f.get('extensions', ['md'])),
+                              ALWAYS_EXCLUDE + list(f.get('exclude', [])), list(f.get('union', []))))
+    names = [f.name for f in folders]
+    if len(set(names)) != len(names):
+        raise ConfigError(f'フォルダの name が重複している: {names}')
+    return cfg['host'], float(cfg.get('settle', SETTLE)), folders
+
+
+def matches(patterns, rel, is_dir=False):
+    """gitignore を簡単にしたもの。末尾 / はディレクトリだけ、/ を含めばフォルダからの相対パス、
+    含まなければ名前と fnmatch で比べる"""
+    name = rel.rpartition('/')[2]
+    for p in patterns:
+        if p.endswith('/'):
+            if not is_dir:
+                continue
+            p = p.rstrip('/')
+        if '/' in p:
+            if fnmatch.fnmatchcase(rel, p.lstrip('/')):
+                return True
+        elif fnmatch.fnmatchcase(name, p):
+            return True
+    return False
+
+
+def scan(folder):
+    """(対象ファイルの相対パス, [Copy])。symlink は辿らない"""
+    files, copies = [], []
+    for dirpath, dirnames, filenames in os.walk(folder.root):
+        base = os.path.relpath(dirpath, folder.root)
+        base = '' if base == '.' else base + '/'
+        keep = []
+        for d in dirnames:
+            full = os.path.join(dirpath, d)
+            # 中に .git があるもの (別の repo) は、影の git から add できない
+            if not (os.path.islink(full) or matches(folder.exclude, base + d, True)
+                    or os.path.lexists(os.path.join(full, '.git'))):
+                keep.append(d)
+        dirnames[:] = keep
+        for fn in filenames:
+            rel = base + fn
+            if matches(folder.exclude, rel) or os.path.islink(os.path.join(dirpath, fn)):
+                continue
+            m = CONFLICT.fullmatch(fn)
+            if m:
+                ext = m['ext'] or ''
+                main = base + m['stem'] + ext
+                if ext[1:].lower() in folder.exts and not matches(folder.exclude, main):
+                    copies.append(Copy(rel, main, m['stamp']))
+            elif os.path.splitext(fn)[1][1:].lower() in folder.exts:
+                files.append(rel)
+    return files, copies
+
+
+def nul(paths):
+    return b'\0'.join(os.fsencode(p) for p in paths)
+
+
+def glob_escape(s):
+    return re.sub(r'([*?\[\\])', r'\\\1', s)
+
+
+class Shadow:
+    """フォルダの外に置いた git dir と、フォルダを work tree にした影の git"""
+
+    def __init__(self, folder):
+        self.folder = folder
+        self.dir = STATE / f'{folder.name}.git'
+
+    def git(self, *args, input=None, check=True, literal=False):
+        cmd = ['git', f'--git-dir={self.dir}', f'--work-tree={self.folder.root}']
+        r = subprocess.run(cmd + (['--literal-pathspecs'] if literal else []) + list(args),
+                           input=input, capture_output=True, env=GIT_ENV, cwd=self.folder.root)
+        if check and r.returncode:
+            raise GitError(f'git {args[0]}: {r.stderr.decode(errors="replace").strip()}')
+        return r
+
+    def exists(self):
+        return (self.dir / 'HEAD').exists()
+
+    def init(self):
+        if self.exists():
+            return
+        self.dir.parent.mkdir(parents=True, exist_ok=True)
+        r = subprocess.run(['git', 'init', '-q', '--bare', str(self.dir)], capture_output=True, env=GIT_ENV)
+        if r.returncode:
+            raise GitError(f'git init: {r.stderr.decode(errors="replace").strip()}')
+        # gc を裏に回すと、oneshot の終了で systemd に止められる
+        for k, v in [('core.autocrlf', 'false'), ('core.quotepath', 'false'), ('core.fsmonitor', 'false'),
+                     ('core.untrackedCache', 'false'), ('status.showUntrackedFiles', 'no'),
+                     ('gc.autoDetach', 'false'), ('commit.gpgsign', 'false')]:
+            self.git('config', k, v)
+        # フォルダの中の .gitattributes で改行の変換やフィルタがかからないように (info/attributes が最優先)
+        (self.dir / 'info').mkdir(exist_ok=True)
+        (self.dir / 'info/attributes').write_text('* -text -eol -filter -ident -working-tree-encoding\n')
+
+    def has_head(self):
+        return self.exists() and self.git('rev-parse', '-q', '--verify', 'HEAD', check=False).returncode == 0
+
+    def tracked(self):
+        if not self.exists():
+            return set()
+        return {os.fsdecode(p) for p in self.git('ls-files', '-z').stdout.split(b'\0') if p}
+
+    def changed(self):
+        """index と中身が違う追跡中のファイル (追跡していないものは見ないので、フォルダ全体は走査しない)"""
+        return {os.fsdecode(p) for p in self.git('diff', '--name-only', '-z').stdout.split(b'\0') if p}
+
+    def stage(self, add=(), remove=()):
+        # パスは自分で選んでいるので、フォルダの中の .gitignore は無視して (-f) そのまま渡す
+        if add:
+            self.git('add', '-f', '--pathspec-from-file=-', '--pathspec-file-nul', input=nul(add), literal=True)
+        if remove:
+            self.git('rm', '--cached', '-q', '--ignore-unmatch', '--pathspec-from-file=-', '--pathspec-file-nul',
+                     input=nul(remove), literal=True)
+
+    def commit(self, message):
+        if self.has_head():
+            if self.git('diff', '--cached', '--quiet', check=False).returncode == 0:
+                return False
+        elif not self.git('ls-files', '-z').stdout:
+            return False
+        self.git('commit', '-q', '--no-verify', '-m', message)
+        return True
+
+    def head_blob(self, path):
+        r = self.git('rev-parse', '-q', '--verify', f'HEAD:{path}', check=False)
+        return r.stdout.strip().decode() if r.returncode == 0 else None
+
+    def versions(self, main):
+        """本体と、取り込んだその conflict コピーの過去の版 [(commit 時刻, blob, 'main' | 'copy', commit)]。
+        新しい順。同じ中身は 1 つにまとめ、最初に現れた commit を付ける"""
+        if not self.has_head():
+            return []
+        stem, ext = os.path.splitext(main)
+        out = self.git('log', '-z', '--no-renames', '--raw', '--no-abbrev', '--format=%x01%ct %h', '--',
+                       f':(literal){main}', f':(glob){glob_escape(stem)}.sync-conflict-*{glob_escape(ext)}').stdout
+        seen = {}
+        for chunk in out.split(b'\x01')[1:]:
+            head, _, rest = chunk.partition(b'\0')
+            ct, commit = head.decode().split()
+            commit = commit[:7]  # --no-abbrev が %h にも効く
+            fields = rest.lstrip(b'\n').split(b'\0')
+            for info, path in zip(fields[0::2], fields[1::2]):
+                parts = info.split()
+                if len(parts) < 5 or parts[4].startswith(b'D') or not parts[3].strip(b'0'):
+                    continue
+                kind = 'main' if os.fsdecode(path) == main else 'copy'
+                seen[parts[3].decode()] = (int(ct), parts[3].decode(), kind, commit)
+        return sorted(seen.values(), reverse=True)[:MAX_VERSIONS]
+
+    def cat(self, blobs):
+        """{blob: 中身}"""
+        blobs = list(dict.fromkeys(blobs))
+        if not blobs:
+            return {}
+        out = self.git('cat-file', '--batch', input=''.join(b + '\n' for b in blobs).encode()).stdout
+        res, i = {}, 0
+        for b in blobs:
+            nl = out.index(b'\n', i)
+            parts = out[i:nl].split()
+            if len(parts) != 3:  # missing
+                i = nl + 1
+                continue
+            size = int(parts[2])
+            res[b] = out[nl + 1:nl + 1 + size]
+            i = nl + 1 + size + 1
+        return res
+
+
+def lines(data):
+    return data.replace(b'\r\n', b'\n').split(b'\n')
+
+
+def distance_to(target):
+    """target との行単位の差 (足した行 + 消した行) を返す関数"""
+    sm = difflib.SequenceMatcher(None, autojunk=False)
+    sm.set_seq2(lines(target))
+
+    def distance(data):
+        sm.set_seq1(lines(data))
+        return sum(i2 - i1 + j2 - j1 for tag, i1, i2, j1, j2 in sm.get_opcodes() if tag != 'equal')
+    return distance
+
+
+def choose_base(sh, main, ours, theirs, virtual=(), head=None):
+    """マージの base を、影の git にある版から選ぶ。(中身, 説明)
+
+    手元の系列 (影の git の最新の本体に近い側) を L、もう片方を R とする。R はどこかの版から
+    枝分かれしていて、その版との差は R 側の変更だけなので、R に最も近い版を選ぶ。同点なら古い方:
+    古すぎる base は両側に同じ変更があるように見えるだけだが、L の系列を進みすぎた base は
+    「L の変更を R が消した」ことにして黙って消してしまう。L 自身も同じ理由で候補にしない。
+    ours と theirs の差の合計で選ぶと、両側が同じ行を変えたときに L の近くが最小になって危ない。
+    virtual と head は dry-run 用 (本当なら同じ run の中で影の git に入る版)
+    """
+    def describe(ct, kind, commit):
+        what = '本体' if kind == 'main' else ' conflict コピー'
+        return f'{dt.datetime.fromtimestamp(ct):%m/%d %H:%M} の{what} ({commit})'
+
+    vers = sh.versions(main)
+    blobs = sh.cat([v[1] for v in vers])
+    cands = [(ct, blobs[b], describe(ct, kind, commit)) for ct, b, kind, commit in vers if b in blobs]
+    cands += virtual
+    if head is None:
+        hb = sh.head_blob(main) if sh.has_head() else None
+        head = sh.cat([hb]).get(hb) if hb else None
+    local_is_ours = True
+    if head is not None:
+        to_head = distance_to(head)
+        local_is_ours = to_head(ours) <= to_head(theirs)
+    local, remote = (ours, theirs) if local_is_ours else (theirs, ours)
+    distance = distance_to(remote)
+    # 履歴に R と重なる版が無ければ空を base にする (両側の全体が衝突し、共通の先頭と末尾だけが残る)
+    best = (distance(b''), 0, b'', '空')
+    for ct, data, desc in cands:
+        if data == local:
+            continue
+        key = (distance(data), ct)
+        if key < best[:2]:
+            best = (*key, data, desc)
+    return best[2], best[3]
+
+
+def eol_style(data):
+    crlf = data.count(b'\r\n')
+    lf = data.count(b'\n') - crlf
+    return 'mixed' if crlf and lf else 'crlf' if crlf else 'lf' if lf else 'none'
+
+
+def merge3(ours, base, theirs, union=False):
+    """git merge-file で 3-way マージする。(結果, 衝突の数)"""
+    so, st = eol_style(ours), eol_style(theirs)
+    crlf = False
+    if 'mixed' not in (so, st):
+        # 片方だけ CRLF でも全行が食い違わないよう LF に揃えてマージし、本体の改行コードに戻す。
+        # 混在しているファイルはそのまま渡す (git merge-file はバイト列のまま扱う)
+        crlf = (so if so != 'none' else st) == 'crlf'
+        ours, base, theirs = (x.replace(b'\r\n', b'\n') for x in (ours, base, theirs))
+    with tempfile.TemporaryDirectory(prefix='syncthing-merge-', dir=STATE if STATE.is_dir() else None) as tmp:
+        paths = []
+        for name, data in (('ours', ours), ('base', base), ('theirs', theirs)):
+            paths.append(os.path.join(tmp, name))
+            Path(paths[-1]).write_bytes(data)
+        r = subprocess.run(['git', 'merge-file', '-p'] + (['--union'] if union else []) + paths,
+                           capture_output=True, env=GIT_ENV)
+    # 終了コードは衝突の数 (127 で頭打ち)。負 (255) はエラー
+    if not 0 <= r.returncode <= 127:
+        raise GitError(f'git merge-file: {r.stderr.decode(errors="replace").strip()}')
+    return (r.stdout.replace(b'\n', b'\r\n') if crlf else r.stdout), r.returncode
+
+
+def sig(st):
+    return st.st_ino, st.st_size, st.st_mtime_ns
+
+
+def replace_file(path, data, before):
+    """path を data で原子的に置き換える。読んだ後に変わっていたら (同期や編集が割り込んだ) Raced"""
+    tmp = path.parent / TMP_NAME.format(os.getpid())
+    try:
+        with open(tmp, 'wb') as f:
+            f.write(data)
+            f.flush()
+            os.fsync(f.fileno())
+        os.chmod(tmp, stat.S_IMODE(before.st_mode))
+        if sig(os.lstat(path)) != sig(before):
+            raise Raced(str(path))
+        os.replace(tmp, path)
+    except BaseException:
+        tmp.unlink(missing_ok=True)
+        raise
+    fd = os.open(path.parent, os.O_RDONLY | os.O_DIRECTORY)
+    try:
+        os.fsync(fd)
+    finally:
+        os.close(fd)
+
+
+class Run:
+    """1 回の run (または dry-run) の間の状態"""
+
+    def __init__(self, settle, dry):
+        self.settle, self.dry = settle, dry
+        self.now = time.time()
+        self.backup_dir = None
+        self.backed_up = set()
+        self.failed = False
+        self.said = 0
+        # 残した conflict などは、変わったときだけログに出す (毎分同じ行を出さない)
+        self.reported_path = STATE / 'reported.json'
+        try:
+            self.reported = json.loads(self.reported_path.read_text())
+        except (OSError, ValueError):
+            self.reported = {}
+        self.reported_now = {}
+
+    def say(self, msg, file=sys.stdout):
+        self.said += 1
+        print(msg, file=file)
+
+    def report(self, key, value, msg):
+        self.reported_now[key] = value
+        if self.dry or self.reported.get(key) != value:
+            self.say(msg)
+
+    def save(self):
+        if self.reported_now != self.reported:
+            if self.reported_now:
+                self.reported_path.write_text(json.dumps(self.reported_now, ensure_ascii=False, indent=1))
+            else:
+                self.reported_path.unlink(missing_ok=True)
+
+    def recent(self, st):
+        # 同期で届いたファイルは mtime が元のままなので、置かれた時刻 (ctime) も見る
+        return time.time() - max(st.st_mtime, st.st_ctime) < self.settle
+
+    def backup(self, folder, rels):
+        if self.backup_dir is None:
+            base = STATE / 'backup' / dt.datetime.fromtimestamp(self.now).strftime('%Y%m%d-%H%M%S')
+            self.backup_dir, i = base, 1
+            while self.backup_dir.exists():
+                i += 1
+                self.backup_dir = base.with_name(f'{base.name}-{i}')
+            self.say(f'backup {self.backup_dir}')
+        for rel in rels:
+            # 同じ run で本体を何度も書き換えるときは、最初の (run の前の) 本体を残す
+            if (folder.name, rel) in self.backed_up:
+                continue
+            self.backed_up.add((folder.name, rel))
+            dst = self.backup_dir / folder.name / rel
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(folder.root / rel, dst)
+
+
+def snapshot(sh, files, pending, run):
+    """対象のファイルを影の git に commit する。conflict コピーが残っている本体は入れない:
+    本体が相手の版に置き換わっていることがあり、それを手元の系列に入れると、
+    手元の変更を相手が消したかのように base を選んでしまう"""
+    tracked = sh.tracked()
+    current = set(files)
+    add = [f for f in files if f not in pending]
+    gone = sorted(t for t in tracked if t not in current and t not in pending)
+    if run.dry:
+        new = sum(f not in tracked for f in add)
+        changed = len(sh.changed() - pending) if sh.has_head() else 0
+        if new or changed or gone:
+            run.say(f'snapshot {sh.folder.name}: 新規 {new}、変更 {changed}、削除 {len(gone)}')
+        return
+    sh.init()
+    sh.stage(add, gone)
+    sh.commit('snapshot')
+
+
+def merge_main(folder, sh, main, copies, run):
+    """1 つの本体に conflict コピーを古い順に 1 つずつ取り込む。取り込めないものがあればそこで止める
+    (後のコピーは前のコピーの続きを編集したものが多く、飛ばして先に入れると前の分を巻き戻してしまう)"""
+    mpath = folder.root / main
+    label = f'{folder.name}/{main}'
+    wrote = None   # 自分が書き戻した本体。直後の「最近変わった」判定から外す
+    virtual = []   # dry-run で、本当なら影の git に入る版
+    head = None
+    for c in copies:
+        cpath = folder.root / c.rel
+        cname = c.rel.rpartition('/')[2]
+        key = f'{folder.name}/{c.rel}'
+        try:
+            mst = os.lstat(mpath)
+        except FileNotFoundError:
+            mst = None
+        if mst is None or not stat.S_ISREG(mst.st_mode):
+            run.report(key, 'orphan', f'orphan {key}  (本体が無いので触らない)')
+            continue
+        try:
+            cst = os.lstat(cpath)
+            if (sig(mst) != wrote and run.recent(mst)) or run.recent(cst):
+                if run.dry:
+                    run.say(f'wait   {key}  ({run.settle:.0f} 秒以内に変更あり。次回に回す)')
+                return
+            ours, theirs = mpath.read_bytes(), cpath.read_bytes()
+        except FileNotFoundError:  # 走査の後に同期で消えた。次回に見直す
+            return
+        if theirs == ours:
+            action, result, note = 'same', ours, '中身が本体と同じ'
+        else:
+            base, desc = choose_base(sh, main, ours, theirs, virtual, head)
+            result, n = merge3(ours, base, theirs)
+            action, note = 'merge', f'クリーン、base: {desc}'
+            if n and matches(folder.union, main):
+                result, _ = merge3(ours, base, theirs, union=True)
+                action, note = 'union', f'衝突 {n} か所を両方残した、base: {desc}'
+            elif n:
+                run.report(key, f'left:{cst.st_size}:{cst.st_mtime_ns}',
+                           f'left   {label} ← {cname}  (衝突 {n} か所。conflict コピーを残した、base: {desc})')
+                return
+            if result == ours:
+                note += '。本体は変わらず'
+        msg = f'{action:6} {label} ← {cname}  ({note})'
+        if run.dry:
+            run.say(msg)
+            virtual += [(run.now, ours, 'この run で取り込む本体'), (run.now, theirs, 'この run で取り込む conflict コピー')]
+            head = result
+            continue
+        run.backup(folder, [main, c.rel])
+        # マージ前の両側を履歴に残す (後から来る、このコピーの続きの版の base になる)
+        sh.stage([main, c.rel])
+        sh.commit(f'ingest: {c.rel}')
+        if result != ours:
+            try:
+                replace_file(mpath, result, mst)
+            except Raced:
+                run.say(f'raced  {label}  (読んだ後に書き換わった。次回やり直す)')
+                return
+            wrote = sig(os.lstat(mpath))
+        os.unlink(cpath)
+        sh.stage([main], [c.rel])
+        sh.commit(f'merge: {main} ← {cname} ({action}、{note})')
+        run.say(msg)
+
+
+def process_folder(folder, run):
+    if not folder.root.is_dir():
+        raise OSError(f'フォルダが無い: {folder.root}')
+    sh = Shadow(folder)
+    files, copies = scan(folder)
+    snapshot(sh, files, {c.main for c in copies}, run)
+    groups = {}
+    for c in sorted(copies, key=lambda c: (c.stamp, c.rel)):
+        groups.setdefault(c.main, []).append(c)
+    for main, cs in sorted(groups.items()):
+        merge_main(folder, sh, main, cs, run)
+
+
+def run_folders(folders, run):
+    for folder in folders:
+        try:
+            process_folder(folder, run)
+        except (GitError, OSError) as e:
+            run.say(f'error  {folder.name}: {e}', file=sys.stderr)
+            run.failed = True
+    return 1 if run.failed else 0
+
+
+def setup(quiet):
+    """config を読む。このホストで動かないなら終了する"""
+    try:
+        cfg = load_config()
+    except ConfigError as e:
+        sys.exit(f'syncthing-merge: 設定を読めない ({CONFIG}): {e}')
+    if cfg is None:
+        print(f'syncthing-merge: 設定が無い: {CONFIG}', file=sys.stderr)
+        sys.exit(0)
+    if not is_this_host(cfg[0]):
+        if not quiet:
+            print(f'このホスト ({socket.gethostname()}) では動かない (config の host は {cfg[0]})')
+        sys.exit(0)
+    return cfg
+
+
+def cmd_run(args):
+    _, settle, folders = setup(quiet=not args.dry_run)
+    run = Run(settle, args.dry_run)
+    if args.dry_run:
+        rc = run_folders(folders, run)
+        if not run.said:
+            print('何もしない')
+        return rc
+    STATE.mkdir(parents=True, exist_ok=True)
+    with open(STATE / 'lock', 'w') as lock:
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            print('ほかの run が動いているのでやめる', file=sys.stderr)
+            return 0
+        rc = run_folders(folders, run)
+        run.save()
+    return rc
+
+
+def cmd_status(_args):
+    _, settle, folders = setup(quiet=False)
+    timer = subprocess.run(['systemctl', '--user', 'is-active', 'syncthing-merge.timer'],
+                           capture_output=True, text=True).stdout.strip() or '?'
+    print(f'設定    {CONFIG}')
+    print(f'ホスト  {socket.gethostname()} (config の host と一致するので、ここで動く)')
+    print(f'状態    {STATE}')
+    print(f'timer   {timer}')
+    for folder in folders:
+        sh = Shadow(folder)
+        print(f'\n{folder.name}  {folder.root}')
+        print(f'  拡張子 {", ".join(sorted(folder.exts))} / union {", ".join(folder.union) or "なし"}')
+        if sh.has_head():
+            n = sh.git('rev-list', '--count', 'HEAD').stdout.decode().strip()
+            last = sh.git('log', '-1', '--format=%ci').stdout.decode().strip()
+            print(f'  影の git {sh.dir} ({n} commit、最後 {last})')
+        else:
+            print(f'  影の git {sh.dir} (まだ無い。最初の run で作る)')
+    print('\nいま run すると:')
+    run = Run(settle, dry=True)
+    rc = run_folders(folders, run)
+    if not run.said:
+        print('何もしない')
+    return rc
+
+
+def cmd_log(args):
+    _, _, folders = setup(quiet=False)
+    for folder in folders:
+        sh = Shadow(folder)
+        print(f'{folder.name}:')
+        if sh.has_head():
+            out = sh.git('log', f'-n{args.n}', '--format=  %ci  %s', '--grep=^merge: ').stdout
+            print(out.decode(errors='replace').rstrip() or '  (まだ無い)')
+        else:
+            print('  (影の git がまだ無い)')
+    backups = sorted((STATE / 'backup').iterdir()) if (STATE / 'backup').is_dir() else []
+    print(f'\nバックアップ ({STATE / "backup"}、{len(backups)} 件):')
+    for b in backups[-args.n:]:
+        print(f'  {b.name}')
+
+
+def main():
+    sys.stdout.reconfigure(line_buffering=True)
+    p = argparse.ArgumentParser(prog='syncthing-merge', description=__doc__,
+                                formatter_class=argparse.RawDescriptionHelpFormatter)
+    sub = p.add_subparsers(dest='cmd', required=True)
+    r = sub.add_parser('run')
+    r.add_argument('--dry-run', action='store_true', help='何も変えずに、何をするかだけ出す')
+    r.set_defaults(func=cmd_run)
+    sub.add_parser('status').set_defaults(func=cmd_status)
+    lg = sub.add_parser('log')
+    lg.add_argument('-n', type=int, default=20)
+    lg.set_defaults(func=cmd_log)
+    args = p.parse_args()
+    sys.exit(args.func(args))
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except KeyboardInterrupt:
+        sys.exit(130)

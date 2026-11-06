@@ -1,0 +1,8 @@
+[Unit]
+Description=Merge Syncthing conflict copies (syncthing-merge)
+
+[Service]
+Type=oneshot
+ExecStart=%h/dotfiles/bin/syncthing-merge run
+Nice=10
+IOSchedulingClass=idle

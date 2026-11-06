@@ -116,7 +116,9 @@ autoload -Uz compinit; compinit -u
 autoload -Uz promptinit; promptinit
 autoload -Uz zmv
 autoload -Uz edit-command-line
-eval `dircolors -b`
+# 誰でも書けるディレクトリ（ow / tw）の既定は緑地に青・黒文字で、Iceberg だと読めない。
+# 通常のディレクトリ色に下線を足して「o+w だ」という目印だけ残す
+eval "$(dircolors -b <(dircolors -p | sed -E 's/^(OTHER_WRITABLE|STICKY_OTHER_WRITABLE) +[0-9;]+/\1 01;34;4/'))"
 
 
 ###* Prompt
