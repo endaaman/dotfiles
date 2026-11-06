@@ -29,3 +29,6 @@ $RECYCLE.BIN
 *.swp
 *.crdownload
 *.part
+
+// , 始まりは各 repo・フォルダの個人作業スペース (書き捨て・メモ)。同期しない
+,*
