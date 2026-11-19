@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- .ndpi は中身が TIFF なので、定義が無いと image/tiff と判定されて画像ビューアが開く。 -->
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+    <mime-type type="application/x-ndpi">
+        <comment>NanoZoomer Digital Pathology Image</comment>
+        <generic-icon name="image-x-generic"/>
+        <glob pattern="*.ndpi"/>
+    </mime-type>
+</mime-info>

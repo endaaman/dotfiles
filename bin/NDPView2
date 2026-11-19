@@ -1,19 +1,63 @@
 #!/usr/bin/bash
+# Hamamatsu NDP.view2 を Wine で起動する。引数に .ndpi を渡すとそれを開く。
+# 経緯はブログ記事「WineでHamamatsu NDP.view2を使う」。
+#
+#   NDPView2 [file.ndpi]   起動する
+#   NDPView2 --exe         見つけた NDPView2.exe のパスを出すだけ (./install がアイコンを取るのに使う)
+#
+#   WINEPREFIX   指定があればそこだけを見る。無ければ下の候補から、入っている所を使う
+#   WINEEXEC     wine の実行ファイル (既定: wine)
 
 export WINEARCH=win64
-if [ -z "${WINEPREFIX}" ]; then
-  export WINEPREFIX="$HOME/Wines/ndp"
-fi
+WINE=${WINEEXEC:-wine}
 
-if [ -z "${WINEEXEC}" ]; then
-  export WINEEXEC=wine
-fi
+fail() {
+  echo "NDPView2: $*" >&2
+  # デスクトップから起動されたときは端末が無いので、通知でも出す。
+  # --exe は ./install が「入っているか」を訊くのに使うので、通知は出さない。
+  if ! $quiet && command -v notify-send >/dev/null; then
+    notify-send -a 'NDP.view 2' 'NDP.view 2 を起動できません' "$*"
+  fi
+  exit 1
+}
 
-if [ -n "$1" ]; then
-  p=$(winepath -w "$1")
+quiet=false
+if [ "${1:-}" = --exe ]; then quiet=true; fi
+
+# インストール先のディレクトリ名は版で違う (2.9 系は "NDP.view 2"、2.10 は "NDP.view")。
+exe=
+find_exe() {
+  local prefix dir
+  for prefix in "$@"; do
+    for dir in 'NDP.view 2' 'NDP.view'; do
+      if [ -f "$prefix/drive_c/Program Files/Hamamatsu/$dir/NDPView2.exe" ]; then
+        export WINEPREFIX=$prefix
+        exe="$prefix/drive_c/Program Files/Hamamatsu/$dir/NDPView2.exe"
+        return 0
+      fi
+    done
+  done
+  return 1
+}
+
+if [ -n "${WINEPREFIX:-}" ]; then
+  find_exe "$WINEPREFIX" || fail "NDPView2.exe が無い: $WINEPREFIX"
 else
-  p=""
+  find_exe "$HOME/Wines/ndp" "$HOME/.wine" ||
+    fail "NDPView2.exe が無い (~/Wines/ndp にも ~/.wine にも入っていない)"
 fi
 
-# zenity --info --title="$WINEPREFIX" --text="$WINEEXEC $p" --no-markup
-$WINEEXEC $WINEPREFIX/drive_c/Program\ Files/Hamamatsu/NDP.view\ 2/NDPView2.exe "$p"
+if $quiet; then
+  printf '%s\n' "$exe"
+  exit 0
+fi
+
+# Linux のパスをそのまま渡すと、外付けメディア (D:\ など別ドライブに見える) を開けない。
+# winepath で Wine 側のドライブレター付きパスに直してから渡す。
+if [ -n "${1:-}" ]; then
+  p=$("$WINE" winepath.exe -w "$(realpath -s -- "$1")" 2>/dev/null)
+  p=${p%$'\r'}
+  [ -n "$p" ] || fail "パスを変換できない: $1"
+  exec "$WINE" "$exe" "$p"
+fi
+exec "$WINE" "$exe"

@@ -134,6 +134,48 @@ merge_json() {
   fi
 }
 
+# ndpview_icon
+#   applications/NDPview2.desktop の Icon=ndpview2 を用意する。
+#   浜松ホトニクスの画像を public な本 repo に置かないよう、入っている NDPView2.exe から
+#   その場で取り出す。winemenubuilder は env.conf で止めているので Wine は作ってくれない。
+#   exe の ICON リソースのうち PNG で入っているもの (256x256) は 7z が拡張子無しで見せる。
+#   番号が一番若いものがアプリ本体のアイコン (残りは .ndpa などファイル種別用)。
+ndpview_icon() {
+  local icon=$HOME/.local/share/icons/hicolor/256x256/apps/ndpview2.png exe entry tmp
+  if [ -e "$icon" ]; then
+    emit ok "$icon"
+    return
+  fi
+  if ! exe=$("$DOTFILES/bin/NDPView2" --exe 2>/dev/null); then
+    emit skip "$icon" "NDP.view2 が入っていない"
+    return
+  fi
+  if ! command -v 7z &>/dev/null; then
+    emit skip "$icon" "7z が無い"
+    return
+  fi
+  # || true: 7z が読めない exe でも install 全体を止めず、下の skip に落とす (set -e / pipefail)。
+  entry=$(7z l -slt "$exe" 2>/dev/null |
+    sed -n 's|^Path = \(\.rsrc/[0-9]*/ICON/[0-9]*\)$|\1|p' | sort -t/ -k4 -n | head -1) || true
+  if [ -z "$entry" ]; then
+    emit skip "$icon" "exe に PNG のアイコンが無い"
+    return
+  fi
+  if $DRY_RUN; then
+    emit new "$icon" "$exe の $entry (dry-run)"
+    return
+  fi
+  tmp=$(mktemp -d)
+  if 7z e -y -o"$tmp" "$exe" "$entry" &>/dev/null && [ -s "$tmp/${entry##*/}" ]; then
+    mkdir -p "$(dirname "$icon")"
+    mv "$tmp/${entry##*/}" "$icon"
+    emit new "$icon" "$exe の $entry"
+  else
+    emit skip "$icon" "取り出せなかった: $entry"
+  fi
+  rm -rf "$tmp"
+}
+
 # ---------------------------------------------------------------- データ
 
 # グループ  dotfiles からの相対パス  リンク先
@@ -167,6 +209,8 @@ gui   kitty.conf            $HOME/.config/kitty/kitty.conf
 gui   applications/code-oss.desktop  $HOME/.local/share/applications/code-oss.desktop
 gui   applications/kitty-zsh.desktop  $HOME/.local/share/applications/kitty-zsh.desktop
 gui   applications/tym-zsh.desktop  $HOME/.local/share/applications/tym-zsh.desktop
+gui   applications/NDPview2.desktop  $HOME/.local/share/applications/NDPview2.desktop
+gui   mime/x-ndpi.xml       $HOME/.local/share/mime/packages/x-ndpi.xml
 EOF
 }
 
@@ -311,6 +355,18 @@ link "$CLAUDE_MAPPING" "$HOME/.claude/project-mapping.md"
 merge_json "$HOME/.claude/settings.json" "$DOTFILES/claude/settings.json"
 
 if $gui; then
+  # mime/*.xml の型 (.ndpi → application/x-ndpi) を登録する。
+  if ! command -v update-mime-database &>/dev/null; then
+    emit skip "$HOME/.local/share/mime" "update-mime-database が無い"
+  elif $DRY_RUN; then
+    emit ok "$HOME/.local/share/mime" "update-mime-database (dry-run)"
+  else
+    update-mime-database "$HOME/.local/share/mime"
+    emit ok "$HOME/.local/share/mime" "mime database updated"
+  fi
+
+  ndpview_icon
+
   # 同名のシステム登録を上書きし、Code OSS をテキスト/フォルダの候補に加える。
   if ! command -v update-desktop-database &>/dev/null; then
     emit skip "$HOME/.local/share/applications" "update-desktop-database が無い"

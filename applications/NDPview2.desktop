@@ -1,9 +1,11 @@
 [Desktop Entry]
-Name=NDP.view 2(Wine)
-Exec=WINEPREFIX="/home/ken/Wines/ndp" /home/ken/dotfiles/bin/NDPView2 %f
 Type=Application
+Name=NDP.view 2(Wine)
+Comment=NanoZoomer のバーチャルスライド (.ndpi) を開く
+Exec=/home/ken/dotfiles/bin/NDPView2 %f
+TryExec=/home/ken/dotfiles/bin/NDPView2
+Icon=ndpview2
 StartupNotify=true
-Icon=53E8_NDPView2.0
 StartupWMClass=ndpview2.exe
 MimeType=application/x-ndpi;
 Categories=Graphics;Viewer;
